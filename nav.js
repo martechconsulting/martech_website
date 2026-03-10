@@ -1,13 +1,13 @@
-/* nav.js — shared navigation + footer + utilities */
+/* nav.js — shared navigation + footer + newsletter modal + utilities */
 (function () {
 
   const page = window.location.pathname.split('/').pop() || 'index.html';
 
   const NAV_LINKS = [
-    ['packages.html',      'Packages'],
-    ['how-it-works.html',  'How It Works'],
-    ['about.html',         'About'],
-    ['faq.html',           'FAQ'],
+    ['packages.html',     'Packages'],
+    ['how-it-works.html', 'How It Works'],
+    ['about.html',        'About'],
+    ['faq.html',          'FAQ'],
   ];
 
   const SERVICE_LINKS = [
@@ -17,9 +17,12 @@
     ['airtable.html',               'Airtable'],
     ['softr.html',                  'Softr'],
     ['bubble.html',                 'Bubble'],
+    ['ai-agents.html',              'AI Agents'],
   ];
 
-  /* Full-color SVG logo (white wordmark + orange icon) */
+  const NEWSLETTER_URL = 'https://martech.fillout.com/t/czZuj8ybkMus';
+
+  /* ── SVGs ── */
   const LOGO_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1054.4 210.5" aria-label="Martech Consulting">
     <g><g>
       <path fill="#fff" d="M435.8,36.6c11.3,0,20.4,3.7,27.3,11.2,6.9,7.4,10.3,17.4,10.3,29.8v56.2c0,2.5-2,4.5-4.5,4.5h-20.7c-2.5,0-4.5-2-4.5-4.5v-53.6c0-5-1.2-9-3.7-11.9-2.4-2.9-6-4.4-10.6-4.4s-8.7,1.6-11.4,4.9c-2.7,3.3-4.1,7.8-4.1,13.6v51.3c0,2.5-2,4.5-4.5,4.5h-20.7c-2.5,0-4.5-2-4.5-4.5v-53.6c0-5-1.2-9-3.7-11.9-2.4-2.9-6-4.4-10.6-4.4s-8.7,1.6-11.4,4.9c-2.7,3.3-4.1,7.8-4.1,13.6v51.3c0,2.5-2,4.5-4.5,4.5h-20.7c-2.5,0-4.5-2-4.5-4.5V43.8c0-2.5,2-4.5,4.5-4.5h20.7c2.5,0,4.5,2,4.5,4.5v4.6c5.4-7.9,14.2-11.9,26.5-11.9s17.1,3,22.8,9.1c1.7,1.9,4.6,1.9,6.4,0,6-6.1,14.5-9.2,25.4-9.2Z"/>
@@ -48,7 +51,6 @@
     </g>
   </svg>`;
 
-  /* Icon-only SVG for footer */
   const ICON_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 273 158.2" aria-hidden="true">
     <path fill="#fe6930" d="M232.3,13c15.3,0,27.7,12.4,27.7,27.7v13.8c0,11.8-7.9,21.8-19,25.8-2.5.9-4.8,2.5-6.6,4.6l-14,16.2-12-13.8c-3-3.5-7.5-5.5-12.1-5.5h-2.7c-1.7,0-3.1,1.4-3.1,3.1v6.1c0,1.7,1.4,3.1,3.1,3.1h2.7c1.1,0,2.1.5,2.9,1.3l12.1,14c2.3,2.7,5.6,4.2,9.1,4.2s6.8-1.5,9.1-4.2l14.1-16.4c.4-.5,1-.9,1.5-1.1,16.2-5.5,27.1-20.7,27.1-37.9v-13.3c0-22.1-17.9-40-40-40h-62.9c-5.2,0-10.2,1-14.7,2.8-1.4.5-1.3,2.4.1,2.9,4.6,1.4,9.3,3.3,13.2,5.8s1.9.9,2.9.9h61.4Z"/>
     <path fill="rgba(255,255,255,.45)" d="M238.2,47.8c-.6-4.9-3-9.4-6.9-12.5-3.9-3.1-8.8-4.5-13.7-3.9-4.9.6-9.4,3-12.5,6.9-1.1,1.3-1.9,2.8-2.6,4.4-.3.7-.9,1.1-1.6,1.1h-18.5c-.4,0-.7-.2-.8-.6-5.3-16.8-21-29-39.5-29H42.9C24.2,14.2,7.9,26.6,2.9,44.5c-.7,2.6-.5,5.4.9,7.6s4.3,3.9,7.3,3.9h189.9c.7,0,1.3.4,1.6,1.1,1.2,2.8,3.1,5.4,5.6,7.3,3.3,2.6,7.4,4,11.5,4s2.2,0,3.3-.3c3.1-.5,6-1.8,8.4-3.8,5.1-4.2,7.5-10.3,6.8-16.6ZM17.5,43.8c-.6,0-1-.7-.8-1.2,4.9-9.7,14.9-16.1,26.1-16.1h99.3c11.4,0,21.3,6.6,26.1,16.1.3.6-.1,1.2-.8,1.2H17.5ZM224.7,53.8c-1.1,1.3-2.6,2.2-4.2,2.4-1.7.2-3.3-.3-4.7-1.3-1.3-1.1-2.2-2.6-2.4-4.2-.2-1.7.3-3.3,1.3-4.7,1.1-1.3,2.6-2.2,4.2-2.4.2,0,.5,0,.7,0,1.4,0,2.8.5,3.9,1.4,1.3,1.1,2.2,2.6,2.4,4.2s-.3,3.3-1.3,4.7Z"/>
@@ -57,17 +59,57 @@
 
   /* ── Build Nav ── */
   function buildNav() {
-    const links = NAV_LINKS.map(([href, label]) =>
+    const desktopLinks = NAV_LINKS.map(([href, label]) =>
       `<a href="${href}" class="${page === href ? 'active' : ''}">${label}</a>`
     ).join('');
+
+    const drawerLinks = NAV_LINKS.map(([href, label]) =>
+      `<a href="${href}" class="${page === href ? 'active' : ''}">${label}</a>`
+    ).join('');
+
+    const drawerSvcLinks = SERVICE_LINKS.map(([href, label]) =>
+      `<a href="${href}">${label}</a>`
+    ).join('');
+
     return `
     <nav class="nav" id="site-nav">
-      <div class="container nav__inner">
+      <div class="nav__inner">
         <a href="index.html" class="nav__logo">${LOGO_SVG}</a>
-        <div class="nav__links">${links}</div>
-        <a href="contact.html" class="btn btn-primary">Book a free call</a>
+        <div class="nav__links">${desktopLinks}</div>
+        <a href="contact.html" class="btn btn-primary nav__cta-desk">Book a free call</a>
+        <button class="nav__hamburger" id="nav-hamburger" aria-label="Open menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+      <div class="nav__drawer" id="nav-drawer">
+        <div class="nav__drawer__label">Navigation</div>
+        ${drawerLinks}
+        <div class="nav__drawer__label">Services</div>
+        ${drawerSvcLinks}
+        <a href="contact.html" class="drawer-cta">Book a free call →</a>
       </div>
     </nav>`;
+  }
+
+  /* ── Build Newsletter Modal ── */
+  function buildNewsletterModal() {
+    return `
+    <div class="nl-modal" id="nl-modal" role="dialog" aria-modal="true" aria-label="Newsletter signup">
+      <div class="nl-modal__box">
+        <div class="nl-modal__head">
+          <h3>Stay in the loop</h3>
+          <button class="nl-modal__close" id="nl-close" aria-label="Close">&times;</button>
+        </div>
+        <iframe
+          class="nl-modal__frame"
+          id="nl-frame"
+          src=""
+          data-src="${NEWSLETTER_URL}"
+          title="Newsletter signup"
+          loading="lazy"
+        ></iframe>
+      </div>
+    </div>`;
   }
 
   /* ── Build Footer ── */
@@ -106,6 +148,7 @@
   /* ── Init ── */
   document.addEventListener('DOMContentLoaded', function () {
     document.body.insertAdjacentHTML('afterbegin', buildNav());
+    document.body.insertAdjacentHTML('beforeend', buildNewsletterModal());
     document.body.insertAdjacentHTML('beforeend', buildFooter());
 
     // Nav scroll
@@ -113,6 +156,55 @@
     window.addEventListener('scroll', function () {
       nav.classList.toggle('scrolled', window.scrollY > 50);
     }, { passive: true });
+
+    // Hamburger toggle
+    const hamburger = document.getElementById('nav-hamburger');
+    const drawer    = document.getElementById('nav-drawer');
+    hamburger.addEventListener('click', function () {
+      hamburger.classList.toggle('open');
+      drawer.classList.toggle('open');
+    });
+
+    // Close drawer on link click
+    drawer.querySelectorAll('a').forEach(function(a) {
+      a.addEventListener('click', function() {
+        hamburger.classList.remove('open');
+        drawer.classList.remove('open');
+      });
+    });
+
+    // Newsletter modal
+    const modal   = document.getElementById('nl-modal');
+    const nlClose = document.getElementById('nl-close');
+    const nlFrame = document.getElementById('nl-frame');
+
+    function openNewsletter() {
+      if (!nlFrame.src || nlFrame.src === window.location.href) {
+        nlFrame.src = nlFrame.dataset.src;
+      }
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeNewsletter() {
+      modal.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    nlClose.addEventListener('click', closeNewsletter);
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) closeNewsletter();
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeNewsletter();
+    });
+
+    // Wire up any [data-newsletter] triggers
+    document.querySelectorAll('[data-newsletter]').forEach(function(el) {
+      el.addEventListener('click', function(e) {
+        e.preventDefault();
+        openNewsletter();
+      });
+    });
 
     // Scroll reveal
     const obs = new IntersectionObserver(function (entries) {
