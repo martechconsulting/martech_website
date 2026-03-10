@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Agents — Martech Consulting | Custom AI for Your Existing Stack</title>
+  <meta name="description" content="Martech Consulting builds custom AI agents connected to your existing tools — Airtable, Bubble, your CRM. Product advisors, intake bots, knowledge bases and more."/>
+  <link rel="canonical" href="https://martechconsulting.io/ai-agents.html"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    /* ── AI Agents page-specific styles ── */
+
+    /* Tech stack tags */
+    .tech-row { display:flex; flex-wrap:wrap; gap:.5rem; margin-top:1.25rem; }
+    .tech-tag {
+      font-size:.73rem; font-weight:600; padding:.35rem .85rem;
+      border-radius:100px; border:1px solid var(--rule);
+      background:#fff; color:var(--mid);
+    }
+    .tech-tag--ai  { background:rgba(254,105,48,.08); border-color:rgba(254,105,48,.25); color:var(--orange); }
+    .tech-tag--int { background:rgba(5,46,77,.06); border-color:rgba(5,46,77,.15); color:var(--navy); }
+
+    /* Use-case cards */
+    .uc-grid {
+      display:grid; grid-template-columns:1fr;
+      gap:1rem; margin-top:2rem;
+    }
+    .uc-card {
+      background:#fff; border:1px solid var(--rule);
+      border-radius:10px; padding:1.5rem;
+      transition:border-color .2s, transform .2s;
+    }
+    .uc-card:hover { border-color:var(--orange); transform:translateY(-2px); }
+    .uc-card__icon  { font-size:1.5rem; margin-bottom:.75rem; }
+    .uc-card__title { font-family:var(--ff-head); font-size:1.05rem; font-weight:500; color:var(--ink); margin-bottom:.4rem; }
+    .uc-card__desc  { font-size:.855rem; color:var(--mid); line-height:1.65; margin-bottom:.875rem; }
+    .uc-card__eg    { font-size:.78rem; color:var(--muted); font-style:italic; padding:.6rem .875rem; background:var(--off); border-radius:5px; }
+
+    /* Process steps */
+    .ai-process { display:grid; grid-template-columns:1fr; gap:1px; background:var(--rule); border:1px solid var(--rule); border-radius:10px; overflow:hidden; }
+    .ai-step    { background:#fff; padding:2rem 1.75rem; display:flex; gap:1.25rem; align-items:flex-start; }
+    .ai-step__num {
+      font-family:var(--ff-head); font-weight:300; font-style:italic;
+      font-size:2rem; color:var(--orange); line-height:1;
+      flex-shrink:0; width:2.5rem; text-align:center;
+    }
+    .ai-step__title { font-family:var(--ff-head); font-size:1.05rem; font-weight:500; color:var(--ink); margin-bottom:.45rem; }
+    .ai-step__body  { font-size:.875rem; color:var(--mid); line-height:1.72; }
+
+    /* Compare table */
+    .compare-table { width:100%; border-collapse:collapse; font-size:.855rem; }
+    .compare-table th { font-family:var(--ff-head); font-weight:500; color:var(--ink); text-align:left; padding:.75rem 1rem; border-bottom:2px solid var(--rule); }
+    .compare-table td { padding:.7rem 1rem; border-bottom:1px solid var(--rule); color:var(--mid); vertical-align:top; }
+    .compare-table tr:last-child td { border-bottom:none; }
+    .compare-table .check { color:var(--orange); font-weight:700; }
+    .compare-table .model { font-family:var(--ff-head); font-weight:500; color:var(--ink); }
+
+    /* AI add-on callout */
+    .addon-badge {
+      display:inline-flex; align-items:center; gap:.45rem;
+      background:rgba(254,105,48,.1); border:1px solid rgba(254,105,48,.3);
+      color:var(--orange); font-size:.72rem; font-weight:700;
+      letter-spacing:.1em; text-transform:uppercase;
+      padding:.4rem .9rem; border-radius:100px; margin-bottom:1.25rem;
+    }
+    .addon-badge::before { content:'✦'; font-size:.6rem; }
+
+    @media (min-width:640px) {
+      .uc-grid { grid-template-columns:1fr 1fr; }
+      .ai-process { grid-template-columns:1fr 1fr; }
+    }
+    @media (min-width:1024px) {
+      .uc-grid { grid-template-columns:repeat(3,1fr); }
+      .ai-process { grid-template-columns:repeat(4,1fr); }
+    }
+  </style>
+</head>
+<body style="padding-top:62px;">
+
+<!-- Hero -->
+<section class="service-hero">
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="index.html">Home</a>
+      <span>/</span>
+      <span>AI Agents</span>
+    </div>
+    <div class="addon-badge">Add-on service</div>
+    <h1 class="fade-in-1">Your existing stack,<br>now with <em>AI on top.</em></h1>
+    <p class="service-hero__sub fade-in-2">We build custom AI agents that connect to Airtable, Bubble, your CRM, and your knowledge base — so your clients get instant, accurate answers while your team stays focused.</p>
+    <div class="service-hero__btns fade-in-3">
+      <a href="contact.html" class="btn btn-primary btn-lg">Book a discovery call <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      <a href="#use-cases" class="btn btn-ghost btn-lg">See use cases</a>
+    </div>
+  </div>
+</section>
+
+<!-- What it is -->
+<section class="bg-white">
+  <div class="container">
+    <div class="two-col">
+      <div class="prose reveal">
+        <div class="eyebrow blue">What this actually is</div>
+        <h2 style="margin-top:.6rem;">An AI that knows your business — and talks to your tools.</h2>
+        <p>AI agents aren't chatbots that answer generic questions. They're purpose-built assistants trained on your documentation, connected to your live data, and embedded directly into your Bubble app, Softr portal, or website.</p>
+        <p>We handle the full build: knowledge base setup, model selection, prompt engineering, and integration. You get an AI that sounds like you, knows your products, and works inside systems you already have.</p>
+        <div class="callout">
+          <div class="callout__label">Important context</div>
+          <div class="callout__text">AI Agents are an add-on to our core services — not a standalone offering. They work best when connected to an existing Airtable, Bubble, or automation stack we've built (or can build) for you.</div>
+        </div>
+        <div class="tech-row">
+          <span class="tech-tag tech-tag--ai">Claude (Anthropic)</span>
+          <span class="tech-tag tech-tag--ai">ChatGPT (OpenAI)</span>
+          <span class="tech-tag tech-tag--ai">Gemini (Google)</span>
+          <span class="tech-tag tech-tag--int">Airtable</span>
+          <span class="tech-tag tech-tag--int">Bubble</span>
+          <span class="tech-tag tech-tag--int">Softr</span>
+          <span class="tech-tag tech-tag--int">Keap CRM</span>
+          <span class="tech-tag tech-tag--int">REST APIs</span>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="callout" style="margin-bottom:1.25rem;">
+          <div class="callout__label">Not a plug-in</div>
+          <div class="callout__text">Every agent is built custom for your business. No generic chatbot templates — we write the prompts, build the knowledge base, and wire it to your actual data.</div>
+        </div>
+        <div class="feature-card" style="margin-bottom:1rem;">
+          <div class="feature-card__icon">🔌</div>
+          <div class="feature-card__title">Connects to live data</div>
+          <div class="feature-card__body">Your AI agent can query your Airtable base in real time — so answers reflect your current inventory, pricing, or case load, not a stale PDF.</div>
+        </div>
+        <div class="feature-card" style="margin-bottom:1rem;">
+          <div class="feature-card__icon">🏷️</div>
+          <div class="feature-card__title">Embedded on your brand</div>
+          <div class="feature-card__body">Deployed inside your Bubble app, Softr portal, or website — not as a third-party widget with someone else's logo.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-card__icon">🔒</div>
+          <div class="feature-card__title">You own the knowledge</div>
+          <div class="feature-card__body">We build your knowledge base from your own documentation. No training on public web data — just what you know about your business.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Use cases -->
+<section class="bg-off" id="use-cases">
+  <div class="container">
+    <div class="reveal" style="max-width:560px;margin-bottom:2.5rem;">
+      <div class="eyebrow blue">Use cases</div>
+      <h2 class="section-title" style="color:var(--ink);margin-top:.6rem;">Six agents we build<br><em style="color:var(--orange);">for real businesses.</em></h2>
+      <p style="font-size:.95rem;color:var(--mid);line-height:1.75;margin-top:1rem;">Every build starts with your specific use case. Here are the most common ones we see.</p>
+    </div>
+    <div class="uc-grid">
+      <div class="uc-card reveal">
+        <div class="uc-card__icon">🛒</div>
+        <div class="uc-card__title">Product Advisor</div>
+        <div class="uc-card__desc">Guides customers to the right product or plan based on their answers — without a sales call.</div>
+        <div class="uc-card__eg">e.g. "Which membership tier is right for me?" on a Softr portal</div>
+      </div>
+      <div class="uc-card reveal">
+        <div class="uc-card__icon">📋</div>
+        <div class="uc-card__title">Intake Bot</div>
+        <div class="uc-card__desc">Collects client info, qualifies leads, and logs everything directly into your Airtable or CRM.</div>
+        <div class="uc-card__eg">e.g. New client onboarding on a law firm's Bubble portal</div>
+      </div>
+      <div class="uc-card reveal">
+        <div class="uc-card__icon">📚</div>
+        <div class="uc-card__title">Knowledge Base</div>
+        <div class="uc-card__desc">Answers detailed questions from your documentation — SOPs, manuals, policy docs, FAQs.</div>
+        <div class="uc-card__eg">e.g. Field tech reference tool for a service company</div>
+      </div>
+      <div class="uc-card reveal">
+        <div class="uc-card__icon">👥</div>
+        <div class="uc-card__title">HR Assistant</div>
+        <div class="uc-card__desc">Handles employee questions about benefits, policies, and procedures — available 24/7.</div>
+        <div class="uc-card__eg">e.g. Internal HR bot for a 50-person company</div>
+      </div>
+      <div class="uc-card reveal">
+        <div class="uc-card__icon">🛍️</div>
+        <div class="uc-card__title">E-Commerce Support</div>
+        <div class="uc-card__desc">Answers order questions, product details, and policies using live data from your store or Airtable.</div>
+        <div class="uc-card__eg">e.g. Post-purchase support bot for a DTC brand</div>
+      </div>
+      <div class="uc-card reveal">
+        <div class="uc-card__icon">📝</div>
+        <div class="uc-card__title">Proposal Assistant</div>
+        <div class="uc-card__desc">Helps prospects scope projects, understand pricing, and move toward a call — without human intervention.</div>
+        <div class="uc-card__eg">e.g. Pre-sales agent for a consulting or agency site</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- How we build -->
+<section class="bg-white">
+  <div class="container">
+    <div class="reveal" style="max-width:560px;margin-bottom:2.5rem;">
+      <div class="eyebrow blue">Our process</div>
+      <h2 class="section-title" style="color:var(--ink);margin-top:.6rem;">How we build<br><em style="color:var(--orange);">your AI agent.</em></h2>
+    </div>
+    <div class="ai-process reveal">
+      <div class="ai-step">
+        <div class="ai-step__num">1</div>
+        <div>
+          <div class="ai-step__title">Discovery</div>
+          <div class="ai-step__body">We map the use case, what data the agent needs, where it lives, and who it talks to. We define success before touching any tools.</div>
+        </div>
+      </div>
+      <div class="ai-step">
+        <div class="ai-step__num">2</div>
+        <div>
+          <div class="ai-step__title">Knowledge Base</div>
+          <div class="ai-step__body">We structure your documentation, FAQs, and data into a knowledge base the model can query accurately and reliably.</div>
+        </div>
+      </div>
+      <div class="ai-step">
+        <div class="ai-step__num">3</div>
+        <div>
+          <div class="ai-step__title">Prompt Engineering</div>
+          <div class="ai-step__body">We write and test the system prompt that defines your agent's personality, guardrails, and response style — so it sounds like you.</div>
+        </div>
+      </div>
+      <div class="ai-step">
+        <div class="ai-step__num">4</div>
+        <div>
+          <div class="ai-step__title">Integration</div>
+          <div class="ai-step__body">We deploy the agent into your Bubble app, Softr portal, or website — wired to live Airtable or CRM data where needed.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Model comparison + why Martech -->
+<section class="bg-off">
+  <div class="container">
+    <div class="two-col">
+      <div class="reveal">
+        <div class="eyebrow blue">Model selection</div>
+        <h2 class="section-title" style="color:var(--ink);margin-top:.6rem;font-size:clamp(1.5rem,2.5vw,2rem);">We choose the right<br>model for your use case.</h2>
+        <p style="font-size:.9rem;color:var(--mid);line-height:1.75;margin:1rem 0 1.5rem;">Not every use case needs the same model. We evaluate cost, accuracy, and context window requirements before recommending one.</p>
+        <div style="overflow-x:auto;">
+          <table class="compare-table">
+            <thead>
+              <tr>
+                <th>Model</th>
+                <th>Best for</th>
+                <th>Cost tier</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="model">Claude (Anthropic)</td>
+                <td>Long-form docs, nuanced reasoning, safety-critical responses</td>
+                <td>$$</td>
+              </tr>
+              <tr>
+                <td class="model">GPT-4o (OpenAI)</td>
+                <td>General-purpose, broad integrations, familiar UX</td>
+                <td>$$</td>
+              </tr>
+              <tr>
+                <td class="model">Gemini (Google)</td>
+                <td>Multimodal tasks, Google Workspace-connected workflows</td>
+                <td>$–$$</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="eyebrow blue">Why Martech</div>
+        <h2 class="section-title" style="color:var(--ink);margin-top:.6rem;font-size:clamp(1.5rem,2.5vw,2rem);">What you get that a<br>solo dev won't give you.</h2>
+        <div style="display:flex;flex-direction:column;gap:1rem;margin-top:1.5rem;">
+          <div class="feature-card">
+            <div class="feature-card__title">Stack context</div>
+            <div class="feature-card__body">We already know Airtable, Bubble, Softr, and Keap. We don't need to learn your tools while billing you for the time.</div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-card__title">Flat-price builds</div>
+            <div class="feature-card__body">Same model as every other Martech project — scoped, priced, and agreed before we start. No hourly billing.</div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-card__title">Ongoing support</div>
+            <div class="feature-card__body">Prompts need tuning. Data changes. We include a support window in every build and offer retainer options for active agents.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Related services -->
+<section class="bg-white">
+  <div class="container">
+    <div class="reveal" style="margin-bottom:2rem;">
+      <div class="eyebrow blue">Part of a bigger stack</div>
+      <h2 class="section-title" style="color:var(--ink);margin-top:.6rem;font-size:clamp(1.5rem,2.5vw,2rem);">AI agents work best<br>when the stack is solid.</h2>
+      <p style="font-size:.9rem;color:var(--mid);line-height:1.75;margin-top:.75rem;max-width:520px;">These are the services we typically pair with an AI agent build.</p>
+    </div>
+    <div class="related-grid reveal">
+      <a href="automation.html" class="related-card">
+        <div class="related-card__name">Marketing Automation</div>
+        <div class="related-card__desc">Route AI-captured leads into your Keap CRM and trigger follow-up sequences automatically.</div>
+      </a>
+      <a href="airtable.html" class="related-card">
+        <div class="related-card__name">Airtable</div>
+        <div class="related-card__desc">Your Airtable base becomes the live data source your AI agent queries for real-time answers.</div>
+      </a>
+      <a href="bubble.html" class="related-card">
+        <div class="related-card__name">Bubble</div>
+        <div class="related-card__desc">We embed the AI agent directly inside the Bubble app — no third-party widget required.</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-band">
+  <div class="container cta-band__inner">
+    <h2 class="section-title">Ready to add AI to<br>your <em>existing stack?</em></h2>
+    <p class="cta-band__sub">Book a free call. We'll tell you whether an AI agent makes sense for your business, what it would connect to, and what it would cost — before you commit to anything.</p>
+    <div class="cta-band__btns">
+      <a href="contact.html" class="btn btn-primary btn-lg">Book a free call <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      <a href="packages.html" class="btn btn-ghost btn-lg">See all packages <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+    <p class="cta-band__note">No commitment. No hard sell. Based in Dover, NH — working with businesses across the US.</p>
+  </div>
+</section>
+
+<script src="nav.js"></script>
+</body>
+</html>
