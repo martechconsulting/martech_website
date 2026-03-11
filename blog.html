@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <!-- Primary SEO -->
+  <title>Blog | Marketing Automation & Tech for Small Business | Martech Consulting</title>
+  <meta name="description" content="Practical guides on marketing automation, CRM setup, email deliverability, Facebook ads, and no-code technology — written by practitioners, not theorists. Based in Dover, NH."/>
+  <meta name="keywords" content="marketing automation blog, small business marketing, CRM tips, email marketing guide, Facebook ads guide, no-code tools, Airtable, Keap, marketing systems"/>
+  <link rel="canonical" href="https://martechconsulting.io/blog.html"/>
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content="Blog | Marketing Automation & Tech for Small Business | Martech Consulting"/>
+  <meta property="og:description" content="Practical guides on marketing automation, CRM setup, email deliverability, and no-code technology — written by practitioners, not theorists."/>
+  <meta property="og:url" content="https://martechconsulting.io/blog.html"/>
+  <meta property="og:site_name" content="Martech Consulting"/>
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Martech Consulting Blog — Marketing Automation & Technology for Small Business"/>
+  <meta name="twitter:description" content="Practical guides on marketing automation, CRM, email deliverability, and no-code tools."/>
+
+  <!-- Blog Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "name": "Martech Consulting Blog",
+    "description": "Practical guides on marketing automation, CRM setup, email deliverability, Facebook ads, and no-code technology for small business.",
+    "url": "https://martechconsulting.io/blog.html",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Martech Consulting",
+      "url": "https://martechconsulting.io"
+    },
+    "blogPost": [
+      {
+        "@type": "BlogPosting",
+        "headline": "The Trust Gap in Home Services Marketing: Why the Fortune Is in the Follow-Up",
+        "url": "https://martechconsulting.io/blog-trust-gap-home-services-marketing.html",
+        "datePublished": "2026-03-11",
+        "author": {
+          "@type": "Person",
+          "name": "Keith Phillips"
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- BreadcrumbList Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://martechconsulting.io/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Blog",
+        "item": "https://martechconsulting.io/blog.html"
+      }
+    ]
+  }
+  </script>
+
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    /* ── Blog index–specific styles ── */
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.75rem;
+    }
+    .blog-card {
+      background: #fff;
+      border: 1px solid var(--rule);
+      border-radius: 10px;
+      overflow: hidden;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .blog-card:hover {
+      border-color: var(--orange);
+      box-shadow: 0 6px 24px rgba(0,0,0,.07);
+    }
+    .blog-card__thumb {
+      height: 180px;
+      background: var(--navy);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .blog-card__thumb-pattern {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 80% at 70% 40%, rgba(254,105,48,.18) 0%, transparent 70%);
+    }
+    .blog-card__thumb-icon {
+      font-size: 3rem;
+      position: relative;
+      z-index: 1;
+    }
+    .blog-card__thumb-badge {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      font-family: var(--ff-head);
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+      color: var(--orange);
+      background: rgba(254,105,48,.12);
+      border: 1px solid rgba(254,105,48,.25);
+      padding: .25rem .65rem;
+      border-radius: 99px;
+      z-index: 2;
+    }
+    .blog-card__body {
+      padding: 1.5rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .blog-card__meta {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      margin-bottom: .85rem;
+    }
+    .blog-card__date {
+      font-size: .78rem;
+      color: var(--muted);
+    }
+    .blog-card__read {
+      font-size: .78rem;
+      color: var(--muted);
+    }
+    .blog-card__title {
+      font-family: var(--ff-head);
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--ink);
+      line-height: 1.38;
+      margin-bottom: .75rem;
+    }
+    .blog-card__excerpt {
+      font-size: .87rem;
+      color: var(--mid);
+      line-height: 1.7;
+      flex: 1;
+      margin-bottom: 1.25rem;
+    }
+    .blog-card__footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--rule);
+      padding-top: 1rem;
+    }
+    .blog-card__author {
+      display: flex;
+      align-items: center;
+      gap: .55rem;
+    }
+    .blog-card__author-avatar {
+      width: 1.75rem;
+      height: 1.75rem;
+      border-radius: 50%;
+      background: var(--orange);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--ff-head);
+      font-size: .6rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .blog-card__author-name {
+      font-size: .8rem;
+      color: var(--mid);
+      font-weight: 500;
+    }
+    .blog-card__arrow {
+      font-size: .82rem;
+      color: var(--orange);
+      font-weight: 500;
+    }
+
+    /* Featured post (first card, full width) */
+    .blog-card--featured {
+      grid-column: 1 / -1;
+      flex-direction: row;
+    }
+    .blog-card--featured .blog-card__thumb {
+      width: 380px;
+      height: auto;
+      flex-shrink: 0;
+      border-radius: 0;
+    }
+    .blog-card--featured .blog-card__title {
+      font-size: 1.35rem;
+    }
+    @media (max-width: 760px) {
+      .blog-card--featured {
+        flex-direction: column;
+      }
+      .blog-card--featured .blog-card__thumb {
+        width: 100%;
+        height: 180px;
+      }
+    }
+
+    /* Topics filter bar */
+    .topic-bar {
+      display: flex;
+      gap: .6rem;
+      flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+    }
+    .topic-pill {
+      font-family: var(--ff-head);
+      font-size: .78rem;
+      font-weight: 500;
+      padding: .4rem 1rem;
+      border-radius: 99px;
+      border: 1px solid var(--rule);
+      background: #fff;
+      color: var(--mid);
+      cursor: pointer;
+      text-decoration: none;
+      transition: background .15s, border-color .15s, color .15s;
+    }
+    .topic-pill:hover,
+    .topic-pill.active {
+      background: var(--orange);
+      border-color: var(--orange);
+      color: #fff;
+    }
+
+    /* Newsletter inline */
+    .blog-nl {
+      background: var(--navy);
+      border-radius: 12px;
+      padding: 2.5rem;
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+      justify-content: space-between;
+      margin: 3rem 0;
+    }
+    @media (max-width: 640px) {
+      .blog-nl { flex-direction: column; gap: 1.5rem; }
+    }
+    .blog-nl__text h3 {
+      font-family: var(--ff-head);
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: #fff;
+      margin-bottom: .4rem;
+    }
+    .blog-nl__text p {
+      font-size: .87rem;
+      color: rgba(255,255,255,.55);
+      line-height: 1.6;
+      margin: 0;
+    }
+    .blog-nl__cta {
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body style="padding-top:62px;">
+
+<!-- ── Hero ── -->
+<section class="service-hero">
+  <div class="container" style="position:relative;z-index:2;">
+    <nav class="breadcrumb"><a href="index.html">Home</a><span>/</span>Blog</nav>
+    <div class="eyebrow">The Martech Blog</div>
+    <h1>Marketing automation and tech,<br>explained by <em>people who build it.</em></h1>
+    <p class="service-hero__sub">No fluff, no vendor-speak. Practical guides on the systems, strategies, and tools that actually move the needle for small business — written by Jonathan and Keith based on real client work.</p>
+  </div>
+</section>
+
+<!-- ── Posts ── -->
+<section class="bg-off">
+  <div class="container">
+
+    <!-- Topic filter -->
+    <div class="topic-bar" role="navigation" aria-label="Filter by topic">
+      <a href="blog.html" class="topic-pill active">All Posts</a>
+      <a href="blog.html" class="topic-pill">Marketing Automation</a>
+      <a href="blog.html" class="topic-pill">Email Marketing</a>
+      <a href="blog.html" class="topic-pill">Paid Social</a>
+      <a href="blog.html" class="topic-pill">No-Code</a>
+      <a href="blog.html" class="topic-pill">CRM</a>
+    </div>
+
+    <!-- Post grid -->
+    <div class="blog-grid">
+
+      <!-- Featured: Trust Gap -->
+      <a href="blog-trust-gap-home-services-marketing.html" class="blog-card blog-card--featured reveal">
+        <div class="blog-card__thumb">
+          <div class="blog-card__thumb-pattern"></div>
+          <span class="blog-card__thumb-icon">🏠</span>
+          <span class="blog-card__thumb-badge">Marketing Automation</span>
+        </div>
+        <div class="blog-card__body">
+          <div class="blog-card__meta">
+            <span class="blog-card__date">March 11, 2026</span>
+            <span class="blog-card__read">5 min read</span>
+          </div>
+          <div class="blog-card__title">The Trust Gap in Home Services Marketing — and Why the Fortune Is in the Follow-Up</div>
+          <p class="blog-card__excerpt">Home service businesses don't lose leads because of poor work. They lose them because of inconsistent follow-up. Right now, home services are struggling against a growing "trust gap" — the gap between a customer's expectation for fast, professional communication and a company's actual response time. Here's what's actually happening and how to fix it with the right systems.</p>
+          <div class="blog-card__footer">
+            <div class="blog-card__author">
+              <div class="blog-card__author-avatar">KP</div>
+              <span class="blog-card__author-name">Keith Phillips</span>
+            </div>
+            <span class="blog-card__arrow">Read article →</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Placeholder cards — future posts -->
+      <div class="blog-card reveal" style="opacity:.5;pointer-events:none;cursor:default;">
+        <div class="blog-card__thumb" style="background:linear-gradient(135deg,#0a2942,#0d3657);">
+          <div class="blog-card__thumb-pattern"></div>
+          <span class="blog-card__thumb-icon">📬</span>
+          <span class="blog-card__thumb-badge">Email Marketing</span>
+        </div>
+        <div class="blog-card__body">
+          <div class="blog-card__meta">
+            <span class="blog-card__date">Coming soon</span>
+          </div>
+          <div class="blog-card__title">Why your emails hit spam — and the technical fixes that restore deliverability</div>
+          <p class="blog-card__excerpt">Most small business email programs fail silently. Your domain reputation, DNS records, and list health determine whether your emails land — or disappear. We break down exactly what to fix.</p>
+          <div class="blog-card__footer">
+            <div class="blog-card__author">
+              <div class="blog-card__author-avatar">KP</div>
+              <span class="blog-card__author-name">Keith Phillips</span>
+            </div>
+            <span class="blog-card__arrow" style="color:var(--muted);">Coming soon</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="blog-card reveal" style="opacity:.5;pointer-events:none;cursor:default;">
+        <div class="blog-card__thumb" style="background:linear-gradient(135deg,#0a2942,#0d3657);">
+          <div class="blog-card__thumb-pattern"></div>
+          <span class="blog-card__thumb-icon">🗂️</span>
+          <span class="blog-card__thumb-badge">No-Code</span>
+        </div>
+        <div class="blog-card__body">
+          <div class="blog-card__meta">
+            <span class="blog-card__date">Coming soon</span>
+          </div>
+          <div class="blog-card__title">When to use Airtable vs. Softr vs. Bubble — an honest decision framework</div>
+          <p class="blog-card__excerpt">Three powerful no-code tools that solve different problems. Here's the decision tree we use with every client who comes in asking which one they actually need.</p>
+          <div class="blog-card__footer">
+            <div class="blog-card__author">
+              <div class="blog-card__author-avatar">JN</div>
+              <span class="blog-card__author-name">Jonathan Noury-Elliard</span>
+            </div>
+            <span class="blog-card__arrow" style="color:var(--muted);">Coming soon</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Newsletter inline -->
+    <div class="blog-nl reveal">
+      <div class="blog-nl__text">
+        <h3>Get new posts in your inbox</h3>
+        <p>Practical guides on marketing automation and technology — no fluff, no spam. Usually one or two per month.</p>
+      </div>
+      <div class="blog-nl__cta">
+        <a href="#" data-newsletter class="btn btn-primary btn-lg">Subscribe free →</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── Services cross-link ── -->
+<section class="bg-white">
+  <div class="container">
+    <div class="reveal" style="max-width:540px;margin-bottom:2.5rem;">
+      <div class="eyebrow blue">What we actually build</div>
+      <h2 class="section-title" style="color:var(--ink);margin-top:.6rem;">The systems behind<br><em style="color:var(--orange);">everything we write about.</em></h2>
+    </div>
+    <div class="related-grid">
+      <a href="automation.html" class="related-card reveal">
+        <div class="related-card__name">Marketing Automation</div>
+        <div class="related-card__desc">CRM setup, follow-up sequences, and workflow automation. We build what we write about.</div>
+      </a>
+      <a href="email-marketing.html" class="related-card reveal">
+        <div class="related-card__name">Email Marketing</div>
+        <div class="related-card__desc">Deliverability audits, campaigns, and automated sequences that actually land in inboxes.</div>
+      </a>
+      <a href="social-media-marketing.html" class="related-card reveal">
+        <div class="related-card__name">Facebook &amp; Instagram Ads</div>
+        <div class="related-card__desc">Done-for-you ad management. Strategy, creative, targeting, and monthly reporting.</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section class="cta-band">
+  <div class="container cta-band__inner">
+    <h2 class="section-title cta-band__headline">Want this applied<br>to <em>your business?</em></h2>
+    <p class="cta-band__sub">Book a free call with Jonathan or Keith. We'll look at your current setup and tell you what would actually move the needle — with a price before you leave.</p>
+    <div class="cta-band__btns">
+      <a href="contact.html" class="btn btn-primary btn-lg">Book a free call →</a>
+      <a href="packages.html" class="btn btn-ghost btn-lg">See packages &amp; pricing</a>
+    </div>
+    <p class="cta-band__note">No commitment. No hard sell.</p>
+  </div>
+</section>
+
+<script src="nav.js"></script>
+</body>
+</html>

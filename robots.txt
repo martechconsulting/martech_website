@@ -1,0 +1,15 @@
+# robots.txt — martechconsulting.io
+# Generated 2026-03-11
+
+User-agent: *
+Allow: /
+
+# Block access to any admin or private paths (none currently, but future-proofed)
+Disallow: /admin/
+Disallow: /private/
+
+# Crawl-delay hint for polite bots
+Crawl-delay: 1
+
+# Sitemap location
+Sitemap: https://martechconsulting.io/sitemap.xml
