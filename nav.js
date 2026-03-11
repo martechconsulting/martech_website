@@ -4,21 +4,21 @@
   const page = window.location.pathname.split('/').pop() || 'index.html';
 
   const NAV_LINKS = [
-    ['packages.html',     'Packages'],
-    ['how-it-works.html', 'How It Works'],
-    ['about.html',        'About'],
-    ['blog.html',         'Blog'],
-    ['faq.html',          'FAQ'],
+    ['/packages.html',     'Packages'],
+    ['/how-it-works.html', 'How It Works'],
+    ['/about.html',        'About'],
+    ['/blog.html',         'Blog'],
+    ['/faq.html',          'FAQ'],
   ];
 
   const SERVICE_LINKS = [
-    ['automation.html',             'Marketing Automation'],
-    ['email-marketing.html',        'Email Marketing'],
-    ['social-media-marketing.html', 'Social Media Ads'],
-    ['airtable.html',               'Airtable'],
-    ['softr.html',                  'Softr'],
-    ['bubble.html',                 'Bubble'],
-    ['ai-agents.html',              'AI Agents'],
+    ['/automation.html',             'Marketing Automation'],
+    ['/email-marketing.html',        'Email Marketing'],
+    ['/social-media-marketing.html', 'Social Media Ads'],
+    ['/airtable.html',               'Airtable'],
+    ['/softr.html',                  'Softr'],
+    ['/bubble.html',                 'Bubble'],
+    ['/ai-agents.html',              'AI Agents'],
   ];
 
   const NEWSLETTER_URL = 'https://martech.fillout.com/t/czZuj8ybkMus';
@@ -48,7 +48,7 @@
     <g>
       <path fill="#fe6930" d="M232.3,39.1c15.3,0,27.7,12.4,27.7,27.7v13.8c0,11.8-7.9,21.8-19,25.8-2.5.9-4.8,2.5-6.6,4.6l-14,16.2-12-13.8c-3-3.5-7.5-5.5-12.1-5.5h-2.7c-1.7,0-3.1,1.4-3.1,3.1v6.1c0,1.7,1.4,3.1,3.1,3.1h2.7c1.1,0,2.1.5,2.9,1.3l12.1,14c2.3,2.7,5.6,4.2,9.1,4.2s6.8-1.5,9.1-4.2l14.1-16.4c.4-.5,1-.9,1.5-1.1,16.2-5.5,27.1-20.7,27.1-37.9v-13.3c0-22.1-17.9-40-40-40h-62.9c-5.2,0-10.2,1-14.7,2.8-1.4.5-1.3,2.4.1,2.9,4.6,1.4,9.3,3.3,13.2,5.8s1.9.9,2.9.9h61.4Z"/>
       <path fill="#fff" d="M238.2,73.9c-.6-4.9-3-9.4-6.9-12.5-3.9-3.1-8.8-4.5-13.7-3.9-4.9.6-9.4,3-12.5,6.9-1.1,1.3-1.9,2.8-2.6,4.4-.3.7-.9,1.1-1.6,1.1h-18.5c-.4,0-.7-.2-.8-.6-5.3-16.8-21-29-39.5-29H42.9c-18.6,0-35,12.4-39.9,30.3-.7,2.6-.5,5.4.9,7.6s4.3,3.9,7.3,3.9h189.9c.7,0,1.3.4,1.6,1.1,1.2,2.8,3.1,5.4,5.6,7.3,3.3,2.6,7.4,4,11.5,4s2.2,0,3.3-.3c3.1-.5,6-1.8,8.4-3.8,5.1-4.2,7.5-10.3,6.8-16.6ZM17.5,69.9c-.6,0-1-.7-.8-1.2,4.9-9.7,14.9-16.1,26.1-16.1h99.3c11.4,0,21.3,6.6,26.1,16.1.3.6-.1,1.2-.8,1.2H17.5ZM224.7,80c-1.1,1.3-2.6,2.2-4.2,2.4-1.7.2-3.3-.3-4.7-1.3-1.3-1.1-2.2-2.6-2.4-4.2-.2-1.7.3-3.3,1.3-4.7,1.1-1.3,2.6-2.2,4.2-2.4.2,0,.5,0,.7,0,1.4,0,2.8.5,3.9,1.4,1.3,1.1,2.2,2.6,2.4,4.2s-.3,3.3-1.3,4.7Z"/>
-      <path fill="#fff" d="M171.3,116.5c0,16.1-13.1,29.2-29.2,29.2h-17c-4.9,0-9.6,2.1-12.8,5.9l-17.6,20.2-17.5-20.2c-3.2-3.7-7.9-5.8-12.8-5.8h-21.6c-14.5,0-26.6-10.7-28.8-24.6,0-.5.3-1,.8-1h67.6c.7,0,1.3.4,1.6,1.1,2.9,6.8,9.6,11.4,17.1,11.4s5.6-.6,8.3-1.9c6.1-2.9,10.1-9.2,10.3-15.9.4-11.6-9.6-20.5-20.7-19.2-6.9.8-12.5,5.3-15,11.3-.3.7-.9,1.1-1.6,1.1H10c-4.8,0-8.6,3.9-8.6,8.6,0,22.9,18.6,41.5,41.4,41.5h21.6c1.3,0,2.6.6,3.5,1.6l17.5,20.2c2.3,2.7,5.8,4.3,9.3,4.3h0c3.6,0,7-1.6,9.3-4.3l17.5-20.2c.9-1,2.2-1.6,3.5-1.6h17c22.9,0,41.4-18.6,41.4-41.4v-19c0-1.7-1.4-3.1-3.1-3.1h-6.1c-1.7,0-3.1,1.4-3.1,3.1v19ZM100.5,107.7c.2,0,.5,0,.7,0,3.2,0,5.9,2.4,6.3,5.6.4,3.5-2.1,6.6-5.6,7-1.7.2-3.3-.3-4.7-1.3s-2.2-2.6-2.4-4.2c-.4-3.5,2.1-6.6,5.6-7Z"/>
+      <path fill="#fff" d="M171.3,116.5c0,16.1-13.1,29.2-29.2,29.2h-17c-4.9,0-9.6,2.1-12.8,5.9l-17.6,20.2-17.5-20.2c-3.2-3.7-7.9-5.8-12.8-5.8h-21.6c-14.5,0-26.6-10.7-28.8-24.6,0-.5.3-1,.8-1h67.6c.7,0,1.3.4,1.6,1.1,2.9,6.8,9.6,11.4,17.1,11.4s5.6-.6,8.3-1.9c6.1-2.9,10.1-9.2,10.3-15.9.4-11.6-9.6-20.5-20.7-19.2-6.9.8-12.5,5.3-15,11.3-.3.7-.9,1.1-1.6,1.1H10c-4.8,0-8.6,3.9-8.6,8.6,0,22.9,18.6,41.5,41.4,41.5h21.6c1.3,0,2.6.6,3.5,1.6l17.5,20.2c2.3,2.7,5.8,4.3,9.3,4.3h0c3.6,0,7-1.6,9.3-4.3l17.5-20.2c.9-1,2.2-1.6,3.5-1.6h17c22.9,0,41.4-18.6,41.4-41.4v-19c0-1.7-1.4-3.1-3.1-3.1h-6.1c-1.7,0-3.1,1.4-3.1,3.1v19ZM100.5,107.7c.2,0,.5,0,.7,0,3.2,0,5.9,2.4,6.3,5.6.4,3.5-2.1,6.6-5.6,7-1.7.2-3.3-.3-4.7-1.3s-2.2-2.6-2.4-4.2c-.4-3.5,2.1,6.6,5.6-7Z"/>
     </g>
   </svg>`;
 
@@ -61,11 +61,11 @@
   /* ── Build Nav ── */
   function buildNav() {
     const desktopLinks = NAV_LINKS.map(([href, label]) =>
-      `<a href="${href}" class="${page === href ? 'active' : ''}">${label}</a>`
+      `<a href="${href}" class="${page === href.split('/').pop() ? 'active' : ''}">${label}</a>`
     ).join('');
 
     const drawerLinks = NAV_LINKS.map(([href, label]) =>
-      `<a href="${href}" class="${page === href ? 'active' : ''}">${label}</a>`
+      `<a href="${href}" class="${page === href.split('/').pop() ? 'active' : ''}">${label}</a>`
     ).join('');
 
     const drawerSvcLinks = SERVICE_LINKS.map(([href, label]) =>
@@ -75,9 +75,9 @@
     return `
     <nav class="nav" id="site-nav">
       <div class="nav__inner">
-        <a href="index.html" class="nav__logo">${LOGO_SVG}</a>
+        <a href="/index.html" class="nav__logo">${LOGO_SVG}</a>
         <div class="nav__links">${desktopLinks}</div>
-        <a href="contact.html" class="btn btn-primary nav__cta-desk">Book a free call</a>
+        <a href="/contact.html" class="btn btn-primary nav__cta-desk">Book a free call</a>
         <button class="nav__hamburger" id="nav-hamburger" aria-label="Open menu">
           <span></span><span></span><span></span>
         </button>
@@ -87,7 +87,7 @@
         ${drawerLinks}
         <div class="nav__drawer__label">Services</div>
         ${drawerSvcLinks}
-        <a href="contact.html" class="drawer-cta">Book a free call →</a>
+        <a href="/contact.html" class="drawer-cta">Book a free call →</a>
       </div>
     </nav>`;
   }
@@ -116,9 +116,9 @@
   /* ── Build Footer ── */
   function buildFooter() {
     const mainLinks = [
-      ['index.html','Home'],['packages.html','Packages'],
-      ['how-it-works.html','How It Works'],['about.html','About'],
-      ['blog.html','Blog'],['faq.html','FAQ'],['contact.html','Contact'],
+      ['/index.html','Home'],['/packages.html','Packages'],
+      ['/how-it-works.html','How It Works'],['/about.html','About'],
+      ['/blog.html','Blog'],['/faq.html','FAQ'],['/contact.html','Contact'],
     ].map(([href,label]) => `<li><a href="${href}">${label}</a></li>`).join('');
 
     const svcLinks = SERVICE_LINKS
@@ -129,7 +129,7 @@
       <div class="container">
         <div class="footer__inner">
           <div>
-            <a href="index.html" class="footer__logo">${ICON_SVG}</a>
+            <a href="/index.html" class="footer__logo">${ICON_SVG}</a>
             <p class="footer__tagline">Marketing automation and technology for small business. Dover, NH — serving businesses across the US.</p>
           </div>
           <div>
