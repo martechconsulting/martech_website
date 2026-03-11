@@ -3,7 +3,7 @@ title: "Making Sense of Martech: Why Your SMB Needs a Martech Strategy"
 slug: "making-sense-of-martech-why-your-smb-needs-a-martech-strategy"
 date: "2026-03-11"
 author: "Martech Consulting"
-category: "Nonprofit"
+category: "Strategy"
 tags: ["Martech", "Marketing Technology", "Automation", "CRM", "Email Marketing", "Social Media"]
 excerpt: "Marketing tools are everywhere. Making them work together? That's where things get complicated, and that's why the term \"Martech,\" short for marketing..."
 canonical_url: "https://martechconsulting.io/blog/making-sense-of-martech-why-your-smb-needs-a-martech-strategy/"
