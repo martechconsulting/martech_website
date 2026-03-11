@@ -7,6 +7,7 @@
     ['packages.html',     'Packages'],
     ['how-it-works.html', 'How It Works'],
     ['about.html',        'About'],
+    ['blog.html',         'Blog'],
     ['faq.html',          'FAQ'],
   ];
 
@@ -117,7 +118,7 @@
     const mainLinks = [
       ['index.html','Home'],['packages.html','Packages'],
       ['how-it-works.html','How It Works'],['about.html','About'],
-      ['faq.html','FAQ'],['contact.html','Contact'],
+      ['blog.html','Blog'],['faq.html','FAQ'],['contact.html','Contact'],
     ].map(([href,label]) => `<li><a href="${href}">${label}</a></li>`).join('');
 
     const svcLinks = SERVICE_LINKS
