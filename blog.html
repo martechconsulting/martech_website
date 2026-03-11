@@ -34,19 +34,7 @@
       "@type": "Organization",
       "name": "Martech Consulting",
       "url": "https://martechconsulting.io"
-    },
-    "blogPost": [
-      {
-        "@type": "BlogPosting",
-        "headline": "The Trust Gap in Home Services Marketing: Why the Fortune Is in the Follow-Up",
-        "url": "https://martechconsulting.io/blog-trust-gap-home-services-marketing.html",
-        "datePublished": "2026-03-11",
-        "author": {
-          "@type": "Person",
-          "name": "Keith Phillips"
-        }
-      }
-    ]
+    }
   }
   </script>
 
@@ -72,9 +60,8 @@
   }
   </script>
 
-  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="/style.css"/>
   <style>
-    /* ── Blog index–specific styles ── */
     .blog-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -141,14 +128,8 @@
       align-items: center;
       margin-bottom: .85rem;
     }
-    .blog-card__date {
-      font-size: .78rem;
-      color: var(--muted);
-    }
-    .blog-card__read {
-      font-size: .78rem;
-      color: var(--muted);
-    }
+    .blog-card__date { font-size: .78rem; color: var(--muted); }
+    .blog-card__read { font-size: .78rem; color: var(--muted); }
     .blog-card__title {
       font-family: var(--ff-head);
       font-size: 1.1rem;
@@ -171,116 +152,64 @@
       border-top: 1px solid var(--rule);
       padding-top: 1rem;
     }
-    .blog-card__author {
-      display: flex;
-      align-items: center;
-      gap: .55rem;
-    }
+    .blog-card__author { display: flex; align-items: center; gap: .55rem; }
     .blog-card__author-avatar {
-      width: 1.75rem;
-      height: 1.75rem;
+      width: 1.75rem; height: 1.75rem;
       border-radius: 50%;
       background: var(--orange);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--ff-head);
-      font-size: .6rem;
-      font-weight: 700;
-      color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--ff-head); font-size: .6rem; font-weight: 700; color: #fff;
     }
-    .blog-card__author-name {
-      font-size: .8rem;
-      color: var(--mid);
-      font-weight: 500;
-    }
-    .blog-card__arrow {
-      font-size: .82rem;
-      color: var(--orange);
-      font-weight: 500;
-    }
+    .blog-card__author-name { font-size: .8rem; color: var(--mid); font-weight: 500; }
+    .blog-card__arrow { font-size: .82rem; color: var(--orange); font-weight: 500; }
 
-    /* Featured post (first card, full width) */
-    .blog-card--featured {
-      grid-column: 1 / -1;
-      flex-direction: row;
-    }
-    .blog-card--featured .blog-card__thumb {
-      width: 380px;
-      height: auto;
-      flex-shrink: 0;
-      border-radius: 0;
-    }
-    .blog-card--featured .blog-card__title {
-      font-size: 1.35rem;
-    }
+    .blog-card--featured { grid-column: 1 / -1; flex-direction: row; }
+    .blog-card--featured .blog-card__thumb { width: 380px; height: auto; flex-shrink: 0; border-radius: 0; }
+    .blog-card--featured .blog-card__title { font-size: 1.35rem; }
     @media (max-width: 760px) {
-      .blog-card--featured {
-        flex-direction: column;
-      }
-      .blog-card--featured .blog-card__thumb {
-        width: 100%;
-        height: 180px;
-      }
+      .blog-card--featured { flex-direction: column; }
+      .blog-card--featured .blog-card__thumb { width: 100%; height: 180px; }
     }
 
-    /* Topics filter bar */
-    .topic-bar {
-      display: flex;
-      gap: .6rem;
-      flex-wrap: wrap;
-      margin-bottom: 2.5rem;
-    }
+    .topic-bar { display: flex; gap: .6rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
     .topic-pill {
-      font-family: var(--ff-head);
-      font-size: .78rem;
-      font-weight: 500;
-      padding: .4rem 1rem;
-      border-radius: 99px;
-      border: 1px solid var(--rule);
-      background: #fff;
-      color: var(--mid);
-      cursor: pointer;
-      text-decoration: none;
-      transition: background .15s, border-color .15s, color .15s;
+      font-family: var(--ff-head); font-size: .78rem; font-weight: 500;
+      padding: .4rem 1rem; border-radius: 99px;
+      border: 1px solid var(--rule); background: #fff; color: var(--mid);
+      cursor: pointer; transition: background .15s, border-color .15s, color .15s;
     }
-    .topic-pill:hover,
-    .topic-pill.active {
-      background: var(--orange);
-      border-color: var(--orange);
-      color: #fff;
+    .topic-pill:hover, .topic-pill.active {
+      background: var(--orange); border-color: var(--orange); color: #fff;
     }
 
-    /* Newsletter inline */
+    .blog-pagination {
+      display: flex; align-items: center; justify-content: center;
+      gap: .5rem; margin-top: 3rem; flex-wrap: wrap;
+    }
+    .blog-pagination__btn {
+      font-family: var(--ff-head); font-size: .82rem; font-weight: 500;
+      padding: .5rem 1.1rem; border-radius: 7px;
+      border: 1px solid var(--rule); background: #fff; color: var(--mid);
+      cursor: pointer; transition: all .15s;
+    }
+    .blog-pagination__btn:hover { border-color: var(--orange); color: var(--orange); }
+    .blog-pagination__btn.active { background: var(--orange); border-color: var(--orange); color: #fff; }
+    .blog-pagination__btn:disabled { opacity: .35; cursor: default; pointer-events: none; }
+    .blog-pagination__info { font-size: .8rem; color: var(--muted); padding: 0 .25rem; }
+
+    .blog-empty {
+      grid-column: 1 / -1; text-align: center;
+      padding: 4rem 2rem; color: var(--muted); font-size: .95rem;
+    }
+
     .blog-nl {
-      background: var(--navy);
-      border-radius: 12px;
-      padding: 2.5rem;
-      display: flex;
-      gap: 2rem;
-      align-items: center;
-      justify-content: space-between;
-      margin: 3rem 0;
+      background: var(--navy); border-radius: 12px; padding: 2.5rem;
+      display: flex; gap: 2rem; align-items: center; justify-content: space-between; margin: 3rem 0;
     }
-    @media (max-width: 640px) {
-      .blog-nl { flex-direction: column; gap: 1.5rem; }
-    }
-    .blog-nl__text h3 {
-      font-family: var(--ff-head);
-      font-size: 1.2rem;
-      font-weight: 500;
-      color: #fff;
-      margin-bottom: .4rem;
-    }
-    .blog-nl__text p {
-      font-size: .87rem;
-      color: rgba(255,255,255,.55);
-      line-height: 1.6;
-      margin: 0;
-    }
-    .blog-nl__cta {
-      flex-shrink: 0;
-    }
+    @media (max-width: 640px) { .blog-nl { flex-direction: column; gap: 1.5rem; } }
+    .blog-nl__text h3 { font-family: var(--ff-head); font-size: 1.2rem; font-weight: 500; color: #fff; margin-bottom: .4rem; }
+    .blog-nl__text p { font-size: .87rem; color: rgba(255,255,255,.55); line-height: 1.6; margin: 0; }
+    .blog-nl__cta { flex-shrink: 0; }
   </style>
 </head>
 <body style="padding-top:62px;">
@@ -288,7 +217,7 @@
 <!-- ── Hero ── -->
 <section class="service-hero">
   <div class="container" style="position:relative;z-index:2;">
-    <nav class="breadcrumb"><a href="index.html">Home</a><span>/</span>Blog</nav>
+    <nav class="breadcrumb"><a href="/index.html">Home</a><span>/</span>Blog</nav>
     <div class="eyebrow">The Martech Blog</div>
     <h1>Marketing automation and tech,<br>explained by <em>people who build it.</em></h1>
     <p class="service-hero__sub">No fluff, no vendor-speak. Practical guides on the systems, strategies, and tools that actually move the needle for small business — written by Jonathan and Keith based on real client work.</p>
@@ -300,140 +229,23 @@
   <div class="container">
 
     <!-- Topic filter -->
-    <div class="topic-bar" role="navigation" aria-label="Filter by topic">
-      <a href="blog.html" class="topic-pill active">All Posts</a>
-      <a href="blog.html" class="topic-pill">Marketing Automation</a>
-      <a href="blog.html" class="topic-pill">Email Marketing</a>
-      <a href="blog.html" class="topic-pill">Paid Social</a>
-      <a href="blog.html" class="topic-pill">No-Code</a>
-      <a href="blog.html" class="topic-pill">CRM</a>
+    <div class="topic-bar" role="navigation" aria-label="Filter by topic" id="topic-bar">
+      <button class="topic-pill active" data-filter="all">All Posts</button>
+      <button class="topic-pill" data-filter="Marketing Automation">Marketing Automation</button>
+      <button class="topic-pill" data-filter="Email Marketing">Email Marketing</button>
+      <button class="topic-pill" data-filter="Paid Social">Paid Social</button>
+      <button class="topic-pill" data-filter="No-Code">No-Code</button>
+      <button class="topic-pill" data-filter="CRM">CRM</button>
     </div>
 
-    <!-- Post grid -->
-    <div class="blog-grid">
+    <!-- Post grid — cards injected by build.js -->
+    <div class="blog-grid" id="blog-grid">
       <!-- AUTO-GENERATED-POSTS-START -->
-
-      <!-- AUTO-GENERATED: 5-airtable-use-cases-to-streamline-your-small-business-marketing -->
-      <a href="/blog/5-airtable-use-cases-to-streamline-your-small-business-marketing.html" class="blog-card blog-card--featured reveal">
-        <div class="blog-card__thumb">
-          <div class="blog-card__thumb-pattern"></div>
-          <span class="blog-card__thumb-icon">⚡</span>
-          <span class="blog-card__thumb-badge">Automation</span>
-        </div>
-        <div class="blog-card__body">
-          <div class="blog-card__meta">
-            <span class="blog-card__date">March 11, 2026</span>
-            <span class="blog-card__read">5 min read</span>
-          </div>
-          <div class="blog-card__title">5 Airtable Use Cases to Streamline Your Small Business Marketing</div>
-          <p class="blog-card__excerpt">Anyone who's heard of Airtable is likely familiar with its nickname: "the spreadsheet on steroids." Sounds impressive (for those of us who like a spreadsheet)</p>
-          <div class="blog-card__footer">
-            <div class="blog-card__author">
-              <div class="blog-card__author-avatar">MC</div>
-              <span class="blog-card__author-name">Martech Consulting</span>
-            </div>
-            <span class="blog-card__arrow">Read article →</span>
-          </div>
-        </div>
-      </a>
-
-      <!-- AUTO-GENERATED: ai-in-martech-and-what-it-means-for-small-business-marketing -->
-      <a href="/blog/ai-in-martech-and-what-it-means-for-small-business-marketing.html" class="blog-card reveal">
-        <div class="blog-card__thumb">
-          <div class="blog-card__thumb-pattern"></div>
-          <span class="blog-card__thumb-icon">⚡</span>
-          <span class="blog-card__thumb-badge">Automation</span>
-        </div>
-        <div class="blog-card__body">
-          <div class="blog-card__meta">
-            <span class="blog-card__date">March 11, 2026</span>
-            <span class="blog-card__read">4 min read</span>
-          </div>
-          <div class="blog-card__title">AI in MarTech and What it Means for Small Business Marketing</div>
-          <p class="blog-card__excerpt">Marie Lu, sci-fi author whose young adult book Warcross graced the New York Times bestseller list is credited with saying, "Everything's science fiction until.</p>
-          <div class="blog-card__footer">
-            <div class="blog-card__author">
-              <div class="blog-card__author-avatar">MC</div>
-              <span class="blog-card__author-name">Martech Consulting</span>
-            </div>
-            <span class="blog-card__arrow">Read article →</span>
-          </div>
-        </div>
-      </a>
-
-      <!-- AUTO-GENERATED: making-sense-of-martech-why-your-smb-needs-a-martech-strategy -->
-      <a href="/blog/making-sense-of-martech-why-your-smb-needs-a-martech-strategy.html" class="blog-card reveal">
-        <div class="blog-card__thumb">
-          <div class="blog-card__thumb-pattern"></div>
-          <span class="blog-card__thumb-icon">📝</span>
-          <span class="blog-card__thumb-badge">Nonprofit</span>
-        </div>
-        <div class="blog-card__body">
-          <div class="blog-card__meta">
-            <span class="blog-card__date">March 11, 2026</span>
-            <span class="blog-card__read">2 min read</span>
-          </div>
-          <div class="blog-card__title">Making Sense of Martech: Why Your SMB Needs a Martech Strategy</div>
-          <p class="blog-card__excerpt">Marketing tools are everywhere. Making them work together? That's where things get complicated, and that's why the term "Martech," short for marketing...</p>
-          <div class="blog-card__footer">
-            <div class="blog-card__author">
-              <div class="blog-card__author-avatar">MC</div>
-              <span class="blog-card__author-name">Martech Consulting</span>
-            </div>
-            <span class="blog-card__arrow">Read article →</span>
-          </div>
-        </div>
-      </a>
-
-      <!-- AUTO-GENERATED: unlocking-custom-apps-with-bubble-a-no-code-solution-for-business-success -->
-      <a href="/blog/unlocking-custom-apps-with-bubble-a-no-code-solution-for-business-success.html" class="blog-card reveal">
-        <div class="blog-card__thumb">
-          <div class="blog-card__thumb-pattern"></div>
-          <span class="blog-card__thumb-icon">⚡</span>
-          <span class="blog-card__thumb-badge">Automation</span>
-        </div>
-        <div class="blog-card__body">
-          <div class="blog-card__meta">
-            <span class="blog-card__date">March 11, 2026</span>
-            <span class="blog-card__read">24 min read</span>
-          </div>
-          <div class="blog-card__title">Unlocking Custom Apps with Bubble: A No-Code Solution for Business Success</div>
-          <p class="blog-card__excerpt">In today's digital economy, businesses of all sizes are finding that off-the-shelf software often can't meet their exact needs. Whether you're a small business.</p>
-          <div class="blog-card__footer">
-            <div class="blog-card__author">
-              <div class="blog-card__author-avatar">MC</div>
-              <span class="blog-card__author-name">Martech Consulting</span>
-            </div>
-            <span class="blog-card__arrow">Read article →</span>
-          </div>
-        </div>
-      </a>
-
-      <!-- AUTO-GENERATED: unlocking-growth-how-email-marketing-automation-copy-increased-roi-for-smbs -->
-      <a href="/blog/unlocking-growth-how-email-marketing-automation-copy-increased-roi-for-smbs.html" class="blog-card reveal">
-        <div class="blog-card__thumb">
-          <div class="blog-card__thumb-pattern"></div>
-          <span class="blog-card__thumb-icon">⚡</span>
-          <span class="blog-card__thumb-badge">Automation</span>
-        </div>
-        <div class="blog-card__body">
-          <div class="blog-card__meta">
-            <span class="blog-card__date">March 11, 2026</span>
-            <span class="blog-card__read">3 min read</span>
-          </div>
-          <div class="blog-card__title">Unlocking Growth: How Email Marketing + Automation + Copy = Increased ROI for SMBs</div>
-          <p class="blog-card__excerpt">Social platforms come and go (looking at you, MySpace!), but email remains one of the most powerful tools in a marketer's toolkit. For small and midsize...</p>
-          <div class="blog-card__footer">
-            <div class="blog-card__author">
-              <div class="blog-card__author-avatar">MC</div>
-              <span class="blog-card__author-name">Martech Consulting</span>
-            </div>
-            <span class="blog-card__arrow">Read article →</span>
-          </div>
-        </div>
-      </a>
       <!-- AUTO-GENERATED-POSTS-END -->
     </div>
+
+    <!-- Pagination controls rendered by JS -->
+    <div class="blog-pagination" id="blog-pagination"></div>
 
     <!-- Newsletter inline -->
     <div class="blog-nl reveal">
@@ -457,15 +269,15 @@
       <h2 class="section-title" style="color:var(--ink);margin-top:.6rem;">The systems behind<br><em style="color:var(--orange);">everything we write about.</em></h2>
     </div>
     <div class="related-grid">
-      <a href="automation.html" class="related-card reveal">
+      <a href="/automation.html" class="related-card reveal">
         <div class="related-card__name">Marketing Automation</div>
         <div class="related-card__desc">CRM setup, follow-up sequences, and workflow automation. We build what we write about.</div>
       </a>
-      <a href="email-marketing.html" class="related-card reveal">
+      <a href="/email-marketing.html" class="related-card reveal">
         <div class="related-card__name">Email Marketing</div>
         <div class="related-card__desc">Deliverability audits, campaigns, and automated sequences that actually land in inboxes.</div>
       </a>
-      <a href="social-media-marketing.html" class="related-card reveal">
+      <a href="/social-media-marketing.html" class="related-card reveal">
         <div class="related-card__name">Facebook &amp; Instagram Ads</div>
         <div class="related-card__desc">Done-for-you ad management. Strategy, creative, targeting, and monthly reporting.</div>
       </a>
@@ -479,13 +291,127 @@
     <h2 class="section-title cta-band__headline">Want this applied<br>to <em>your business?</em></h2>
     <p class="cta-band__sub">Book a free call with Jonathan or Keith. We'll look at your current setup and tell you what would actually move the needle — with a price before you leave.</p>
     <div class="cta-band__btns">
-      <a href="contact.html" class="btn btn-primary btn-lg">Book a free call →</a>
-      <a href="packages.html" class="btn btn-ghost btn-lg">See packages &amp; pricing</a>
+      <a href="/contact.html" class="btn btn-primary btn-lg">Book a free call →</a>
+      <a href="/packages.html" class="btn btn-ghost btn-lg">See packages &amp; pricing</a>
     </div>
     <p class="cta-band__note">No commitment. No hard sell.</p>
   </div>
 </section>
 
-<script src="nav.js"></script>
+<script src="/nav.js"></script>
+
+<script>
+(function () {
+  const POSTS_PER_PAGE = 9;
+  const grid       = document.getElementById('blog-grid');
+  const pagination = document.getElementById('blog-pagination');
+  const topicBar   = document.getElementById('topic-bar');
+
+  // Collect only real element cards (skip comment nodes)
+  const allCards = Array.from(grid.childNodes).filter(function(n) {
+    return n.nodeType === 1;
+  });
+
+  let activeFilter = 'all';
+  let currentPage  = 1;
+
+  function getFiltered() {
+    if (activeFilter === 'all') return allCards;
+    return allCards.filter(function(card) {
+      var badge = card.querySelector('.blog-card__thumb-badge');
+      return badge && badge.textContent.trim() === activeFilter;
+    });
+  }
+
+  function render() {
+    var filtered   = getFiltered();
+    var totalPages = Math.max(1, Math.ceil(filtered.length / POSTS_PER_PAGE));
+    if (currentPage > totalPages) currentPage = totalPages;
+
+    var start = (currentPage - 1) * POSTS_PER_PAGE;
+    var end   = start + POSTS_PER_PAGE;
+
+    // Hide all cards
+    allCards.forEach(function(c) {
+      c.style.display = 'none';
+      c.classList.remove('blog-card--featured');
+    });
+
+    // Remove old empty state
+    var old = grid.querySelector('.blog-empty');
+    if (old) old.remove();
+
+    var pageCards = filtered.slice(start, end);
+
+    if (pageCards.length === 0) {
+      var empty = document.createElement('div');
+      empty.className = 'blog-empty';
+      empty.textContent = 'No posts in this category yet — check back soon.';
+      grid.appendChild(empty);
+    } else {
+      pageCards.forEach(function(card, i) {
+        card.style.display = '';
+        // Feature first card only on page 1 of "all posts"
+        if (i === 0 && currentPage === 1 && activeFilter === 'all') {
+          card.classList.add('blog-card--featured');
+        }
+      });
+    }
+
+    renderPagination(totalPages);
+  }
+
+  function renderPagination(totalPages) {
+    pagination.innerHTML = '';
+    if (totalPages <= 1) return;
+
+    function makeBtn(label, page, disabled, active) {
+      var btn = document.createElement('button');
+      btn.className = 'blog-pagination__btn' + (active ? ' active' : '');
+      btn.textContent = label;
+      btn.disabled = disabled;
+      if (!disabled) {
+        btn.addEventListener('click', function() {
+          currentPage = page;
+          render();
+          window.scrollTo({ top: grid.offsetTop - 120, behavior: 'smooth' });
+        });
+      }
+      return btn;
+    }
+
+    pagination.appendChild(makeBtn('← Prev', currentPage - 1, currentPage === 1, false));
+
+    var startP = Math.max(1, currentPage - 2);
+    var endP   = Math.min(totalPages, startP + 4);
+    if (endP - startP < 4) startP = Math.max(1, endP - 4);
+
+    for (var p = startP; p <= endP; p++) {
+      pagination.appendChild(makeBtn(p, p, false, p === currentPage));
+    }
+
+    var info = document.createElement('span');
+    info.className = 'blog-pagination__info';
+    info.textContent = 'Page ' + currentPage + ' of ' + totalPages;
+    pagination.appendChild(info);
+
+    pagination.appendChild(makeBtn('Next →', currentPage + 1, currentPage === totalPages, false));
+  }
+
+  // Filter clicks
+  topicBar.addEventListener('click', function(e) {
+    var pill = e.target.closest('.topic-pill');
+    if (!pill) return;
+    topicBar.querySelectorAll('.topic-pill').forEach(function(p) { p.classList.remove('active'); });
+    pill.classList.add('active');
+    activeFilter = pill.dataset.filter;
+    currentPage  = 1;
+    render();
+  });
+
+  render();
+})();
+</script>
+
 </body>
 </html>
