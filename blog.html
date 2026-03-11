@@ -197,11 +197,6 @@
     .blog-pagination__btn:disabled { opacity: .35; cursor: default; pointer-events: none; }
     .blog-pagination__info { font-size: .8rem; color: var(--muted); padding: 0 .25rem; }
 
-    .blog-empty {
-      grid-column: 1 / -1; text-align: center;
-      padding: 4rem 2rem; color: var(--muted); font-size: .95rem;
-    }
-
     .blog-nl {
       background: var(--navy); border-radius: 12px; padding: 2.5rem;
       display: flex; gap: 2rem; align-items: center; justify-content: space-between; margin: 3rem 0;
@@ -228,14 +223,9 @@
 <section class="bg-off">
   <div class="container">
 
-    <!-- Topic filter -->
+    <!-- Topic filter — pills are built dynamically from actual post categories -->
     <div class="topic-bar" role="navigation" aria-label="Filter by topic" id="topic-bar">
       <button class="topic-pill active" data-filter="all">All Posts</button>
-      <button class="topic-pill" data-filter="Marketing Automation">Marketing Automation</button>
-      <button class="topic-pill" data-filter="Email Marketing">Email Marketing</button>
-      <button class="topic-pill" data-filter="Paid Social">Paid Social</button>
-      <button class="topic-pill" data-filter="No-Code">No-Code</button>
-      <button class="topic-pill" data-filter="CRM">CRM</button>
     </div>
 
     <!-- Post grid — cards injected by build.js -->
@@ -422,19 +412,35 @@
 
 <script>
 (function () {
-  const POSTS_PER_PAGE = 9;
-  const grid       = document.getElementById('blog-grid');
-  const pagination = document.getElementById('blog-pagination');
-  const topicBar   = document.getElementById('topic-bar');
+  var POSTS_PER_PAGE = 9;
+  var grid       = document.getElementById('blog-grid');
+  var pagination = document.getElementById('blog-pagination');
+  var topicBar   = document.getElementById('topic-bar');
 
-  // Collect only real element cards (skip comment nodes)
-  const allCards = Array.from(grid.childNodes).filter(function(n) {
-    return n.nodeType === 1;
+  // Grab all generated post cards
+  var allCards = Array.from(grid.querySelectorAll('a.blog-card'));
+
+  var activeFilter = 'all';
+  var currentPage  = 1;
+
+  // ── Build filter pills dynamically from actual post categories ──
+  var categories = [];
+  allCards.forEach(function(card) {
+    var badge = card.querySelector('.blog-card__thumb-badge');
+    if (badge) {
+      var cat = badge.textContent.trim();
+      if (cat && categories.indexOf(cat) === -1) categories.push(cat);
+    }
+  });
+  categories.forEach(function(cat) {
+    var btn = document.createElement('button');
+    btn.className = 'topic-pill';
+    btn.dataset.filter = cat;
+    btn.textContent = cat;
+    topicBar.appendChild(btn);
   });
 
-  let activeFilter = 'all';
-  let currentPage  = 1;
-
+  // ── Filter ──
   function getFiltered() {
     if (activeFilter === 'all') return allCards;
     return allCards.filter(function(card) {
@@ -443,6 +449,7 @@
     });
   }
 
+  // ── Render ──
   function render() {
     var filtered   = getFiltered();
     var totalPages = Math.max(1, Math.ceil(filtered.length / POSTS_PER_PAGE));
@@ -451,36 +458,22 @@
     var start = (currentPage - 1) * POSTS_PER_PAGE;
     var end   = start + POSTS_PER_PAGE;
 
-    // Hide all cards
     allCards.forEach(function(c) {
       c.style.display = 'none';
       c.classList.remove('blog-card--featured');
     });
 
-    // Remove old empty state
-    var old = grid.querySelector('.blog-empty');
-    if (old) old.remove();
-
-    var pageCards = filtered.slice(start, end);
-
-    if (pageCards.length === 0) {
-      var empty = document.createElement('div');
-      empty.className = 'blog-empty';
-      empty.textContent = 'No posts in this category yet — check back soon.';
-      grid.appendChild(empty);
-    } else {
-      pageCards.forEach(function(card, i) {
-        card.style.display = '';
-        // Feature first card only on page 1 of "all posts"
-        if (i === 0 && currentPage === 1 && activeFilter === 'all') {
-          card.classList.add('blog-card--featured');
-        }
-      });
-    }
+    filtered.slice(start, end).forEach(function(card, i) {
+      card.style.display = '';
+      if (i === 0 && currentPage === 1 && activeFilter === 'all') {
+        card.classList.add('blog-card--featured');
+      }
+    });
 
     renderPagination(totalPages);
   }
 
+  // ── Pagination ──
   function renderPagination(totalPages) {
     pagination.innerHTML = '';
     if (totalPages <= 1) return;
@@ -505,7 +498,6 @@
     var startP = Math.max(1, currentPage - 2);
     var endP   = Math.min(totalPages, startP + 4);
     if (endP - startP < 4) startP = Math.max(1, endP - 4);
-
     for (var p = startP; p <= endP; p++) {
       pagination.appendChild(makeBtn(p, p, false, p === currentPage));
     }
@@ -518,7 +510,7 @@
     pagination.appendChild(makeBtn('Next →', currentPage + 1, currentPage === totalPages, false));
   }
 
-  // Filter clicks
+  // ── Filter pill clicks ──
   topicBar.addEventListener('click', function(e) {
     var pill = e.target.closest('.topic-pill');
     if (!pill) return;
