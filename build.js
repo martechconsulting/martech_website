@@ -28,22 +28,15 @@ const posts = postFiles.map(file => {
   const raw     = fs.readFileSync(path.join(POSTS_DIR, file), 'utf8');
   const { data, content } = matter(raw);
 
-  // Strip any <script> blocks from content before converting
-  // (schema JSON is already in frontmatter — we handle it in template)
   const cleanContent = content.replace(/<script[\s\S]*?<\/script>/gi, '').trim();
-
-  // Convert markdown to HTML
   const bodyHtml = marked.parse(cleanContent);
 
-  // Estimate read time (avg 200 wpm)
   const wordCount = cleanContent.split(/\s+/).length;
   const readTime  = Math.max(1, Math.round(wordCount / 200));
 
-  // Author initials for avatar
   const authorName = data.author || 'Martech Consulting';
   const initials = authorName.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
 
-  // Author display — map known authors
   const authorMap = {
     'Keith Phillips':          { initials: 'KP', role: 'Co-Founder & CMO · Keap Certified Partner' },
     'Jonathan Noury-Elliard':  { initials: 'JN', role: 'Co-Founder · Strategy & Technology' },
@@ -54,10 +47,8 @@ const posts = postFiles.map(file => {
   return { ...data, bodyHtml, readTime, authorInfo, file };
 });
 
-// Sort by date descending
 posts.sort((a, b) => new Date(b.date) - new Date(a.date));
 
-// ── Generate each post page ───────────────────────────────────────────────────
 posts.forEach(post => {
   const slug     = post.slug || post.file.replace('.md', '');
   const outFile  = path.join(OUTPUT_DIR, `${slug}.html`);
@@ -66,18 +57,12 @@ posts.forEach(post => {
   console.log(`✓ blog/${slug}.html`);
 });
 
-// ── Update blog index card list ───────────────────────────────────────────────
 updateBlogIndex(posts);
-
-// ── Update sitemap ────────────────────────────────────────────────────────────
 updateSitemap(posts);
 
 console.log(`\n✅ Built ${posts.length} post(s). Blog index and sitemap updated.`);
 
 
-// ═════════════════════════════════════════════════════════════════════════════
-// TEMPLATE: individual post page
-// ═════════════════════════════════════════════════════════════════════════════
 function buildPostPage(post, slug) {
   const {
     title, date, category, tags = [], excerpt, meta_description,
@@ -156,7 +141,7 @@ function buildPostPage(post, slug) {
   <script type="application/ld+json">${schemaJson}</script>
   <script type="application/ld+json">${breadcrumbSchema}</script>
 
-  <link rel="stylesheet" href="../../style.css"/>
+  <link rel="stylesheet" href="/style.css"/>
   <style>
     .post-hero{background:var(--navy);padding:5rem 0 3.5rem;position:relative;overflow:hidden;}
     .post-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 80% 50%,rgba(254,105,48,.13) 0%,transparent 70%);pointer-events:none;}
@@ -202,8 +187,8 @@ function buildPostPage(post, slug) {
 <header class="post-hero">
   <div class="container">
     <nav class="breadcrumb" style="margin-bottom:1.5rem;">
-      <a href="../../index.html">Home</a><span>/</span>
-      <a href="../../blog.html">Blog</a><span>/</span>
+      <a href="/index.html">Home</a><span>/</span>
+      <a href="/blog.html">Blog</a><span>/</span>
       ${title}
     </nav>
     <div class="post-meta">
@@ -236,7 +221,7 @@ function buildPostPage(post, slug) {
           <div>
             <div class="post-author-box__name">${author}</div>
             <div class="post-author-box__role">${authorInfo.role}</div>
-            <p class="post-author-box__bio">Martech Consulting was founded by Jonathan Noury-Elliard and Keith Phillips — a no-code technologist and a Keap Certified Partner who grew a business 300% through COVID by pivoting to marketing automation. <a href="../../about.html">Learn more about us →</a></p>
+            <p class="post-author-box__bio">Martech Consulting was founded by Jonathan Noury-Elliard and Keith Phillips — a no-code technologist and a Keap Certified Partner who grew a business 300% through COVID by pivoting to marketing automation. <a href="/about.html">Learn more about us →</a></p>
           </div>
         </div>
       </article>
@@ -244,19 +229,19 @@ function buildPostPage(post, slug) {
       <aside class="post-sidebar">
         <div class="sidebar-card">
           <div class="sidebar-card__label">Related services</div>
-          <a href="../../automation.html" class="sidebar-service-link">
+          <a href="/automation.html" class="sidebar-service-link">
             <div>
               <div class="sidebar-service-link__name">Marketing Automation</div>
               <div class="sidebar-service-link__tag">CRM · follow-up sequences · Keap</div>
             </div>
           </a>
-          <a href="../../airtable.html" class="sidebar-service-link">
+          <a href="/airtable.html" class="sidebar-service-link">
             <div>
               <div class="sidebar-service-link__name">Airtable</div>
               <div class="sidebar-service-link__tag">Custom bases · automations · interfaces</div>
             </div>
           </a>
-          <a href="../../email-marketing.html" class="sidebar-service-link">
+          <a href="/email-marketing.html" class="sidebar-service-link">
             <div>
               <div class="sidebar-service-link__name">Email Marketing</div>
               <div class="sidebar-service-link__tag">Deliverability · campaigns · sequences</div>
@@ -267,7 +252,7 @@ function buildPostPage(post, slug) {
         <div style="background:var(--navy);border-radius:10px;padding:1.5rem;">
           <div style="font-family:var(--ff-head);font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:.85rem;">Want this for your business?</div>
           <p style="font-size:.85rem;color:rgba(255,255,255,.6);line-height:1.65;margin-bottom:1.25rem;">Book a free call. We'll look at your setup and tell you exactly what would move the needle — with a price before you leave.</p>
-          <a href="../../contact.html" class="btn btn-primary" style="width:100%;justify-content:center;text-align:center;display:flex;">Book a free call →</a>
+          <a href="/contact.html" class="btn btn-primary" style="width:100%;justify-content:center;text-align:center;display:flex;">Book a free call →</a>
           <p style="font-size:.72rem;color:rgba(255,255,255,.3);text-align:center;margin-top:.75rem;">No commitment. No hard sell.</p>
         </div>
       </aside>
@@ -280,22 +265,19 @@ function buildPostPage(post, slug) {
     <h2 class="section-title cta-band__headline">Ready to put this<br>into <em>practice?</em></h2>
     <p class="cta-band__sub">Book a free call with Jonathan or Keith. We'll look at your current setup honestly and tell you what would actually help.</p>
     <div class="cta-band__btns">
-      <a href="../../contact.html" class="btn btn-primary btn-lg">Book a free call →</a>
-      <a href="../../packages.html" class="btn btn-ghost btn-lg">See packages &amp; pricing</a>
+      <a href="/contact.html" class="btn btn-primary btn-lg">Book a free call →</a>
+      <a href="/packages.html" class="btn btn-ghost btn-lg">See packages &amp; pricing</a>
     </div>
     <p class="cta-band__note">No commitment. No hard sell.</p>
   </div>
 </section>
 
-<script src="../../nav.js"></script>
+<script src="/nav.js"></script>
 </body>
 </html>`;
 }
 
 
-// ═════════════════════════════════════════════════════════════════════════════
-// UPDATE blog.html — inject generated cards into the grid
-// ═════════════════════════════════════════════════════════════════════════════
 function updateBlogIndex(posts) {
   if (!fs.existsSync(BLOG_INDEX)) {
     console.log('⚠️  blog.html not found — skipping index update');
@@ -313,7 +295,7 @@ function updateBlogIndex(posts) {
   const cards = posts.map((post, i) => {
     const slug  = post.slug || post.file.replace('.md', '');
     const icon  = categoryIcons[post.category] || '📝';
-    const href  = `blog/${slug}.html`;
+    const href  = `/blog/${slug}.html`;
     const displayDate = new Date(post.date).toLocaleDateString('en-US', {
       year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC'
     });
@@ -347,7 +329,6 @@ function updateBlogIndex(posts) {
 
   let indexHtml = fs.readFileSync(BLOG_INDEX, 'utf8');
 
-  // Replace everything between the AUTO-GENERATED markers
   const startMarker = '<!-- AUTO-GENERATED-POSTS-START -->';
   const endMarker   = '<!-- AUTO-GENERATED-POSTS-END -->';
 
@@ -364,9 +345,6 @@ function updateBlogIndex(posts) {
 }
 
 
-// ═════════════════════════════════════════════════════════════════════════════
-// UPDATE sitemap.xml — add new post URLs
-// ═════════════════════════════════════════════════════════════════════════════
 function updateSitemap(posts) {
   const sitemapPath = path.join(__dirname, 'sitemap.xml');
   if (!fs.existsSync(sitemapPath)) return;
