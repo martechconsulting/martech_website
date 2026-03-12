@@ -152,6 +152,15 @@
     document.body.insertAdjacentHTML('beforeend', buildNewsletterModal());
     document.body.insertAdjacentHTML('beforeend', buildFooter());
 
+// Inject favicon
+    var link = document.createElement('link');
+    link.rel = 'icon';
+    link.type = 'image/svg+xml';
+    link.href = '/favicon.svg';
+    document.head.appendChild(link);
+
+    document.body.insertAdjacentHTML('afterbegin', buildNav());
+    
     // Nav scroll
     const nav = document.getElementById('site-nav');
     window.addEventListener('scroll', function () {
