@@ -8,16 +8,49 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 <style>
-/* ── Page-specific overrides ── */
+/* ── Tooltips ── */
+.tip {
+  position: relative; display: inline-flex; align-items: center;
+  cursor: help; margin-left: .35rem; vertical-align: middle;
+}
+.tip__icon {
+  width: 15px; height: 15px; border-radius: 50%;
+  background: rgba(255,255,255,.13); border: 1px solid rgba(255,255,255,.18);
+  color: rgba(255,255,255,.55); font-size: .6rem; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .15s; flex-shrink: 0;
+}
+.tip:hover .tip__icon { background: var(--orange); border-color: var(--orange); color: #fff; }
+.tip__bubble {
+  position: absolute; bottom: calc(100% + 9px); left: 50%;
+  transform: translateX(-50%); width: 220px;
+  background: #0a2840; border: 1px solid rgba(255,255,255,.12);
+  border-radius: 7px; padding: .65rem .85rem;
+  font-size: .75rem; color: rgba(255,255,255,.75); line-height: 1.55;
+  font-family: var(--ff-body); font-weight: 400; font-style: normal;
+  pointer-events: none; opacity: 0; transition: opacity .18s;
+  white-space: normal; z-index: 200;
+  box-shadow: 0 10px 28px rgba(5,46,77,.45);
+}
+.tip__bubble::after {
+  content: ''; position: absolute; top: 100%; left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent; border-top-color: rgba(255,255,255,.12);
+}
+.tip:hover .tip__bubble { opacity: 1; }
+.tip--light .tip__icon { background: var(--off); border-color: var(--rule); color: var(--mid); }
+.tip--light:hover .tip__icon { background: var(--orange); border-color: var(--orange); color: #fff; }
+.tip--light .tip__bubble { background: #fff; border-color: var(--rule); color: var(--mid); box-shadow: 0 8px 24px rgba(5,46,77,.1); }
+.tip--light .tip__bubble::after { border-top-color: var(--rule); }
+
+/* ── Hero ── */
 .pulse-hero {
   background: var(--navy);
   padding: clamp(5rem,12vw,9rem) 0 clamp(3rem,6vw,5rem);
-  position: relative;
-  overflow: hidden;
+  position: relative; overflow: hidden;
 }
 .pulse-hero::before {
-  content: '';
-  position: absolute; inset: 0; pointer-events: none;
+  content: ''; position: absolute; inset: 0; pointer-events: none;
   background:
     radial-gradient(ellipse 60% 50% at 70% 40%, rgba(254,105,48,.13) 0%, transparent 65%),
     radial-gradient(ellipse 40% 60% at 10% 80%, rgba(255,255,255,.03) 0%, transparent 60%);
@@ -32,359 +65,225 @@
 .pulse-hero__inner { position: relative; z-index: 2; }
 .pulse-hero h1 { color: #fff; margin-bottom: 1.25rem; }
 .pulse-hero h1 em { font-style: italic; color: var(--orange-lt); }
-.pulse-hero__sub {
-  font-size: 1rem; color: rgba(255,255,255,.52);
-  line-height: 1.72; max-width: 480px; margin-bottom: 2rem; font-weight: 300;
-}
-.pulse-hero__stats {
-  display: flex; gap: 2.5rem; flex-wrap: wrap; margin-top: 2.5rem;
-  padding-top: 2rem; border-top: 1px solid rgba(255,255,255,.08);
-}
+.pulse-hero__sub { font-size: 1rem; color: rgba(255,255,255,.52); line-height: 1.72; max-width: 500px; margin-bottom: 2rem; font-weight: 300; }
+.pulse-hero__stats { display: flex; gap: 2.5rem; flex-wrap: wrap; margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,.08); }
 
 /* ── Audit wrapper ── */
-.audit-wrap {
-  background: var(--navy);
-  padding: 0 0 clamp(4rem,8vw,7rem);
-}
+.audit-wrap { background: var(--navy); padding: 0 0 clamp(4rem,8vw,7rem); }
 
 /* ── Progress ── */
-.audit-progress {
-  max-width: 680px; margin: 0 auto;
-  padding: 0 clamp(1.25rem,4vw,2.5rem) 2.5rem;
-}
+.audit-progress { max-width: 680px; margin: 0 auto; padding: 0 clamp(1.25rem,4vw,2.5rem) 2.5rem; }
 .progress-steps { display: flex; gap: 5px; margin-bottom: .6rem; }
-.progress-step {
-  height: 3px; flex: 1; border-radius: 2px;
-  background: rgba(255,255,255,.1);
-  transition: background .4s;
-}
+.progress-step { height: 3px; flex: 1; border-radius: 2px; background: rgba(255,255,255,.1); transition: background .4s; }
 .progress-step.done   { background: var(--orange); }
 .progress-step.active { background: rgba(254,105,48,.45); }
-.progress-meta {
-  display: flex; justify-content: space-between;
-  font-size: .72rem; color: rgba(255,255,255,.3);
-  font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
-}
+.progress-meta { display: flex; justify-content: space-between; font-size: .72rem; color: rgba(255,255,255,.3); font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
 
 /* ── Question card ── */
 .q-wrap { max-width: 680px; margin: 0 auto; padding: 0 clamp(1.25rem,4vw,2.5rem); }
-
-.q-card {
-  display: none;
-  background: rgba(255,255,255,.04);
-  border: 1px solid rgba(255,255,255,.08);
-  border-radius: 10px;
-  padding: clamp(1.75rem,4vw,2.5rem);
-  animation: fadeUp .35s ease both;
-}
+.q-card { display: none; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: 10px; padding: clamp(1.75rem,4vw,2.5rem); animation: fadeUp .35s ease both; }
 .q-card.active { display: block; }
-
-.q-eyebrow {
-  font-size: .65rem; font-weight: 700; letter-spacing: .18em;
-  text-transform: uppercase; color: var(--orange); margin-bottom: .75rem;
-  display: flex; align-items: center; gap: .5rem;
-}
+.q-eyebrow { font-size: .65rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--orange); margin-bottom: .75rem; display: flex; align-items: center; gap: .5rem; }
 .q-eyebrow::before { content:''; display:block; width:1rem; height:2px; background:currentColor; flex-shrink:0; }
-
-.q-text {
-  font-family: var(--ff-head); font-size: clamp(1.2rem,3vw,1.6rem);
-  font-weight: 400; color: #fff; margin-bottom: .5rem; line-height: 1.2;
-}
+.q-text { font-family: var(--ff-head); font-size: clamp(1.2rem,3vw,1.6rem); font-weight: 400; color: #fff; margin-bottom: .5rem; line-height: 1.2; }
 .q-hint { font-size: .82rem; color: rgba(255,255,255,.35); margin-bottom: 1.75rem; font-weight: 300; }
 
-/* URL input */
-.url-row { display: flex; gap: .75rem; }
-.url-field {
-  flex: 1; background: rgba(255,255,255,.07);
-  border: 1px solid rgba(255,255,255,.12); border-radius: 4px;
-  padding: .8rem 1.1rem; font-family: var(--ff-body); font-size: .9rem;
-  color: #fff; outline: none; transition: border-color .2s;
-}
+/* Fields */
+.field-stack { display: flex; flex-direction: column; gap: .65rem; }
+.field-label { font-size: .7rem; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: rgba(255,255,255,.38); margin-bottom: .15rem; }
+.url-field { width: 100%; box-sizing: border-box; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12); border-radius: 4px; padding: .85rem 1.1rem; font-family: var(--ff-body); font-size: .9rem; color: #fff; outline: none; transition: border-color .2s; }
 .url-field::placeholder { color: rgba(255,255,255,.28); }
 .url-field:focus { border-color: var(--orange); }
 
 /* Options */
-.options-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
-  gap: .6rem;
-}
+.options-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: .6rem; }
 .option-btn {
-  background: rgba(255,255,255,.05);
-  border: 1px solid rgba(255,255,255,.1);
+  background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1);
   border-radius: 6px; padding: .85rem 1rem;
-  color: rgba(255,255,255,.62);
-  font-family: var(--ff-body); font-size: .84rem;
-  cursor: pointer; text-align: left;
-  transition: all .15s; line-height: 1.45;
+  color: rgba(255,255,255,.62); font-family: var(--ff-body); font-size: .84rem;
+  cursor: pointer; text-align: left; transition: all .15s; line-height: 1.45; position: relative;
 }
-.option-btn:hover { border-color: var(--orange); color: #fff; background: rgba(254,105,48,.08); }
+.option-btn:hover   { border-color: var(--orange); color: #fff; background: rgba(254,105,48,.08); }
 .option-btn.selected { border-color: var(--orange); background: rgba(254,105,48,.14); color: #fff; }
+
+/* Option tooltip */
+.opt-tip {
+  position: absolute; top: .45rem; right: .45rem;
+  width: 14px; height: 14px; border-radius: 50%;
+  background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.15);
+  color: rgba(255,255,255,.4); font-size: .58rem; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  cursor: help; transition: all .15s; z-index: 2;
+}
+.option-btn:hover .opt-tip, .option-btn.selected .opt-tip { background: rgba(254,105,48,.25); border-color: rgba(254,105,48,.5); color: var(--orange-lt); }
+.opt-tip__bubble {
+  position: absolute; bottom: calc(100% + 6px); right: 0; width: 200px;
+  background: #0a2840; border: 1px solid rgba(255,255,255,.12); border-radius: 6px;
+  padding: .6rem .8rem; font-size: .72rem; color: rgba(255,255,255,.75); line-height: 1.5;
+  pointer-events: none; opacity: 0; transition: opacity .15s; z-index: 300;
+  text-align: left; box-shadow: 0 6px 20px rgba(5,46,77,.45); white-space: normal;
+}
+.opt-tip:hover .opt-tip__bubble { opacity: 1; }
+
+/* Score impact label */
+.score-impact { display: block; margin-top: .3rem; font-size: .68rem; font-weight: 600; letter-spacing: .04em; }
+.impact-high   { color: #86D97A; }
+.impact-medium { color: #FAC775; }
+.impact-low    { color: rgba(255,255,255,.3); }
+
 .multi-hint { font-size: .72rem; color: rgba(255,255,255,.28); margin-bottom: .75rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
 
-/* Nav buttons */
+/* Nav */
 .q-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 1.75rem; }
-.btn-back {
-  background: none; border: 1px solid rgba(255,255,255,.14);
-  color: rgba(255,255,255,.45); padding: .7rem 1.4rem;
-  border-radius: 4px; font-family: var(--ff-body); font-size: .84rem;
-  cursor: pointer; transition: all .18s;
-}
+.btn-back { background: none; border: 1px solid rgba(255,255,255,.14); color: rgba(255,255,255,.45); padding: .7rem 1.4rem; border-radius: 4px; font-family: var(--ff-body); font-size: .84rem; cursor: pointer; transition: all .18s; }
 .btn-back:hover { border-color: rgba(255,255,255,.3); color: #fff; }
-.btn-next {
-  background: var(--orange); border: none; color: #fff;
-  padding: .8rem 1.75rem; border-radius: 4px;
-  font-family: var(--ff-body); font-size: .875rem; font-weight: 600;
-  cursor: pointer; transition: all .18s;
-}
+.btn-next { background: var(--orange); border: none; color: #fff; padding: .8rem 1.75rem; border-radius: 4px; font-family: var(--ff-body); font-size: .875rem; font-weight: 600; cursor: pointer; transition: all .18s; }
 .btn-next:hover { background: var(--orange-lt); transform: translateY(-1px); }
 .btn-next:disabled { opacity: .3; cursor: not-allowed; transform: none; }
 
 /* ── Analyzing ── */
-.analyzing-state {
-  display: none; text-align: center;
-  padding: 5rem 1.25rem;
-}
+.analyzing-state { display: none; text-align: center; padding: 5rem 1.25rem; }
 .analyzing-state.active { display: block; }
-.scan-rings {
-  width: 72px; height: 72px; margin: 0 auto 2rem; position: relative;
-}
-.scan-ring {
-  position: absolute; inset: 0;
-  border: 2px solid transparent;
-  border-top-color: var(--orange);
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-}
-.scan-ring:nth-child(2) {
-  inset: 10px; border-top-color: rgba(254,105,48,.35);
-  animation-duration: 1.6s; animation-direction: reverse;
-}
-.scan-dot {
-  position: absolute; inset: 28px;
-  background: var(--orange); border-radius: 50%;
-  animation: pulse-dot 1.5s ease-in-out infinite;
-}
+.scan-rings { width: 72px; height: 72px; margin: 0 auto 2rem; position: relative; }
+.scan-ring { position: absolute; inset: 0; border: 2px solid transparent; border-top-color: var(--orange); border-radius: 50%; animation: spin 1s linear infinite; }
+.scan-ring:nth-child(2) { inset: 10px; border-top-color: rgba(254,105,48,.35); animation-duration: 1.6s; animation-direction: reverse; }
+.scan-dot { position: absolute; inset: 28px; background: var(--orange); border-radius: 50%; animation: pulse-dot 1.5s ease-in-out infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 @keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.75)} }
-
-.analyzing-title {
-  font-family: var(--ff-head); font-size: clamp(1.5rem,3vw,2rem);
-  color: #fff; font-weight: 300; margin-bottom: .5rem;
-}
-.analyzing-sub { font-size: .9rem; color: rgba(255,255,255,.35); font-weight: 300; margin-bottom: 1rem; }
-.analyzing-status { font-size: .82rem; color: rgba(255,255,255,.28); min-height: 1.2em; transition: opacity .3s; }
+.analyzing-title { font-family: var(--ff-head); font-size: clamp(1.5rem,3vw,2rem); color: #fff; font-weight: 300; margin-bottom: .5rem; }
+.analyzing-sub   { font-size: .9rem; color: rgba(255,255,255,.35); font-weight: 300; margin-bottom: 1rem; }
+.analyzing-status { font-size: .82rem; color: rgba(255,255,255,.28); min-height: 1.2em; }
 
 /* ── Results ── */
 .results-section { display: none; background: var(--cream); }
 .results-section.active { display: block; }
-
-.results-hero {
-  background: var(--navy); padding: clamp(3rem,6vw,5rem) 0;
-  position: relative; overflow: hidden;
-}
-.results-hero::before {
-  content: ''; position: absolute; inset: 0; pointer-events: none;
-  background: radial-gradient(ellipse 55% 60% at 80% 50%, rgba(254,105,48,.1) 0%, transparent 60%);
-}
+.results-hero { background: var(--navy); padding: clamp(3rem,6vw,5rem) 0; position: relative; overflow: hidden; }
+.results-hero::before { content: ''; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse 55% 60% at 80% 50%, rgba(254,105,48,.1) 0%, transparent 60%); }
 .results-hero__inner { position: relative; z-index: 2; }
-.results-hero__layout {
-  display: grid; grid-template-columns: auto 1fr;
-  gap: 3rem; align-items: center;
-}
-
-/* Score ring */
+.results-hero__layout { display: grid; grid-template-columns: auto 1fr; gap: 3rem; align-items: center; }
 .score-ring-wrap { position: relative; width: 140px; height: 140px; flex-shrink: 0; }
 .score-ring-svg { width: 140px; height: 140px; transform: rotate(-90deg); }
 .ring-bg  { fill: none; stroke: rgba(255,255,255,.1); stroke-width: 9; }
-.ring-fill {
-  fill: none; stroke: var(--orange); stroke-width: 9; stroke-linecap: round;
-  stroke-dasharray: 357; stroke-dashoffset: 357;
-  transition: stroke-dashoffset 1.6s cubic-bezier(.4,0,.2,1);
-}
-.score-center {
-  position: absolute; inset: 0;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-}
-.score-number {
-  font-family: var(--ff-head); font-size: 2.6rem;
-  font-weight: 300; color: #fff; line-height: 1;
-}
-.score-denom { font-size: .7rem; color: rgba(255,255,255,.35); letter-spacing: .05em; margin-top: .2rem; }
-
-.score-info h2 {
-  font-family: var(--ff-head); font-size: clamp(1.4rem,3vw,2rem);
-  font-weight: 400; color: #fff; margin-bottom: .6rem; line-height: 1.15;
-}
-.score-info p { font-size: .9rem; color: rgba(255,255,255,.48); line-height: 1.72; font-weight: 300; margin-bottom: 1rem; }
-.score-badge {
-  display: inline-flex; align-items: center; gap: .45rem;
-  padding: .4rem 1rem; border-radius: 4px;
-  font-size: .75rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
-}
+.ring-fill { fill: none; stroke: var(--orange); stroke-width: 9; stroke-linecap: round; stroke-dasharray: 357; stroke-dashoffset: 357; transition: stroke-dashoffset 1.6s cubic-bezier(.4,0,.2,1); }
+.score-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.score-number { font-family: var(--ff-head); font-size: 2.6rem; font-weight: 300; color: #fff; line-height: 1; }
+.score-denom  { font-size: .7rem; color: rgba(255,255,255,.35); letter-spacing: .05em; margin-top: .2rem; }
+.score-info h2 { font-family: var(--ff-head); font-size: clamp(1.4rem,3vw,2rem); font-weight: 400; color: #fff; margin-bottom: .6rem; line-height: 1.15; }
+.score-info p  { font-size: .9rem; color: rgba(255,255,255,.48); line-height: 1.72; font-weight: 300; margin-bottom: 1rem; }
+.score-badge { display: inline-flex; align-items: center; gap: .45rem; padding: .4rem 1rem; border-radius: 4px; font-size: .75rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
 .badge-poor      { background: rgba(226,75,74,.15); color: #f09595; border: 1px solid rgba(226,75,74,.25); }
 .badge-fair      { background: rgba(239,159,39,.15); color: #FAC775; border: 1px solid rgba(239,159,39,.25); }
 .badge-good      { background: rgba(99,153,34,.15); color: #C0DD97; border: 1px solid rgba(99,153,34,.25); }
 .badge-excellent { background: rgba(254,105,48,.15); color: var(--orange-lt); border: 1px solid rgba(254,105,48,.25); }
 
 /* Category bars */
-.categories-section {
-  padding: clamp(2.5rem,5vw,4rem) 0;
-  border-bottom: 1px solid var(--rule);
-}
-.cat-row {
-  display: flex; align-items: center; gap: 1rem;
-  padding: 1rem 0; border-bottom: 1px solid var(--rule);
-}
+.categories-section { padding: clamp(2.5rem,5vw,4rem) 0; border-bottom: 1px solid var(--rule); }
+.cat-row { display: flex; align-items: center; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid var(--rule); }
 .cat-row:last-child { border-bottom: none; }
-.cat-icon {
-  width: 34px; height: 34px; border-radius: 6px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 15px; flex-shrink: 0;
-}
-.cat-name { flex: 1; font-size: .875rem; font-weight: 500; color: var(--ink); }
+.cat-icon { width: 34px; height: 34px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; }
+.cat-name { flex: 1; font-size: .875rem; font-weight: 500; color: var(--ink); display: flex; align-items: center; }
 .cat-bar-wrap { flex: 2; height: 5px; background: var(--off); border-radius: 3px; overflow: hidden; }
 .cat-bar-fill { height: 100%; border-radius: 3px; width: 0; transition: width 1.2s cubic-bezier(.4,0,.2,1); }
 .cat-pct { font-size: .82rem; font-weight: 600; color: var(--ink); min-width: 34px; text-align: right; }
 
-/* Locked section */
+/* Recommendations */
+.recs-section { padding: clamp(2.5rem,5vw,4rem) 0; border-bottom: 1px solid var(--rule); }
+.recs-section h2 { font-family: var(--ff-head); font-size: clamp(1.4rem,3vw,2rem); font-weight: 300; color: var(--ink); margin-bottom: .4rem; }
+.recs-section > .container--narrow > p { font-size: .9rem; color: var(--mid); margin-bottom: 2rem; font-weight: 300; }
+.rec-card { background: #fff; border: 1px solid var(--rule); border-radius: 9px; padding: 1.5rem 1.75rem; margin-bottom: 1rem; transition: border-color .2s, box-shadow .2s; }
+.rec-card:hover { border-color: rgba(254,105,48,.3); box-shadow: 0 4px 18px rgba(5,46,77,.07); }
+.rec-card__header { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: .75rem; }
+.rec-card__icon { width: 36px; height: 36px; border-radius: 8px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+.rec-card__title { font-size: .9rem; font-weight: 600; color: var(--ink); margin-bottom: .15rem; }
+.rec-card__priority { font-size: .7rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; }
+.priority-high   { color: #E24B4A; }
+.priority-medium { color: #C9952A; }
+.priority-low    { color: #2E6B4F; }
+.rec-card__body { font-size: .875rem; color: var(--mid); line-height: 1.72; margin-bottom: 1rem; }
+.rec-card__tools { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: 1rem; align-items: center; }
+.tools-label { font-size: .7rem; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); margin-right: .2rem; }
+.tool-tag { display: inline-flex; align-items: center; gap: .3rem; border-radius: 4px; padding: .22rem .65rem; font-size: .75rem; font-weight: 500; transition: all .15s; cursor: default; }
+.tool-tag.ours  { background: rgba(254,105,48,.1); border: 1px solid rgba(254,105,48,.25); color: var(--orange); }
+.tool-tag.ours::before { content: '★'; font-size: .6rem; }
+.tool-tag.other { background: var(--off); border: 1px solid var(--rule); color: var(--mid); }
+.rec-cta { display: inline-flex; align-items: center; gap: .4rem; font-size: .8rem; font-weight: 600; color: var(--orange); cursor: pointer; transition: gap .15s; background: none; border: none; padding: 0; font-family: var(--ff-body); }
+.rec-cta:hover { gap: .65rem; }
+.rec-cta svg { width: 12px; height: 12px; }
+
+/* Urgency banner */
+.urgency-banner {
+  background: linear-gradient(135deg, var(--navy) 0%, #0d3d5e 100%);
+  border-radius: 10px; padding: clamp(1.5rem,3vw,2.25rem) clamp(1.5rem,4vw,2.5rem);
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1.5rem; flex-wrap: wrap; margin-bottom: 2rem;
+  border: 1px solid rgba(254,105,48,.2);
+}
+.urgency-banner__text h3 { font-family: var(--ff-head); font-size: 1.2rem; font-weight: 400; color: #fff; margin-bottom: .3rem; }
+.urgency-banner__text p  { font-size: .84rem; color: rgba(255,255,255,.45); font-weight: 300; }
+.urgency-banner__cta { flex-shrink: 0; }
+
+/* Locked */
 .locked-section { padding: clamp(2.5rem,5vw,4rem) 0; border-bottom: 1px solid var(--rule); }
 .locked-inner { position: relative; }
 .locked-blur { filter: blur(5px); pointer-events: none; user-select: none; }
-.locked-blur-card {
-  background: #fff; border: 1px solid var(--rule); border-radius: 9px;
-  padding: 1.75rem; margin-bottom: .75rem;
-}
-.blur-line {
-  height: 13px; background: var(--off); border-radius: 4px; margin-bottom: .75rem;
-}
-.locked-gate {
-  position: absolute; inset: 0;
-  display: flex; align-items: center; justify-content: center; z-index: 2;
-}
-.locked-card {
-  background: #fff; border: 1px solid var(--rule); border-radius: 10px;
-  padding: 2rem 2.5rem; text-align: center;
-  box-shadow: 0 12px 40px rgba(5,46,77,.12);
-  max-width: 360px; width: 100%;
-}
+.locked-blur-card { background: #fff; border: 1px solid var(--rule); border-radius: 9px; padding: 1.75rem; margin-bottom: .75rem; }
+.blur-line { height: 13px; background: var(--off); border-radius: 4px; margin-bottom: .75rem; }
+.locked-gate { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; z-index: 2; }
+.locked-card { background: #fff; border: 1px solid var(--rule); border-radius: 10px; padding: 2rem 2.5rem; text-align: center; box-shadow: 0 12px 40px rgba(5,46,77,.12); max-width: 360px; width: 100%; }
 .locked-card__icon { font-size: 1.75rem; margin-bottom: .75rem; }
-.locked-card h4 {
-  font-family: var(--ff-head); font-size: 1.3rem; font-weight: 400;
-  color: var(--ink); margin-bottom: .4rem;
-}
+.locked-card h4 { font-family: var(--ff-head); font-size: 1.3rem; font-weight: 400; color: var(--ink); margin-bottom: .4rem; }
 .locked-card p { font-size: .82rem; color: var(--mid); line-height: 1.65; margin-bottom: 1.25rem; font-weight: 300; }
 
 /* Tiers */
 .tiers-section { padding: clamp(2.5rem,5vw,4rem) 0; border-bottom: 1px solid var(--rule); }
-.tiers-section h2 {
-  font-family: var(--ff-head); font-size: clamp(1.5rem,3vw,2.2rem);
-  font-weight: 300; color: var(--ink); margin-bottom: .4rem;
-}
-.tiers-section > .container--narrow > p {
-  font-size: .9rem; color: var(--mid); margin-bottom: 2rem; font-weight: 300;
-}
+.tiers-section h2 { font-family: var(--ff-head); font-size: clamp(1.5rem,3vw,2.2rem); font-weight: 300; color: var(--ink); margin-bottom: .4rem; }
+.tiers-section > .container--narrow > p { font-size: .9rem; color: var(--mid); margin-bottom: 2rem; font-weight: 300; }
 .tiers-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
-.tier-card {
-  background: #fff; border: 1px solid var(--rule);
-  border-radius: 9px; padding: 1.75rem; position: relative; overflow: hidden;
-  transition: all .2s;
-}
+.tier-card { background: #fff; border: 1px solid var(--rule); border-radius: 9px; padding: 1.75rem; position: relative; overflow: hidden; transition: all .2s; }
 .tier-card:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(5,46,77,.09); }
 .tier-card.featured { border-color: var(--orange); border-width: 2px; }
-.tier-card.featured::before {
-  content: 'Most popular';
-  position: absolute; top: 0; right: 0;
-  background: var(--orange); color: #fff;
-  font-size: .6rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
-  padding: .3rem .9rem; border-bottom-left-radius: 6px;
-}
-.tier-card__name {
-  font-family: var(--ff-head); font-size: 1.2rem; font-weight: 400;
-  color: var(--ink); margin-bottom: .25rem;
-}
-.tier-card__price {
-  font-family: var(--ff-head); font-size: 2rem; font-weight: 300;
-  color: var(--orange); line-height: 1; margin-bottom: 1.1rem;
-}
+.tier-card.featured::before { content: 'Most popular'; position: absolute; top: 0; right: 0; background: var(--orange); color: #fff; font-size: .6rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: .3rem .9rem; border-bottom-left-radius: 6px; }
+.tier-card__name  { font-family: var(--ff-head); font-size: 1.2rem; font-weight: 400; color: var(--ink); margin-bottom: .25rem; }
+.tier-card__price { font-family: var(--ff-head); font-size: 2rem; font-weight: 300; color: var(--orange); line-height: 1; margin-bottom: 1.1rem; }
 .tier-card__price sub { font-size: 1rem; vertical-align: baseline; }
-.tier-card__price span { font-size: .78rem; color: var(--muted); font-family: var(--ff-body); }
 .tier-features { list-style: none; margin-bottom: 1.5rem; }
-.tier-features li {
-  display: flex; align-items: flex-start; gap: .5rem;
-  font-size: .82rem; color: var(--mid); padding: .35rem 0; line-height: 1.45;
-}
+.tier-features li { display: flex; align-items: flex-start; gap: .5rem; font-size: .82rem; color: var(--mid); padding: .35rem 0; line-height: 1.45; }
 .tier-features li::before { content: '✓'; color: var(--orange); flex-shrink: 0; font-weight: 700; }
 .tier-features li.off::before { content: '—'; color: var(--rule); font-weight: 400; }
 .tier-features li.off { opacity: .55; }
 
 /* Email cap */
 .email-cap-section { padding: clamp(2.5rem,5vw,4rem) 0; }
-.email-cap {
-  background: var(--navy); border-radius: 10px;
-  padding: clamp(2rem,4vw,3rem); text-align: center;
-}
-.email-cap h3 {
-  font-family: var(--ff-head); font-size: 1.5rem; font-weight: 300;
-  color: #fff; margin-bottom: .5rem;
-}
-.email-cap p { font-size: .875rem; color: rgba(255,255,255,.4); margin-bottom: 1.5rem; font-weight: 300; }
+.email-cap { background: var(--navy); border-radius: 10px; padding: clamp(2rem,4vw,3rem); text-align: center; }
+.email-cap h3 { font-family: var(--ff-head); font-size: 1.5rem; font-weight: 300; color: #fff; margin-bottom: .5rem; }
+.email-cap p   { font-size: .875rem; color: rgba(255,255,255,.4); margin-bottom: 1.5rem; font-weight: 300; }
 .email-row { display: flex; gap: .75rem; max-width: 380px; margin: 0 auto; }
-.email-field {
-  flex: 1; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12);
-  border-radius: 4px; padding: .8rem 1.1rem;
-  font-family: var(--ff-body); font-size: .875rem; color: #fff; outline: none;
-  transition: border-color .2s;
-}
+.email-field { flex: 1; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); border-radius: 4px; padding: .8rem 1.1rem; font-family: var(--ff-body); font-size: .875rem; color: #fff; outline: none; transition: border-color .2s; }
 .email-field::placeholder { color: rgba(255,255,255,.28); }
 .email-field:focus { border-color: var(--orange); }
 
-/* ── Paid modal ── */
-.paid-modal {
-  display: none; position: fixed; inset: 0;
-  background: rgba(5,46,77,.82); backdrop-filter: blur(6px);
-  z-index: 500; align-items: center; justify-content: center; padding: 1.25rem;
-}
+/* Paid modal */
+.paid-modal { display: none; position: fixed; inset: 0; background: rgba(5,46,77,.82); backdrop-filter: blur(6px); z-index: 500; align-items: center; justify-content: center; padding: 1.25rem; }
 .paid-modal.open { display: flex; }
-.paid-modal__box {
-  background: #fff; border-radius: 10px; overflow: hidden;
-  width: 100%; max-width: 460px;
-  box-shadow: 0 24px 80px rgba(5,46,77,.3);
-  animation: fadeUp .3s ease;
-}
-.paid-modal__head {
-  background: var(--navy); padding: 1.25rem 1.5rem;
-  display: flex; align-items: center; justify-content: space-between;
-}
-.paid-modal__head h3 {
-  font-family: var(--ff-head); font-size: 1.1rem; font-weight: 400; color: #fff;
-}
-.paid-modal__close {
-  background: none; border: none; cursor: pointer;
-  color: rgba(255,255,255,.45); font-size: 1.4rem; line-height: 1;
-  transition: color .15s;
-}
+.paid-modal__box { background: #fff; border-radius: 10px; overflow: hidden; width: 100%; max-width: 460px; box-shadow: 0 24px 80px rgba(5,46,77,.3); animation: fadeUp .3s ease; }
+.paid-modal__head { background: var(--navy); padding: 1.25rem 1.5rem; display: flex; align-items: center; justify-content: space-between; }
+.paid-modal__head h3 { font-family: var(--ff-head); font-size: 1.1rem; font-weight: 400; color: #fff; }
+.paid-modal__close { background: none; border: none; cursor: pointer; color: rgba(255,255,255,.45); font-size: 1.4rem; line-height: 1; transition: color .15s; }
 .paid-modal__close:hover { color: #fff; }
 .paid-modal__body { padding: 1.75rem; }
 .paid-modal__body p { font-size: .875rem; color: var(--mid); line-height: 1.7; margin-bottom: 1.25rem; font-weight: 300; }
 .paid-checklist { background: var(--off); border-radius: 6px; padding: 1rem 1.25rem; margin-bottom: 1.5rem; }
-.paid-checklist div {
-  font-size: .82rem; color: var(--mid); padding: .3rem 0;
-  display: flex; align-items: center; gap: .6rem;
-}
+.paid-checklist div { font-size: .82rem; color: var(--mid); padding: .3rem 0; display: flex; align-items: center; gap: .6rem; }
 .paid-checklist div::before { content: '✓'; color: var(--orange); font-weight: 700; flex-shrink: 0; }
 
-/* Responsive */
 @media (min-width: 640px) {
   .tiers-grid { grid-template-columns: repeat(3, 1fr); }
   .email-row  { flex-direction: row; }
-  .results-hero__layout { gap: 3.5rem; }
 }
 @media (max-width: 500px) {
   .results-hero__layout { grid-template-columns: 1fr; text-align: center; }
-  .results-hero__layout .score-info p { max-width: 100%; }
-  .url-row { flex-direction: column; }
   .email-row { flex-direction: column; }
+  .urgency-banner { text-align: center; justify-content: center; }
 }
 </style>
 </head>
@@ -392,7 +291,6 @@
 
 <!-- nav injected by nav.js -->
 
-<!-- ── HERO ── -->
 <section class="pulse-hero">
   <div class="pulse-hero__grid"></div>
   <div class="pulse-hero__inner">
@@ -405,32 +303,17 @@
         <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 7h12M8 3l4 4-4 4"/></svg>
       </button>
       <div class="pulse-hero__stats">
-        <div>
-          <div class="stat__num">12+</div>
-          <div class="stat__label">Hours saved / week</div>
-        </div>
-        <div>
-          <div class="stat__num">5</div>
-          <div class="stat__label">Areas we score</div>
-        </div>
-        <div>
-          <div class="stat__num">2 min</div>
-          <div class="stat__label">To complete</div>
-        </div>
-        <div>
-          <div class="stat__num">Free</div>
-          <div class="stat__label">No card needed</div>
-        </div>
+        <div><div class="stat__num">12+</div><div class="stat__label">Hours saved / week</div></div>
+        <div><div class="stat__num">5</div><div class="stat__label">Areas we score</div></div>
+        <div><div class="stat__num">2 min</div><div class="stat__label">To complete</div></div>
+        <div><div class="stat__num">Free</div><div class="stat__label">No card needed</div></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── AUDIT FORM ── -->
 <div class="audit-wrap" id="audit-wrap" style="display:none;">
   <div style="padding: clamp(2.5rem,5vw,4rem) 0 0;">
-
-    <!-- Progress -->
     <div class="audit-progress">
       <div class="progress-steps" id="progressSteps"></div>
       <div class="progress-meta">
@@ -438,29 +321,18 @@
         <span id="progressCat"></span>
       </div>
     </div>
-
-    <!-- Questions -->
     <div class="q-wrap" id="questionsContainer"></div>
-
-    <!-- Analyzing -->
     <div class="analyzing-state" id="analyzingState">
-      <div class="scan-rings">
-        <div class="scan-ring"></div>
-        <div class="scan-ring"></div>
-        <div class="scan-dot"></div>
-      </div>
+      <div class="scan-rings"><div class="scan-ring"></div><div class="scan-ring"></div><div class="scan-dot"></div></div>
       <h3 class="analyzing-title">Analyzing your setup…</h3>
       <p class="analyzing-sub">Takes about 5 seconds</p>
-      <p class="analyzing-status" id="analyzingStatus">Scanning website…</p>
+      <p class="analyzing-status" id="analyzingStatus">Scoring your answers…</p>
     </div>
-
   </div>
 </div>
 
-<!-- ── RESULTS ── -->
 <section class="results-section" id="results">
 
-  <!-- Score hero -->
   <div class="results-hero">
     <div class="results-hero__inner">
       <div class="container--narrow">
@@ -486,7 +358,6 @@
     </div>
   </div>
 
-  <!-- Category breakdown -->
   <div class="categories-section">
     <div class="container--narrow">
       <p class="eyebrow blue" style="margin-bottom:1.5rem;">Score by category</p>
@@ -494,27 +365,35 @@
     </div>
   </div>
 
-  <!-- Locked recommendations -->
+  <div class="recs-section" id="recsSection">
+    <div class="container--narrow">
+      <h2>Your top opportunities</h2>
+      <p>Based on your answers — with the exact tools we use to fix these for clients.</p>
+      <div id="recCards"></div>
+      <div class="urgency-banner">
+        <div class="urgency-banner__text">
+          <h3>Want the full prioritized roadmap?</h3>
+          <p>Every gap diagnosed, every tool mapped out, a 30-day action plan built around your exact setup.</p>
+        </div>
+        <div class="urgency-banner__cta">
+          <button class="btn btn-primary" onclick="showPaidModal()">Get full report — $49 →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="locked-section">
     <div class="container--narrow">
       <div class="locked-inner">
         <div class="locked-blur">
-          <div class="locked-blur-card">
-            <div class="blur-line" style="width:55%"></div>
-            <div class="blur-line" style="width:90%"></div>
-            <div class="blur-line" style="width:72%"></div>
-          </div>
-          <div class="locked-blur-card">
-            <div class="blur-line" style="width:45%"></div>
-            <div class="blur-line" style="width:83%"></div>
-            <div class="blur-line" style="width:68%"></div>
-          </div>
+          <div class="locked-blur-card"><div class="blur-line" style="width:55%"></div><div class="blur-line" style="width:90%"></div><div class="blur-line" style="width:72%"></div></div>
+          <div class="locked-blur-card"><div class="blur-line" style="width:45%"></div><div class="blur-line" style="width:83%"></div><div class="blur-line" style="width:68%"></div></div>
         </div>
         <div class="locked-gate">
           <div class="locked-card">
             <div class="locked-card__icon">🔒</div>
             <h4>Unlock your full report</h4>
-            <p>Get specific tool recommendations, quick wins, and a prioritized roadmap for your business.</p>
+            <p>Detailed per-category diagnosis, tool-by-tool setup guide, and a personalized 30-day implementation plan.</p>
             <button class="btn btn-primary" onclick="showPaidModal()" style="width:100%;justify-content:center;">Get full report — $49</button>
           </div>
         </div>
@@ -522,41 +401,37 @@
     </div>
   </div>
 
-  <!-- Tiers -->
   <div class="tiers-section">
     <div class="container--narrow">
       <h2>Choose how deep you want to go</h2>
       <p>Your free score is a starting point. Here's what comes next.</p>
       <div class="tiers-grid">
-
         <div class="tier-card">
           <div class="tier-card__name">Free score</div>
           <div class="tier-card__price">$0</div>
           <ul class="tier-features">
             <li>Overall automation score</li>
             <li>5-category breakdown</li>
-            <li class="off">Specific recommendations</li>
-            <li class="off">Tool suggestions</li>
-            <li class="off">Action roadmap</li>
+            <li>Top 3 opportunity areas</li>
+            <li class="off">Specific tool recommendations</li>
+            <li class="off">Prioritized action roadmap</li>
           </ul>
           <button class="btn btn-outline" onclick="scrollToScore()" style="width:100%;justify-content:center;">Your current plan</button>
         </div>
-
         <div class="tier-card featured">
           <div class="tier-card__name">Full report</div>
           <div class="tier-card__price"><sub>$</sub>49</div>
           <ul class="tier-features">
             <li>Everything in free</li>
-            <li>Detailed recommendations</li>
-            <li>Specific tools to use</li>
+            <li>Detailed per-category diagnosis</li>
+            <li>Specific tools + setup guides</li>
             <li>Prioritized action plan</li>
             <li>30-day implementation guide</li>
           </ul>
           <button class="btn btn-primary" onclick="showPaidModal()" style="width:100%;justify-content:center;">Get my full report →</button>
         </div>
-
         <div class="tier-card">
-          <div class="tier-card__name">Consulting</div>
+          <div class="tier-card__name">Done with you</div>
           <div class="tier-card__price"><sub>$</sub>297</div>
           <ul class="tier-features">
             <li>Everything in full report</li>
@@ -567,17 +442,15 @@
           </ul>
           <button class="btn btn-primary" onclick="bookConsulting()" style="width:100%;justify-content:center;">Book a session →</button>
         </div>
-
       </div>
     </div>
   </div>
 
-  <!-- Email capture -->
   <div class="email-cap-section">
     <div class="container--narrow">
       <div class="email-cap">
         <h3>Get automation tips every week</h3>
-        <p>Practical workflows, real time saved. No fluff.</p>
+        <p>Practical workflows, real time saved. No fluff — just what's working for businesses like yours.</p>
         <div class="email-row">
           <input type="email" class="email-field" placeholder="your@email.com" id="emailInput">
           <button class="btn btn-primary" onclick="subscribeEmail()">Subscribe →</button>
@@ -588,7 +461,6 @@
 
 </section>
 
-<!-- ── PAID MODAL ── -->
 <div class="paid-modal" id="paidModal">
   <div class="paid-modal__box">
     <div class="paid-modal__head">
@@ -598,10 +470,11 @@
     <div class="paid-modal__body">
       <p>Your personalized roadmap with specific tool recommendations, quick wins, and a 30-day action plan — built around your exact answers.</p>
       <div class="paid-checklist">
-        <div>Detailed breakdown per category</div>
-        <div>Specific tool recommendations</div>
-        <div>Prioritized quick-win actions</div>
+        <div>Full per-category diagnosis with scores explained</div>
+        <div>Specific tools to implement (with setup links)</div>
+        <div>Prioritized quick-win actions — week 1, 2, 3</div>
         <div>30-day implementation guide</div>
+        <div>Setup support from Keith &amp; Jonathan</div>
       </div>
       <button class="btn btn-primary" onclick="processPurchase()" style="width:100%;justify-content:center;font-size:.95rem;padding:1rem;">
         Pay $49 — instant access
@@ -613,127 +486,193 @@
   </div>
 </div>
 
-<!-- ── nav.js — injects nav + footer ── -->
 <script src="nav.js"></script>
-
 <script>
-// ── AIRTABLE CONFIG ──────────────────────────
+// ── CONFIG ────────────────────────────────────
 const AIRTABLE_TOKEN   = 'your_personal_access_token_here';
 const AIRTABLE_BASE_ID = 'your_base_id_here';
 const AIRTABLE_TABLE   = 'Martech Pulse Submissions';
-// ─────────────────────────────────────────────
 
+// ── Our tech stack ────────────────────────────
+const TOOLS_DB = {
+  keap:      { name:'Keap CRM',    ours:true,  note:'Keith is a Keap Certified Partner. We build and automate Keap for clients every week — CRM, email sequences, pipelines, and more.' },
+  airtable:  { name:'Airtable',    ours:true,  note:'We build Airtable bases, automations, and reporting dashboards for clients. Often replaces spreadsheets and project management tools together.' },
+  softr:     { name:'Softr',       ours:true,  note:'We pair Softr with Airtable to build no-code client portals, internal apps, and dashboards — without custom dev.' },
+  make:      { name:'Make',        ours:true,  note:'Our go-to automation layer. We use Make to connect your tools and automate workflows without writing code.' },
+  bubble:    { name:'Bubble',      ours:true,  note:'We build full custom web apps in Bubble when Softr needs more flexibility. No developers required.' },
+  zapier:    { name:'Zapier',      ours:false, note:'Widely used for simple integrations. For more complex or high-volume flows, we usually recommend Make.' },
+  calendly:  { name:'Calendly',    ours:false, note:'Simple and effective for booking. We wire Calendly into Keap so every booking auto-creates a contact and triggers a sequence.' },
+  mailchimp: { name:'Mailchimp',   ours:false, note:'Good starter ESP. For service businesses, Keap handles CRM and email marketing together — fewer tools, better data.' },
+  hubspot:   { name:'HubSpot',     ours:false, note:'Powerful but often overkill and expensive for small businesses. We typically recommend Keap for better value and support.' },
+  notion:    { name:'Notion',      ours:false, note:'Great for SOPs and wikis. Airtable is usually better when you need structured data, automations, and client-facing views.' },
+  asana:     { name:'Asana',       ours:false, note:'Solid project management. Airtable can replace this and add a database layer plus automation — one less tool to pay for.' },
+};
+
+function toolTag(key) {
+  const t = TOOLS_DB[key];
+  if (!t) return '';
+  return `<span class="tool-tag ${t.ours?'ours':'other'}" title="${t.note}">${t.name}</span>`;
+}
+
+// ── Questions ─────────────────────────────────
 const QUESTIONS = [
   {
-    id: 'url', type: 'url', num: '01',
-    text: "What's your business website?",
-    hint: "We'll use this to understand your business type and setup",
-    cat: 'Setup'
+    id:'contact', type:'contact', num:'01',
+    text:"Let's get you set up",
+    hint:"We'll send your score here and use your website to personalize your results",
+    cat:'Setup'
   },
   {
-    id: 'business_type', type: 'single', num: '02',
-    text: 'What type of business do you run?',
-    hint: 'Choose the closest match',
-    cat: 'Setup',
-    options: ['Service business / agency','Coaching or consulting','E-commerce / product','SaaS / tech company','Local / brick-and-mortar','Creator / solopreneur']
+    id:'business_type', type:'single', num:'02',
+    text:'What type of business do you run?',
+    hint:'Choose the closest match',
+    cat:'Setup',
+    options:[
+      {val:'Service business / agency',  tip:'Includes marketing agencies, consultants, freelancers, and B2B service providers.'},
+      {val:'Coaching or consulting',      tip:'High-touch, relationship-driven — coaches, advisors, trainers. Automation frees you to focus on delivery.'},
+      {val:'E-commerce / product',        tip:'Physical or digital products. Email automation and abandoned cart flows are usually the biggest wins.'},
+      {val:'SaaS / tech company',         tip:'Onboarding sequences and churn-prevention automations tend to have the highest ROI here.'},
+      {val:'Local / brick-and-mortar',    tip:'Appointment reminders, review requests, and reactivation campaigns save 5+ hours/week for most local businesses.'},
+      {val:'Creator / solopreneur',       tip:'For solo operators, every manual task is a direct hit on your time. Automation is leverage.'}
+    ]
   },
   {
-    id: 'team_size', type: 'single', num: '03',
-    text: 'How big is your team?',
-    hint: 'Including yourself',
-    cat: 'Setup',
-    options: ['Just me','2–5 people','6–15 people','16–50 people','50+ people']
+    id:'team_size', type:'single', num:'03',
+    text:'How big is your team?',
+    hint:'Including yourself',
+    cat:'Setup',
+    options:[
+      {val:'Just me',      tip:'Solo operators benefit most from automation — even one good workflow can save a full day per week.'},
+      {val:'2–5 people',   tip:'Small teams often run on inconsistent processes. Automation creates reliability without adding headcount.'},
+      {val:'6–15 people',  tip:'At this size, disconnected tools create real drag across the team. Integration is usually the biggest win.'},
+      {val:'16–50 people', tip:'Automation gaps compound across many people. Standardized workflows have outsized impact here.'},
+      {val:'50+ people',   tip:'Larger teams benefit most from auditable, standardized processes and real-time reporting dashboards.'}
+    ]
   },
   {
-    id: 'lead_capture', type: 'single', num: '04',
-    text: 'How do new leads typically reach you?',
-    hint: 'Choose your primary channel',
-    cat: 'Leads',
-    options: ['Referrals / word of mouth','Website contact form','Social media DMs','Email or phone directly','Paid ads → landing page','Marketplace / platform']
+    id:'lead_capture', type:'single', num:'04',
+    text:'How do new leads typically reach you?',
+    hint:'Choose your primary channel',
+    cat:'Leads',
+    options:[
+      {val:'Referrals / word of mouth',    tip:'Great quality, hard to scale. Automation ensures you never drop the ball on a warm referral.'},
+      {val:'Website contact form',          tip:'Most businesses take 24–72 hours to respond. Automating first touch can 10x your close rate on inbound leads.'},
+      {val:'Social media DMs',             tip:'High intent, easy to lose track of. Wiring DMs into a CRM has huge ROI.'},
+      {val:'Email or phone directly',       tip:'Very warm leads — but without a system, follow-up depends entirely on memory.'},
+      {val:'Paid ads → landing page',       tip:'Speed-to-lead is everything here. Every minute of delay costs you ad spend.'},
+      {val:'Marketplace / platform',        tip:'Platform leads go cold fast. Moving them to your own system quickly is critical.'}
+    ]
   },
   {
-    id: 'follow_up', type: 'single', num: '05',
-    text: 'What happens after someone expresses interest?',
-    hint: 'Your typical follow-up process',
-    cat: 'Leads',
-    options: ['I manually follow up when I remember','I have a rough email template','Auto-reply, then manual follow-up','Fully automated email sequence','CRM handles it automatically']
+    id:'follow_up', type:'single', num:'05',
+    text:'What happens after someone expresses interest?',
+    hint:'Your typical follow-up process',
+    cat:'Leads',
+    options:[
+      {val:'I manually follow up when I remember', impact:'low',    tip:'This is the #1 time drain we see. Automating lead follow-up typically saves 3–5 hours/week and doubles response rates.'},
+      {val:'I have a rough email template',        impact:'medium', tip:'A template is a start, but manual sending means leads slip through during busy periods.'},
+      {val:'Auto-reply, then manual follow-up',    impact:'medium', tip:'Good first step. The gap is between the auto-reply and the next human touchpoint.'},
+      {val:'Fully automated email sequence',       impact:'high',   tip:'Solid. The next level is personalizing sequences by lead source or behavior inside your CRM.'},
+      {val:'CRM handles it automatically',         impact:'high',   tip:'Best-in-class. Keap clients at this level typically see 40% faster close rates.'}
+    ]
   },
   {
-    id: 'scheduling', type: 'single', num: '06',
-    text: 'How do people book time with you?',
-    hint: 'Calls, meetings, appointments',
-    cat: 'Scheduling',
-    options: ['Back-and-forth emails to find a time','They call or text me','I share a Calendly / booking link','Automated with reminders and prep emails',"I don't do calls / not applicable"]
+    id:'scheduling', type:'single', num:'06',
+    text:'How do people book time with you?',
+    hint:'Calls, meetings, appointments',
+    cat:'Scheduling',
+    options:[
+      {val:'Back-and-forth emails to find a time',  impact:'low',    tip:'Costs an average of 8 emails per booking. A free Calendly link eliminates this entirely.'},
+      {val:'They call or text me',                   impact:'low',    tip:'Works but creates interruptions and context switching. A booking link lets people self-schedule on your terms.'},
+      {val:'I share a Calendly / booking link',      impact:'medium', tip:'Great. Next step: connect it to your CRM so bookings auto-create contacts and trigger a prep sequence.'},
+      {val:'Automated with reminders and prep emails',impact:'high',  tip:'Gold standard. Automated reminders alone reduce no-shows by up to 70%.'},
+      {val:"I don't do calls / not applicable",      impact:'high',   tip:"Noted — we'll weight your score toward the other categories that apply to you."}
+    ]
   },
   {
-    id: 'tools', type: 'multi', num: '07',
-    text: 'Which tools are you currently using?',
-    hint: 'Select all that apply',
-    cat: 'Tools',
-    options: ['A CRM (HubSpot, Salesforce, Keap, etc.)','Email marketing (Mailchimp, ConvertKit)','Scheduling tool (Calendly, Acuity)','Project management (Asana, Notion)','Zapier / Make / automation tool','Social scheduling (Buffer, Later)','Reporting dashboards','None of the above']
+    id:'tools', type:'multi', num:'07',
+    text:'Which tools are you currently using?',
+    hint:'Select all that apply — this directly powers your category scores',
+    cat:'Tools',
+    options:[
+      {val:'A CRM (HubSpot, Salesforce, Keap, etc.)', tip:'Having a CRM is a strong positive signal. How well it\'s configured matters even more than which one you use.'},
+      {val:'Email marketing (Mailchimp, ConvertKit)',  tip:'Good foundation. The key question is whether it\'s connected to your CRM and lead capture.'},
+      {val:'Scheduling tool (Calendly, Acuity)',        tip:'Eliminates back-and-forth. Even more powerful when connected to your CRM for automatic contact creation.'},
+      {val:'Project management (Asana, Notion)',        tip:'Helps with internal ops. Airtable can combine project management with a database and automations in one tool.'},
+      {val:'Zapier / Make / automation tool',           tip:'An automation layer multiplies the value of every other tool you have. This is usually the highest-ROI addition.'},
+      {val:'Social scheduling (Buffer, Later)',         tip:'Saves 2–3 hours/week on content. Even more powerful paired with an AI content workflow.'},
+      {val:'Reporting dashboards',                      tip:'Automatically tracking KPIs puts you ahead of 80% of small businesses. Most still do this manually.'},
+      {val:'None of the above',                         tip:"That's exactly what this audit is for. We'll show you where to start for maximum impact."}
+    ]
   },
   {
-    id: 'time_drain', type: 'multi', num: '08',
-    text: 'Where do you lose the most time?',
-    hint: 'Pick your top pain points',
-    cat: 'Pain points',
-    options: ['Repetitive client emails','Manual data entry / reporting','Posting on social media','Chasing invoices / payments','Onboarding new clients','Scheduling and rescheduling','Creating content from scratch','Internal team communication']
+    id:'time_drain', type:'multi', num:'08',
+    text:'Where do you lose the most time?',
+    hint:'Be honest — this shapes your recommendations',
+    cat:'Pain points',
+    options:[
+      {val:'Repetitive client emails',       tip:'Automated sequences and templates in Keap typically eliminate 80% of repetitive email work.'},
+      {val:'Manual data entry / reporting',  tip:'Airtable + Make can automate most data capture and generate reports automatically.'},
+      {val:'Posting on social media',        tip:'A scheduling tool + AI content workflow reduces this to about 1 focused hour per week.'},
+      {val:'Chasing invoices / payments',    tip:'Automated payment reminders in Keap reduce late payments by 60% on average for our clients.'},
+      {val:'Onboarding new clients',         tip:'A standardized onboarding automation in Keap saves 3–4 hours per new client — and improves their experience.'},
+      {val:'Scheduling and rescheduling',    tip:'Calendly + Keap integration eliminates almost all manual scheduling work.'},
+      {val:'Creating content from scratch',  tip:'AI-assisted content workflows (we build these in Make + Airtable) cut creation time by 50–60%.'},
+      {val:'Internal team communication',    tip:'Softr client portals and Airtable automations significantly reduce internal back-and-forth.'}
+    ]
   }
 ];
 
-let answers = {};
+let answers  = {};
 let currentQ = 0;
 
-// ── Airtable POST ──────────────────────────────
+// ── Airtable POST ─────────────────────────────
 async function postToAirtable(ans) {
   const fields = {
-    'Business name':          ans.url || '',
-    'Website URL':            ans.url || '',
-    'Business type':          ans.business_type || '',
-    'Team size':              ans.team_size || '',
-    'Lead capture method':    ans.lead_capture || '',
-    'Automated follow-up?':   ans.follow_up || '',
-    'Scheduling method':      ans.scheduling || '',
-    'Tools in use':           (ans.tools || []).join(', '),
-    'Biggest pain point':     (ans.time_drain || []).join(', '),
-    'Tier':                   'Free'
-    // TIER: hardcoded to Free until payment integration is live.
-    // To re-enable paid tier: add "Tier" single-select to the table,
-    // build a Stripe webhook (checkout.session.completed) that finds
-    // the matching record by email and sets Tier = "Paid" via the
-    // Airtable REST API, then swap the line above for a live lookup.
+    'Business name':        ans.url || ans.email || '',
+    'Email':                ans.email  || '',
+    'Website URL':          ans.url    || '',
+    'Business type':        ans.business_type  || '',
+    'Team size':            ans.team_size      || '',
+    'Lead capture method':  ans.lead_capture   || '',
+    'Automated follow-up?': ans.follow_up      || '',
+    'Scheduling method':    ans.scheduling     || '',
+    'Tools in use':         (ans.tools      || []).join(', '),
+    'Biggest pain point':   (ans.time_drain || []).join(', '),
+    'Tier': 'Free'
+    // TIER: hardcoded to Free until Stripe is live.
+    // To enable paid tier: build a Stripe webhook (checkout.session.completed)
+    // that finds the matching record by email and sets Tier = "Paid"
+    // via the Airtable REST API.
   };
   try {
     const res = await fetch(
       `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_TABLE)}`,
       {
-        method: 'POST',
-        headers: { 'Authorization': `Bearer ${AIRTABLE_TOKEN}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ fields })
+        method:'POST',
+        headers:{'Authorization':`Bearer ${AIRTABLE_TOKEN}`,'Content-Type':'application/json'},
+        body: JSON.stringify({fields})
       }
     );
-    if (!res.ok) { const e = await res.json(); console.error('Airtable error:', e); return null; }
-    const data = await res.json();
-    return data.id;
-  } catch (err) {
-    console.error('Airtable fetch failed:', err);
-    return null;
-  }
+    if (!res.ok) { console.error('Airtable error:', await res.json()); return null; }
+    return (await res.json()).id;
+  } catch(err) { console.error('Airtable fetch failed:', err); return null; }
 }
 
-// ── Scoring ──────────────────────────────────
+// ── Scoring ───────────────────────────────────
 function calcScores() {
-  const s = { leads: 20, scheduling: 20, comms: 40, reporting: 30, content: 25 };
+  const s = {leads:20, scheduling:20, comms:42, reporting:30, content:25};
+
   const fu = answers.follow_up || '';
-  if (fu.includes('manually'))         s.leads = 15;
-  else if (fu.includes('rough'))       s.leads = 30;
+  if      (fu.includes('manually'))    s.leads = 15;
+  else if (fu.includes('rough'))       s.leads = 32;
   else if (fu.includes('Auto-reply'))  s.leads = 55;
   else if (fu.includes('Fully'))       s.leads = 82;
   else if (fu.includes('CRM'))         s.leads = 95;
 
   const sch = answers.scheduling || '';
-  if (sch.includes('Back-and-forth'))        s.scheduling = 10;
-  else if (sch.includes('call or text'))     s.scheduling = 20;
+  if      (sch.includes('Back-and-forth'))   s.scheduling = 10;
+  else if (sch.includes('call or text'))     s.scheduling = 22;
   else if (sch.includes('Calendly'))         s.scheduling = 65;
   else if (sch.includes('Automated'))        s.scheduling = 92;
   else if (sch.includes('not applicable'))   s.scheduling = 80;
@@ -741,7 +680,8 @@ function calcScores() {
   const tools = answers.tools || [];
   const tc = tools.filter(t => t !== 'None of the above').length;
   s.reporting = Math.min(95, 20 + tc * 12);
-  if (tools.some(t => t.includes('Zapier'))) {
+
+  if (tools.some(t => t.includes('Zapier') || t.includes('Make'))) {
     s.leads      = Math.min(98, s.leads + 10);
     s.scheduling = Math.min(98, s.scheduling + 10);
   }
@@ -749,123 +689,240 @@ function calcScores() {
             : tools.some(t => t.includes('Email marketing'))   ? 55 : 20;
 
   const pain = answers.time_drain || [];
-  s.comms = 40;
-  if (pain.includes('Repetitive client emails')) s.comms -= 20;
-  if (pain.includes('Onboarding new clients'))   s.comms -= 15;
-  if (tools.some(t => t.includes('CRM')))        s.comms += 35;
+  s.comms = 42;
+  if (pain.includes('Repetitive client emails'))  s.comms -= 20;
+  if (pain.includes('Onboarding new clients'))    s.comms -= 15;
+  if (pain.includes('Chasing invoices'))          s.comms -= 10;
+  if (tools.some(t => t.includes('CRM')))         s.comms += 35;
   s.comms = Math.max(5, Math.min(95, s.comms));
 
   const overall = Math.round(s.leads*.25 + s.scheduling*.2 + s.comms*.2 + s.reporting*.2 + s.content*.15);
-  return { overall, ...s };
+  return {overall, ...s};
 }
 
 function gradeInfo(score) {
-  if (score < 30) return { label: 'High opportunity', css: 'badge-poor',      headline: "You're leaving serious time on the table" };
-  if (score < 55) return { label: 'Room to grow',     css: 'badge-fair',      headline: "You've got the basics — now it's time to scale" };
-  if (score < 75) return { label: 'Solid foundation', css: 'badge-good',      headline: 'Good setup. A few changes will unlock a lot more.' };
-  return              { label: 'Well optimized',   css: 'badge-excellent', headline: "You're ahead of most — let's find the remaining gaps" };
+  if (score < 30) return {label:'High opportunity', css:'badge-poor',      headline:"You're leaving serious time on the table"};
+  if (score < 55) return {label:'Room to grow',     css:'badge-fair',      headline:"You've got the basics — now it's time to scale"};
+  if (score < 75) return {label:'Solid foundation', css:'badge-good',      headline:'Good setup. A few targeted changes will unlock a lot more.'};
+  return              {label:'Well optimized',   css:'badge-excellent', headline:"You're ahead of most businesses — let's find the remaining gaps"};
 }
 
 function scoreDesc(score) {
   const pain = (answers.time_drain || [])[0] || 'repetitive tasks';
-  if (score < 30) return `Your biggest quick win is automating lead follow-up and scheduling — two changes that typically save 8–12 hours a week. "${pain}" is likely your biggest drain right now.`;
-  if (score < 55) return `You have some tools in place but they aren't fully connected. An automation layer like Zapier or Make could recover 5–8 hours a week.`;
-  if (score < 75) return `You're in good shape. The remaining opportunity is in ${pain.toLowerCase()} — likely worth $200–500/month in recovered time.`;
-  return `You've built solid habits. The final 20% usually comes from custom integrations and AI-assisted workflows.`;
+  const biz  = answers.business_type || 'your business type';
+  if (score < 30) return `For a ${biz}, the biggest quick win is automating lead follow-up and scheduling — two changes that typically save 8–12 hours a week. "${pain}" is your most expensive bottleneck right now.`;
+  if (score < 55) return `You have tools in place but they aren't fully connected. An automation layer like Make wired into a CRM could recover 5–8 hours a week and eliminate most of your "${pain}" problem.`;
+  if (score < 75) return `You're in good shape. The remaining opportunity is around ${pain.toLowerCase()} — typically worth $300–600/month in recovered time for a team your size.`;
+  return `You've built solid habits. The final 20% usually comes from custom integrations, AI-assisted workflows, and tighter reporting — the kind we build in Airtable and Make.`;
 }
 
-// ── Render ────────────────────────────────────
+// ── Recommendations engine ────────────────────
+function buildRecs(data) {
+  const recs  = [];
+  const tools = answers.tools      || [];
+  const pain  = answers.time_drain || [];
+  const hasCRM  = tools.some(t => t.includes('CRM'));
+  const hasAuto = tools.some(t => t.includes('Zapier') || t.includes('Make'));
+  const hasCal  = tools.some(t => t.includes('Calendly') || t.includes('Scheduling'));
+
+  if (data.leads < 70) {
+    recs.push({
+      icon:'🎯', color:'#fe6930',
+      priority: data.leads < 35 ? 'High priority' : 'Medium priority',
+      pClass:   data.leads < 35 ? 'priority-high' : 'priority-medium',
+      title:'Automate your lead follow-up',
+      body: hasCRM
+        ? `You have a CRM — the next step is building a proper automated follow-up sequence inside it. Most clients recover 4–6 hours/week just from automating the first 3 touchpoints after a new lead comes in.`
+        : `Every lead without a fast, automated follow-up is a missed opportunity. We set this up in Keap — it handles the entire follow-up sequence automatically, triggered the moment a new lead comes in, with no manual work.`,
+      toolKeys: hasCRM ? ['make','keap'] : ['keap','make'],
+      cta:'Talk to us about building this →'
+    });
+  }
+
+  if (data.scheduling < 65) {
+    recs.push({
+      icon:'📅', color:'#2E6B4F',
+      priority: data.scheduling < 30 ? 'High priority' : 'Medium priority',
+      pClass:   data.scheduling < 30 ? 'priority-high' : 'priority-medium',
+      title: hasCal ? 'Connect your booking tool to your CRM' : 'Eliminate scheduling back-and-forth',
+      body: hasCal
+        ? `You already have a booking tool — now wire it into Keap so every booked call auto-creates a contact, logs the meeting, and kicks off a prep email sequence. We build this connection in about a day.`
+        : `Back-and-forth scheduling costs 8+ emails per booking. A Calendly link takes 10 minutes to set up. Connected to Keap, it automatically creates the contact, tags them, and starts an onboarding sequence — all without touching anything manually.`,
+      toolKeys:['calendly','keap','make'],
+      cta:'Talk to us about building this →'
+    });
+  }
+
+  if (pain.includes('Onboarding new clients') || pain.includes('Repetitive client emails')) {
+    recs.push({
+      icon:'💬', color:'#C9952A',
+      priority:'High priority', pClass:'priority-high',
+      title:'Build an automated client onboarding sequence',
+      body:`A Keap onboarding sequence sends the right information at the right time — welcome email, intake form, contract, kick-off booking — without anyone lifting a finger. Your clients get a more professional experience, and your team gets 3–4 hours back per new client.`,
+      toolKeys:['keap','airtable','softr'],
+      cta:'Talk to us about building this →'
+    });
+  }
+
+  if (data.reporting < 50 || pain.includes('Manual data entry / reporting')) {
+    recs.push({
+      icon:'📊', color:'#185FA5',
+      priority: data.reporting < 30 ? 'High priority' : 'Medium priority',
+      pClass:   data.reporting < 30 ? 'priority-high' : 'priority-medium',
+      title:'Replace manual reporting with a live dashboard',
+      body: !hasAuto
+        ? `Manual data entry is the most automatable — and least glamorous — problem in most businesses. We build Airtable bases connected via Make that pull data automatically and update dashboards in real time. No more copy-paste.`
+        : `You have automation tools — point them at your reporting. An Airtable base wired to your existing stack via Make can replace most manual data entry and give you a live view of your business KPIs.`,
+      toolKeys:['airtable','make','softr'],
+      cta:'Talk to us about building this →'
+    });
+  }
+
+  if (data.content < 55 || pain.includes('Creating content from scratch')) {
+    recs.push({
+      icon:'📢', color:'#534AB7',
+      priority:'Medium priority', pClass:'priority-medium',
+      title:'Build an AI-assisted content workflow',
+      body:`Creating content from scratch every week is one of the biggest time drains for small teams. We build content workflows in Airtable + Make that use AI to generate first drafts from your inputs, schedule posts, and track performance — typically cutting creation time by 50–60%.`,
+      toolKeys:['airtable','make'],
+      cta:'Talk to us about building this →'
+    });
+  }
+
+  if (recs.length === 0) {
+    recs.push({
+      icon:'🚀', color:'#fe6930',
+      priority:'Next level', pClass:'priority-low',
+      title:'Fine-tune your integration layer',
+      body:`Your setup is already solid. The final gains usually come from tightening connections between tools — eliminating any remaining manual handoffs, adding AI-assisted steps, and building a reporting layer that gives you a clear picture of what's working. We'd love to dig into the specifics with you.`,
+      toolKeys:['make','airtable','softr'],
+      cta:'Book a strategy session →'
+    });
+  }
+
+  return recs.slice(0,3);
+}
+
+// ── Build UI ──────────────────────────────────
 function buildProgress() {
   const el = document.getElementById('progressSteps');
   el.innerHTML = '';
-  QUESTIONS.forEach((_, i) => {
+  QUESTIONS.forEach((_,i) => {
     const d = document.createElement('div');
     d.className = 'progress-step' + (i < currentQ ? ' done' : i === currentQ ? ' active' : '');
     el.appendChild(d);
   });
-  document.getElementById('progressLabel').textContent = `Question ${currentQ + 1} of ${QUESTIONS.length}`;
+  document.getElementById('progressLabel').textContent = `Question ${currentQ+1} of ${QUESTIONS.length}`;
   document.getElementById('progressCat').textContent   = QUESTIONS[currentQ]?.cat || '';
 }
 
 function buildQuestions() {
   const wrap = document.getElementById('questionsContainer');
   wrap.innerHTML = '';
-  QUESTIONS.forEach((q, i) => {
+  QUESTIONS.forEach((q,i) => {
     const card = document.createElement('div');
-    card.className = 'q-card' + (i === currentQ ? ' active' : '');
+    card.className = 'q-card' + (i===currentQ ? ' active' : '');
     card.id = `qcard-${i}`;
-    card.innerHTML = buildQHTML(q, i);
+    card.innerHTML = buildQHTML(q,i);
     wrap.appendChild(card);
   });
 }
 
-function buildQHTML(q, i) {
+function buildQHTML(q,i) {
   let input = '';
-  const isLast = i === QUESTIONS.length - 1;
+  const isLast = i === QUESTIONS.length-1;
 
-  if (q.type === 'url') {
+  if (q.type === 'contact') {
+    const urlVal   = answers['url']   || '';
+    const emailVal = answers['email'] || '';
+    const ready    = urlVal.length > 4 && emailVal.includes('@');
     input = `
-      <div class="url-row">
-        <input type="url" class="url-field" id="input-${q.id}"
-          placeholder="https://yourbusiness.com"
-          value="${answers[q.id] || ''}"
-          oninput="handleURL(this)">
-        <button class="btn-next" id="urlbtn-${i}" onclick="nextQ()"
-          ${answers[q.id] ? '' : 'disabled'}>Scan →</button>
-      </div>`;
+      <div class="field-stack">
+        <div>
+          <div class="field-label">Business website</div>
+          <input type="url" class="url-field" id="input-url"
+            placeholder="https://yourbusiness.com"
+            value="${urlVal}"
+            oninput="handleContact()">
+        </div>
+        <div>
+          <div class="field-label">Your email — we'll send your results here</div>
+          <input type="email" class="url-field" id="input-email"
+            placeholder="you@yourbusiness.com"
+            value="${emailVal}"
+            oninput="handleContact()">
+        </div>
+        <button class="btn-next" id="urlbtn-${i}" onclick="nextQ()" ${ready?'':'disabled'}>Start audit →</button>
+      </div>
+      <p style="font-size:.7rem;color:rgba(255,255,255,.22);margin-top:.75rem;">🔒 No spam. We send your results and occasional automation tips. Unsubscribe any time.</p>`;
+
   } else if (q.type === 'single') {
-    input = `<div class="options-grid">${q.options.map(o =>
-      `<button class="option-btn${answers[q.id]===o?' selected':''}"
-        onclick="pickOne('${q.id}',this,'${o.replace(/'/g,"\\'")}')">
-        ${o}
-      </button>`).join('')}</div>`;
+    input = `<div class="options-grid">${q.options.map(o => {
+      const val    = typeof o==='string' ? o : o.val;
+      const tip    = typeof o==='object' ? (o.tip||'') : '';
+      const impact = typeof o==='object' ? (o.impact||'') : '';
+      const impactHTML = impact ? `<span class="score-impact impact-${impact}">${impact==='high'?'↑ Strong signal':impact==='medium'?'↑ Positive signal':'↓ Lower score'}</span>` : '';
+      const tipHTML    = tip    ? `<span class="opt-tip">?<span class="opt-tip__bubble">${tip}</span></span>` : '';
+      const sel = answers[q.id]===val ? ' selected' : '';
+      return `<button class="option-btn${sel}" onclick="pickOne('${q.id}',this,'${val.replace(/'/g,"\\'")}')">
+        ${tipHTML}${val}${impactHTML}
+      </button>`;
+    }).join('')}</div>`;
+
   } else {
     const sel = answers[q.id] || [];
     input = `<p class="multi-hint">Select all that apply</p>
-      <div class="options-grid">${q.options.map(o =>
-        `<button class="option-btn${sel.includes(o)?' selected':''}"
-          onclick="pickMany('${q.id}',this,'${o.replace(/'/g,"\\'")}')">
-          ${o}
-        </button>`).join('')}</div>`;
+      <div class="options-grid">${q.options.map(o => {
+        const val  = typeof o==='string' ? o : o.val;
+        const tip  = typeof o==='object' ? (o.tip||'') : '';
+        const tipHTML = tip ? `<span class="opt-tip">?<span class="opt-tip__bubble">${tip}</span></span>` : '';
+        const isSel   = sel.includes(val) ? ' selected' : '';
+        return `<button class="option-btn${isSel}" onclick="pickMany('${q.id}',this,'${val.replace(/'/g,"\\'")}')">
+          ${tipHTML}${val}
+        </button>`;
+      }).join('')}</div>`;
   }
+
+  const navHTML = q.type !== 'contact' ? `
+    <div class="q-nav">
+      ${i > 0 ? `<button class="btn-back" onclick="prevQ()">← Back</button>` : '<span></span>'}
+      <button class="btn-next" id="qbtn-${i}"
+        onclick="${isLast ? 'submitAudit()' : 'nextQ()'}"
+        ${answers[q.id] && (Array.isArray(answers[q.id]) ? answers[q.id].length>0 : true) ? '' : 'disabled'}>
+        ${isLast ? 'See my score →' : 'Next →'}
+      </button>
+    </div>` : '';
 
   return `
     <div class="q-eyebrow">Question ${q.num}</div>
     <h3 class="q-text">${q.text}</h3>
     <p class="q-hint">${q.hint}</p>
     ${input}
-    ${q.type !== 'url' ? `
-    <div class="q-nav">
-      ${i > 0 ? `<button class="btn-back" onclick="prevQ()">← Back</button>` : '<span></span>'}
-      <button class="btn-next" id="qbtn-${i}"
-        onclick="${isLast ? 'submitAudit()' : 'nextQ()'}"
-        ${answers[q.id] && (Array.isArray(answers[q.id]) ? answers[q.id].length > 0 : true) ? '' : 'disabled'}>
-        ${isLast ? 'See my score →' : 'Next →'}
-      </button>
-    </div>` : ''}`;
+    ${navHTML}`;
 }
 
-function handleURL(el) {
-  answers['url'] = el.value.trim();
-  const btn = document.querySelector(`#qcard-0 .btn-next`);
-  if (btn) btn.disabled = answers['url'].length < 4;
+function handleContact() {
+  answers['url']   = document.getElementById('input-url')?.value.trim()   || '';
+  answers['email'] = document.getElementById('input-email')?.value.trim() || '';
+  const btn = document.querySelector('#qcard-0 .btn-next');
+  if (btn) btn.disabled = !(answers['url'].length > 4 && answers['email'].includes('@'));
 }
 
-function pickOne(id, el, val) {
+function pickOne(id,el,val) {
   answers[id] = val;
-  el.closest('.options-grid').querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+  el.closest('.options-grid').querySelectorAll('.option-btn').forEach(b=>b.classList.remove('selected'));
   el.classList.add('selected');
   const btn = document.querySelector(`#qcard-${currentQ} .btn-next`);
   if (btn) btn.disabled = false;
 }
 
-function pickMany(id, el, val) {
-  if (!answers[id]) answers[id] = [];
+function pickMany(id,el,val) {
+  if (!answers[id]) answers[id]=[];
   const idx = answers[id].indexOf(val);
-  idx > -1 ? answers[id].splice(idx, 1) : answers[id].push(val);
+  idx>-1 ? answers[id].splice(idx,1) : answers[id].push(val);
   el.classList.toggle('selected', answers[id].includes(val));
   const btn = document.querySelector(`#qcard-${currentQ} .btn-next`);
-  if (btn) btn.disabled = answers[id].length === 0;
+  if (btn) btn.disabled = answers[id].length===0;
 }
 
 function nextQ() {
@@ -873,9 +930,8 @@ function nextQ() {
   currentQ++;
   document.getElementById(`qcard-${currentQ}`).classList.add('active');
   buildProgress();
-  document.getElementById(`qcard-${currentQ}`).scrollIntoView({ behavior: 'smooth', block: 'center' });
+  document.getElementById(`qcard-${currentQ}`).scrollIntoView({behavior:'smooth',block:'center'});
 }
-
 function prevQ() {
   document.getElementById(`qcard-${currentQ}`).classList.remove('active');
   currentQ--;
@@ -883,91 +939,105 @@ function prevQ() {
   buildProgress();
 }
 
-// ── Submit ─────────────────────────────────────
 function submitAudit() {
   document.getElementById('questionsContainer').style.display = 'none';
   document.getElementById('analyzingState').classList.add('active');
-
-  // Fire Airtable POST in parallel — user never waits on it
   postToAirtable(answers);
-
   const statuses = [
-    'Scanning website…',
+    'Scoring your answers…',
     'Analyzing lead capture flows…',
     'Evaluating scheduling setup…',
     'Checking tool integrations…',
     'Scoring communication workflows…',
-    'Calculating your automation score…'
+    'Building your recommendations…'
   ];
-
-  let si = 0;
+  let si=0;
   const statusEl = document.getElementById('analyzingStatus');
-  const iv = setInterval(() => {
+  const iv = setInterval(()=>{
     si++;
     if (si < statuses.length) { statusEl.textContent = statuses[si]; }
     else { clearInterval(iv); showResults(); }
-  }, 900);
+  },900);
 }
 
-// ── Results ────────────────────────────────────
 function showResults() {
   document.getElementById('audit-wrap').style.display = 'none';
   document.querySelector('.pulse-hero').style.display = 'none';
-
   const results = document.getElementById('results');
   results.classList.add('active');
-  results.scrollIntoView({ behavior: 'smooth' });
+  results.scrollIntoView({behavior:'smooth'});
 
   const data  = calcScores();
   const grade = gradeInfo(data.overall);
 
-  // Ring animation
-  setTimeout(() => {
-    const ring = document.getElementById('ringFill');
-    const offset = 357 - (data.overall / 100) * 357;
-    ring.style.strokeDashoffset = offset;
-    if (data.overall < 30)      ring.style.stroke = '#E24B4A';
-    else if (data.overall < 55) ring.style.stroke = '#EF9F27';
-    else                        ring.style.stroke = '#fe6930';
+  setTimeout(()=>{
+    const ring   = document.getElementById('ringFill');
+    ring.style.strokeDashoffset = 357 - (data.overall/100)*357;
+    ring.style.stroke = data.overall<30 ? '#E24B4A' : data.overall<55 ? '#EF9F27' : '#fe6930';
     document.getElementById('scoreNum').textContent = data.overall;
-  }, 150);
+  },150);
 
   document.getElementById('scoreHeadline').textContent = grade.headline;
   document.getElementById('scoreDesc').textContent     = scoreDesc(data.overall);
   const badge = document.getElementById('scoreBadge');
   badge.textContent = grade.label;
-  badge.className = 'score-badge ' + grade.css;
+  badge.className   = 'score-badge ' + grade.css;
 
-  // Category rows
-  const cats = [
-    { key: 'leads',      label: 'Lead capture & follow-up', icon: '🎯', color: '#fe6930' },
-    { key: 'scheduling', label: 'Scheduling',                icon: '📅', color: '#2E6B4F' },
-    { key: 'comms',      label: 'Client communications',    icon: '💬', color: '#C9952A' },
-    { key: 'reporting',  label: 'Reporting & data',         icon: '📊', color: '#185FA5', locked: true },
-    { key: 'content',    label: 'Content & social',         icon: '📢', color: '#534AB7', locked: true }
+  const catMeta = [
+    {key:'leads',      label:'Lead capture & follow-up', icon:'🎯', color:'#fe6930',  tip:'How well you capture and automatically follow up with new leads. Weighted 25% of your total score.'},
+    {key:'scheduling', label:'Scheduling',                icon:'📅', color:'#2E6B4F',  tip:'How friction-free it is for leads and clients to book time with you. Weighted 20%.'},
+    {key:'comms',      label:'Client communications',    icon:'💬', color:'#C9952A',  tip:'Your client communication and onboarding workflows. Weighted 20%.'},
+    {key:'reporting',  label:'Reporting & data',         icon:'📊', color:'#185FA5',  tip:'How automated your data collection and reporting is — based on your tool count. Weighted 20%.'},
+    {key:'content',    label:'Content & social',         icon:'📢', color:'#534AB7',  tip:'Your content creation and social media automation maturity. Weighted 15%.'},
   ];
 
-  document.getElementById('catRows').innerHTML = cats.map(c => `
+  document.getElementById('catRows').innerHTML = catMeta.map(c => `
     <div class="cat-row">
       <div class="cat-icon" style="background:${c.color}18">${c.icon}</div>
-      <div class="cat-name">${c.label}</div>
+      <div class="cat-name">
+        ${c.label}
+        <span class="tip tip--light">
+          <span class="tip__icon">?</span>
+          <span class="tip__bubble">${c.tip}</span>
+        </span>
+      </div>
       <div class="cat-bar-wrap">
         <div class="cat-bar-fill" id="fill-${c.key}" style="background:${c.color}"></div>
       </div>
-      <div class="cat-pct">${c.locked ? '—' : data[c.key] + '%'}</div>
+      <div class="cat-pct">${data[c.key]}%</div>
     </div>`).join('');
 
-  setTimeout(() => {
-    cats.forEach((c, i) => {
-      setTimeout(() => {
+  setTimeout(()=>{
+    catMeta.forEach((c,i)=>{
+      setTimeout(()=>{
         const el = document.getElementById(`fill-${c.key}`);
-        if (el) el.style.width = (c.locked ? 0 : data[c.key]) + '%';
-      }, i * 150);
+        if (el) el.style.width = data[c.key]+'%';
+      },i*150);
     });
-  }, 300);
+  },300);
+
+  const recs = buildRecs(data);
+  document.getElementById('recCards').innerHTML = recs.map(r=>`
+    <div class="rec-card">
+      <div class="rec-card__header">
+        <div class="rec-card__icon" style="background:${r.color}18">${r.icon}</div>
+        <div>
+          <div class="rec-card__title">${r.title}</div>
+          <div class="rec-card__priority ${r.pClass}">${r.priority}</div>
+        </div>
+      </div>
+      <div class="rec-card__body">${r.body}</div>
+      <div class="rec-card__tools">
+        <span class="tools-label">Tools we use for this:</span>
+        ${r.toolKeys.map(k=>toolTag(k)).join('')}
+      </div>
+      <button class="rec-cta" onclick="bookConsulting()">
+        ${r.cta}
+        <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6h10M7 2l4 4-4 4"/></svg>
+      </button>
+    </div>`).join('');
 }
 
-// ── Page actions ───────────────────────────────
 function startAudit() {
   document.querySelector('.pulse-hero').style.display = 'none';
   const wrap = document.getElementById('audit-wrap');
@@ -975,18 +1045,18 @@ function startAudit() {
   currentQ = 0; answers = {};
   buildProgress();
   buildQuestions();
-  wrap.scrollIntoView({ behavior: 'smooth' });
+  wrap.scrollIntoView({behavior:'smooth'});
 }
 
 function showPaidModal()  { document.getElementById('paidModal').classList.add('open'); }
 function closePaidModal() { document.getElementById('paidModal').classList.remove('open'); }
 function processPurchase() {
   closePaidModal();
-  // TODO: replace with your Stripe payment link
+  // TODO: replace with Stripe payment link
   alert('This will connect to Stripe. Full report delivered after payment.');
 }
 function bookConsulting() {
-  // TODO: replace with your Calendly link
+  // TODO: replace with Calendly link
   alert('This will open your Calendly booking link.');
 }
 function subscribeEmail() {
@@ -995,12 +1065,11 @@ function subscribeEmail() {
   alert(`Thanks! "${email}" added to the newsletter.`);
 }
 function scrollToScore() {
-  document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+  document.getElementById('results').scrollIntoView({behavior:'smooth'});
 }
 
-// Close paid modal on outside click
 document.getElementById('paidModal').addEventListener('click', function(e) {
-  if (e.target === this) closePaidModal();
+  if (e.target===this) closePaidModal();
 });
 </script>
 </body>
