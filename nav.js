@@ -96,12 +96,12 @@
         padding: .5rem 0; z-index: 300; border: 1px solid var(--rule);
       }
       .nav__services.open .nav__dropdown { display: block; }
-      .nav__dropdown-item {
+      .nav__links a.nav__dropdown-item {
         display: block; padding: .7rem 1.25rem;
-        font-size: .84rem; font-weight: 500; color: #3a5570;
+        font-size: .84rem; font-weight: 500; color: var(--mid);
         transition: color .15s, background .15s;
       }
-      .nav__dropdown-item:hover { color: var(--orange); background: var(--off); }
+      .nav__links a.nav__dropdown-item:hover { color: var(--orange); background: var(--off); }
     </style>
     <nav class="nav" id="site-nav">
       <div class="nav__inner">
