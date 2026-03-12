@@ -48,7 +48,7 @@
     <g>
       <path fill="#fe6930" d="M232.3,39.1c15.3,0,27.7,12.4,27.7,27.7v13.8c0,11.8-7.9,21.8-19,25.8-2.5.9-4.8,2.5-6.6,4.6l-14,16.2-12-13.8c-3-3.5-7.5-5.5-12.1-5.5h-2.7c-1.7,0-3.1,1.4-3.1,3.1v6.1c0,1.7,1.4,3.1,3.1,3.1h2.7c1.1,0,2.1.5,2.9,1.3l12.1,14c2.3,2.7,5.6,4.2,9.1,4.2s6.8-1.5,9.1-4.2l14.1-16.4c.4-.5,1-.9,1.5-1.1,16.2-5.5,27.1-20.7,27.1-37.9v-13.3c0-22.1-17.9-40-40-40h-62.9c-5.2,0-10.2,1-14.7,2.8-1.4.5-1.3,2.4.1,2.9,4.6,1.4,9.3,3.3,13.2,5.8s1.9.9,2.9.9h61.4Z"/>
       <path fill="#fff" d="M238.2,73.9c-.6-4.9-3-9.4-6.9-12.5-3.9-3.1-8.8-4.5-13.7-3.9-4.9.6-9.4,3-12.5,6.9-1.1,1.3-1.9,2.8-2.6,4.4-.3.7-.9,1.1-1.6,1.1h-18.5c-.4,0-.7-.2-.8-.6-5.3-16.8-21-29-39.5-29H42.9c-18.6,0-35,12.4-39.9,30.3-.7,2.6-.5,5.4.9,7.6s4.3,3.9,7.3,3.9h189.9c.7,0,1.3.4,1.6,1.1,1.2,2.8,3.1,5.4,5.6,7.3,3.3,2.6,7.4,4,11.5,4s2.2,0,3.3-.3c3.1-.5,6-1.8,8.4-3.8,5.1-4.2,7.5-10.3,6.8-16.6ZM17.5,69.9c-.6,0-1-.7-.8-1.2,4.9-9.7,14.9-16.1,26.1-16.1h99.3c11.4,0,21.3,6.6,26.1,16.1.3.6-.1,1.2-.8,1.2H17.5ZM224.7,80c-1.1,1.3-2.6,2.2-4.2,2.4-1.7.2-3.3-.3-4.7-1.3-1.3-1.1-2.2-2.6-2.4-4.2-.2-1.7.3-3.3,1.3-4.7,1.1-1.3,2.6-2.2,4.2-2.4.2,0,.5,0,.7,0,1.4,0,2.8.5,3.9,1.4,1.3,1.1,2.2,2.6,2.4,4.2s-.3,3.3-1.3,4.7Z"/>
-      <path fill="#fff" d="M171.3,116.5c0,16.1-13.1,29.2-29.2,29.2h-17c-4.9,0-9.6,2.1-12.8,5.9l-17.6,20.2-17.5-20.2c-3.2-3.7-7.9-5.8-12.8-5.8h-21.6c-14.5,0-26.6-10.7-28.8-24.6,0-.5.3-1,.8-1h67.6c.7,0,1.3.4,1.6,1.1,2.9,6.8,9.6,11.4,17.1,11.4s5.6-.6,8.3-1.9c6.1-2.9,10.1-9.2,10.3-15.9.4-11.6-9.6-20.5-20.7-19.2-6.9.8-12.5,5.3-15,11.3-.3.7-.9,1.1-1.6,1.1H10c-4.8,0-8.6,3.9-8.6,8.6,0,22.9,18.6,41.5,41.4,41.5h21.6c1.3,0,2.6.6,3.5,1.6l17.5,20.2c2.3,2.7,5.8,4.3,9.3,4.3h0c3.6,0,7-1.6,9.3-4.3l17.5-20.2c.9-1,2.2-1.6,3.5-1.6h17c22.9,0,41.4-18.6,41.4-41.4v-19c0-1.7-1.4-3.1-3.1-3.1h-6.1c-1.7,0-3.1,1.4-3.1,3.1v19ZM100.5,107.7c.2,0,.5,0,.7,0,3.2,0,5.9,2.4,6.3,5.6.4,3.5-2.1,6.6-5.6,7-1.7.2-3.3-.3-4.7-1.3s-2.2-2.6-2.4-4.2c-.4-3.5,2.1,6.6,5.6-7Z"/>
+      <path fill="#fff" d="M171.3,116.5c0,16.1-13.1,29.2-29.2,29.2h-17c-4.9,0-9.6,2.1-12.8,5.9l-17.6,20.2-17.5-20.2c-3.2-3.7-7.9-5.8-12.8-5.8h-21.6c-14.5,0-26.6-10.7-28.8-24.6,0-.5.3-1,.8-1h67.6c.7,0,1.3.4,1.6,1.1,2.9,6.8,9.6,11.4,17.1,11.4s5.6-.6,8.3-1.9c6.1-2.9,10.1-9.2,10.3-15.9.4-11.6-9.6-20.5-20.7-19.2-6.9.8-12.5,5.3-15,11.3-.3.7-.9,1.1-1.6,1.1H10c-4.8,0-8.6,3.9-8.6,8.6,0,22.9,18.6,41.5,41.4,41.5h21.6c1.3,0,2.6.6,3.5,1.6l17.5,20.2c2.3,2.7,5.8,4.3,9.3,4.3h0c3.6,0,7-1.6,9.3-4.3l17.5-20.2c.9-1,2.2-1.6,3.5-1.6h17c22.9,0,41.4-18.6,41.4-41.4v-19c0-1.7-1.4-3.1-3.1-3.1h-6.1c-1.7,0-3.1,1.4-3.1,3.1v19ZM100.5,107.7c.2,0,.5,0,.7,0,3.2,0,5.9,2.4,6.3,5.6.4,3.5-2.1,6.6-5.6,7-1.7.2-3.3-.3-4.7-1.3s-2.2-2.6-2.4-4.2c-.4-3.5,2.1-6.6,5.6-7Z"/>
     </g>
   </svg>`;
 
@@ -64,6 +64,10 @@
       `<a href="${href}" class="${page === href.split('/').pop() ? 'active' : ''}">${label}</a>`
     ).join('');
 
+    const desktopSvcItems = SERVICE_LINKS.map(([href, label]) =>
+      `<a href="${href}" class="nav__dropdown-item">${label}</a>`
+    ).join('');
+
     const drawerLinks = NAV_LINKS.map(([href, label]) =>
       `<a href="${href}" class="${page === href.split('/').pop() ? 'active' : ''}">${label}</a>`
     ).join('');
@@ -73,16 +77,51 @@
     ).join('');
 
     return `
+    <style>
+      .nav__services { position: relative; }
+      .nav__services-btn {
+        font-size: .82rem; font-weight: 500; color: rgba(255,255,255,.48);
+        background: none; border: none; cursor: pointer;
+        display: flex; align-items: center; gap: .3rem;
+        transition: color .15s; padding: 0; font-family: var(--ff-body);
+      }
+      .nav__services-btn:hover,
+      .nav__services.open .nav__services-btn { color: #fff; }
+      .nav__services-btn svg { width: 10px; height: 10px; transition: transform .2s; }
+      .nav__services.open .nav__services-btn svg { transform: rotate(180deg); }
+      .nav__dropdown {
+        display: none; position: absolute; top: calc(100% + 14px); left: 50%;
+        transform: translateX(-50%); background: #fff; border-radius: 8px;
+        box-shadow: 0 8px 32px rgba(5,46,77,.18); min-width: 210px;
+        padding: .5rem 0; z-index: 300; border: 1px solid var(--rule);
+      }
+      .nav__services.open .nav__dropdown { display: block; }
+      .nav__dropdown-item {
+        display: block; padding: .7rem 1.25rem;
+        font-size: .84rem; font-weight: 500; color: var(--mid);
+        transition: color .15s, background .15s;
+      }
+      .nav__dropdown-item:hover { color: var(--orange); background: var(--off); }
+    </style>
     <nav class="nav" id="site-nav">
       <div class="nav__inner">
         <a href="/index.html" class="nav__logo">${LOGO_SVG}</a>
-        <div class="nav__links">${desktopLinks}</div>
+        <div class="nav__links">
+          ${desktopLinks}
+          <div class="nav__services" id="nav-services">
+            <button class="nav__services-btn" id="nav-services-btn">
+              Services
+              <svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg>
+            </button>
+            <div class="nav__dropdown">${desktopSvcItems}</div>
+          </div>
+        </div>
         <a href="/contact.html" class="btn btn-primary nav__cta-desk">Book a free call</a>
-        <button class="nav__hamburger" id="nav-hamburger" aria-label="Open menu">
+        <button class="nav__hamburger" id="nav-hamburger" aria-label="Open menu" aria-expanded="false">
           <span></span><span></span><span></span>
         </button>
       </div>
-      <div class="nav__drawer" id="nav-drawer">
+      <div class="nav__drawer" id="nav-drawer" aria-hidden="true">
         <div class="nav__drawer__label">Navigation</div>
         ${drawerLinks}
         <div class="nav__drawer__label">Services</div>
@@ -148,19 +187,19 @@
 
   /* ── Init ── */
   document.addEventListener('DOMContentLoaded', function () {
-    document.body.insertAdjacentHTML('afterbegin', buildNav());
-    document.body.insertAdjacentHTML('beforeend', buildNewsletterModal());
-    document.body.insertAdjacentHTML('beforeend', buildFooter());
 
-// Inject favicon
+    // Inject favicon
     var link = document.createElement('link');
     link.rel = 'icon';
     link.type = 'image/svg+xml';
     link.href = '/favicon.svg';
     document.head.appendChild(link);
 
+    // Build page chrome — each called ONCE
     document.body.insertAdjacentHTML('afterbegin', buildNav());
-    
+    document.body.insertAdjacentHTML('beforeend', buildNewsletterModal());
+    document.body.insertAdjacentHTML('beforeend', buildFooter());
+
     // Nav scroll
     const nav = document.getElementById('site-nav');
     window.addEventListener('scroll', function () {
@@ -170,18 +209,44 @@
     // Hamburger toggle
     const hamburger = document.getElementById('nav-hamburger');
     const drawer    = document.getElementById('nav-drawer');
+
     hamburger.addEventListener('click', function () {
-      hamburger.classList.toggle('open');
-      drawer.classList.toggle('open');
+      const isOpen = drawer.classList.contains('open');
+      if (isOpen) {
+        drawer.classList.remove('open');
+        hamburger.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+        drawer.setAttribute('aria-hidden', 'true');
+      } else {
+        drawer.classList.add('open');
+        hamburger.classList.add('open');
+        hamburger.setAttribute('aria-expanded', 'true');
+        drawer.setAttribute('aria-hidden', 'false');
+      }
     });
 
-    // Close drawer on link click
-    drawer.querySelectorAll('a').forEach(function(a) {
-      a.addEventListener('click', function() {
+    // Close drawer when a link inside it is tapped
+    drawer.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', function () {
         hamburger.classList.remove('open');
         drawer.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+        drawer.setAttribute('aria-hidden', 'true');
       });
     });
+
+    // Desktop Services dropdown
+    const servicesWrapper = document.getElementById('nav-services');
+    const servicesBtn     = document.getElementById('nav-services-btn');
+    if (servicesBtn) {
+      servicesBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        servicesWrapper.classList.toggle('open');
+      });
+      document.addEventListener('click', function () {
+        servicesWrapper.classList.remove('open');
+      });
+    }
 
     // Newsletter modal
     const modal   = document.getElementById('nl-modal');
@@ -201,16 +266,15 @@
     }
 
     nlClose.addEventListener('click', closeNewsletter);
-    modal.addEventListener('click', function(e) {
+    modal.addEventListener('click', function (e) {
       if (e.target === modal) closeNewsletter();
     });
-    document.addEventListener('keydown', function(e) {
+    document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') closeNewsletter();
     });
 
-    // Wire up any [data-newsletter] triggers
-    document.querySelectorAll('[data-newsletter]').forEach(function(el) {
-      el.addEventListener('click', function(e) {
+    document.querySelectorAll('[data-newsletter]').forEach(function (el) {
+      el.addEventListener('click', function (e) {
         e.preventDefault();
         openNewsletter();
       });
@@ -236,6 +300,7 @@
         if (!wasOpen) item.classList.add('open');
       });
     });
+
   });
 
 })();
