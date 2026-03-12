@@ -119,6 +119,7 @@ h1,h2,h3,h4 { font-family: var(--ff-head); font-weight: 300; line-height: 1.1; l
   font-size: .94rem; font-weight: 500; color: rgba(255,255,255,.55);
   padding: .7rem 0; border-bottom: 1px solid rgba(255,255,255,.05);
   transition: color .15s;
+  touch-action: manipulation; /* prevents 300ms tap delay on iOS */
 }
 .nav__drawer a:last-of-type { border-bottom: none; }
 .nav__drawer a:hover { color: #fff; }
