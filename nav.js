@@ -225,15 +225,10 @@
       }
     });
 
-    // Close drawer when a link inside it is tapped
-    drawer.querySelectorAll('a').forEach(function (a) {
-      a.addEventListener('click', function () {
-        hamburger.classList.remove('open');
-        drawer.classList.remove('open');
-        hamburger.setAttribute('aria-expanded', 'false');
-        drawer.setAttribute('aria-hidden', 'true');
-      });
-    });
+    // NOTE: The drawer link click handler has been intentionally removed.
+    // Closing the drawer on tap was causing ghost clicks to land on the logo
+    // and redirect to index.html on iOS Safari. The drawer resets naturally
+    // on each page load, so no manual close is needed.
 
     // Desktop Services dropdown
     const servicesWrapper = document.getElementById('nav-services');
@@ -243,8 +238,11 @@
         e.stopPropagation();
         servicesWrapper.classList.toggle('open');
       });
-      document.addEventListener('click', function () {
-        servicesWrapper.classList.remove('open');
+      // Scoped to outside the dropdown to avoid interfering with mobile taps
+      document.addEventListener('click', function (e) {
+        if (!servicesWrapper.contains(e.target)) {
+          servicesWrapper.classList.remove('open');
+        }
       });
     }
 
