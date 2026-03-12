@@ -3,7 +3,7 @@ title: "Top 10 Automations Every Residential Service Business Should Be Using to
 slug: "top-10-automations-every-residential-service-business-should-be-using-to-save-ti"
 date: "2026-03-12"
 author: "Martech Consulting"
-category: "Marketing Automation"
+category: "Automation"
 tags: ["Martech", "Automation", "CRM", "Email Marketing", "Lawn Care", "SMB"]
 excerpt: "Before we even jump into each of these automations, we need to start with a disclaimer. We know a lot of great SMBs, run by super cool humans who worry that..."
 canonical_url: "https://martechconsulting.io/blog/top-10-automations-every-residential-service-business-should-be-using-to-save-ti/"
