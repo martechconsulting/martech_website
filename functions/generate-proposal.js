@@ -1,13 +1,3 @@
-// functions/generate-proposal.js
-//
-// Cloudflare Pages Function — generates a personalized proposal via Claude
-// and saves it to Airtable.
-//
-// SETUP: Add to Cloudflare Pages → Settings → Environment Variables:
-//   ANTHROPIC_API_KEY          → your Anthropic API key
-//   AIRTABLE_TOKEN             → already set
-//   AIRTABLE_PROPOSALS_BASE_ID → base ID for your proposals Airtable base (different from Pulse)
-
 const AIRTABLE_TABLE = 'Proposals';
 
 const SERVICES_PRICING = `
@@ -83,7 +73,9 @@ INSTRUCTIONS:
 - Select 2–4 services that best fit this prospect's situation and budget
 - NEVER mention hourly rates anywhere in the proposal — show only investment ranges
 - Always consider whether a retainer tier fits the prospect's situation. If they need ongoing work (ads, email marketing, CRM management, platform maintenance), recommend the appropriate retainer tier alongside or instead of project work
-- If their budget is under $3K, recommend audits or the Essentials retainer as an entry point
+- Take the budget range seriously. If they say 'Under $1K', only recommend audits — do NOT recommend retainers. If '$1K-$5K', one project or Essentials retainer is the ceiling. Never propose a monthly retainer to someone who said their budget is under $1K
+- If the prospect's budget is genuinely too low for any of our services (i.e. they selected 'Under $1K' AND their needs require substantial work, OR they selected 'Under $1K' and are asking for builds, implementations, or retainers), respond with notReady: true instead of services. Be honest but warm — tell them what to do first to get ready, and point them to resources they can use now. This is not a rejection, it's a redirect
+- When notReady is true, provide 3-5 concrete actionable steps they can take themselves right now, and reference our blog at https://martechconsulting.io/blog and newsletter signup at https://martechconsulting.io/newsletter
 - If business type is Non-profit, automatically apply a 15% discount to all investment ranges and note it with a single line: "Non-profit rate applied"
 - Minimum engagement: $1,000 — never propose below this
 - For retainer recommendations: frame them as ongoing partnership, not a recurring bill — emphasize priority access, predictability, and the contracted rate discount vs. ad-hoc work
@@ -94,9 +86,11 @@ INSTRUCTIONS:
 - Total range should be the sum of selected services (use the lower end for small budgets)
 - Next steps should feel warm and low-pressure
 
-Respond ONLY with valid JSON, no markdown, no backticks, no explanation:
+Respond ONLY with valid JSON, no markdown, no backticks, no explanation.
 
+If the prospect IS ready for our services:
 {
+  "notReady": false,
   "executiveSummary": "2-3 sentences, personal and specific to their situation",
   "services": [
     {
@@ -111,6 +105,23 @@ Respond ONLY with valid JSON, no markdown, no backticks, no explanation:
   "totalRange": "$X,XXX – $X,XXX",
   "projectTimeline": "X–X weeks total",
   "nextSteps": "1-2 sentences, warm and low-pressure"
+}
+
+If the prospect is NOT ready (budget too low for their actual needs):
+{
+  "notReady": true,
+  "notReadySummary": "1-2 warm, honest sentences — not a rejection, a redirect. Acknowledge what they're trying to do.",
+  "actionableSteps": [
+    {
+      "step": "short title",
+      "description": "1-2 sentences of concrete advice they can act on today, no fluff"
+    }
+  ],
+  "resources": [
+    { "label": "Martech Consulting Blog", "url": "https://martechconsulting.io/blog" },
+    { "label": "The Automation Edge Newsletter", "url": "https://martechconsulting.io/newsletter" }
+  ],
+  "closingNote": "1 sentence — leave the door open warmly. E.g. when you're ready, we're here."
 }`;
 
   // ── Call Claude ────────────────────────────────────────────────────────
