@@ -95,7 +95,7 @@ export async function onRequestPost({ request, env }) {
     'Tier':              'Paid',
     'Upsell stage':      '$49 report',
     'Stripe session ID': stripeSessionId,
-    'Amount paid':       amountPaid,
+    'Amount Paid':       amountPaid,
     'Report sent':       false
     // Airtable automation fires when it sees Tier = "Paid":
     //   Script 1 → builds Claude prompt
