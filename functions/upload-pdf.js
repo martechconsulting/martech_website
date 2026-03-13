@@ -1,10 +1,3 @@
-// functions/upload-pdf.js
-//
-// Receives a base64-encoded PDF from the browser and uploads it
-// directly to the Airtable record's PDF attachment field.
-//
-// Called from proposal.html after the proposal is generated and rendered.
-
 export async function onRequestPost({ request, env }) {
 
   let body;
@@ -27,28 +20,46 @@ export async function onRequestPost({ request, env }) {
     bytes[i] = binaryStr.charCodeAt(i);
   }
 
-  // Upload directly to Airtable's Content API
-  // This endpoint accepts raw file bytes and attaches them to the record
+  const safeFilename = filename || 'proposal.pdf';
+
+  // Build multipart/form-data manually
+  // Airtable's Content API requires: file (bytes), filename, contentType
+  const boundary = '----FormBoundary' + Math.random().toString(36).slice(2);
+
+  const encoder = new TextEncoder();
+  const preamble = encoder.encode(
+    `--${boundary}\r\n` +
+    `Content-Disposition: form-data; name="file"; filename="${safeFilename}"\r\n` +
+    `Content-Type: application/pdf\r\n\r\n`
+  );
+  const suffix = encoder.encode(`\r\n--${boundary}--\r\n`);
+
+  // Concatenate preamble + file bytes + suffix
+  const multipart = new Uint8Array(preamble.length + bytes.length + suffix.length);
+  multipart.set(preamble, 0);
+  multipart.set(bytes, preamble.length);
+  multipart.set(suffix, preamble.length + bytes.length);
+
   const uploadUrl = `https://content.airtable.com/v0/${env.AIRTABLE_PROPOSALS_BASE_ID}/${recordId}/uploadAttachment/PDF`;
 
   try {
     const res = await fetch(uploadUrl, {
       method: 'POST',
       headers: {
-        'Authorization':             `Bearer ${env.AIRTABLE_TOKEN}`,
-        'Content-Type':              'application/octet-stream',
-        'x-airtable-application-id': env.AIRTABLE_PROPOSALS_BASE_ID,
-        'Content-Disposition':       `attachment; filename="${filename || 'proposal.pdf'}"`,
+        'Authorization': `Bearer ${env.AIRTABLE_TOKEN}`,
+        'Content-Type':  `multipart/form-data; boundary=${boundary}`,
       },
-      body: bytes
+      body: multipart
     });
 
+    const resText = await res.text();
+
     if (!res.ok) {
-      const err = await res.json();
-      console.error('Airtable PDF upload failed:', JSON.stringify(err));
-      return json({ error: JSON.stringify(err) }, 500);
+      console.error('Airtable PDF upload failed:', res.status, resText);
+      return json({ error: resText }, 500);
     }
 
+    console.log('PDF uploaded successfully for record:', recordId);
     return json({ success: true });
 
   } catch (err) {
