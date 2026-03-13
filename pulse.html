@@ -1049,6 +1049,9 @@ function prevQ() {
 }
 
 // ── Submit ────────────────────────────────────
+// Stores the saveAuditResults promise so processPurchase can await it
+let auditSavePromise = null;
+
 function submitAudit() {
   document.getElementById('questionsContainer').style.display = 'none';
   document.getElementById('analyzingState').classList.add('active');
@@ -1060,9 +1063,9 @@ function submitAudit() {
   lastRecs     = recs;
   const recTitles = recs.map(r => r.title);
 
-  // PATCH the existing record (created at Q1) with full answers + scores
-  // Fire and forget — user sees the analyzing animation while this runs
-  saveAuditResults(answers, scores, recTitles);
+  // PATCH the existing record with full answers + scores
+  // Store the promise so processPurchase can wait for it to complete before redirecting
+  auditSavePromise = saveAuditResults(answers, scores, recTitles);
 
   const statuses = [
     'Scoring your answers…',
@@ -1173,16 +1176,20 @@ function startAudit() {
 function showPaidModal()  { document.getElementById('paidModal').classList.add('open'); }
 function closePaidModal() { document.getElementById('paidModal').classList.remove('open'); }
 
-function processPurchase() {
+async function processPurchase() {
   closePaidModal();
 
   // TODO: replace with your actual Stripe payment link
   const STRIPE_LINK = 'https://buy.stripe.com/9B614ncPsgLw8xu881fQI00';
 
+  // Wait for audit data to finish saving to Airtable before leaving the page.
+  // This ensures all answers + scores are in the record before Stripe webhook fires.
+  if (auditSavePromise) {
+    try { await auditSavePromise; } catch(e) { console.warn('Audit save error:', e); }
+  }
+
   const stripeUrl = new URL(STRIPE_LINK);
 
-  // Pass Airtable record ID so the webhook knows which record to upgrade.
-  // If record wasn't created yet, fall back gracefully — Keith/Jon can match by email.
   if (airtableRecordId) {
     stripeUrl.searchParams.set('client_reference_id', airtableRecordId);
   } else {
