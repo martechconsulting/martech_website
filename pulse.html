@@ -517,9 +517,12 @@
 // All Airtable requests go through /submit (functions/submit.js).
 const AIRTABLE_TABLE = 'Martech Pulse Submissions';
 
-// Stores the Airtable record ID after initial POST so we can PATCH it on paid upgrade
-let airtableRecordId = null;
-// Stores computed scores so we can write them back on paid upgrade
+// ── State ─────────────────────────────────────
+// Flow:
+//   Q1 next    → POST contact info only → store record ID
+//   Audit done → PATCH record with answers + scores
+//   Purchase   → PATCH record Tier=Paid → triggers Airtable automation (Claude deep dive)
+let airtableRecordId = null; // set after Q1 POST, used for all subsequent PATCHes
 let lastScores = null;
 let lastRecs   = null;
 
@@ -656,18 +659,50 @@ const QUESTIONS = [
 let answers  = {};
 let currentQ = 0;
 
-// ── Airtable: CREATE record ───────────────────
-async function postToAirtable(ans, scores, recTitles) {
+// ── Airtable helper ───────────────────────────
+async function airtableRequest(fields, recordId = null) {
+  const body = recordId
+    ? { _method: 'PATCH', recordId, fields }
+    : { fields };
+  try {
+    const res = await fetch('/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    if (!res.ok) { console.error('Airtable error:', await res.json()); return null; }
+    const data = await res.json();
+    return data;
+  } catch(err) { console.error('Airtable request failed:', err); return null; }
+}
+
+// ── Step 1: POST contact info on Q1 "Start audit" ─
+// Called immediately when the user clicks "Start audit →"
+// Creates the record and stores the ID for all future PATCHes
+async function createContactRecord(ans) {
   const firstName = ans.first_name || '';
   const lastName  = ans.last_name  || '';
-  const fullName  = [firstName, lastName].filter(Boolean).join(' ');
-
   const fields = {
-    'First name':           firstName,
-    'Last name':            lastName,
-    'Full name':            fullName,
-    'Email':                ans.email        || '',
-    'Website URL':          ans.url          || '',
+    'First name':    firstName,
+    'Last name':     lastName,
+    'Full name':     [firstName, lastName].filter(Boolean).join(' '),
+    'Business name': ans.business_name || '',
+    'Email':         ans.email || '',
+    'Website URL':   ans.url   || '',
+    'Tier':          'Free',
+    'Upsell stage':  'None',
+    'Report sent':          false,
+    'Consulting call booked': false
+  };
+  const data = await airtableRequest(fields);
+  return data ? data.id : null; // store this as airtableRecordId
+}
+
+// ── Step 2: PATCH with full answers + scores on audit complete ─
+// Called after the analyzing animation, before showing results
+async function saveAuditResults(ans, scores, recTitles) {
+  if (!airtableRecordId) { console.warn('No record ID — contact step may have failed'); return; }
+  const fields = {
     'Business type':        ans.business_type  || '',
     'Team size':            ans.team_size      || '',
     'Lead capture method':  ans.lead_capture   || '',
@@ -675,50 +710,35 @@ async function postToAirtable(ans, scores, recTitles) {
     'Scheduling method':    ans.scheduling     || '',
     'Tools in use':         (ans.tools      || []).join(', '),
     'Biggest pain point':   (ans.time_drain || []).join(', '),
-    // Scores
-    'Overall score':        scores.overall,
-    'Score - leads':        scores.leads,
-    'Score - scheduling':   scores.scheduling,
-    'Score - comms':        scores.comms,
-    'Score - reporting':    scores.reporting,
-    'Score - content':      scores.content,
-    // Top rec titles for quick reference
-    'Rec 1 title':          recTitles[0] || '',
-    'Rec 2 title':          recTitles[1] || '',
-    'Rec 3 title':          recTitles[2] || '',
-    // Tier & pipeline
-    'Tier':                 'Free',
-    'Report sent':          false,
-    'Consulting call booked': false,
-    'Upsell stage':         'None'
-    // TIER NOTE: hardcoded to Free.
-    // On paid: Stripe webhook → checkout.session.completed
-    // → PATCH this record by ID → set Tier = "Paid", Upsell stage = "$49 report"
+    // Scores written back to record
+    'Overall score':      scores.overall,
+    'Score - leads':      scores.leads,
+    'Score - scheduling': scores.scheduling,
+    'Score - comms':      scores.comms,
+    'Score - reporting':  scores.reporting,
+    'Score - content':    scores.content,
+    // Top rec titles for Keith/Jon to see at a glance
+    'Rec 1 title': recTitles[0] || '',
+    'Rec 2 title': recTitles[1] || '',
+    'Rec 3 title': recTitles[2] || ''
   };
-
-  try {
-    const res = await fetch('/submit', {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({fields})
-    });
-    if (!res.ok) { console.error('Airtable POST error:', await res.json()); return null; }
-    const data = await res.json();
-    return data.id; // recId stored in airtableRecordId
-  } catch(err) { console.error('Airtable POST failed:', err); return null; }
+  await airtableRequest(fields, airtableRecordId);
 }
 
-// ── Airtable: UPDATE record on paid upgrade ───
-async function patchAirtableRecord(recId, paidFields) {
-  if (!recId) { console.warn('No record ID to patch'); return; }
-  try {
-    const res = await fetch('/submit', {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({_method:'PATCH', recordId: recId, fields: paidFields})
-    });
-    if (!res.ok) { console.error('Airtable PATCH error:', await res.json()); }
-  } catch(err) { console.error('Airtable PATCH failed:', err); }
+// ── Step 3: PATCH Tier=Paid on purchase ──────────
+// This is what triggers the Airtable automation (prompt composer → Claude deep dive)
+// Call this AFTER Stripe payment is confirmed — from your webhook or redirect handler
+async function markAsPaid() {
+  if (!airtableRecordId) { console.warn('No record ID — cannot mark as paid'); return; }
+  const fields = {
+    'Tier':         'Paid',
+    'Upsell stage': '$49 report'
+    // The Airtable automation watches for Tier = "Paid" and fires:
+    //   Script 1: reads answers + Config table → builds Claude prompt
+    //   Script 2: calls Claude API → writes deep-dive results back to record
+    //   Script 3 (email): sends full report to the email on record
+  };
+  await airtableRequest(fields, airtableRecordId);
 }
 
 // ── Scoring ───────────────────────────────────
@@ -883,11 +903,12 @@ function buildQHTML(q,i) {
   const isLast = i === QUESTIONS.length-1;
 
   if (q.type === 'contact') {
-    const fn    = answers['first_name'] || '';
-    const ln    = answers['last_name']  || '';
-    const url   = answers['url']        || '';
-    const email = answers['email']      || '';
-    const ready = fn.trim() && ln.trim() && url.length > 4 && email.includes('@');
+    const fn  = answers['first_name']    || '';
+    const ln  = answers['last_name']     || '';
+    const bn  = answers['business_name'] || '';
+    const url = answers['url']           || '';
+    const em  = answers['email']         || '';
+    const ready = fn.trim() && ln.trim() && bn.trim() && url.length > 4 && em.includes('@');
     input = `
       <div class="field-stack">
         <div class="field-row">
@@ -901,14 +922,18 @@ function buildQHTML(q,i) {
           </div>
         </div>
         <div>
+          <div class="field-label">Business name</div>
+          <input type="text" class="url-field" id="input-bizname" placeholder="Martech Consulting" value="${bn}" oninput="handleContact()">
+        </div>
+        <div>
           <div class="field-label">Business website</div>
           <input type="url" class="url-field" id="input-url" placeholder="https://yourbusiness.com" value="${url}" oninput="handleContact()">
         </div>
         <div>
           <div class="field-label">Your email — we'll send your results here</div>
-          <input type="email" class="url-field" id="input-email" placeholder="you@yourbusiness.com" value="${email}" oninput="handleContact()">
+          <input type="email" class="url-field" id="input-email" placeholder="you@yourbusiness.com" value="${em}" oninput="handleContact()">
         </div>
-        <button class="btn-next" id="urlbtn-${i}" onclick="nextQ()" ${ready?'':'disabled'}>Start audit →</button>
+        <button class="btn-next" id="urlbtn-${i}" onclick="startAuditFromContact()" ${ready?'':'disabled'}>Start audit →</button>
       </div>
       <p style="font-size:.7rem;color:rgba(255,255,255,.22);margin-top:.75rem;">🔒 No spam. We send your results and occasional automation tips. Unsubscribe any time.</p>`;
 
@@ -958,15 +983,34 @@ function buildQHTML(q,i) {
 }
 
 function handleContact() {
-  answers['first_name'] = document.getElementById('input-first')?.value.trim() || '';
-  answers['last_name']  = document.getElementById('input-last')?.value.trim()  || '';
-  answers['url']        = document.getElementById('input-url')?.value.trim()   || '';
-  answers['email']      = document.getElementById('input-email')?.value.trim() || '';
+  answers['first_name']    = document.getElementById('input-first')?.value.trim()   || '';
+  answers['last_name']     = document.getElementById('input-last')?.value.trim()    || '';
+  answers['business_name'] = document.getElementById('input-bizname')?.value.trim() || '';
+  answers['url']           = document.getElementById('input-url')?.value.trim()     || '';
+  answers['email']         = document.getElementById('input-email')?.value.trim()   || '';
   const btn = document.querySelector('#qcard-0 .btn-next');
   if (btn) btn.disabled = !(
-    answers['first_name'] && answers['last_name'] &&
+    answers['first_name'] && answers['last_name'] && answers['business_name'] &&
     answers['url'].length > 4 && answers['email'].includes('@')
   );
+}
+
+// Called when "Start audit →" is clicked on Q1
+// POSTs contact info immediately so we have a record ID before the audit starts
+async function startAuditFromContact() {
+  const btn = document.getElementById('urlbtn-0');
+  if (btn) { btn.disabled = true; btn.textContent = 'Starting…'; }
+
+  // POST contact info now — fire and await so we have the record ID
+  const id = await createContactRecord(answers);
+  if (id) {
+    airtableRecordId = id;
+  } else {
+    console.warn('Contact record creation failed — audit will continue but record may be missing');
+  }
+
+  // Proceed to Q2
+  nextQ();
 }
 
 function pickOne(id,el,val) {
@@ -1005,17 +1049,16 @@ function submitAudit() {
   document.getElementById('questionsContainer').style.display = 'none';
   document.getElementById('analyzingState').classList.add('active');
 
-  // Pre-compute scores so we can POST them immediately
+  // Compute scores and recs
   const scores = calcScores();
   lastScores   = scores;
   const recs   = buildRecs(scores);
   lastRecs     = recs;
   const recTitles = recs.map(r => r.title);
 
-  // Fire POST — capture record ID for later PATCH on paid upgrade
-  postToAirtable(answers, scores, recTitles).then(id => {
-    if (id) { airtableRecordId = id; }
-  });
+  // PATCH the existing record (created at Q1) with full answers + scores
+  // Fire and forget — user sees the analyzing animation while this runs
+  saveAuditResults(answers, scores, recTitles);
 
   const statuses = [
     'Scoring your answers…',
@@ -1128,23 +1171,28 @@ function closePaidModal() { document.getElementById('paidModal').classList.remov
 
 function processPurchase() {
   closePaidModal();
-  // On successful Stripe payment, call upgradeRecord() with the record ID.
-  // The Stripe webhook should POST to your server → call upgradeRecord().
-  // For now: placeholder alert.
-  // TODO: replace with your Stripe payment link
-  alert('This will connect to Stripe. Full report delivered after payment.');
-}
 
-// Called by your Stripe webhook handler (or manually) after payment confirmed
-async function upgradeRecord() {
-  if (!airtableRecordId) { console.warn('No record ID — cannot upgrade.'); return; }
-  const paidFields = {
-    'Tier':         'Paid',
-    'Upsell stage': '$49 report',
-    'Report sent':  false // flip to true after you email the report
-  };
-  await patchAirtableRecord(airtableRecordId, paidFields);
-  console.log('Record upgraded to Paid:', airtableRecordId);
+  if (!airtableRecordId) {
+    console.warn('No record ID — cannot attach to Stripe session');
+    return;
+  }
+
+  // Build Stripe checkout URL with the Airtable record ID in client_reference_id.
+  // Stripe passes this through to the webhook so the server knows which record to upgrade.
+  // TODO: replace YOUR_STRIPE_PAYMENT_LINK with your actual Stripe payment link URL.
+  const stripeUrl = new URL('https://buy.stripe.com/YOUR_STRIPE_PAYMENT_LINK');
+  stripeUrl.searchParams.set('client_reference_id', airtableRecordId);
+
+  // Prefill email if we have it — Stripe supports this via prefilled_email param
+  if (answers.email) {
+    stripeUrl.searchParams.set('prefilled_email', answers.email);
+  }
+
+  window.location.href = stripeUrl.toString();
+  // After payment, Stripe redirects to your success_url (set in Stripe dashboard).
+  // The webhook (functions/stripe-webhook.js) handles the Tier=Paid PATCH and
+  // triggers the Airtable automation (Claude deep-dive + email report).
+  // The browser never calls markAsPaid() — only the verified webhook does.
 }
 
 function bookConsulting() {
