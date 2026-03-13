@@ -9,281 +9,252 @@
 <link rel="stylesheet" href="style.css">
 <style>
 /* ── Tooltips ── */
-.tip {
-  position: relative; display: inline-flex; align-items: center;
-  cursor: help; margin-left: .35rem; vertical-align: middle;
-}
-.tip__icon {
-  width: 15px; height: 15px; border-radius: 50%;
-  background: rgba(255,255,255,.13); border: 1px solid rgba(255,255,255,.18);
-  color: rgba(255,255,255,.55); font-size: .6rem; font-weight: 700;
-  display: flex; align-items: center; justify-content: center;
-  transition: all .15s; flex-shrink: 0;
-}
-.tip:hover .tip__icon { background: var(--orange); border-color: var(--orange); color: #fff; }
-.tip__bubble {
-  position: absolute; bottom: calc(100% + 9px); left: 50%;
-  transform: translateX(-50%); width: 220px;
-  background: #0a2840; border: 1px solid rgba(255,255,255,.12);
-  border-radius: 7px; padding: .65rem .85rem;
-  font-size: .75rem; color: rgba(255,255,255,.75); line-height: 1.55;
-  font-family: var(--ff-body); font-weight: 400; font-style: normal;
-  pointer-events: none; opacity: 0; transition: opacity .18s;
-  white-space: normal; z-index: 200;
-  box-shadow: 0 10px 28px rgba(5,46,77,.45);
-}
-.tip__bubble::after {
-  content: ''; position: absolute; top: 100%; left: 50%;
-  transform: translateX(-50%);
-  border: 5px solid transparent; border-top-color: rgba(255,255,255,.12);
-}
-.tip:hover .tip__bubble { opacity: 1; }
-.tip--light .tip__icon { background: var(--off); border-color: var(--rule); color: var(--mid); }
-.tip--light:hover .tip__icon { background: var(--orange); border-color: var(--orange); color: #fff; }
-.tip--light .tip__bubble { background: #fff; border-color: var(--rule); color: var(--mid); box-shadow: 0 8px 24px rgba(5,46,77,.1); }
-.tip--light .tip__bubble::after { border-top-color: var(--rule); }
+.tip { position:relative;display:inline-flex;align-items:center;cursor:help;margin-left:.35rem;vertical-align:middle; }
+.tip__icon { width:15px;height:15px;border-radius:50%;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.55);font-size:.6rem;font-weight:700;display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0; }
+.tip:hover .tip__icon { background:var(--orange);border-color:var(--orange);color:#fff; }
+.tip__bubble { position:absolute;bottom:calc(100% + 9px);left:50%;transform:translateX(-50%);width:220px;background:#0a2840;border:1px solid rgba(255,255,255,.12);border-radius:7px;padding:.65rem .85rem;font-size:.75rem;color:rgba(255,255,255,.75);line-height:1.55;font-family:var(--ff-body);font-weight:400;font-style:normal;pointer-events:none;opacity:0;transition:opacity .18s;white-space:normal;z-index:200;box-shadow:0 10px 28px rgba(5,46,77,.45); }
+.tip__bubble::after { content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:rgba(255,255,255,.12); }
+.tip:hover .tip__bubble { opacity:1; }
+.tip--light .tip__icon { background:var(--off);border-color:var(--rule);color:var(--mid); }
+.tip--light:hover .tip__icon { background:var(--orange);border-color:var(--orange);color:#fff; }
+.tip--light .tip__bubble { background:#fff;border-color:var(--rule);color:var(--mid);box-shadow:0 8px 24px rgba(5,46,77,.1); }
+.tip--light .tip__bubble::after { border-top-color:var(--rule); }
 
 /* ── Hero ── */
-.pulse-hero {
-  background: var(--navy);
-  padding: clamp(5rem,12vw,9rem) 0 clamp(3rem,6vw,5rem);
-  position: relative; overflow: hidden;
-}
-.pulse-hero::before {
-  content: ''; position: absolute; inset: 0; pointer-events: none;
-  background:
-    radial-gradient(ellipse 60% 50% at 70% 40%, rgba(254,105,48,.13) 0%, transparent 65%),
-    radial-gradient(ellipse 40% 60% at 10% 80%, rgba(255,255,255,.03) 0%, transparent 60%);
-}
-.pulse-hero__grid {
-  position: absolute; inset: 0; pointer-events: none;
-  background-image:
-    linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
-  background-size: 72px 72px;
-}
-.pulse-hero__inner { position: relative; z-index: 2; }
-.pulse-hero h1 { color: #fff; margin-bottom: 1.25rem; }
-.pulse-hero h1 em { font-style: italic; color: var(--orange-lt); }
-.pulse-hero__sub { font-size: 1rem; color: rgba(255,255,255,.52); line-height: 1.72; max-width: 500px; margin-bottom: 2rem; font-weight: 300; }
-.pulse-hero__stats { display: flex; gap: 2.5rem; flex-wrap: wrap; margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,.08); }
+.pulse-hero { background:var(--navy);padding:clamp(5rem,12vw,9rem) 0 clamp(3rem,6vw,5rem);position:relative;overflow:hidden; }
+.pulse-hero::before { content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 60% 50% at 70% 40%,rgba(254,105,48,.13) 0%,transparent 65%),radial-gradient(ellipse 40% 60% at 10% 80%,rgba(255,255,255,.03) 0%,transparent 60%); }
+.pulse-hero__grid { position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:72px 72px; }
+.pulse-hero__inner { position:relative;z-index:2; }
+.pulse-hero h1 { color:#fff;margin-bottom:1.25rem; }
+.pulse-hero h1 em { font-style:italic;color:var(--orange-lt); }
+.pulse-hero__sub { font-size:1rem;color:rgba(255,255,255,.52);line-height:1.72;max-width:500px;margin-bottom:2rem;font-weight:300; }
+.pulse-hero__stats { display:flex;gap:2.5rem;flex-wrap:wrap;margin-top:2.5rem;padding-top:2rem;border-top:1px solid rgba(255,255,255,.08); }
 
-/* ── Audit wrapper ── */
-.audit-wrap { background: var(--navy); padding: 0 0 clamp(4rem,8vw,7rem); }
-
-/* ── Progress ── */
-.audit-progress { max-width: 680px; margin: 0 auto; padding: 0 clamp(1.25rem,4vw,2.5rem) 2.5rem; }
-.progress-steps { display: flex; gap: 5px; margin-bottom: .6rem; }
-.progress-step { height: 3px; flex: 1; border-radius: 2px; background: rgba(255,255,255,.1); transition: background .4s; }
-.progress-step.done   { background: var(--orange); }
-.progress-step.active { background: rgba(254,105,48,.45); }
-.progress-meta { display: flex; justify-content: space-between; font-size: .72rem; color: rgba(255,255,255,.3); font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
-
-/* ── Question card ── */
-.q-wrap { max-width: 680px; margin: 0 auto; padding: 0 clamp(1.25rem,4vw,2.5rem); }
-.q-card { display: none; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: 10px; padding: clamp(1.75rem,4vw,2.5rem); animation: fadeUp .35s ease both; }
-.q-card.active { display: block; }
-.q-eyebrow { font-size: .65rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--orange); margin-bottom: .75rem; display: flex; align-items: center; gap: .5rem; }
-.q-eyebrow::before { content:''; display:block; width:1rem; height:2px; background:currentColor; flex-shrink:0; }
-.q-text { font-family: var(--ff-head); font-size: clamp(1.2rem,3vw,1.6rem); font-weight: 400; color: #fff; margin-bottom: .5rem; line-height: 1.2; }
-.q-hint { font-size: .82rem; color: rgba(255,255,255,.35); margin-bottom: 1.75rem; font-weight: 300; }
+/* ── Audit ── */
+.audit-wrap { background:var(--navy);padding:0 0 clamp(4rem,8vw,7rem); }
+.audit-progress { max-width:680px;margin:0 auto;padding:0 clamp(1.25rem,4vw,2.5rem) 2.5rem; }
+.progress-steps { display:flex;gap:5px;margin-bottom:.6rem; }
+.progress-step { height:3px;flex:1;border-radius:2px;background:rgba(255,255,255,.1);transition:background .4s; }
+.progress-step.done   { background:var(--orange); }
+.progress-step.active { background:rgba(254,105,48,.45); }
+.progress-meta { display:flex;justify-content:space-between;font-size:.72rem;color:rgba(255,255,255,.3);font-weight:600;letter-spacing:.08em;text-transform:uppercase; }
+.q-wrap { max-width:680px;margin:0 auto;padding:0 clamp(1.25rem,4vw,2.5rem); }
+.q-card { display:none;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:clamp(1.75rem,4vw,2.5rem);animation:fadeUp .35s ease both; }
+.q-card.active { display:block; }
+.q-eyebrow { font-size:.65rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--orange);margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem; }
+.q-eyebrow::before { content:'';display:block;width:1rem;height:2px;background:currentColor;flex-shrink:0; }
+.q-text { font-family:var(--ff-head);font-size:clamp(1.2rem,3vw,1.6rem);font-weight:400;color:#fff;margin-bottom:.5rem;line-height:1.2; }
+.q-hint { font-size:.82rem;color:rgba(255,255,255,.35);margin-bottom:1.75rem;font-weight:300; }
 
 /* Fields */
-.field-stack { display: flex; flex-direction: column; gap: .65rem; }
-.field-label { font-size: .7rem; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: rgba(255,255,255,.38); margin-bottom: .15rem; }
-.url-field { width: 100%; box-sizing: border-box; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12); border-radius: 4px; padding: .85rem 1.1rem; font-family: var(--ff-body); font-size: .9rem; color: #fff; outline: none; transition: border-color .2s; }
-.url-field::placeholder { color: rgba(255,255,255,.28); }
-.url-field:focus { border-color: var(--orange); }
+.field-stack { display:flex;flex-direction:column;gap:.65rem; }
+.field-row   { display:grid;grid-template-columns:1fr 1fr;gap:.65rem; }
+.field-label { font-size:.7rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:rgba(255,255,255,.38);margin-bottom:.2rem; }
+.url-field { width:100%;box-sizing:border-box;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:4px;padding:.85rem 1.1rem;font-family:var(--ff-body);font-size:.9rem;color:#fff;outline:none;transition:border-color .2s; }
+.url-field::placeholder { color:rgba(255,255,255,.28); }
+.url-field:focus { border-color:var(--orange); }
 
 /* Options */
-.options-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: .6rem; }
-.option-btn {
-  background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1);
-  border-radius: 6px; padding: .85rem 1rem;
-  color: rgba(255,255,255,.62); font-family: var(--ff-body); font-size: .84rem;
-  cursor: pointer; text-align: left; transition: all .15s; line-height: 1.45; position: relative;
-}
-.option-btn:hover   { border-color: var(--orange); color: #fff; background: rgba(254,105,48,.08); }
-.option-btn.selected { border-color: var(--orange); background: rgba(254,105,48,.14); color: #fff; }
-
-/* Option tooltip */
-.opt-tip {
-  position: absolute; top: .45rem; right: .45rem;
-  width: 14px; height: 14px; border-radius: 50%;
-  background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.15);
-  color: rgba(255,255,255,.4); font-size: .58rem; font-weight: 700;
-  display: flex; align-items: center; justify-content: center;
-  cursor: help; transition: all .15s; z-index: 2;
-}
-.option-btn:hover .opt-tip, .option-btn.selected .opt-tip { background: rgba(254,105,48,.25); border-color: rgba(254,105,48,.5); color: var(--orange-lt); }
-.opt-tip__bubble {
-  position: absolute; bottom: calc(100% + 6px); right: 0; width: 200px;
-  background: #0a2840; border: 1px solid rgba(255,255,255,.12); border-radius: 6px;
-  padding: .6rem .8rem; font-size: .72rem; color: rgba(255,255,255,.75); line-height: 1.5;
-  pointer-events: none; opacity: 0; transition: opacity .15s; z-index: 300;
-  text-align: left; box-shadow: 0 6px 20px rgba(5,46,77,.45); white-space: normal;
-}
-.opt-tip:hover .opt-tip__bubble { opacity: 1; }
-
-/* Score impact label */
-.score-impact { display: block; margin-top: .3rem; font-size: .68rem; font-weight: 600; letter-spacing: .04em; }
-.impact-high   { color: #86D97A; }
-.impact-medium { color: #FAC775; }
-.impact-low    { color: rgba(255,255,255,.3); }
-
-.multi-hint { font-size: .72rem; color: rgba(255,255,255,.28); margin-bottom: .75rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
-
-/* Nav */
-.q-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 1.75rem; }
-.btn-back { background: none; border: 1px solid rgba(255,255,255,.14); color: rgba(255,255,255,.45); padding: .7rem 1.4rem; border-radius: 4px; font-family: var(--ff-body); font-size: .84rem; cursor: pointer; transition: all .18s; }
-.btn-back:hover { border-color: rgba(255,255,255,.3); color: #fff; }
-.btn-next { background: var(--orange); border: none; color: #fff; padding: .8rem 1.75rem; border-radius: 4px; font-family: var(--ff-body); font-size: .875rem; font-weight: 600; cursor: pointer; transition: all .18s; }
-.btn-next:hover { background: var(--orange-lt); transform: translateY(-1px); }
-.btn-next:disabled { opacity: .3; cursor: not-allowed; transform: none; }
+.options-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:.6rem; }
+.option-btn { background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:6px;padding:.85rem 1rem;color:rgba(255,255,255,.62);font-family:var(--ff-body);font-size:.84rem;cursor:pointer;text-align:left;transition:all .15s;line-height:1.45;position:relative; }
+.option-btn:hover   { border-color:var(--orange);color:#fff;background:rgba(254,105,48,.08); }
+.option-btn.selected { border-color:var(--orange);background:rgba(254,105,48,.14);color:#fff; }
+.opt-tip { position:absolute;top:.45rem;right:.45rem;width:14px;height:14px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.4);font-size:.58rem;font-weight:700;display:flex;align-items:center;justify-content:center;cursor:help;transition:all .15s;z-index:2; }
+.option-btn:hover .opt-tip,.option-btn.selected .opt-tip { background:rgba(254,105,48,.25);border-color:rgba(254,105,48,.5);color:var(--orange-lt); }
+.opt-tip__bubble { position:absolute;bottom:calc(100% + 6px);right:0;width:200px;background:#0a2840;border:1px solid rgba(255,255,255,.12);border-radius:6px;padding:.6rem .8rem;font-size:.72rem;color:rgba(255,255,255,.75);line-height:1.5;pointer-events:none;opacity:0;transition:opacity .15s;z-index:300;text-align:left;box-shadow:0 6px 20px rgba(5,46,77,.45);white-space:normal; }
+.opt-tip:hover .opt-tip__bubble { opacity:1; }
+.score-impact { display:block;margin-top:.3rem;font-size:.68rem;font-weight:600;letter-spacing:.04em; }
+.impact-high   { color:#86D97A; }
+.impact-medium { color:#FAC775; }
+.impact-low    { color:rgba(255,255,255,.3); }
+.multi-hint { font-size:.72rem;color:rgba(255,255,255,.28);margin-bottom:.75rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase; }
+.q-nav { display:flex;justify-content:space-between;align-items:center;margin-top:1.75rem; }
+.btn-back { background:none;border:1px solid rgba(255,255,255,.14);color:rgba(255,255,255,.45);padding:.7rem 1.4rem;border-radius:4px;font-family:var(--ff-body);font-size:.84rem;cursor:pointer;transition:all .18s; }
+.btn-back:hover { border-color:rgba(255,255,255,.3);color:#fff; }
+.btn-next { background:var(--orange);border:none;color:#fff;padding:.8rem 1.75rem;border-radius:4px;font-family:var(--ff-body);font-size:.875rem;font-weight:600;cursor:pointer;transition:all .18s; }
+.btn-next:hover { background:var(--orange-lt);transform:translateY(-1px); }
+.btn-next:disabled { opacity:.3;cursor:not-allowed;transform:none; }
 
 /* ── Analyzing ── */
-.analyzing-state { display: none; text-align: center; padding: 5rem 1.25rem; }
-.analyzing-state.active { display: block; }
-.scan-rings { width: 72px; height: 72px; margin: 0 auto 2rem; position: relative; }
-.scan-ring { position: absolute; inset: 0; border: 2px solid transparent; border-top-color: var(--orange); border-radius: 50%; animation: spin 1s linear infinite; }
-.scan-ring:nth-child(2) { inset: 10px; border-top-color: rgba(254,105,48,.35); animation-duration: 1.6s; animation-direction: reverse; }
-.scan-dot { position: absolute; inset: 28px; background: var(--orange); border-radius: 50%; animation: pulse-dot 1.5s ease-in-out infinite; }
-@keyframes spin { to { transform: rotate(360deg); } }
+.analyzing-state { display:none;text-align:center;padding:5rem 1.25rem; }
+.analyzing-state.active { display:block; }
+.scan-rings { width:72px;height:72px;margin:0 auto 2rem;position:relative; }
+.scan-ring { position:absolute;inset:0;border:2px solid transparent;border-top-color:var(--orange);border-radius:50%;animation:spin 1s linear infinite; }
+.scan-ring:nth-child(2) { inset:10px;border-top-color:rgba(254,105,48,.35);animation-duration:1.6s;animation-direction:reverse; }
+.scan-dot { position:absolute;inset:28px;background:var(--orange);border-radius:50%;animation:pulse-dot 1.5s ease-in-out infinite; }
+@keyframes spin { to{transform:rotate(360deg)} }
 @keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.75)} }
-.analyzing-title { font-family: var(--ff-head); font-size: clamp(1.5rem,3vw,2rem); color: #fff; font-weight: 300; margin-bottom: .5rem; }
-.analyzing-sub   { font-size: .9rem; color: rgba(255,255,255,.35); font-weight: 300; margin-bottom: 1rem; }
-.analyzing-status { font-size: .82rem; color: rgba(255,255,255,.28); min-height: 1.2em; }
+.analyzing-title { font-family:var(--ff-head);font-size:clamp(1.5rem,3vw,2rem);color:#fff;font-weight:300;margin-bottom:.5rem; }
+.analyzing-sub   { font-size:.9rem;color:rgba(255,255,255,.35);font-weight:300;margin-bottom:1rem; }
+.analyzing-status { font-size:.82rem;color:rgba(255,255,255,.28);min-height:1.2em; }
 
 /* ── Results ── */
-.results-section { display: none; background: var(--cream); }
-.results-section.active { display: block; }
-.results-hero { background: var(--navy); padding: clamp(3rem,6vw,5rem) 0; position: relative; overflow: hidden; }
-.results-hero::before { content: ''; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse 55% 60% at 80% 50%, rgba(254,105,48,.1) 0%, transparent 60%); }
-.results-hero__inner { position: relative; z-index: 2; }
-.results-hero__layout { display: grid; grid-template-columns: auto 1fr; gap: 3rem; align-items: center; }
-.score-ring-wrap { position: relative; width: 140px; height: 140px; flex-shrink: 0; }
-.score-ring-svg { width: 140px; height: 140px; transform: rotate(-90deg); }
-.ring-bg  { fill: none; stroke: rgba(255,255,255,.1); stroke-width: 9; }
-.ring-fill { fill: none; stroke: var(--orange); stroke-width: 9; stroke-linecap: round; stroke-dasharray: 357; stroke-dashoffset: 357; transition: stroke-dashoffset 1.6s cubic-bezier(.4,0,.2,1); }
-.score-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-.score-number { font-family: var(--ff-head); font-size: 2.6rem; font-weight: 300; color: #fff; line-height: 1; }
-.score-denom  { font-size: .7rem; color: rgba(255,255,255,.35); letter-spacing: .05em; margin-top: .2rem; }
-.score-info h2 { font-family: var(--ff-head); font-size: clamp(1.4rem,3vw,2rem); font-weight: 400; color: #fff; margin-bottom: .6rem; line-height: 1.15; }
-.score-info p  { font-size: .9rem; color: rgba(255,255,255,.48); line-height: 1.72; font-weight: 300; margin-bottom: 1rem; }
-.score-badge { display: inline-flex; align-items: center; gap: .45rem; padding: .4rem 1rem; border-radius: 4px; font-size: .75rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
-.badge-poor      { background: rgba(226,75,74,.15); color: #f09595; border: 1px solid rgba(226,75,74,.25); }
-.badge-fair      { background: rgba(239,159,39,.15); color: #FAC775; border: 1px solid rgba(239,159,39,.25); }
-.badge-good      { background: rgba(99,153,34,.15); color: #C0DD97; border: 1px solid rgba(99,153,34,.25); }
-.badge-excellent { background: rgba(254,105,48,.15); color: var(--orange-lt); border: 1px solid rgba(254,105,48,.25); }
+.results-section { display:none;background:var(--cream); }
+.results-section.active { display:block; }
+.results-hero { background:var(--navy);padding:clamp(3rem,6vw,5rem) 0;position:relative;overflow:hidden; }
+.results-hero::before { content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 55% 60% at 80% 50%,rgba(254,105,48,.1) 0%,transparent 60%); }
+.results-hero__inner { position:relative;z-index:2; }
+.results-hero__layout { display:grid;grid-template-columns:auto 1fr;gap:3rem;align-items:center; }
+.score-ring-wrap { position:relative;width:140px;height:140px;flex-shrink:0; }
+.score-ring-svg { width:140px;height:140px;transform:rotate(-90deg); }
+.ring-bg   { fill:none;stroke:rgba(255,255,255,.1);stroke-width:9; }
+.ring-fill { fill:none;stroke:var(--orange);stroke-width:9;stroke-linecap:round;stroke-dasharray:357;stroke-dashoffset:357;transition:stroke-dashoffset 1.6s cubic-bezier(.4,0,.2,1); }
+.score-center { position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center; }
+.score-number { font-family:var(--ff-head);font-size:2.6rem;font-weight:300;color:#fff;line-height:1; }
+.score-denom  { font-size:.7rem;color:rgba(255,255,255,.35);letter-spacing:.05em;margin-top:.2rem; }
+.score-info h2 { font-family:var(--ff-head);font-size:clamp(1.4rem,3vw,2rem);font-weight:400;color:#fff;margin-bottom:.6rem;line-height:1.15; }
+.score-info p  { font-size:.9rem;color:rgba(255,255,255,.48);line-height:1.72;font-weight:300;margin-bottom:1rem; }
+.score-badge { display:inline-flex;align-items:center;gap:.45rem;padding:.4rem 1rem;border-radius:4px;font-size:.75rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase; }
+.badge-poor      { background:rgba(226,75,74,.15);color:#f09595;border:1px solid rgba(226,75,74,.25); }
+.badge-fair      { background:rgba(239,159,39,.15);color:#FAC775;border:1px solid rgba(239,159,39,.25); }
+.badge-good      { background:rgba(99,153,34,.15);color:#C0DD97;border:1px solid rgba(99,153,34,.25); }
+.badge-excellent { background:rgba(254,105,48,.15);color:var(--orange-lt);border:1px solid rgba(254,105,48,.25); }
 
 /* Category bars */
-.categories-section { padding: clamp(2.5rem,5vw,4rem) 0; border-bottom: 1px solid var(--rule); }
-.cat-row { display: flex; align-items: center; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid var(--rule); }
-.cat-row:last-child { border-bottom: none; }
-.cat-icon { width: 34px; height: 34px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; }
-.cat-name { flex: 1; font-size: .875rem; font-weight: 500; color: var(--ink); display: flex; align-items: center; }
-.cat-bar-wrap { flex: 2; height: 5px; background: var(--off); border-radius: 3px; overflow: hidden; }
-.cat-bar-fill { height: 100%; border-radius: 3px; width: 0; transition: width 1.2s cubic-bezier(.4,0,.2,1); }
-.cat-pct { font-size: .82rem; font-weight: 600; color: var(--ink); min-width: 34px; text-align: right; }
+.categories-section { padding:clamp(2.5rem,5vw,4rem) 0;border-bottom:1px solid var(--rule); }
+.cat-row { display:flex;align-items:center;gap:1rem;padding:1rem 0;border-bottom:1px solid var(--rule); }
+.cat-row:last-child { border-bottom:none; }
+.cat-icon { width:34px;height:34px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0; }
+.cat-name { flex:1;font-size:.875rem;font-weight:500;color:var(--ink);display:flex;align-items:center; }
+.cat-bar-wrap { flex:2;height:5px;background:var(--off);border-radius:3px;overflow:hidden; }
+.cat-bar-fill { height:100%;border-radius:3px;width:0;transition:width 1.2s cubic-bezier(.4,0,.2,1); }
+.cat-pct { font-size:.82rem;font-weight:600;color:var(--ink);min-width:34px;text-align:right; }
 
-/* Recommendations */
-.recs-section { padding: clamp(2.5rem,5vw,4rem) 0; border-bottom: 1px solid var(--rule); }
-.recs-section h2 { font-family: var(--ff-head); font-size: clamp(1.4rem,3vw,2rem); font-weight: 300; color: var(--ink); margin-bottom: .4rem; }
-.recs-section > .container--narrow > p { font-size: .9rem; color: var(--mid); margin-bottom: 2rem; font-weight: 300; }
-.rec-card { background: #fff; border: 1px solid var(--rule); border-radius: 9px; padding: 1.5rem 1.75rem; margin-bottom: 1rem; transition: border-color .2s, box-shadow .2s; }
-.rec-card:hover { border-color: rgba(254,105,48,.3); box-shadow: 0 4px 18px rgba(5,46,77,.07); }
-.rec-card__header { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: .75rem; }
-.rec-card__icon { width: 36px; height: 36px; border-radius: 8px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 16px; }
-.rec-card__title { font-size: .9rem; font-weight: 600; color: var(--ink); margin-bottom: .15rem; }
-.rec-card__priority { font-size: .7rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; }
-.priority-high   { color: #E24B4A; }
-.priority-medium { color: #C9952A; }
-.priority-low    { color: #2E6B4F; }
-.rec-card__body { font-size: .875rem; color: var(--mid); line-height: 1.72; margin-bottom: 1rem; }
-.rec-card__tools { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: 1rem; align-items: center; }
-.tools-label { font-size: .7rem; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); margin-right: .2rem; }
-.tool-tag { display: inline-flex; align-items: center; gap: .3rem; border-radius: 4px; padding: .22rem .65rem; font-size: .75rem; font-weight: 500; transition: all .15s; cursor: default; }
-.tool-tag.ours  { background: rgba(254,105,48,.1); border: 1px solid rgba(254,105,48,.25); color: var(--orange); }
-.tool-tag.ours::before { content: '★'; font-size: .6rem; }
-.tool-tag.other { background: var(--off); border: 1px solid var(--rule); color: var(--mid); }
-.rec-cta { display: inline-flex; align-items: center; gap: .4rem; font-size: .8rem; font-weight: 600; color: var(--orange); cursor: pointer; transition: gap .15s; background: none; border: none; padding: 0; font-family: var(--ff-body); }
-.rec-cta:hover { gap: .65rem; }
-.rec-cta svg { width: 12px; height: 12px; }
+/* Recs */
+.recs-section { padding:clamp(2.5rem,5vw,4rem) 0;border-bottom:1px solid var(--rule); }
+.recs-section h2 { font-family:var(--ff-head);font-size:clamp(1.4rem,3vw,2rem);font-weight:300;color:var(--ink);margin-bottom:.4rem; }
+.recs-section>.container--narrow>p { font-size:.9rem;color:var(--mid);margin-bottom:2rem;font-weight:300; }
+.rec-card { background:#fff;border:1px solid var(--rule);border-radius:9px;padding:1.5rem 1.75rem;margin-bottom:1rem;transition:border-color .2s,box-shadow .2s; }
+.rec-card:hover { border-color:rgba(254,105,48,.3);box-shadow:0 4px 18px rgba(5,46,77,.07); }
+.rec-card__header { display:flex;align-items:flex-start;gap:1rem;margin-bottom:.75rem; }
+.rec-card__icon { width:36px;height:36px;border-radius:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:16px; }
+.rec-card__title { font-size:.9rem;font-weight:600;color:var(--ink);margin-bottom:.15rem; }
+.rec-card__priority { font-size:.7rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase; }
+.priority-high   { color:#E24B4A; }
+.priority-medium { color:#C9952A; }
+.priority-low    { color:#2E6B4F; }
+.rec-card__body { font-size:.875rem;color:var(--mid);line-height:1.72;margin-bottom:1rem; }
+.rec-card__tools { display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1rem;align-items:center; }
+.tools-label { font-size:.7rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-right:.2rem; }
+.tool-tag { display:inline-flex;align-items:center;gap:.3rem;border-radius:4px;padding:.22rem .65rem;font-size:.75rem;font-weight:500;transition:all .15s;cursor:default; }
+.tool-tag.ours  { background:rgba(254,105,48,.1);border:1px solid rgba(254,105,48,.25);color:var(--orange); }
+.tool-tag.ours::before { content:'★';font-size:.6rem; }
+.tool-tag.other { background:var(--off);border:1px solid var(--rule);color:var(--mid); }
+.rec-cta { display:inline-flex;align-items:center;gap:.4rem;font-size:.8rem;font-weight:600;color:var(--orange);cursor:pointer;transition:gap .15s;background:none;border:none;padding:0;font-family:var(--ff-body); }
+.rec-cta:hover { gap:.65rem; }
+.rec-cta svg { width:12px;height:12px; }
 
 /* Urgency banner */
-.urgency-banner {
-  background: linear-gradient(135deg, var(--navy) 0%, #0d3d5e 100%);
-  border-radius: 10px; padding: clamp(1.5rem,3vw,2.25rem) clamp(1.5rem,4vw,2.5rem);
-  display: flex; align-items: center; justify-content: space-between;
-  gap: 1.5rem; flex-wrap: wrap; margin-bottom: 2rem;
-  border: 1px solid rgba(254,105,48,.2);
+.urgency-banner { background:linear-gradient(135deg,var(--navy) 0%,#0d3d5e 100%);border-radius:10px;padding:clamp(1.5rem,3vw,2.25rem) clamp(1.5rem,4vw,2.5rem);display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;margin-bottom:2rem;border:1px solid rgba(254,105,48,.2); }
+.urgency-banner__text h3 { font-family:var(--ff-head);font-size:1.2rem;font-weight:400;color:#fff;margin-bottom:.3rem; }
+.urgency-banner__text p  { font-size:.84rem;color:rgba(255,255,255,.45);font-weight:300; }
+.urgency-banner__cta { flex-shrink:0; }
+
+/* ── Save Ranking section ── */
+.save-ranking-section { padding:clamp(2.5rem,5vw,4rem) 0;border-bottom:1px solid var(--rule); }
+.save-ranking-card {
+  background: linear-gradient(135deg, #fff 0%, #fef8f4 100%);
+  border: 2px solid var(--orange);
+  border-radius: 12px;
+  padding: clamp(2rem,4vw,2.75rem);
+  position: relative; overflow: hidden;
 }
-.urgency-banner__text h3 { font-family: var(--ff-head); font-size: 1.2rem; font-weight: 400; color: #fff; margin-bottom: .3rem; }
-.urgency-banner__text p  { font-size: .84rem; color: rgba(255,255,255,.45); font-weight: 300; }
-.urgency-banner__cta { flex-shrink: 0; }
+.save-ranking-card::before {
+  content: '';
+  position: absolute; top: 0; right: 0;
+  width: 220px; height: 220px;
+  background: radial-gradient(circle, rgba(254,105,48,.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+.save-ranking-card__badge {
+  display: inline-flex; align-items: center; gap: .4rem;
+  background: var(--orange); color: #fff;
+  font-size: .65rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  padding: .3rem .85rem; border-radius: 4px; margin-bottom: 1rem;
+}
+.save-ranking-card h3 {
+  font-family: var(--ff-head); font-size: clamp(1.3rem,2.5vw,1.8rem);
+  font-weight: 400; color: var(--ink); margin-bottom: .5rem; line-height: 1.15;
+}
+.save-ranking-card__sub { font-size: .9rem; color: var(--mid); line-height: 1.7; margin-bottom: 1.5rem; font-weight: 300; max-width: 580px; }
+.save-ranking-perks { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; margin-bottom: 1.75rem; }
+.save-perk {
+  display: flex; align-items: flex-start; gap: .6rem;
+  background: #fff; border: 1px solid var(--rule); border-radius: 7px;
+  padding: .85rem 1rem;
+}
+.save-perk__icon { font-size: 1.1rem; flex-shrink: 0; line-height: 1; }
+.save-perk__text { font-size: .8rem; color: var(--mid); line-height: 1.5; }
+.save-perk__text strong { display: block; color: var(--ink); font-weight: 600; margin-bottom: .1rem; font-size: .82rem; }
+.save-ranking-cta { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.save-ranking-note { font-size: .75rem; color: var(--muted); }
 
 /* Locked */
-.locked-section { padding: clamp(2.5rem,5vw,4rem) 0; border-bottom: 1px solid var(--rule); }
-.locked-inner { position: relative; }
-.locked-blur { filter: blur(5px); pointer-events: none; user-select: none; }
-.locked-blur-card { background: #fff; border: 1px solid var(--rule); border-radius: 9px; padding: 1.75rem; margin-bottom: .75rem; }
-.blur-line { height: 13px; background: var(--off); border-radius: 4px; margin-bottom: .75rem; }
-.locked-gate { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; z-index: 2; }
-.locked-card { background: #fff; border: 1px solid var(--rule); border-radius: 10px; padding: 2rem 2.5rem; text-align: center; box-shadow: 0 12px 40px rgba(5,46,77,.12); max-width: 360px; width: 100%; }
-.locked-card__icon { font-size: 1.75rem; margin-bottom: .75rem; }
-.locked-card h4 { font-family: var(--ff-head); font-size: 1.3rem; font-weight: 400; color: var(--ink); margin-bottom: .4rem; }
-.locked-card p { font-size: .82rem; color: var(--mid); line-height: 1.65; margin-bottom: 1.25rem; font-weight: 300; }
+.locked-section { padding:clamp(2.5rem,5vw,4rem) 0;border-bottom:1px solid var(--rule); }
+.locked-inner { position:relative; }
+.locked-blur { filter:blur(5px);pointer-events:none;user-select:none; }
+.locked-blur-card { background:#fff;border:1px solid var(--rule);border-radius:9px;padding:1.75rem;margin-bottom:.75rem; }
+.blur-line { height:13px;background:var(--off);border-radius:4px;margin-bottom:.75rem; }
+.locked-gate { position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:2; }
+.locked-card { background:#fff;border:1px solid var(--rule);border-radius:10px;padding:2rem 2.5rem;text-align:center;box-shadow:0 12px 40px rgba(5,46,77,.12);max-width:360px;width:100%; }
+.locked-card__icon { font-size:1.75rem;margin-bottom:.75rem; }
+.locked-card h4 { font-family:var(--ff-head);font-size:1.3rem;font-weight:400;color:var(--ink);margin-bottom:.4rem; }
+.locked-card p { font-size:.82rem;color:var(--mid);line-height:1.65;margin-bottom:1.25rem;font-weight:300; }
 
 /* Tiers */
-.tiers-section { padding: clamp(2.5rem,5vw,4rem) 0; border-bottom: 1px solid var(--rule); }
-.tiers-section h2 { font-family: var(--ff-head); font-size: clamp(1.5rem,3vw,2.2rem); font-weight: 300; color: var(--ink); margin-bottom: .4rem; }
-.tiers-section > .container--narrow > p { font-size: .9rem; color: var(--mid); margin-bottom: 2rem; font-weight: 300; }
-.tiers-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
-.tier-card { background: #fff; border: 1px solid var(--rule); border-radius: 9px; padding: 1.75rem; position: relative; overflow: hidden; transition: all .2s; }
-.tier-card:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(5,46,77,.09); }
-.tier-card.featured { border-color: var(--orange); border-width: 2px; }
-.tier-card.featured::before { content: 'Most popular'; position: absolute; top: 0; right: 0; background: var(--orange); color: #fff; font-size: .6rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: .3rem .9rem; border-bottom-left-radius: 6px; }
-.tier-card__name  { font-family: var(--ff-head); font-size: 1.2rem; font-weight: 400; color: var(--ink); margin-bottom: .25rem; }
-.tier-card__price { font-family: var(--ff-head); font-size: 2rem; font-weight: 300; color: var(--orange); line-height: 1; margin-bottom: 1.1rem; }
-.tier-card__price sub { font-size: 1rem; vertical-align: baseline; }
-.tier-features { list-style: none; margin-bottom: 1.5rem; }
-.tier-features li { display: flex; align-items: flex-start; gap: .5rem; font-size: .82rem; color: var(--mid); padding: .35rem 0; line-height: 1.45; }
-.tier-features li::before { content: '✓'; color: var(--orange); flex-shrink: 0; font-weight: 700; }
-.tier-features li.off::before { content: '—'; color: var(--rule); font-weight: 400; }
-.tier-features li.off { opacity: .55; }
+.tiers-section { padding:clamp(2.5rem,5vw,4rem) 0;border-bottom:1px solid var(--rule); }
+.tiers-section h2 { font-family:var(--ff-head);font-size:clamp(1.5rem,3vw,2.2rem);font-weight:300;color:var(--ink);margin-bottom:.4rem; }
+.tiers-section>.container--narrow>p { font-size:.9rem;color:var(--mid);margin-bottom:2rem;font-weight:300; }
+.tiers-grid { display:grid;grid-template-columns:1fr;gap:1rem; }
+.tier-card { background:#fff;border:1px solid var(--rule);border-radius:9px;padding:1.75rem;position:relative;overflow:hidden;transition:all .2s; }
+.tier-card:hover { transform:translateY(-2px);box-shadow:0 8px 28px rgba(5,46,77,.09); }
+.tier-card.featured { border-color:var(--orange);border-width:2px; }
+.tier-card.featured::before { content:'Most popular';position:absolute;top:0;right:0;background:var(--orange);color:#fff;font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.3rem .9rem;border-bottom-left-radius:6px; }
+.tier-card__name  { font-family:var(--ff-head);font-size:1.2rem;font-weight:400;color:var(--ink);margin-bottom:.25rem; }
+.tier-card__price { font-family:var(--ff-head);font-size:2rem;font-weight:300;color:var(--orange);line-height:1;margin-bottom:1.1rem; }
+.tier-card__price sub { font-size:1rem;vertical-align:baseline; }
+.tier-features { list-style:none;margin-bottom:1.5rem; }
+.tier-features li { display:flex;align-items:flex-start;gap:.5rem;font-size:.82rem;color:var(--mid);padding:.35rem 0;line-height:1.45; }
+.tier-features li::before { content:'✓';color:var(--orange);flex-shrink:0;font-weight:700; }
+.tier-features li.off::before { content:'—';color:var(--rule);font-weight:400; }
+.tier-features li.off { opacity:.55; }
 
 /* Email cap */
-.email-cap-section { padding: clamp(2.5rem,5vw,4rem) 0; }
-.email-cap { background: var(--navy); border-radius: 10px; padding: clamp(2rem,4vw,3rem); text-align: center; }
-.email-cap h3 { font-family: var(--ff-head); font-size: 1.5rem; font-weight: 300; color: #fff; margin-bottom: .5rem; }
-.email-cap p   { font-size: .875rem; color: rgba(255,255,255,.4); margin-bottom: 1.5rem; font-weight: 300; }
-.email-row { display: flex; gap: .75rem; max-width: 380px; margin: 0 auto; }
-.email-field { flex: 1; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); border-radius: 4px; padding: .8rem 1.1rem; font-family: var(--ff-body); font-size: .875rem; color: #fff; outline: none; transition: border-color .2s; }
-.email-field::placeholder { color: rgba(255,255,255,.28); }
-.email-field:focus { border-color: var(--orange); }
+.email-cap-section { padding:clamp(2.5rem,5vw,4rem) 0; }
+.email-cap { background:var(--navy);border-radius:10px;padding:clamp(2rem,4vw,3rem);text-align:center; }
+.email-cap h3 { font-family:var(--ff-head);font-size:1.5rem;font-weight:300;color:#fff;margin-bottom:.5rem; }
+.email-cap p   { font-size:.875rem;color:rgba(255,255,255,.4);margin-bottom:1.5rem;font-weight:300; }
+.email-row { display:flex;gap:.75rem;max-width:380px;margin:0 auto; }
+.email-field { flex:1;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:4px;padding:.8rem 1.1rem;font-family:var(--ff-body);font-size:.875rem;color:#fff;outline:none;transition:border-color .2s; }
+.email-field::placeholder { color:rgba(255,255,255,.28); }
+.email-field:focus { border-color:var(--orange); }
 
 /* Paid modal */
-.paid-modal { display: none; position: fixed; inset: 0; background: rgba(5,46,77,.82); backdrop-filter: blur(6px); z-index: 500; align-items: center; justify-content: center; padding: 1.25rem; }
-.paid-modal.open { display: flex; }
-.paid-modal__box { background: #fff; border-radius: 10px; overflow: hidden; width: 100%; max-width: 460px; box-shadow: 0 24px 80px rgba(5,46,77,.3); animation: fadeUp .3s ease; }
-.paid-modal__head { background: var(--navy); padding: 1.25rem 1.5rem; display: flex; align-items: center; justify-content: space-between; }
-.paid-modal__head h3 { font-family: var(--ff-head); font-size: 1.1rem; font-weight: 400; color: #fff; }
-.paid-modal__close { background: none; border: none; cursor: pointer; color: rgba(255,255,255,.45); font-size: 1.4rem; line-height: 1; transition: color .15s; }
-.paid-modal__close:hover { color: #fff; }
-.paid-modal__body { padding: 1.75rem; }
-.paid-modal__body p { font-size: .875rem; color: var(--mid); line-height: 1.7; margin-bottom: 1.25rem; font-weight: 300; }
-.paid-checklist { background: var(--off); border-radius: 6px; padding: 1rem 1.25rem; margin-bottom: 1.5rem; }
-.paid-checklist div { font-size: .82rem; color: var(--mid); padding: .3rem 0; display: flex; align-items: center; gap: .6rem; }
-.paid-checklist div::before { content: '✓'; color: var(--orange); font-weight: 700; flex-shrink: 0; }
+.paid-modal { display:none;position:fixed;inset:0;background:rgba(5,46,77,.82);backdrop-filter:blur(6px);z-index:500;align-items:center;justify-content:center;padding:1.25rem; }
+.paid-modal.open { display:flex; }
+.paid-modal__box { background:#fff;border-radius:10px;overflow:hidden;width:100%;max-width:460px;box-shadow:0 24px 80px rgba(5,46,77,.3);animation:fadeUp .3s ease; }
+.paid-modal__head { background:var(--navy);padding:1.25rem 1.5rem;display:flex;align-items:center;justify-content:space-between; }
+.paid-modal__head h3 { font-family:var(--ff-head);font-size:1.1rem;font-weight:400;color:#fff; }
+.paid-modal__close { background:none;border:none;cursor:pointer;color:rgba(255,255,255,.45);font-size:1.4rem;line-height:1;transition:color .15s; }
+.paid-modal__close:hover { color:#fff; }
+.paid-modal__body { padding:1.75rem; }
+.paid-modal__body p { font-size:.875rem;color:var(--mid);line-height:1.7;margin-bottom:1.25rem;font-weight:300; }
+.paid-checklist { background:var(--off);border-radius:6px;padding:1rem 1.25rem;margin-bottom:1.5rem; }
+.paid-checklist div { font-size:.82rem;color:var(--mid);padding:.3rem 0;display:flex;align-items:center;gap:.6rem; }
+.paid-checklist div::before { content:'✓';color:var(--orange);font-weight:700;flex-shrink:0; }
 
-@media (min-width: 640px) {
-  .tiers-grid { grid-template-columns: repeat(3, 1fr); }
-  .email-row  { flex-direction: row; }
+@media (min-width:640px) {
+  .tiers-grid { grid-template-columns:repeat(3,1fr); }
+  .email-row  { flex-direction:row; }
 }
-@media (max-width: 500px) {
-  .results-hero__layout { grid-template-columns: 1fr; text-align: center; }
-  .email-row { flex-direction: column; }
-  .urgency-banner { text-align: center; justify-content: center; }
+@media (max-width:600px) {
+  .save-ranking-perks { grid-template-columns:1fr; }
+  .field-row { grid-template-columns:1fr; }
+}
+@media (max-width:500px) {
+  .results-hero__layout { grid-template-columns:1fr;text-align:center; }
+  .email-row { flex-direction:column; }
+  .urgency-banner { text-align:center;justify-content:center; }
 }
 </style>
 </head>
@@ -313,7 +284,7 @@
 </section>
 
 <div class="audit-wrap" id="audit-wrap" style="display:none;">
-  <div style="padding: clamp(2.5rem,5vw,4rem) 0 0;">
+  <div style="padding:clamp(2.5rem,5vw,4rem) 0 0;">
     <div class="audit-progress">
       <div class="progress-steps" id="progressSteps"></div>
       <div class="progress-meta">
@@ -382,6 +353,56 @@
     </div>
   </div>
 
+  <!-- ── SAVE RANKING ── -->
+  <div class="save-ranking-section">
+    <div class="container--narrow">
+      <div class="save-ranking-card">
+        <div class="save-ranking-card__badge">⭐ Full Report — $49</div>
+        <h3 id="saveRankingHeadline">Save your score &amp; get your full roadmap</h3>
+        <p class="save-ranking-card__sub" id="saveRankingDesc">
+          Your free score shows where you stand. The full report saves your ranking permanently, delivers a detailed action plan, and gives Keith &amp; Jonathan everything they need to build it for you — or help you do it yourself.
+        </p>
+        <div class="save-ranking-perks">
+          <div class="save-perk">
+            <div class="save-perk__icon">📌</div>
+            <div class="save-perk__text">
+              <strong>Saved score &amp; ranking</strong>
+              Your results are stored permanently — revisit, share, or track progress as you implement.
+            </div>
+          </div>
+          <div class="save-perk">
+            <div class="save-perk__icon">🗺️</div>
+            <div class="save-perk__text">
+              <strong>30-day action plan</strong>
+              A week-by-week implementation guide built around your specific gaps and team size.
+            </div>
+          </div>
+          <div class="save-perk">
+            <div class="save-perk__icon">🛠️</div>
+            <div class="save-perk__text">
+              <strong>Tool-by-tool setup guide</strong>
+              Exact tools to use, why, and how to set them up — including the ones we use every day.
+            </div>
+          </div>
+          <div class="save-perk">
+            <div class="save-perk__icon">📞</div>
+            <div class="save-perk__text">
+              <strong>Priority review by Keith &amp; Jon</strong>
+              We personally review every paid report and flag anything worth a follow-up call.
+            </div>
+          </div>
+        </div>
+        <div class="save-ranking-cta">
+          <button class="btn btn-primary btn-lg" onclick="showPaidModal()">
+            Save my score &amp; get full report — $49
+            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 7h12M8 3l4 4-4 4"/></svg>
+          </button>
+          <span class="save-ranking-note">One-time payment · Instant delivery · 30-day money-back guarantee</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="locked-section">
     <div class="container--narrow">
       <div class="locked-inner">
@@ -413,6 +434,7 @@
             <li>Overall automation score</li>
             <li>5-category breakdown</li>
             <li>Top 3 opportunity areas</li>
+            <li class="off">Saved ranking</li>
             <li class="off">Specific tool recommendations</li>
             <li class="off">Prioritized action roadmap</li>
           </ul>
@@ -423,10 +445,10 @@
           <div class="tier-card__price"><sub>$</sub>49</div>
           <ul class="tier-features">
             <li>Everything in free</li>
+            <li>Saved score &amp; ranking</li>
             <li>Detailed per-category diagnosis</li>
             <li>Specific tools + setup guides</li>
-            <li>Prioritized action plan</li>
-            <li>30-day implementation guide</li>
+            <li>30-day implementation plan</li>
           </ul>
           <button class="btn btn-primary" onclick="showPaidModal()" style="width:100%;justify-content:center;">Get my full report →</button>
         </div>
@@ -461,6 +483,7 @@
 
 </section>
 
+<!-- PAID MODAL -->
 <div class="paid-modal" id="paidModal">
   <div class="paid-modal__box">
     <div class="paid-modal__head">
@@ -468,16 +491,17 @@
       <button class="paid-modal__close" onclick="closePaidModal()">&times;</button>
     </div>
     <div class="paid-modal__body">
-      <p>Your personalized roadmap with specific tool recommendations, quick wins, and a 30-day action plan — built around your exact answers.</p>
+      <p>Your personalized roadmap with specific tool recommendations, quick wins, and a 30-day action plan — built around your exact answers. Your score is saved permanently.</p>
       <div class="paid-checklist">
+        <div>Saved score &amp; ranking — revisit any time</div>
         <div>Full per-category diagnosis with scores explained</div>
         <div>Specific tools to implement (with setup links)</div>
         <div>Prioritized quick-win actions — week 1, 2, 3</div>
         <div>30-day implementation guide</div>
-        <div>Setup support from Keith &amp; Jonathan</div>
+        <div>Personal review by Keith &amp; Jonathan</div>
       </div>
       <button class="btn btn-primary" onclick="processPurchase()" style="width:100%;justify-content:center;font-size:.95rem;padding:1rem;">
-        Pay $49 — instant access
+        Pay $49 — save my score &amp; get full report
       </button>
       <button onclick="closePaidModal()" style="display:block;width:100%;margin-top:.75rem;background:none;border:none;color:var(--muted);font-size:.8rem;cursor:pointer;font-family:var(--ff-body);">
         No thanks, keep free score
@@ -489,23 +513,29 @@
 <script src="nav.js"></script>
 <script>
 // ── CONFIG ────────────────────────────────────
-const AIRTABLE_TOKEN   = 'your_personal_access_token_here';
-const AIRTABLE_BASE_ID = 'your_base_id_here';
-const AIRTABLE_TABLE   = 'Martech Pulse Submissions';
+// Token and Base ID live in Cloudflare Pages env vars — never put them here.
+// All Airtable requests go through /submit (functions/submit.js).
+const AIRTABLE_TABLE = 'Martech Pulse Submissions';
 
-// ── Our tech stack ────────────────────────────
+// Stores the Airtable record ID after initial POST so we can PATCH it on paid upgrade
+let airtableRecordId = null;
+// Stores computed scores so we can write them back on paid upgrade
+let lastScores = null;
+let lastRecs   = null;
+
+// ── Tech stack ────────────────────────────────
 const TOOLS_DB = {
-  keap:      { name:'Keap CRM',    ours:true,  note:'Keith is a Keap Certified Partner. We build and automate Keap for clients every week — CRM, email sequences, pipelines, and more.' },
-  airtable:  { name:'Airtable',    ours:true,  note:'We build Airtable bases, automations, and reporting dashboards for clients. Often replaces spreadsheets and project management tools together.' },
-  softr:     { name:'Softr',       ours:true,  note:'We pair Softr with Airtable to build no-code client portals, internal apps, and dashboards — without custom dev.' },
-  make:      { name:'Make',        ours:true,  note:'Our go-to automation layer. We use Make to connect your tools and automate workflows without writing code.' },
-  bubble:    { name:'Bubble',      ours:true,  note:'We build full custom web apps in Bubble when Softr needs more flexibility. No developers required.' },
-  zapier:    { name:'Zapier',      ours:false, note:'Widely used for simple integrations. For more complex or high-volume flows, we usually recommend Make.' },
-  calendly:  { name:'Calendly',    ours:false, note:'Simple and effective for booking. We wire Calendly into Keap so every booking auto-creates a contact and triggers a sequence.' },
-  mailchimp: { name:'Mailchimp',   ours:false, note:'Good starter ESP. For service businesses, Keap handles CRM and email marketing together — fewer tools, better data.' },
-  hubspot:   { name:'HubSpot',     ours:false, note:'Powerful but often overkill and expensive for small businesses. We typically recommend Keap for better value and support.' },
-  notion:    { name:'Notion',      ours:false, note:'Great for SOPs and wikis. Airtable is usually better when you need structured data, automations, and client-facing views.' },
-  asana:     { name:'Asana',       ours:false, note:'Solid project management. Airtable can replace this and add a database layer plus automation — one less tool to pay for.' },
+  keap:      {name:'Keap CRM',  ours:true,  note:'Keith is a Keap Certified Partner. We build and automate Keap for clients every week — CRM, email sequences, pipelines, and more.'},
+  airtable:  {name:'Airtable',  ours:true,  note:'We build Airtable bases, automations, and reporting dashboards for clients. Often replaces spreadsheets and project management tools together.'},
+  softr:     {name:'Softr',     ours:true,  note:'We pair Softr with Airtable to build no-code client portals, internal apps, and dashboards — without custom dev.'},
+  make:      {name:'Make',      ours:true,  note:'Our go-to automation layer. We use Make to connect your tools and automate workflows without writing code.'},
+  bubble:    {name:'Bubble',    ours:true,  note:'We build full custom web apps in Bubble when Softr needs more flexibility.'},
+  zapier:    {name:'Zapier',    ours:false, note:'Widely used for simple integrations. For more complex flows, we usually recommend Make.'},
+  calendly:  {name:'Calendly',  ours:false, note:'Simple and effective for booking. We wire Calendly into Keap so every booking auto-creates a contact and triggers a sequence.'},
+  mailchimp: {name:'Mailchimp', ours:false, note:'Good starter ESP. For service businesses, Keap handles CRM and email marketing together.'},
+  hubspot:   {name:'HubSpot',   ours:false, note:'Powerful but often overkill for small businesses. We typically recommend Keap for better value and support.'},
+  notion:    {name:'Notion',    ours:false, note:'Great for SOPs and wikis. Airtable is usually better when you need structured data plus automations.'},
+  asana:     {name:'Asana',     ours:false, note:'Solid project management. Airtable can replace this and add a database layer plus automation.'},
 };
 
 function toolTag(key) {
@@ -519,7 +549,7 @@ const QUESTIONS = [
   {
     id:'contact', type:'contact', num:'01',
     text:"Let's get you set up",
-    hint:"We'll send your score here and use your website to personalize your results",
+    hint:"We'll send your results here and use your website to personalize your score",
     cat:'Setup'
   },
   {
@@ -582,11 +612,11 @@ const QUESTIONS = [
     hint:'Calls, meetings, appointments',
     cat:'Scheduling',
     options:[
-      {val:'Back-and-forth emails to find a time',  impact:'low',    tip:'Costs an average of 8 emails per booking. A free Calendly link eliminates this entirely.'},
-      {val:'They call or text me',                   impact:'low',    tip:'Works but creates interruptions and context switching. A booking link lets people self-schedule on your terms.'},
-      {val:'I share a Calendly / booking link',      impact:'medium', tip:'Great. Next step: connect it to your CRM so bookings auto-create contacts and trigger a prep sequence.'},
-      {val:'Automated with reminders and prep emails',impact:'high',  tip:'Gold standard. Automated reminders alone reduce no-shows by up to 70%.'},
-      {val:"I don't do calls / not applicable",      impact:'high',   tip:"Noted — we'll weight your score toward the other categories that apply to you."}
+      {val:'Back-and-forth emails to find a time',   impact:'low',    tip:'Costs an average of 8 emails per booking. A free Calendly link eliminates this entirely.'},
+      {val:'They call or text me',                    impact:'low',    tip:'Works but creates interruptions and context switching. A booking link lets people self-schedule on your terms.'},
+      {val:'I share a Calendly / booking link',       impact:'medium', tip:'Great. Next step: connect it to your CRM so bookings auto-create contacts and trigger a prep sequence.'},
+      {val:'Automated with reminders and prep emails',impact:'high',   tip:'Gold standard. Automated reminders alone reduce no-shows by up to 70%.'},
+      {val:"I don't do calls / not applicable",       impact:'high',   tip:"Noted — we'll weight your score toward the other categories that apply to you."}
     ]
   },
   {
@@ -595,11 +625,11 @@ const QUESTIONS = [
     hint:'Select all that apply — this directly powers your category scores',
     cat:'Tools',
     options:[
-      {val:'A CRM (HubSpot, Salesforce, Keap, etc.)', tip:'Having a CRM is a strong positive signal. How well it\'s configured matters even more than which one you use.'},
+      {val:'A CRM (HubSpot, Salesforce, Keap, etc.)', tip:'Having a CRM is a strong positive signal. How well it\'s configured matters even more than which one.'},
       {val:'Email marketing (Mailchimp, ConvertKit)',  tip:'Good foundation. The key question is whether it\'s connected to your CRM and lead capture.'},
       {val:'Scheduling tool (Calendly, Acuity)',        tip:'Eliminates back-and-forth. Even more powerful when connected to your CRM for automatic contact creation.'},
       {val:'Project management (Asana, Notion)',        tip:'Helps with internal ops. Airtable can combine project management with a database and automations in one tool.'},
-      {val:'Zapier / Make / automation tool',           tip:'An automation layer multiplies the value of every other tool you have. This is usually the highest-ROI addition.'},
+      {val:'Zapier / Make / automation tool',           tip:'An automation layer multiplies the value of every other tool you have. Usually the highest-ROI addition.'},
       {val:'Social scheduling (Buffer, Later)',         tip:'Saves 2–3 hours/week on content. Even more powerful paired with an AI content workflow.'},
       {val:'Reporting dashboards',                      tip:'Automatically tracking KPIs puts you ahead of 80% of small businesses. Most still do this manually.'},
       {val:'None of the above',                         tip:"That's exactly what this audit is for. We'll show you where to start for maximum impact."}
@@ -626,12 +656,18 @@ const QUESTIONS = [
 let answers  = {};
 let currentQ = 0;
 
-// ── Airtable POST ─────────────────────────────
-async function postToAirtable(ans) {
+// ── Airtable: CREATE record ───────────────────
+async function postToAirtable(ans, scores, recTitles) {
+  const firstName = ans.first_name || '';
+  const lastName  = ans.last_name  || '';
+  const fullName  = [firstName, lastName].filter(Boolean).join(' ');
+
   const fields = {
-    'Business name':        ans.url || ans.email || '',
-    'Email':                ans.email  || '',
-    'Website URL':          ans.url    || '',
+    'First name':           firstName,
+    'Last name':            lastName,
+    'Full name':            fullName,
+    'Email':                ans.email        || '',
+    'Website URL':          ans.url          || '',
     'Business type':        ans.business_type  || '',
     'Team size':            ans.team_size      || '',
     'Lead capture method':  ans.lead_capture   || '',
@@ -639,24 +675,50 @@ async function postToAirtable(ans) {
     'Scheduling method':    ans.scheduling     || '',
     'Tools in use':         (ans.tools      || []).join(', '),
     'Biggest pain point':   (ans.time_drain || []).join(', '),
-    'Tier': 'Free'
-    // TIER: hardcoded to Free until Stripe is live.
-    // To enable paid tier: build a Stripe webhook (checkout.session.completed)
-    // that finds the matching record by email and sets Tier = "Paid"
-    // via the Airtable REST API.
+    // Scores
+    'Overall score':        scores.overall,
+    'Score - leads':        scores.leads,
+    'Score - scheduling':   scores.scheduling,
+    'Score - comms':        scores.comms,
+    'Score - reporting':    scores.reporting,
+    'Score - content':      scores.content,
+    // Top rec titles for quick reference
+    'Rec 1 title':          recTitles[0] || '',
+    'Rec 2 title':          recTitles[1] || '',
+    'Rec 3 title':          recTitles[2] || '',
+    // Tier & pipeline
+    'Tier':                 'Free',
+    'Report sent':          false,
+    'Consulting call booked': false,
+    'Upsell stage':         'None'
+    // TIER NOTE: hardcoded to Free.
+    // On paid: Stripe webhook → checkout.session.completed
+    // → PATCH this record by ID → set Tier = "Paid", Upsell stage = "$49 report"
   };
+
   try {
-    const res = await fetch(
-      `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_TABLE)}`,
-      {
-        method:'POST',
-        headers:{'Authorization':`Bearer ${AIRTABLE_TOKEN}`,'Content-Type':'application/json'},
-        body: JSON.stringify({fields})
-      }
-    );
-    if (!res.ok) { console.error('Airtable error:', await res.json()); return null; }
-    return (await res.json()).id;
-  } catch(err) { console.error('Airtable fetch failed:', err); return null; }
+    const res = await fetch('/submit', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({fields})
+    });
+    if (!res.ok) { console.error('Airtable POST error:', await res.json()); return null; }
+    const data = await res.json();
+    return data.id; // recId stored in airtableRecordId
+  } catch(err) { console.error('Airtable POST failed:', err); return null; }
+}
+
+// ── Airtable: UPDATE record on paid upgrade ───
+async function patchAirtableRecord(recId, paidFields) {
+  if (!recId) { console.warn('No record ID to patch'); return; }
+  try {
+    const res = await fetch('/submit', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({_method:'PATCH', recordId: recId, fields: paidFields})
+    });
+    if (!res.ok) { console.error('Airtable PATCH error:', await res.json()); }
+  } catch(err) { console.error('Airtable PATCH failed:', err); }
 }
 
 // ── Scoring ───────────────────────────────────
@@ -680,7 +742,6 @@ function calcScores() {
   const tools = answers.tools || [];
   const tc = tools.filter(t => t !== 'None of the above').length;
   s.reporting = Math.min(95, 20 + tc * 12);
-
   if (tools.some(t => t.includes('Zapier') || t.includes('Make'))) {
     s.leads      = Math.min(98, s.leads + 10);
     s.scheduling = Math.min(98, s.scheduling + 10);
@@ -708,15 +769,16 @@ function gradeInfo(score) {
 }
 
 function scoreDesc(score) {
+  const firstName = answers.first_name ? `, ${answers.first_name}` : '';
   const pain = (answers.time_drain || [])[0] || 'repetitive tasks';
   const biz  = answers.business_type || 'your business type';
-  if (score < 30) return `For a ${biz}, the biggest quick win is automating lead follow-up and scheduling — two changes that typically save 8–12 hours a week. "${pain}" is your most expensive bottleneck right now.`;
-  if (score < 55) return `You have tools in place but they aren't fully connected. An automation layer like Make wired into a CRM could recover 5–8 hours a week and eliminate most of your "${pain}" problem.`;
-  if (score < 75) return `You're in good shape. The remaining opportunity is around ${pain.toLowerCase()} — typically worth $300–600/month in recovered time for a team your size.`;
-  return `You've built solid habits. The final 20% usually comes from custom integrations, AI-assisted workflows, and tighter reporting — the kind we build in Airtable and Make.`;
+  if (score < 30) return `For a ${biz}${firstName}, the biggest quick win is automating lead follow-up and scheduling — two changes that typically save 8–12 hours a week. "${pain}" is your most expensive bottleneck right now.`;
+  if (score < 55) return `You have tools in place${firstName} but they aren't fully connected. An automation layer like Make wired into a CRM could recover 5–8 hours a week.`;
+  if (score < 75) return `You're in good shape${firstName}. The remaining opportunity is around ${pain.toLowerCase()} — typically worth $300–600/month in recovered time for a team your size.`;
+  return `You've built solid habits${firstName}. The final 20% usually comes from custom integrations and AI-assisted workflows — the kind we build in Airtable and Make.`;
 }
 
-// ── Recommendations engine ────────────────────
+// ── Recs engine ───────────────────────────────
 function buildRecs(data) {
   const recs  = [];
   const tools = answers.tools      || [];
@@ -725,91 +787,79 @@ function buildRecs(data) {
   const hasAuto = tools.some(t => t.includes('Zapier') || t.includes('Make'));
   const hasCal  = tools.some(t => t.includes('Calendly') || t.includes('Scheduling'));
 
-  if (data.leads < 70) {
-    recs.push({
-      icon:'🎯', color:'#fe6930',
-      priority: data.leads < 35 ? 'High priority' : 'Medium priority',
-      pClass:   data.leads < 35 ? 'priority-high' : 'priority-medium',
-      title:'Automate your lead follow-up',
-      body: hasCRM
-        ? `You have a CRM — the next step is building a proper automated follow-up sequence inside it. Most clients recover 4–6 hours/week just from automating the first 3 touchpoints after a new lead comes in.`
-        : `Every lead without a fast, automated follow-up is a missed opportunity. We set this up in Keap — it handles the entire follow-up sequence automatically, triggered the moment a new lead comes in, with no manual work.`,
-      toolKeys: hasCRM ? ['make','keap'] : ['keap','make'],
-      cta:'Talk to us about building this →'
-    });
-  }
+  if (data.leads < 70) recs.push({
+    icon:'🎯', color:'#fe6930',
+    priority: data.leads<35 ? 'High priority':'Medium priority',
+    pClass:   data.leads<35 ? 'priority-high':'priority-medium',
+    title:'Automate your lead follow-up',
+    body: hasCRM
+      ? `You have a CRM — the next step is building a proper automated follow-up sequence inside it. Most clients recover 4–6 hours/week just from automating the first 3 touchpoints after a new lead comes in.`
+      : `Every lead without a fast, automated follow-up is a missed opportunity. We set this up in Keap — it handles the entire follow-up sequence automatically, triggered the moment a new lead comes in.`,
+    toolKeys: hasCRM ? ['make','keap'] : ['keap','make'],
+    cta:'Talk to us about building this →'
+  });
 
-  if (data.scheduling < 65) {
-    recs.push({
-      icon:'📅', color:'#2E6B4F',
-      priority: data.scheduling < 30 ? 'High priority' : 'Medium priority',
-      pClass:   data.scheduling < 30 ? 'priority-high' : 'priority-medium',
-      title: hasCal ? 'Connect your booking tool to your CRM' : 'Eliminate scheduling back-and-forth',
-      body: hasCal
-        ? `You already have a booking tool — now wire it into Keap so every booked call auto-creates a contact, logs the meeting, and kicks off a prep email sequence. We build this connection in about a day.`
-        : `Back-and-forth scheduling costs 8+ emails per booking. A Calendly link takes 10 minutes to set up. Connected to Keap, it automatically creates the contact, tags them, and starts an onboarding sequence — all without touching anything manually.`,
-      toolKeys:['calendly','keap','make'],
-      cta:'Talk to us about building this →'
-    });
-  }
+  if (data.scheduling < 65) recs.push({
+    icon:'📅', color:'#2E6B4F',
+    priority: data.scheduling<30 ? 'High priority':'Medium priority',
+    pClass:   data.scheduling<30 ? 'priority-high':'priority-medium',
+    title: hasCal ? 'Connect your booking tool to your CRM':'Eliminate scheduling back-and-forth',
+    body: hasCal
+      ? `You already have a booking tool — now wire it into Keap so every booked call auto-creates a contact, logs the meeting, and kicks off a prep email sequence.`
+      : `Back-and-forth scheduling costs 8+ emails per booking. A Calendly link takes 10 minutes to set up. Connected to Keap, it automatically creates the contact, tags them, and starts an onboarding sequence.`,
+    toolKeys:['calendly','keap','make'],
+    cta:'Talk to us about building this →'
+  });
 
-  if (pain.includes('Onboarding new clients') || pain.includes('Repetitive client emails')) {
-    recs.push({
-      icon:'💬', color:'#C9952A',
-      priority:'High priority', pClass:'priority-high',
-      title:'Build an automated client onboarding sequence',
-      body:`A Keap onboarding sequence sends the right information at the right time — welcome email, intake form, contract, kick-off booking — without anyone lifting a finger. Your clients get a more professional experience, and your team gets 3–4 hours back per new client.`,
-      toolKeys:['keap','airtable','softr'],
-      cta:'Talk to us about building this →'
-    });
-  }
+  if (pain.includes('Onboarding new clients') || pain.includes('Repetitive client emails')) recs.push({
+    icon:'💬', color:'#C9952A',
+    priority:'High priority', pClass:'priority-high',
+    title:'Build an automated client onboarding sequence',
+    body:`A Keap onboarding sequence sends the right information at the right time — welcome email, intake form, contract, kick-off booking — without anyone lifting a finger. Clients get a more professional experience, and your team gets 3–4 hours back per new client.`,
+    toolKeys:['keap','airtable','softr'],
+    cta:'Talk to us about building this →'
+  });
 
-  if (data.reporting < 50 || pain.includes('Manual data entry / reporting')) {
-    recs.push({
-      icon:'📊', color:'#185FA5',
-      priority: data.reporting < 30 ? 'High priority' : 'Medium priority',
-      pClass:   data.reporting < 30 ? 'priority-high' : 'priority-medium',
-      title:'Replace manual reporting with a live dashboard',
-      body: !hasAuto
-        ? `Manual data entry is the most automatable — and least glamorous — problem in most businesses. We build Airtable bases connected via Make that pull data automatically and update dashboards in real time. No more copy-paste.`
-        : `You have automation tools — point them at your reporting. An Airtable base wired to your existing stack via Make can replace most manual data entry and give you a live view of your business KPIs.`,
-      toolKeys:['airtable','make','softr'],
-      cta:'Talk to us about building this →'
-    });
-  }
+  if (data.reporting < 50 || pain.includes('Manual data entry / reporting')) recs.push({
+    icon:'📊', color:'#185FA5',
+    priority: data.reporting<30 ? 'High priority':'Medium priority',
+    pClass:   data.reporting<30 ? 'priority-high':'priority-medium',
+    title:'Replace manual reporting with a live dashboard',
+    body: !hasAuto
+      ? `Manual data entry is the most automatable problem in most businesses. We build Airtable bases connected via Make that pull data automatically and update dashboards in real time.`
+      : `You have automation tools — point them at your reporting. An Airtable base wired to your existing stack via Make can replace most manual data entry and give you a live view of your KPIs.`,
+    toolKeys:['airtable','make','softr'],
+    cta:'Talk to us about building this →'
+  });
 
-  if (data.content < 55 || pain.includes('Creating content from scratch')) {
-    recs.push({
-      icon:'📢', color:'#534AB7',
-      priority:'Medium priority', pClass:'priority-medium',
-      title:'Build an AI-assisted content workflow',
-      body:`Creating content from scratch every week is one of the biggest time drains for small teams. We build content workflows in Airtable + Make that use AI to generate first drafts from your inputs, schedule posts, and track performance — typically cutting creation time by 50–60%.`,
-      toolKeys:['airtable','make'],
-      cta:'Talk to us about building this →'
-    });
-  }
+  if (data.content < 55 || pain.includes('Creating content from scratch')) recs.push({
+    icon:'📢', color:'#534AB7',
+    priority:'Medium priority', pClass:'priority-medium',
+    title:'Build an AI-assisted content workflow',
+    body:`Creating content from scratch every week is one of the biggest time drains for small teams. We build content workflows in Airtable + Make that use AI to generate first drafts, schedule posts, and track performance — cutting creation time by 50–60%.`,
+    toolKeys:['airtable','make'],
+    cta:'Talk to us about building this →'
+  });
 
-  if (recs.length === 0) {
-    recs.push({
-      icon:'🚀', color:'#fe6930',
-      priority:'Next level', pClass:'priority-low',
-      title:'Fine-tune your integration layer',
-      body:`Your setup is already solid. The final gains usually come from tightening connections between tools — eliminating any remaining manual handoffs, adding AI-assisted steps, and building a reporting layer that gives you a clear picture of what's working. We'd love to dig into the specifics with you.`,
-      toolKeys:['make','airtable','softr'],
-      cta:'Book a strategy session →'
-    });
-  }
+  if (recs.length === 0) recs.push({
+    icon:'🚀', color:'#fe6930',
+    priority:'Next level', pClass:'priority-low',
+    title:'Fine-tune your integration layer',
+    body:`Your setup is already solid. The final gains usually come from tightening connections between tools, adding AI-assisted steps, and building a reporting layer that gives you a clear picture of what's working.`,
+    toolKeys:['make','airtable','softr'],
+    cta:'Book a strategy session →'
+  });
 
   return recs.slice(0,3);
 }
 
-// ── Build UI ──────────────────────────────────
+// ── Render ────────────────────────────────────
 function buildProgress() {
   const el = document.getElementById('progressSteps');
   el.innerHTML = '';
   QUESTIONS.forEach((_,i) => {
     const d = document.createElement('div');
-    d.className = 'progress-step' + (i < currentQ ? ' done' : i === currentQ ? ' active' : '');
+    d.className = 'progress-step'+(i<currentQ?' done':i===currentQ?' active':'');
     el.appendChild(d);
   });
   document.getElementById('progressLabel').textContent = `Question ${currentQ+1} of ${QUESTIONS.length}`;
@@ -821,7 +871,7 @@ function buildQuestions() {
   wrap.innerHTML = '';
   QUESTIONS.forEach((q,i) => {
     const card = document.createElement('div');
-    card.className = 'q-card' + (i===currentQ ? ' active' : '');
+    card.className = 'q-card'+(i===currentQ?' active':'');
     card.id = `qcard-${i}`;
     card.innerHTML = buildQHTML(q,i);
     wrap.appendChild(card);
@@ -833,24 +883,30 @@ function buildQHTML(q,i) {
   const isLast = i === QUESTIONS.length-1;
 
   if (q.type === 'contact') {
-    const urlVal   = answers['url']   || '';
-    const emailVal = answers['email'] || '';
-    const ready    = urlVal.length > 4 && emailVal.includes('@');
+    const fn    = answers['first_name'] || '';
+    const ln    = answers['last_name']  || '';
+    const url   = answers['url']        || '';
+    const email = answers['email']      || '';
+    const ready = fn.trim() && ln.trim() && url.length > 4 && email.includes('@');
     input = `
       <div class="field-stack">
+        <div class="field-row">
+          <div>
+            <div class="field-label">First name</div>
+            <input type="text" class="url-field" id="input-first" placeholder="Keith" value="${fn}" oninput="handleContact()">
+          </div>
+          <div>
+            <div class="field-label">Last name</div>
+            <input type="text" class="url-field" id="input-last" placeholder="Phillips" value="${ln}" oninput="handleContact()">
+          </div>
+        </div>
         <div>
           <div class="field-label">Business website</div>
-          <input type="url" class="url-field" id="input-url"
-            placeholder="https://yourbusiness.com"
-            value="${urlVal}"
-            oninput="handleContact()">
+          <input type="url" class="url-field" id="input-url" placeholder="https://yourbusiness.com" value="${url}" oninput="handleContact()">
         </div>
         <div>
           <div class="field-label">Your email — we'll send your results here</div>
-          <input type="email" class="url-field" id="input-email"
-            placeholder="you@yourbusiness.com"
-            value="${emailVal}"
-            oninput="handleContact()">
+          <input type="email" class="url-field" id="input-email" placeholder="you@yourbusiness.com" value="${email}" oninput="handleContact()">
         </div>
         <button class="btn-next" id="urlbtn-${i}" onclick="nextQ()" ${ready?'':'disabled'}>Start audit →</button>
       </div>
@@ -902,10 +958,15 @@ function buildQHTML(q,i) {
 }
 
 function handleContact() {
-  answers['url']   = document.getElementById('input-url')?.value.trim()   || '';
-  answers['email'] = document.getElementById('input-email')?.value.trim() || '';
+  answers['first_name'] = document.getElementById('input-first')?.value.trim() || '';
+  answers['last_name']  = document.getElementById('input-last')?.value.trim()  || '';
+  answers['url']        = document.getElementById('input-url')?.value.trim()   || '';
+  answers['email']      = document.getElementById('input-email')?.value.trim() || '';
   const btn = document.querySelector('#qcard-0 .btn-next');
-  if (btn) btn.disabled = !(answers['url'].length > 4 && answers['email'].includes('@'));
+  if (btn) btn.disabled = !(
+    answers['first_name'] && answers['last_name'] &&
+    answers['url'].length > 4 && answers['email'].includes('@')
+  );
 }
 
 function pickOne(id,el,val) {
@@ -939,10 +1000,23 @@ function prevQ() {
   buildProgress();
 }
 
+// ── Submit ────────────────────────────────────
 function submitAudit() {
   document.getElementById('questionsContainer').style.display = 'none';
   document.getElementById('analyzingState').classList.add('active');
-  postToAirtable(answers);
+
+  // Pre-compute scores so we can POST them immediately
+  const scores = calcScores();
+  lastScores   = scores;
+  const recs   = buildRecs(scores);
+  lastRecs     = recs;
+  const recTitles = recs.map(r => r.title);
+
+  // Fire POST — capture record ID for later PATCH on paid upgrade
+  postToAirtable(answers, scores, recTitles).then(id => {
+    if (id) { airtableRecordId = id; }
+  });
+
   const statuses = [
     'Scoring your answers…',
     'Analyzing lead capture flows…',
@@ -956,32 +1030,41 @@ function submitAudit() {
   const iv = setInterval(()=>{
     si++;
     if (si < statuses.length) { statusEl.textContent = statuses[si]; }
-    else { clearInterval(iv); showResults(); }
-  },900);
+    else { clearInterval(iv); showResults(scores, recs); }
+  }, 900);
 }
 
-function showResults() {
+// ── Results ───────────────────────────────────
+function showResults(data, recs) {
   document.getElementById('audit-wrap').style.display = 'none';
   document.querySelector('.pulse-hero').style.display = 'none';
   const results = document.getElementById('results');
   results.classList.add('active');
   results.scrollIntoView({behavior:'smooth'});
 
-  const data  = calcScores();
   const grade = gradeInfo(data.overall);
+  const firstName = answers.first_name || '';
 
   setTimeout(()=>{
-    const ring   = document.getElementById('ringFill');
+    const ring = document.getElementById('ringFill');
     ring.style.strokeDashoffset = 357 - (data.overall/100)*357;
     ring.style.stroke = data.overall<30 ? '#E24B4A' : data.overall<55 ? '#EF9F27' : '#fe6930';
     document.getElementById('scoreNum').textContent = data.overall;
-  },150);
+  }, 150);
 
-  document.getElementById('scoreHeadline').textContent = grade.headline;
-  document.getElementById('scoreDesc').textContent     = scoreDesc(data.overall);
+  document.getElementById('scoreHeadline').textContent = firstName
+    ? `${firstName}, ${grade.headline.charAt(0).toLowerCase()+grade.headline.slice(1)}`
+    : grade.headline;
+  document.getElementById('scoreDesc').textContent = scoreDesc(data.overall);
   const badge = document.getElementById('scoreBadge');
   badge.textContent = grade.label;
   badge.className   = 'score-badge ' + grade.css;
+
+  // Personalise save-ranking headline
+  if (firstName) {
+    document.getElementById('saveRankingHeadline').textContent =
+      `Save your score, ${firstName} — and get your full roadmap`;
+  }
 
   const catMeta = [
     {key:'leads',      label:'Lead capture & follow-up', icon:'🎯', color:'#fe6930',  tip:'How well you capture and automatically follow up with new leads. Weighted 25% of your total score.'},
@@ -991,32 +1074,23 @@ function showResults() {
     {key:'content',    label:'Content & social',         icon:'📢', color:'#534AB7',  tip:'Your content creation and social media automation maturity. Weighted 15%.'},
   ];
 
-  document.getElementById('catRows').innerHTML = catMeta.map(c => `
+  document.getElementById('catRows').innerHTML = catMeta.map(c=>`
     <div class="cat-row">
       <div class="cat-icon" style="background:${c.color}18">${c.icon}</div>
       <div class="cat-name">
         ${c.label}
-        <span class="tip tip--light">
-          <span class="tip__icon">?</span>
-          <span class="tip__bubble">${c.tip}</span>
-        </span>
+        <span class="tip tip--light"><span class="tip__icon">?</span><span class="tip__bubble">${c.tip}</span></span>
       </div>
-      <div class="cat-bar-wrap">
-        <div class="cat-bar-fill" id="fill-${c.key}" style="background:${c.color}"></div>
-      </div>
+      <div class="cat-bar-wrap"><div class="cat-bar-fill" id="fill-${c.key}" style="background:${c.color}"></div></div>
       <div class="cat-pct">${data[c.key]}%</div>
     </div>`).join('');
 
   setTimeout(()=>{
     catMeta.forEach((c,i)=>{
-      setTimeout(()=>{
-        const el = document.getElementById(`fill-${c.key}`);
-        if (el) el.style.width = data[c.key]+'%';
-      },i*150);
+      setTimeout(()=>{ const el=document.getElementById(`fill-${c.key}`); if(el) el.style.width=data[c.key]+'%'; }, i*150);
     });
-  },300);
+  }, 300);
 
-  const recs = buildRecs(data);
   document.getElementById('recCards').innerHTML = recs.map(r=>`
     <div class="rec-card">
       <div class="rec-card__header">
@@ -1038,6 +1112,7 @@ function showResults() {
     </div>`).join('');
 }
 
+// ── Page actions ──────────────────────────────
 function startAudit() {
   document.querySelector('.pulse-hero').style.display = 'none';
   const wrap = document.getElementById('audit-wrap');
@@ -1050,13 +1125,30 @@ function startAudit() {
 
 function showPaidModal()  { document.getElementById('paidModal').classList.add('open'); }
 function closePaidModal() { document.getElementById('paidModal').classList.remove('open'); }
+
 function processPurchase() {
   closePaidModal();
-  // TODO: replace with Stripe payment link
+  // On successful Stripe payment, call upgradeRecord() with the record ID.
+  // The Stripe webhook should POST to your server → call upgradeRecord().
+  // For now: placeholder alert.
+  // TODO: replace with your Stripe payment link
   alert('This will connect to Stripe. Full report delivered after payment.');
 }
+
+// Called by your Stripe webhook handler (or manually) after payment confirmed
+async function upgradeRecord() {
+  if (!airtableRecordId) { console.warn('No record ID — cannot upgrade.'); return; }
+  const paidFields = {
+    'Tier':         'Paid',
+    'Upsell stage': '$49 report',
+    'Report sent':  false // flip to true after you email the report
+  };
+  await patchAirtableRecord(airtableRecordId, paidFields);
+  console.log('Record upgraded to Paid:', airtableRecordId);
+}
+
 function bookConsulting() {
-  // TODO: replace with Calendly link
+  // TODO: replace with your Calendly link
   alert('This will open your Calendly booking link.');
 }
 function subscribeEmail() {
