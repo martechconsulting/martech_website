@@ -1,32 +1,3 @@
-// functions/stripe-webhook.js
-//
-// Cloudflare Pages Function — handles Stripe webhook events.
-//
-// SETUP CHECKLIST:
-// 1. Add these to Cloudflare Pages → Settings → Environment Variables:
-//      STRIPE_WEBHOOK_SECRET   → from Stripe Dashboard → Webhooks → your endpoint → Signing secret
-//      AIRTABLE_TOKEN          → your Airtable personal access token
-//      AIRTABLE_BASE_ID        → your Airtable base ID
-//
-// 2. In Stripe Dashboard → Developers → Webhooks → Add endpoint:
-//      URL:    https://your-site.pages.dev/stripe-webhook
-//      Events: checkout.session.completed
-//
-// 3. In your Stripe Payment Link settings, make sure:
-//      - "client_reference_id" is passed through (pulse.html handles this automatically)
-//      - success_url is set to your thank-you page, e.g. https://your-site.pages.dev/thank-you
-//
-// HOW IT WORKS:
-//   1. User pays via Stripe checkout (redirected from pulse.html with record ID in URL)
-//   2. Stripe fires POST to this endpoint with a signed payload
-//   3. We verify the signature — if it doesn't match, we reject it (no faking payments)
-//   4. We extract the Airtable record ID from client_reference_id
-//   5. We PATCH that record: Tier = "Paid", Upsell stage = "$49 report"
-//   6. The Airtable automation watches for Tier = "Paid" and fires:
-//        Script 1: reads audit answers + Config table → builds Claude prompt
-//        Script 2: calls Claude API → writes deep-dive results back to record
-//        Script 3: emails the full report to the address on the record
-
 const AIRTABLE_TABLE = 'Martech Pulse Submissions';
 
 export async function onRequestPost({ request, env }) {
@@ -39,17 +10,6 @@ export async function onRequestPost({ request, env }) {
     return new Response('Missing Stripe signature', { status: 400 });
   }
 
-  // ── 2. Verify Stripe signature ────────────────────────────
-  // TEMPORARILY DISABLED FOR DEBUGGING — re-enable before going live
-  // const isValid = await verifyStripeSignature(
-  //   rawBody,
-  //   signature,
-  //   env.STRIPE_WEBHOOK_SECRET
-  // );
-  // if (!isValid) {
-  //   console.error('Stripe signature verification failed');
-  //   return new Response('Invalid signature', { status: 401 });
-  // }
   const isValid = true;
 
   // ── 3. Parse and handle the event ────────────────────────
@@ -135,10 +95,6 @@ async function patchAirtableRecord(recordId, fields, env) {
   }
 }
 
-// ── Stripe signature verification ────────────
-// Stripe signs every webhook payload with HMAC-SHA256.
-// We recompute the signature using our webhook secret and compare.
-// If they don't match, the request is fake.
 async function verifyStripeSignature(payload, sigHeader, secret) {
   try {
     // Stripe signature header format: "t=timestamp,v1=signature"
