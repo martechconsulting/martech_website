@@ -1180,7 +1180,7 @@ function processPurchase() {
   // Build Stripe checkout URL with the Airtable record ID in client_reference_id.
   // Stripe passes this through to the webhook so the server knows which record to upgrade.
   // TODO: replace YOUR_STRIPE_PAYMENT_LINK with your actual Stripe payment link URL.
-  const stripeUrl = new URL('https://buy.stripe.com/YOUR_STRIPE_PAYMENT_LINK');
+  const stripeUrl = new URL('https://buy.stripe.com/9B614ncPsgLw8xu881fQI00');
   stripeUrl.searchParams.set('client_reference_id', airtableRecordId);
 
   // Prefill email if we have it — Stripe supports this via prefilled_email param
