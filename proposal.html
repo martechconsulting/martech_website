@@ -537,6 +537,96 @@
   margin-top: 1rem;
 }
 
+/* ── Not ready state ── */
+.prop-notready {
+  background: var(--cream);
+  padding: clamp(3rem,6vw,5rem) 0;
+}
+.prop-notready-inner {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 clamp(1.25rem,4vw,2.5rem);
+}
+.prop-notready-summary {
+  font-size: 1.05rem;
+  color: var(--body);
+  line-height: 1.8;
+  font-weight: 300;
+  padding: 1.5rem;
+  background: #fff;
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--orange);
+  border-radius: 0 8px 8px 0;
+  margin-bottom: 2rem;
+}
+.prop-steps-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+.prop-step-item {
+  background: #fff;
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+.prop-step-num {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(254,105,48,.1);
+  border: 1px solid rgba(254,105,48,.25);
+  color: var(--orange);
+  font-size: .75rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: .1rem;
+}
+.prop-step-title { font-size: .9rem; font-weight: 600; color: var(--navy); margin-bottom: .3rem; }
+.prop-step-desc  { font-size: .83rem; color: var(--mid); line-height: 1.65; font-weight: 300; }
+.prop-resources {
+  background: var(--navy);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.prop-resources-label {
+  font-size: .65rem;
+  font-weight: 700;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.3);
+  margin-bottom: 1rem;
+}
+.prop-resource-link {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  color: rgba(255,255,255,.7);
+  text-decoration: none;
+  font-size: .875rem;
+  padding: .5rem 0;
+  border-bottom: 1px solid rgba(255,255,255,.06);
+  transition: color .15s;
+}
+.prop-resource-link:last-child { border-bottom: none; }
+.prop-resource-link:hover { color: var(--orange-lt); }
+.prop-resource-link::before { content: '→'; color: var(--orange); font-size: .75rem; }
+.prop-closing {
+  font-size: .875rem;
+  color: var(--mid);
+  font-style: italic;
+  text-align: center;
+  padding-top: 1rem;
+}
+
 /* ── Print styles ── */
 @media print {
   .prop-page, #prop-loading, .prop-output-hero, nav, footer { display: none !important; }
@@ -878,6 +968,10 @@ async function submitProposal() {
   const btn = document.getElementById('submit-btn');
   btn.disabled = true;
 
+  // Clear any previous error
+  const errEl = document.getElementById('error-3');
+  errEl.style.display = 'none';
+
   // Show loading
   document.getElementById('prop-form-page').style.display = 'none';
   document.getElementById('prop-loading').style.display   = 'flex';
@@ -932,11 +1026,61 @@ async function submitProposal() {
 function renderProposal(p, form) {
   const today = new Date().toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' });
 
+  // Not ready — render redirect state instead of proposal
+  if (p.notReady) {
+    document.getElementById('output-headline').innerHTML =
+      `Let's get you <em style="color:var(--orange-lt);">ready</em>`;
+    document.getElementById('email-sent-note').textContent = '';
+
+    const stepsHtml = (p.actionableSteps || []).map((s, i) => `
+      <div class="prop-step-item">
+        <div class="prop-step-num">${i + 1}</div>
+        <div>
+          <div class="prop-step-title">${s.step}</div>
+          <div class="prop-step-desc">${s.description}</div>
+        </div>
+      </div>`).join('');
+
+    const resourcesHtml = (p.resources || []).map(r =>
+      `<a href="${r.url}" target="_blank" class="prop-resource-link">${r.label}</a>`
+    ).join('');
+
+    document.getElementById('proposal-document').parentElement.innerHTML = `
+      <div class="prop-notready">
+        <div class="prop-notready-inner">
+          <p class="prop-section-title">Where you are now</p>
+          <div class="prop-notready-summary">${p.notReadySummary}</div>
+
+          <p class="prop-section-title">Steps to take right now</p>
+          <div class="prop-steps-list">${stepsHtml}</div>
+
+          <div class="prop-resources">
+            <div class="prop-resources-label">Free resources from Martech Consulting</div>
+            ${resourcesHtml}
+          </div>
+
+          <div class="prop-cta" style="border-top:1px solid var(--rule);padding-top:1.5rem;">
+            <a href="https://calendly.com/d/cr79-s6m-dws/martech-meeting" target="_blank" class="btn-book">
+              Book a free call anyway →
+            </a>
+            <span class="prop-cta-note">Sometimes a 30-minute conversation is all it takes to find a path forward.</span>
+          </div>
+
+          <p class="prop-closing">${p.closingNote}</p>
+        </div>
+      </div>`;
+
+    document.getElementById('prop-loading').style.display  = 'none';
+    document.getElementById('prop-output').style.display   = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    return;
+  }
+
   // Headline
   document.getElementById('output-headline').innerHTML =
     `Here's what we'd recommend<br>for <em style="color:var(--orange-lt);">${form.businessName}</em>`;
   document.getElementById('email-sent-note').textContent =
-    `A copy has been sent to ${form.email}`;
+    `Saved to your account · ${form.email}`;
 
   // Services HTML
   const servicesHtml = (p.services || []).map(svc => {
@@ -946,7 +1090,7 @@ function renderProposal(p, form) {
 
     const isRetainer = svc.isRetainer || svc.timeline?.toLowerCase().includes('month') || svc.investmentRange?.toLowerCase().includes('/month');
     const badgeLabel = isRetainer ? 'Monthly retainer' : 'Project investment';
-    const timelineLabel = isRetainer ? `Ongoing · ${svc.timeline || 'monthly'}` : `⏱ ${svc.timeline}`;
+    const timelineLabel = isRetainer ? 'Ongoing partnership' : `⏱ ${svc.timeline}`;
 
     return `
       <div class="prop-service-card">
