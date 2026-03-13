@@ -5,9 +5,9 @@
 //
 // SETUP:
 // Add to Cloudflare Pages → Settings → Environment Variables:
-//   ANTHROPIC_API_KEY  → your Anthropic API key
-//   AIRTABLE_TOKEN     → already set
-//   AIRTABLE_BASE_ID   → already set
+//   ANTHROPIC_API_KEY          → your Anthropic API key
+//   AIRTABLE_TOKEN             → already set
+//   AIRTABLE_PROPOSALS_BASE_ID → base ID for your proposals Airtable base (different from Pulse)
 //
 // Airtable: create a "Proposals" table with these fields:
 //   Name (single line), Email (email), Business Name (single line),
@@ -165,7 +165,7 @@ async function saveToAirtable(form, proposal, env) {
   const proposalText = buildPlainTextProposal(form, proposal);
 
   await fetch(
-    `https://api.airtable.com/v0/${env.AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_TABLE)}`,
+    `https://api.airtable.com/v0/${env.AIRTABLE_PROPOSALS_BASE_ID}/${encodeURIComponent(AIRTABLE_TABLE)}`,
     {
       method: 'POST',
       headers: {
