@@ -1,3 +1,13 @@
+// functions/generate-proposal.js
+//
+// Cloudflare Pages Function — generates a personalized proposal via Claude
+// and saves it to Airtable.
+//
+// SETUP: Add to Cloudflare Pages → Settings → Environment Variables:
+//   ANTHROPIC_API_KEY          → your Anthropic API key
+//   AIRTABLE_TOKEN             → already set
+//   AIRTABLE_PROPOSALS_BASE_ID → base ID for your proposals Airtable base (different from Pulse)
+
 const AIRTABLE_TABLE = 'Proposals';
 
 const SERVICES_PRICING = `
@@ -28,7 +38,7 @@ RETAINER SERVICES (ongoing monthly, deeply discounted vs. ad-hoc):
 - Email Marketing Management: $2,500–$5,000/month (standalone retainer)
 
 Overflow on any retainer billed at contracted rates — significantly below ad-hoc.
-Non-profit discount: 15% off all investment ranges. Apply automatically if the business type is Non-profit.
+Non-profit discount: 15% off all investment ranges. Apply automatically if business type is Non-profit.
 Minimum engagement: $1,000.
 `.trim();
 
@@ -147,12 +157,12 @@ Respond ONLY with valid JSON, no markdown, no backticks, no explanation:
   }
 
   // ── Save to Airtable (awaited, errors surfaced) ────────────────────────
-  const saveError = await saveToAirtable(body, proposal, env);
+  const { error: saveError, recordId } = await saveToAirtable(body, proposal, env);
   if (saveError) {
     console.error('Airtable save failed:', saveError);
   }
 
-  return json({ success: true, proposal, airtableError: saveError || null });
+  return json({ success: true, proposal, recordId: recordId || null, airtableError: saveError || null });
 }
 
 // ── Save to Airtable ──────────────────────────────────────────────────────
@@ -190,13 +200,14 @@ async function saveToAirtable(form, proposal, env) {
 
     if (!res.ok) {
       const err = await res.json();
-      return JSON.stringify(err);
+      return { error: JSON.stringify(err), recordId: null };
     }
 
-    return null; // success
+    const data = await res.json();
+    return { error: null, recordId: data.id };
 
   } catch (err) {
-    return err.message;
+    return { error: err.message, recordId: null };
   }
 }
 
