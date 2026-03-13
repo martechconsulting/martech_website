@@ -996,21 +996,25 @@ function handleContact() {
 }
 
 // Called when "Start audit →" is clicked on Q1
-// POSTs contact info immediately so we have a record ID before the audit starts
-async function startAuditFromContact() {
+// Proceeds immediately — POSTs contact info in background
+function startAuditFromContact() {
   const btn = document.getElementById('urlbtn-0');
   if (btn) { btn.disabled = true; btn.textContent = 'Starting…'; }
 
-  // POST contact info now — fire and await so we have the record ID
-  const id = await createContactRecord(answers);
-  if (id) {
-    airtableRecordId = id;
-  } else {
-    console.warn('Contact record creation failed — audit will continue but record may be missing');
-  }
-
-  // Proceed to Q2
+  // Move to Q2 immediately — never block the user on a network call
   nextQ();
+
+  // POST contact info in background — store record ID when it returns
+  createContactRecord(answers).then(id => {
+    if (id) {
+      airtableRecordId = id;
+      console.log('Contact record created:', id);
+    } else {
+      console.warn('Contact record creation failed — audit will continue');
+    }
+  }).catch(err => {
+    console.warn('Contact record error (non-blocking):', err);
+  });
 }
 
 function pickOne(id,el,val) {
@@ -1180,7 +1184,7 @@ function processPurchase() {
   // Build Stripe checkout URL with the Airtable record ID in client_reference_id.
   // Stripe passes this through to the webhook so the server knows which record to upgrade.
   // TODO: replace YOUR_STRIPE_PAYMENT_LINK with your actual Stripe payment link URL.
-  const stripeUrl = new URL('https://buy.stripe.com/9B614ncPsgLw8xu881fQI00');
+  const stripeUrl = new URL('https://buy.stripe.com/YOUR_STRIPE_PAYMENT_LINK');
   stripeUrl.searchParams.set('client_reference_id', airtableRecordId);
 
   // Prefill email if we have it — Stripe supports this via prefilled_email param
