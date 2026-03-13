@@ -683,12 +683,12 @@ async function createContactRecord(ans) {
   const firstName = ans.first_name || '';
   const lastName  = ans.last_name  || '';
   const fields = {
-    'First name':    firstName,
-    'Last name':     lastName,
-    'Full name':     [firstName, lastName].filter(Boolean).join(' '),
-    'Business name': ans.business_name || '',
+    'First Name':    firstName,
+    'Last Name':     lastName,
+    'Full Name':     [firstName, lastName].filter(Boolean).join(' '),
+    'Business Name': ans.business_name || '',
     'Email':         ans.email || '',
-    'Website URL':   ans.url   || '',
+    'Website':   ans.url   || '',
     'Tier':          'Free',
     'Upsell stage':  'None',
     'Report sent':          false,
@@ -703,15 +703,15 @@ async function createContactRecord(ans) {
 async function saveAuditResults(ans, scores, recTitles) {
   if (!airtableRecordId) { console.warn('No record ID — contact step may have failed'); return; }
   const fields = {
-    'Business type':        ans.business_type  || '',
-    'Team size':            ans.team_size      || '',
+    'Business Type':        ans.business_type  || '',
+    'Team Size':            ans.team_size      || '',
     'Lead capture method':  ans.lead_capture   || '',
     'Automated follow-up?': ans.follow_up      || '',
     'Scheduling method':    ans.scheduling     || '',
     'Tools in use':         (ans.tools      || []).join(', '),
     'Biggest pain point':   (ans.time_drain || []).join(', '),
     // Scores written back to record
-    'Overall score':      scores.overall,
+    'Overall Score':      scores.overall,
     'Score - leads':      scores.leads,
     'Score - scheduling': scores.scheduling,
     'Score - comms':      scores.comms,
@@ -1176,27 +1176,24 @@ function closePaidModal() { document.getElementById('paidModal').classList.remov
 function processPurchase() {
   closePaidModal();
 
-  if (!airtableRecordId) {
-    console.warn('No record ID — cannot attach to Stripe session');
-    return;
+  // TODO: replace with your actual Stripe payment link
+  const STRIPE_LINK = 'https://buy.stripe.com/YOUR_STRIPE_PAYMENT_LINK';
+
+  const stripeUrl = new URL(STRIPE_LINK);
+
+  // Pass Airtable record ID so the webhook knows which record to upgrade.
+  // If record wasn't created yet, fall back gracefully — Keith/Jon can match by email.
+  if (airtableRecordId) {
+    stripeUrl.searchParams.set('client_reference_id', airtableRecordId);
+  } else {
+    console.warn('No record ID yet — webhook will need to match by email');
   }
 
-  // Build Stripe checkout URL with the Airtable record ID in client_reference_id.
-  // Stripe passes this through to the webhook so the server knows which record to upgrade.
-  // TODO: replace YOUR_STRIPE_PAYMENT_LINK with your actual Stripe payment link URL.
-  const stripeUrl = new URL('https://buy.stripe.com/YOUR_STRIPE_PAYMENT_LINK');
-  stripeUrl.searchParams.set('client_reference_id', airtableRecordId);
-
-  // Prefill email if we have it — Stripe supports this via prefilled_email param
   if (answers.email) {
     stripeUrl.searchParams.set('prefilled_email', answers.email);
   }
 
   window.location.href = stripeUrl.toString();
-  // After payment, Stripe redirects to your success_url (set in Stripe dashboard).
-  // The webhook (functions/stripe-webhook.js) handles the Tier=Paid PATCH and
-  // triggers the Airtable automation (Claude deep-dive + email report).
-  // The browser never calls markAsPaid() — only the verified webhook does.
 }
 
 function bookConsulting() {
