@@ -781,6 +781,11 @@
         <!-- populated by JS -->
       </div>
 
+      <div id="rush-notice" style="display:none;background:rgba(254,105,48,.08);border:1px solid rgba(254,105,48,.3);border-radius:6px;padding:.85rem 1rem;margin-top:.5rem;">
+        <div style="font-size:.78rem;color:var(--orange);font-weight:600;margin-bottom:.25rem;">⚡ Rush fee applies</div>
+        <div style="font-size:.78rem;color:rgba(255,255,255,.6);line-height:1.55;">ASAP projects carry a 20% rush fee so we can prioritize your work in our pipeline. Select a planned timeline to save 20%.</div>
+      </div>
+
       <div id="error-3" class="prop-error">Please select at least one service and a budget range.</div>
       <div class="prop-nav">
         <button class="btn-back" onclick="prevStep(3)">← Back</button>
@@ -889,6 +894,11 @@ function toggleCheck(el) {
 function toggleRadio(el, groupId) {
   document.querySelectorAll(`#${groupId} .radio-pill`).forEach(p => p.classList.remove('selected'));
   el.classList.add('selected');
+
+  if (groupId === 'timeline-group') {
+    const notice = document.getElementById('rush-notice');
+    if (notice) notice.style.display = el.textContent.trim() === 'ASAP' ? 'block' : 'none';
+  }
 }
 
 function getChecked(containerId) {
@@ -1087,6 +1097,11 @@ function renderProposal(p, form) {
   document.getElementById('email-sent-note').textContent =
     `Saved to your account · ${form.email}`;
 
+  // Rush fee banner
+  const rushBanner = form.timeline === 'ASAP'
+    ? '<div style="background:rgba(254,105,48,.08);border:1px solid rgba(254,105,48,.25);border-radius:6px;padding:.85rem 1.1rem;margin-bottom:1.5rem;font-size:.82rem;color:var(--body);line-height:1.6;"><strong style="color:var(--orange);">⚡ Rush pricing applied.</strong> A 20% rush fee is included in the investment ranges below to prioritize your project. If your timeline is flexible, <a href="https://calendly.com/d/cr79-s6m-dws/martech-meeting" target="_blank" style="color:var(--orange);">book a call</a> to discuss a planned timeline and save 20%.</div>'
+    : '';
+
   // Services HTML
   const servicesHtml = (p.services || []).map(svc => {
     const scopeItems = Array.isArray(svc.scope)
@@ -1141,6 +1156,7 @@ function renderProposal(p, form) {
     <div class="prop-doc-summary">${p.executiveSummary}</div>
 
     <div class="prop-section-title">Recommended engagement</div>
+    ${rushBanner}
     <div class="prop-services">${servicesHtml}</div>
 
     <div class="prop-section-title">Investment summary</div>
