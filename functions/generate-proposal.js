@@ -1,3 +1,13 @@
+// functions/generate-proposal.js
+//
+// Cloudflare Pages Function — generates a personalized proposal via Claude
+// and saves it to Airtable.
+//
+// SETUP: Add to Cloudflare Pages → Settings → Environment Variables:
+//   ANTHROPIC_API_KEY          → your Anthropic API key
+//   AIRTABLE_TOKEN             → already set
+//   AIRTABLE_PROPOSALS_BASE_ID → base ID for your proposals Airtable base (different from Pulse)
+
 const AIRTABLE_TABLE = 'Proposals';
 
 const SERVICES_PRICING = `
@@ -173,7 +183,13 @@ If the prospect is NOT ready (budget too low for their actual needs):
     console.error('Airtable save failed:', saveError);
   }
 
-  return json({ success: true, proposal, recordId: recordId || null, airtableError: saveError || null });
+  return json({
+    success: true,
+    proposal,
+    recordId:      recordId || null,
+    notReady:      proposal.notReady || false,
+    airtableError: saveError || null
+  });
 }
 
 // ── Save to Airtable ──────────────────────────────────────────────────────
@@ -203,7 +219,7 @@ async function saveToAirtable(form, proposal, env) {
             'Budget':         form.budget,
             'Timeline':       form.timeline,
             'Proposal JSON':  JSON.stringify(proposal),
-            'Proposal body':  proposalText
+            'Proposal body':  proposal.notReady ? `NOT READY — Budget: ${form.budget}\n\n${proposal.notReadySummary}` : proposalText
           }
         })
       }
