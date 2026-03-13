@@ -641,6 +641,8 @@
 </head>
 <body>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="nav.js"></script>
 
 <!-- ══ FORM PAGE ══ -->
@@ -1168,8 +1170,6 @@ function renderProposal(p, form) {
     </div>
   `;
 
-  document.getElementById('prop-loading').style.display  = 'none';
-  document.getElementById('prop-output').style.display   = 'block';
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -1221,7 +1221,5 @@ async function generateAndUploadPDF(recordId, form) {
 }
 
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </body>
 </html>
