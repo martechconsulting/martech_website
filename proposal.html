@@ -1173,6 +1173,53 @@ function renderProposal(p, form) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
+// ── PDF generation + upload ───────────────────────────────────────────────
+async function generateAndUploadPDF(recordId, form) {
+  try {
+    await new Promise(r => setTimeout(r, 800));
+
+    const { jsPDF } = window.jspdf;
+    const doc     = new jsPDF({ unit: 'pt', format: 'a4', orientation: 'portrait' });
+    const element = document.getElementById('proposal-document');
+
+    const canvas = await html2canvas(element, {
+      scale: 2,
+      useCORS: true,
+      backgroundColor: '#f5f3ee'
+    });
+
+    const imgData = canvas.toDataURL('image/jpeg', 0.9);
+    const pageW   = doc.internal.pageSize.getWidth();
+    const pageH   = doc.internal.pageSize.getHeight();
+    const imgW    = pageW - 80;
+    const imgH    = (canvas.height * imgW) / canvas.width;
+    const margin  = 40;
+
+    let yOffset = 0;
+    while (yOffset < imgH) {
+      if (yOffset > 0) doc.addPage();
+      doc.addImage(imgData, 'JPEG', margin, margin - yOffset, imgW, imgH);
+      yOffset += pageH - margin * 2;
+    }
+
+    const pdfBase64 = doc.output('datauristring').split(',')[1];
+    const filename  = 'proposal-' + form.businessName.replace(/[^a-z0-9]/gi, '-').toLowerCase() + '.pdf';
+
+    const res = await fetch('/upload-pdf', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ recordId, pdfBase64, filename })
+    });
+
+    const result = await res.json();
+    if (!res.ok) console.error('PDF upload failed:', result);
+    else console.log('PDF uploaded to Airtable for record:', recordId);
+
+  } catch (err) {
+    console.error('PDF generation/upload failed:', err);
+  }
+}
+
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
