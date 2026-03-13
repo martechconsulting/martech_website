@@ -1,1241 +1,265 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Get a Custom Proposal — Martech Consulting</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
-<style>
-
-/* ── Form page ── */
-.prop-page {
-  background: var(--navy);
-  min-height: 100vh;
-  position: relative;
-  overflow: hidden;
-}
-
-.prop-page::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background-image:
-    linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
-  background-size: 72px 72px;
-}
-
-.prop-page::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(ellipse 55% 45% at 75% 20%, rgba(254,105,48,.12) 0%, transparent 60%),
-    radial-gradient(ellipse 40% 50% at 10% 80%, rgba(255,255,255,.03) 0%, transparent 55%);
-}
-
-.prop-hero {
-  padding: clamp(5rem,10vw,8rem) 0 clamp(2rem,4vw,3rem);
-  position: relative;
-  z-index: 2;
-}
-
-.prop-hero h1 { color: #fff; margin-bottom: 1rem; }
-.prop-hero h1 em { font-style: italic; color: var(--orange-lt); }
-.prop-hero__sub {
-  font-size: 1rem;
-  color: rgba(255,255,255,.5);
-  line-height: 1.75;
-  font-weight: 300;
-  max-width: 520px;
-  margin-bottom: 2.5rem;
-}
-
-/* ── Progress ── */
-.prop-progress {
-  max-width: 680px;
-  margin: 0 auto;
-  padding: 0 clamp(1.25rem,4vw,2.5rem) 1.75rem;
-  position: relative;
-  z-index: 2;
-}
-.progress-steps { display: flex; gap: 5px; margin-bottom: .5rem; }
-.progress-step  { height: 3px; flex: 1; border-radius: 2px; background: rgba(255,255,255,.1); transition: background .4s; }
-.progress-step.done   { background: var(--orange); }
-.progress-step.active { background: rgba(254,105,48,.45); }
-.progress-meta { display: flex; justify-content: space-between; font-size: .7rem; color: rgba(255,255,255,.28); font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
-
-/* ── Step cards ── */
-.prop-steps {
-  max-width: 680px;
-  margin: 0 auto;
-  padding: 0 clamp(1.25rem,4vw,2.5rem) clamp(3rem,6vw,5rem);
-  position: relative;
-  z-index: 2;
-}
-
-.prop-card {
-  display: none;
-  background: rgba(255,255,255,.04);
-  border: 1px solid rgba(255,255,255,.08);
-  border-radius: 10px;
-  padding: clamp(1.75rem,4vw,2.5rem);
-  animation: fadeUp .3s ease both;
-}
-.prop-card.active { display: block; }
-
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(16px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-.prop-eyebrow {
-  font-size: .65rem;
-  font-weight: 700;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  color: var(--orange);
-  margin-bottom: .6rem;
-  display: flex;
-  align-items: center;
-  gap: .5rem;
-}
-.prop-eyebrow::before { content: ''; display: block; width: 1rem; height: 2px; background: currentColor; }
-
-.prop-card h2 {
-  font-family: var(--ff-head);
-  font-size: clamp(1.2rem,3vw,1.55rem);
-  font-weight: 400;
-  color: #fff;
-  margin-bottom: 1.75rem;
-  line-height: 1.2;
-}
-
-/* ── Fields ── */
-.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; margin-bottom: .75rem; }
-.field-row.single { grid-template-columns: 1fr; }
-@media (max-width: 540px) { .field-row { grid-template-columns: 1fr; } }
-
-.field { display: flex; flex-direction: column; gap: .4rem; }
-.field label {
-  font-size: .72rem;
-  font-weight: 600;
-  color: rgba(255,255,255,.45);
-  letter-spacing: .06em;
-  text-transform: uppercase;
-}
-.field input,
-.field select,
-.field textarea {
-  background: rgba(255,255,255,.06);
-  border: 1px solid rgba(255,255,255,.1);
-  border-radius: 5px;
-  color: #fff;
-  font-family: var(--ff-body);
-  font-size: .9rem;
-  font-weight: 400;
-  padding: .75rem 1rem;
-  transition: border-color .18s, background .18s;
-  outline: none;
-  width: 100%;
-  box-sizing: border-box;
-}
-.field input::placeholder,
-.field textarea::placeholder { color: rgba(255,255,255,.22); }
-.field input:focus,
-.field select:focus,
-.field textarea:focus {
-  border-color: rgba(254,105,48,.5);
-  background: rgba(255,255,255,.08);
-}
-.field select option { background: #052e4d; color: #fff; }
-.field textarea { resize: vertical; min-height: 90px; line-height: 1.6; }
-
-/* ── Checkboxes ── */
-.check-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: .5rem;
-  margin-bottom: 1.25rem;
-}
-@media (max-width: 480px) { .check-grid { grid-template-columns: 1fr; } }
-
-.check-item {
-  display: flex;
-  align-items: center;
-  gap: .65rem;
-  background: rgba(255,255,255,.04);
-  border: 1px solid rgba(255,255,255,.08);
-  border-radius: 5px;
-  padding: .6rem .85rem;
-  cursor: pointer;
-  transition: border-color .15s, background .15s;
-  user-select: none;
-}
-.check-item:hover { border-color: rgba(254,105,48,.35); background: rgba(254,105,48,.04); }
-.check-item input[type=checkbox] { display: none; }
-.check-box {
-  width: 16px; height: 16px;
-  border: 1.5px solid rgba(255,255,255,.2);
-  border-radius: 3px;
-  flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center;
-  transition: all .15s;
-}
-.check-item.selected { border-color: rgba(254,105,48,.5); background: rgba(254,105,48,.07); }
-.check-item.selected .check-box { background: var(--orange); border-color: var(--orange); }
-.check-item.selected .check-box::after { content: '✓'; font-size: .65rem; color: #fff; font-weight: 700; }
-.check-label { font-size: .82rem; color: rgba(255,255,255,.65); line-height: 1.3; }
-
-/* ── Radio pills ── */
-.radio-group { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1.25rem; }
-.radio-pill {
-  background: rgba(255,255,255,.04);
-  border: 1px solid rgba(255,255,255,.1);
-  border-radius: 100px;
-  padding: .5rem 1.1rem;
-  font-size: .82rem;
-  color: rgba(255,255,255,.55);
-  cursor: pointer;
-  transition: all .15s;
-  user-select: none;
-}
-.radio-pill:hover { border-color: rgba(254,105,48,.4); color: rgba(255,255,255,.8); }
-.radio-pill.selected { background: rgba(254,105,48,.12); border-color: var(--orange); color: #fff; font-weight: 500; }
-
-.field-section-label {
-  font-size: .7rem;
-  font-weight: 700;
-  color: rgba(255,255,255,.3);
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  margin-bottom: .65rem;
-  margin-top: 1.25rem;
-}
-.field-section-label:first-child { margin-top: 0; }
-
-/* ── Buttons ── */
-.prop-nav { display: flex; gap: .75rem; justify-content: flex-end; margin-top: 1.75rem; }
-.btn-next, .btn-back, .btn-submit {
-  padding: .8rem 1.75rem;
-  border-radius: 4px;
-  font-family: var(--ff-body);
-  font-size: .875rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all .18s;
-  border: none;
-}
-.btn-next, .btn-submit {
-  background: var(--orange);
-  color: #fff;
-}
-.btn-next:hover, .btn-submit:hover { background: var(--orange-lt); transform: translateY(-1px); }
-.btn-back {
-  background: rgba(255,255,255,.06);
-  border: 1px solid rgba(255,255,255,.12);
-  color: rgba(255,255,255,.6);
-}
-.btn-back:hover { color: #fff; border-color: rgba(255,255,255,.3); }
-.btn-submit:disabled { opacity: .5; cursor: not-allowed; transform: none; }
-
-/* ── Loading state ── */
-#prop-loading {
-  min-height: 60vh;
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 4rem 2rem;
-  position: relative;
-  z-index: 2;
-}
-.prop-spinner {
-  width: 48px; height: 48px;
-  border: 3px solid rgba(255,255,255,.1);
-  border-top-color: var(--orange);
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin-bottom: 1.5rem;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
-.prop-loading-text {
-  font-family: var(--ff-head);
-  font-size: 1.3rem;
-  color: rgba(255,255,255,.6);
-  font-weight: 300;
-  font-style: italic;
-}
-.prop-loading-sub { font-size: .82rem; color: rgba(255,255,255,.25); margin-top: .5rem; }
-
-/* ── Proposal output ── */
-#prop-output { display: none; }
-
-.prop-output-hero {
-  background: var(--navy);
-  padding: clamp(3rem,7vw,5rem) 0 clamp(2rem,4vw,3rem);
-  position: relative;
-  z-index: 2;
-  border-bottom: 1px solid rgba(255,255,255,.06);
-}
-
-.prop-output-actions {
-  display: flex;
-  gap: .75rem;
-  flex-wrap: wrap;
-  align-items: center;
-  margin-top: 1.5rem;
-}
-.btn-print {
-  background: rgba(255,255,255,.06);
-  border: 1px solid rgba(255,255,255,.14);
-  color: rgba(255,255,255,.7);
-  padding: .7rem 1.4rem;
-  border-radius: 4px;
-  font-family: var(--ff-body);
-  font-size: .82rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all .18s;
-  display: inline-flex;
-  align-items: center;
-  gap: .5rem;
-}
-.btn-print:hover { color: #fff; border-color: rgba(255,255,255,.3); }
-.prop-email-note {
-  font-size: .78rem;
-  color: rgba(255,255,255,.3);
-  display: flex;
-  align-items: center;
-  gap: .4rem;
-}
-.prop-email-note::before { content: '✓'; color: var(--orange); font-weight: 700; }
-
-/* ── Proposal document ── */
-.prop-doc {
-  background: var(--cream);
-  padding: clamp(3rem,6vw,5rem) 0;
-}
-
-.prop-doc-inner {
-  max-width: 760px;
-  margin: 0 auto;
-  padding: 0 clamp(1.25rem,4vw,2.5rem);
-}
-
-.prop-doc-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding-bottom: 2rem;
-  margin-bottom: 2rem;
-  border-bottom: 2px solid var(--navy);
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-.prop-doc-brand {
-  font-size: .75rem;
-  font-weight: 700;
-  color: var(--navy);
-  letter-spacing: .1em;
-  text-transform: uppercase;
-}
-.prop-doc-brand span { color: var(--orange); }
-.prop-doc-meta { text-align: right; }
-.prop-doc-meta-label { font-size: .65rem; color: var(--mid); text-transform: uppercase; letter-spacing: .1em; font-weight: 600; }
-.prop-doc-meta-val { font-size: .85rem; color: var(--navy); font-weight: 500; }
-
-.prop-doc-title {
-  font-family: var(--ff-head);
-  font-size: clamp(1.5rem,3vw,2.2rem);
-  font-weight: 400;
-  color: var(--navy);
-  margin-bottom: .5rem;
-  line-height: 1.15;
-}
-.prop-doc-title em { font-style: italic; color: var(--orange); }
-
-.prop-doc-summary {
-  font-size: .95rem;
-  color: var(--mid);
-  line-height: 1.8;
-  font-weight: 300;
-  max-width: 600px;
-  padding: 1.5rem;
-  background: rgba(5,46,77,.04);
-  border-left: 3px solid var(--orange);
-  border-radius: 0 6px 6px 0;
-  margin: 1.5rem 0 2.5rem;
-}
-
-.prop-section-title {
-  font-size: .65rem;
-  font-weight: 700;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  color: var(--orange);
-  margin-bottom: 1.25rem;
-  display: flex;
-  align-items: center;
-  gap: .75rem;
-}
-.prop-section-title::after { content: ''; flex: 1; height: 1px; background: var(--rule); }
-
-/* ── Service cards ── */
-.prop-services { display: flex; flex-direction: column; gap: 1.25rem; margin-bottom: 2.5rem; }
-
-.prop-service-card {
-  background: #fff;
-  border: 1px solid var(--rule);
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.prop-service-head {
-  padding: 1.25rem 1.5rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 1rem;
-  flex-wrap: wrap;
-  border-bottom: 1px solid var(--rule);
-}
-.prop-service-name {
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--navy);
-}
-.prop-service-badge {
-  background: rgba(5,46,77,.06);
-  border: 1px solid rgba(5,46,77,.1);
-  border-radius: 100px;
-  padding: .3rem .85rem;
-  font-size: .75rem;
-  font-weight: 600;
-  color: var(--navy);
-  white-space: nowrap;
-}
-.prop-service-badge.highlight {
-  background: rgba(254,105,48,.08);
-  border-color: rgba(254,105,48,.25);
-  color: var(--orange);
-}
-
-.prop-service-body { padding: 1.25rem 1.5rem; }
-.prop-service-rationale {
-  font-size: .875rem;
-  color: var(--mid);
-  line-height: 1.7;
-  font-weight: 300;
-  margin-bottom: 1rem;
-}
-.prop-service-scope {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: .4rem;
-}
-.prop-service-scope li {
-  font-size: .82rem;
-  color: var(--body);
-  padding-left: 1.1rem;
-  position: relative;
-  line-height: 1.55;
-}
-.prop-service-scope li::before {
-  content: '→';
-  position: absolute;
-  left: 0;
-  color: var(--orange);
-  font-size: .72rem;
-}
-
-.prop-service-footer {
-  padding: .85rem 1.5rem;
-  background: rgba(5,46,77,.03);
-  border-top: 1px solid var(--rule);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-.prop-service-investment { font-size: .8rem; color: var(--mid); font-weight: 300; }
-.prop-service-investment strong { color: var(--navy); font-weight: 700; font-size: .9rem; }
-.prop-service-timeline { font-size: .78rem; color: var(--mid); }
-
-/* ── Totals ── */
-.prop-totals {
-  background: var(--navy);
-  border-radius: 8px;
-  padding: 1.5rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-  margin-bottom: 2.5rem;
-}
-.prop-total-item { }
-.prop-total-label { font-size: .65rem; font-weight: 700; color: rgba(255,255,255,.35); letter-spacing: .12em; text-transform: uppercase; margin-bottom: .3rem; }
-.prop-total-val { font-family: var(--ff-head); font-size: 1.4rem; font-weight: 400; color: #fff; }
-.prop-total-val em { font-style: italic; color: var(--orange-lt); }
-
-/* ── Next steps ── */
-.prop-next-steps {
-  background: #fff;
-  border: 1px solid var(--rule);
-  border-radius: 8px;
-  padding: 1.5rem;
-  margin-bottom: 2rem;
-  font-size: .9rem;
-  color: var(--mid);
-  line-height: 1.75;
-  font-weight: 300;
-}
-
-.prop-cta {
-  display: flex;
-  gap: .75rem;
-  flex-wrap: wrap;
-  align-items: center;
-  padding-top: 1.5rem;
-  border-top: 1px solid var(--rule);
-}
-.btn-book {
-  background: var(--orange);
-  color: #fff;
-  padding: .9rem 1.75rem;
-  border-radius: 4px;
-  font-family: var(--ff-body);
-  font-size: .9rem;
-  font-weight: 600;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: .4rem;
-  transition: all .18s;
-}
-.btn-book:hover { background: var(--orange-lt); transform: translateY(-1px); }
-.prop-cta-note { font-size: .78rem; color: var(--mid); font-weight: 300; }
-
-/* ── Error ── */
-.prop-error {
-  display: none;
-  background: rgba(220,50,50,.1);
-  border: 1px solid rgba(220,50,50,.25);
-  border-radius: 6px;
-  padding: .85rem 1rem;
-  font-size: .82rem;
-  color: #ff6b6b;
-  margin-top: 1rem;
-}
-
-/* ── Not ready state ── */
-.prop-notready {
-  background: var(--cream);
-  padding: clamp(3rem,6vw,5rem) 0;
-}
-.prop-notready-inner {
-  max-width: 680px;
-  margin: 0 auto;
-  padding: 0 clamp(1.25rem,4vw,2.5rem);
-}
-.prop-notready-summary {
-  font-size: 1.05rem;
-  color: var(--body);
-  line-height: 1.8;
-  font-weight: 300;
-  padding: 1.5rem;
-  background: #fff;
-  border: 1px solid var(--rule);
-  border-left: 3px solid var(--orange);
-  border-radius: 0 8px 8px 0;
-  margin-bottom: 2rem;
-}
-.prop-steps-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin-bottom: 2rem;
-}
-.prop-step-item {
-  background: #fff;
-  border: 1px solid var(--rule);
-  border-radius: 8px;
-  padding: 1.25rem 1.5rem;
-  display: flex;
-  gap: 1rem;
-  align-items: flex-start;
-}
-.prop-step-num {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: rgba(254,105,48,.1);
-  border: 1px solid rgba(254,105,48,.25);
-  color: var(--orange);
-  font-size: .75rem;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  margin-top: .1rem;
-}
-.prop-step-title { font-size: .9rem; font-weight: 600; color: var(--navy); margin-bottom: .3rem; }
-.prop-step-desc  { font-size: .83rem; color: var(--mid); line-height: 1.65; font-weight: 300; }
-.prop-resources {
-  background: var(--navy);
-  border-radius: 8px;
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
-}
-.prop-resources-label {
-  font-size: .65rem;
-  font-weight: 700;
-  letter-spacing: .15em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,.3);
-  margin-bottom: 1rem;
-}
-.prop-resource-link {
-  display: flex;
-  align-items: center;
-  gap: .6rem;
-  color: rgba(255,255,255,.7);
-  text-decoration: none;
-  font-size: .875rem;
-  padding: .5rem 0;
-  border-bottom: 1px solid rgba(255,255,255,.06);
-  transition: color .15s;
-}
-.prop-resource-link:last-child { border-bottom: none; }
-.prop-resource-link:hover { color: var(--orange-lt); }
-.prop-resource-link::before { content: '→'; color: var(--orange); font-size: .75rem; }
-.prop-closing {
-  font-size: .875rem;
-  color: var(--mid);
-  font-style: italic;
-  text-align: center;
-  padding-top: 1rem;
-}
-
-/* ── Print styles ── */
-@media print {
-  .prop-page, #prop-loading, .prop-output-hero, nav, footer { display: none !important; }
-  #prop-output { display: block !important; }
-  .prop-output-hero { display: none !important; }
-  .prop-doc { padding: 0; background: #fff; }
-  .prop-service-card, .prop-totals, .prop-next-steps { break-inside: avoid; }
-  .btn-book, .btn-print, .prop-output-actions { display: none !important; }
-}
-
-</style>
-</head>
-<body>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="nav.js"></script>
-
-<!-- ══ FORM PAGE ══ -->
-<div class="prop-page" id="prop-form-page">
-
-  <div class="prop-hero">
-    <div class="container--narrow">
-      <p class="eyebrow on-dark">Free proposal generator</p>
-      <h1 class="display">Tell us what you need.<br><em>We'll scope it out.</em></h1>
-      <p class="prop-hero__sub">Answer a few quick questions and we'll generate a personalized proposal — services, scope, and investment ranges — in under a minute.</p>
-    </div>
-  </div>
-
-  <div class="prop-progress">
-    <div class="progress-steps">
-      <div class="progress-step active" id="ps-1"></div>
-      <div class="progress-step" id="ps-2"></div>
-      <div class="progress-step" id="ps-3"></div>
-    </div>
-    <div class="progress-meta">
-      <span id="step-label">Step 1 of 3</span>
-      <span id="step-name">About you</span>
-    </div>
-  </div>
-
-  <div class="prop-steps">
-
-    <!-- ── Step 1: About you ── -->
-    <div class="prop-card active" id="step-1">
-      <p class="prop-eyebrow">Step 1</p>
-      <h2>Let's start with the basics</h2>
-
-      <div class="field-row">
-        <div class="field">
-          <label>First name *</label>
-          <input type="text" id="firstName" placeholder="Keith" autocomplete="given-name">
-        </div>
-        <div class="field">
-          <label>Last name *</label>
-          <input type="text" id="lastName" placeholder="Phillips" autocomplete="family-name">
-        </div>
-      </div>
-      <div class="field-row single">
-        <div class="field">
-          <label>Email *</label>
-          <input type="email" id="email" placeholder="you@yourcompany.com" autocomplete="email">
-        </div>
-      </div>
-      <div class="field-row">
-        <div class="field">
-          <label>Business name *</label>
-          <input type="text" id="businessName" placeholder="Acme Co.">
-        </div>
-        <div class="field">
-          <label>Website</label>
-          <input type="text" id="website" placeholder="yoursite.com">
-        </div>
-      </div>
-
-      <div id="error-1" class="prop-error">Please fill in all required fields.</div>
-      <div class="prop-nav">
-        <button class="btn-next" onclick="nextStep(1)">Next →</button>
-      </div>
-    </div>
-
-    <!-- ── Step 2: Your situation ── -->
-    <div class="prop-card" id="step-2">
-      <p class="prop-eyebrow">Step 2</p>
-      <h2>Tell us about your setup</h2>
-
-      <div class="field-row">
-        <div class="field">
-          <label>Business type *</label>
-          <select id="bizType">
-            <option value="">Select one…</option>
-            <option>Coaching / Consulting</option>
-            <option>E-commerce</option>
-            <option>SaaS / Tech</option>
-            <option>Agency</option>
-            <option>Healthcare</option>
-            <option>Real Estate</option>
-            <option>Professional Services</option>
-            <option>Non-profit</option>
-            <option>Other</option>
-          </select>
-        </div>
-        <div class="field">
-          <label>Team size *</label>
-          <select id="teamSize">
-            <option value="">Select one…</option>
-            <option>Solo</option>
-            <option>2–5 people</option>
-            <option>6–15 people</option>
-            <option>16–50 people</option>
-            <option>50+ people</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="field-section-label">Tools you currently use</div>
-      <div class="check-grid" id="tools-grid">
-        <!-- populated by JS -->
-      </div>
-
-      <div class="field-row single" style="margin-top:.5rem;">
-        <div class="field">
-          <label>Biggest challenge right now *</label>
-          <textarea id="challenge" placeholder="E.g. Our follow-up process is completely manual, we're losing leads and wasting hours every week…"></textarea>
-        </div>
-      </div>
-
-      <div id="error-2" class="prop-error">Please fill in all required fields.</div>
-      <div class="prop-nav">
-        <button class="btn-back" onclick="prevStep(2)">← Back</button>
-        <button class="btn-next" onclick="nextStep(2)">Next →</button>
-      </div>
-    </div>
-
-    <!-- ── Step 3: What you need ── -->
-    <div class="prop-card" id="step-3">
-      <p class="prop-eyebrow">Step 3</p>
-      <h2>What are you looking to get done?</h2>
-
-      <div class="field-section-label">Services you're interested in (select all that apply)</div>
-      <div class="check-grid" id="services-grid">
-        <!-- populated by JS -->
-      </div>
-
-      <div class="field-section-label">Budget range</div>
-      <div class="radio-group" id="budget-group">
-        <!-- populated by JS -->
-      </div>
-
-      <div class="field-section-label">Timeline</div>
-      <div class="radio-group" id="timeline-group">
-        <!-- populated by JS -->
-      </div>
-
-      <div id="rush-notice" style="display:none;background:rgba(254,105,48,.08);border:1px solid rgba(254,105,48,.3);border-radius:6px;padding:.85rem 1rem;margin-top:.5rem;">
-        <div style="font-size:.78rem;color:var(--orange);font-weight:600;margin-bottom:.25rem;">⚡ Rush fee applies</div>
-        <div style="font-size:.78rem;color:rgba(255,255,255,.6);line-height:1.55;">ASAP projects carry a 20% rush fee so we can prioritize your work in our pipeline. Select a planned timeline to save 20%.</div>
-      </div>
-
-      <div id="error-3" class="prop-error">Please select at least one service and a budget range.</div>
-      <div class="prop-nav">
-        <button class="btn-back" onclick="prevStep(3)">← Back</button>
-        <button class="btn-submit" id="submit-btn" onclick="submitProposal()">Generate my proposal →</button>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-<!-- ══ LOADING ══ -->
-<div class="prop-page" id="prop-loading">
-  <div class="prop-spinner"></div>
-  <div class="prop-loading-text">Building your proposal…</div>
-  <div class="prop-loading-sub">This takes about 15–20 seconds</div>
-</div>
-
-<!-- ══ PROPOSAL OUTPUT ══ -->
-<div id="prop-output">
-
-  <div class="prop-output-hero">
-    <div class="container--narrow" style="position:relative;z-index:2;">
-      <p class="eyebrow on-dark">Your proposal is ready</p>
-      <h1 class="display" id="output-headline" style="color:#fff;">Here's what we'd <em style="color:var(--orange-lt);">recommend</em></h1>
-      <div class="prop-output-actions">
-        <button class="btn-print" onclick="window.print()">
-          ↓ Download / Print PDF
-        </button>
-        <span class="prop-email-note" id="email-sent-note"></span>
-      </div>
-    </div>
-  </div>
-
-  <div class="prop-doc">
-    <div class="prop-doc-inner" id="proposal-document">
-      <!-- rendered by JS -->
-    </div>
-  </div>
-
-</div>
-
-<script>
-
-// ── Data ─────────────────────────────────────────────────────────────────
-
-const TOOLS_LIST = [
-  'Keap', 'HubSpot', 'ActiveCampaign', 'Mailchimp',
-  'Airtable', 'Monday.com', 'Notion', 'Asana',
-  'Zapier', 'Make', 'Salesforce', 'Pipedrive',
-  'Bubble', 'Softr', 'Webflow', 'Shopify'
-];
-
-const SERVICES_LIST = [
-  'Automation Setup (Make/Zapier)',
-  'Automation Audit',
-  'CRM Implementation (Keap)',
-  'Airtable Buildout',
-  'Airtable Audit',
-  'Airtable Integrations',
-  'API Integrations',
-  'Softr Client Portal',
-  'MVP Build',
-  'Bubble Build',
-  'Vibe Coded Website',
-  'Full Martech Stack Audit & Implementation',
-  'Meta Ads Management',
-  'Copywriting',
-  'Email Marketing Management',
-  'Email Audit',
-  'Email Deliverability Setup'
-];
-
-const BUDGETS = ['Under $1K', '$1K–$5K', '$5K–$15K', '$15K–$30K', '$30K+'];
-const TIMELINES = ['ASAP', '1–3 months', '3–6 months', 'Just exploring'];
-
-// ── Build checkboxes & radios ─────────────────────────────────────────────
-
-function buildCheckGrid(containerId, items) {
-  const el = document.getElementById(containerId);
-  el.innerHTML = items.map(item => `
-    <div class="check-item" onclick="toggleCheck(this)">
-      <input type="checkbox" value="${item}" style="display:none">
-      <div class="check-box"></div>
-      <span class="check-label">${item}</span>
-    </div>
-  `).join('');
-}
-
-function buildRadioGroup(containerId, items) {
-  const el = document.getElementById(containerId);
-  el.innerHTML = items.map(item => `
-    <div class="radio-pill" onclick="toggleRadio(this, '${containerId}')">${item}</div>
-  `).join('');
-}
-
-buildCheckGrid('tools-grid', TOOLS_LIST);
-buildCheckGrid('services-grid', SERVICES_LIST);
-buildRadioGroup('budget-group', BUDGETS);
-buildRadioGroup('timeline-group', TIMELINES);
-
-function toggleCheck(el) {
-  el.classList.toggle('selected');
-  el.querySelector('input').checked = el.classList.contains('selected');
-}
-
-function toggleRadio(el, groupId) {
-  document.querySelectorAll(`#${groupId} .radio-pill`).forEach(p => p.classList.remove('selected'));
-  el.classList.add('selected');
-
-  if (groupId === 'timeline-group') {
-    const notice = document.getElementById('rush-notice');
-    if (notice) notice.style.display = el.textContent.trim() === 'ASAP' ? 'block' : 'none';
+const AIRTABLE_TABLE = 'Proposals';
+
+const SERVICES_PRICING = `
+IMPORTANT: Never show hourly rates in the proposal. Show only investment ranges and value.
+
+PROJECT SERVICES (one-time):
+- Automation Setup (Make/Zapier): $2,000–$6,000
+- Automation Audit (Make/Zapier): $1,000–$2,000
+- CRM Implementation (Keap): $4,000–$12,000
+- Airtable Buildout: $3,000–$8,000
+- Airtable Audit: $1,000–$2,000
+- Airtable Integrations: $2,000–$6,000
+- API Integrations: $3,000–$8,000
+- Softr Client Portal: $4,000–$10,000
+- MVP Build: $8,000–$25,000
+- Bubble Build: $10,000–$30,000
+- Vibe Coded Website: $4,000–$10,000
+- Full Martech Stack Audit & Implementation: $10,000–$30,000
+- Copywriting: $2,000–$6,000
+- Email Audit: $1,000–$2,000
+- Email Deliverability Setup: $2,000–$4,000
+
+RETAINER SERVICES (ongoing monthly, deeply discounted vs. ad-hoc):
+- Essentials Retainer: $2,500/month — one platform managed, monthly reporting, up to 3 change requests, email support. Best for small businesses needing steady maintenance.
+- Growth Retainer: $4,500/month — up to 2 platforms, bi-weekly check-ins, up to 8 change requests/month, quarterly strategy session, priority response. Core SMB tier.
+- Partner Retainer: $7,500/month — full stack management, weekly syncs, unlimited requests under 2hrs, monthly strategy session, first access to senior time. For clients who want us embedded.
+- Meta Ads Management: $3,000–$5,500/month (standalone retainer)
+- Email Marketing Management: $2,500–$5,000/month (standalone retainer)
+
+Overflow on any retainer billed at contracted rates — significantly below ad-hoc.
+Non-profit discount: 15% off all investment ranges. Apply automatically if business type is Non-profit.
+Minimum engagement: $1,000.
+`.trim();
+
+export async function onRequestPost({ request, env }) {
+
+  let body;
+  try {
+    body = await request.json();
+  } catch {
+    return json({ error: 'Invalid JSON' }, 400);
   }
-}
 
-function getChecked(containerId) {
-  return [...document.querySelectorAll(`#${containerId} input:checked`)].map(i => i.value);
-}
+  const { firstName, lastName, email, businessName, website,
+          bizType, teamSize, tools, challenge,
+          services, budget, timeline } = body;
 
-function getRadio(groupId) {
-  const el = document.querySelector(`#${groupId} .selected`);
-  return el ? el.textContent.trim() : '';
-}
+  if (!firstName || !email || !businessName || !services?.length) {
+    return json({ error: 'Missing required fields' }, 400);
+  }
 
-// ── Step navigation ───────────────────────────────────────────────────────
+  // ── Build Claude prompt ────────────────────────────────────────────────
+  const prompt = `You are a proposal writer for Martech Consulting, a boutique martech consultancy run by Keith Phillips (Keap Certified Partner) and Jonathan Noury-Elliard. They specialize in marketing automation, CRM implementation, Airtable, Softr, Bubble, and digital marketing.
 
-let currentStep = 1;
-const stepNames = ['', 'About you', 'Your setup', 'What you need'];
+Generate a personalized proposal based on this prospect's submission.
 
-function nextStep(from) {
-  if (!validateStep(from)) return;
-  currentStep = from + 1;
-  showStep(currentStep);
-}
+PROSPECT:
+Name: ${firstName} ${lastName}
+Business: ${businessName}
+Website: ${website || 'not provided'}
+Business type: ${bizType}
+Team size: ${teamSize}
+Current tools: ${tools}
+Biggest challenge: ${challenge}
+Services interested in: ${Array.isArray(services) ? services.join(', ') : services}
+Budget range: ${budget}
+Timeline: ${timeline}
 
-function prevStep(from) {
-  currentStep = from - 1;
-  showStep(currentStep);
-}
+AVAILABLE SERVICES AND PRICE RANGES:
+${SERVICES_PRICING}
 
-function showStep(n) {
-  document.querySelectorAll('.prop-card').forEach(c => c.classList.remove('active'));
-  document.getElementById(`step-${n}`).classList.add('active');
+INSTRUCTIONS:
+- Select 2–4 services that best fit this prospect's situation and budget
+- NEVER mention hourly rates anywhere in the proposal — show only investment ranges
+- Always consider whether a retainer tier fits the prospect's situation. If they need ongoing work (ads, email marketing, CRM management, platform maintenance), recommend the appropriate retainer tier alongside or instead of project work
+- Take the budget range seriously. If they say 'Under $1K', only recommend audits — do NOT recommend retainers. If '$1K-$5K', one project or Essentials retainer is the ceiling. Never propose a monthly retainer to someone who said their budget is under $1K
+- If the prospect's budget is genuinely too low for any of our services (i.e. they selected 'Under $1K' AND their needs require substantial work, OR they selected 'Under $1K' and are asking for builds, implementations, or retainers), respond with notReady: true instead of services. Be honest but warm — tell them what to do first to get ready, and point them to resources they can use now. This is not a rejection, it's a redirect
+- When notReady is true, provide 3-5 concrete actionable steps they can take themselves right now, and reference our blog at https://martechconsulting.io/blog and newsletter signup at https://martechconsulting.io/newsletter
+- If business type is Non-profit, automatically apply a 15% discount to all investment ranges and note it with a single line: "Non-profit rate applied"
+- Minimum engagement: $1,000 — never propose below this
+- For retainer recommendations: frame them as ongoing partnership, not a recurring bill — emphasize priority access, predictability, and the contracted rate discount vs. ad-hoc work
+- Do not recommend more than 4 services/tiers total — keep proposals focused
+- RUSH FEE: If timeline is 'ASAP', apply a 20% rush fee to ALL investment ranges. Add a note in nextSteps that says: "Because you need this done quickly, a 20% rush fee applies to prioritize your project. If your timeline is flexible, you can save 20% by planning ahead — just let us know." Do not hide or soften this — it reflects real prioritization cost.
+- Write the executive summary in a direct, human voice — no corporate fluff
+- Each service rationale should reference something specific from their submission
+- Scope bullets should be concrete deliverables, not vague promises
+- Total range should be the sum of selected services (use the lower end for small budgets)
+- Next steps should feel warm and low-pressure
 
-  const steps = document.querySelectorAll('.progress-step');
-  steps.forEach((s, i) => {
-    s.classList.remove('active', 'done');
-    if (i + 1 < n) s.classList.add('done');
-    else if (i + 1 === n) s.classList.add('active');
-  });
+Respond ONLY with valid JSON, no markdown, no backticks, no explanation.
 
-  document.getElementById('step-label').textContent = `Step ${n} of 3`;
-  document.getElementById('step-name').textContent = stepNames[n];
-}
-
-function validateStep(n) {
-  const err = document.getElementById(`error-${n}`);
-  err.style.display = 'none';
-
-  if (n === 1) {
-    const ok = v('firstName') && v('lastName') && v('email') && v('businessName');
-    if (!ok) { err.style.display = 'block'; return false; }
-    if (!document.getElementById('email').value.includes('@')) {
-      err.textContent = 'Please enter a valid email address.';
-      err.style.display = 'block'; return false;
+If the prospect IS ready for our services:
+{
+  "notReady": false,
+  "executiveSummary": "2-3 sentences, personal and specific to their situation",
+  "services": [
+    {
+      "name": "exact service name",
+      "rationale": "1-2 sentences referencing their specific situation",
+      "scope": ["deliverable 1", "deliverable 2", "deliverable 3"],
+      "investmentRange": "$X,XXX – $X,XXX",
+      "timeline": "X weeks",
+      "isRetainer": false
     }
-  }
-  if (n === 2) {
-    const ok = v('bizType') && v('teamSize') && v('challenge');
-    if (!ok) { err.style.display = 'block'; return false; }
-  }
-  if (n === 3) {
-    const services = getChecked('services-grid');
-    const budget   = getRadio('budget-group');
-    if (!services.length || !budget) {
-      err.style.display = 'block'; return false;
+  ],
+  "totalRange": "$X,XXX – $X,XXX",
+  "projectTimeline": "X–X weeks total",
+  "nextSteps": "1-2 sentences, warm and low-pressure"
+}
+
+If the prospect is NOT ready (budget too low for their actual needs):
+{
+  "notReady": true,
+  "notReadySummary": "1-2 warm, honest sentences — not a rejection, a redirect. Acknowledge what they're trying to do.",
+  "actionableSteps": [
+    {
+      "step": "short title",
+      "description": "1-2 sentences of concrete advice they can act on today, no fluff"
     }
-  }
-  return true;
-}
+  ],
+  "resources": [
+    { "label": "Martech Consulting Blog", "url": "https://martechconsulting.io/blog" },
+    { "label": "The Automation Edge Newsletter", "url": "https://martechconsulting.io/newsletter" }
+  ],
+  "closingNote": "1 sentence — leave the door open warmly. E.g. when you're ready, we're here."
+}`;
 
-function v(id) {
-  const el = document.getElementById(id);
-  return el && el.value.trim() !== '';
-}
-
-// ── Submit ────────────────────────────────────────────────────────────────
-
-async function submitProposal() {
-  if (!validateStep(3)) return;
-
-  const btn = document.getElementById('submit-btn');
-  btn.disabled = true;
-
-  // Clear any previous error
-  const errEl = document.getElementById('error-3');
-  errEl.style.display = 'none';
-
-  // Show loading
-  document.getElementById('prop-form-page').style.display = 'none';
-  document.getElementById('prop-loading').style.display   = 'flex';
-
-  const payload = {
-    firstName:    document.getElementById('firstName').value.trim(),
-    lastName:     document.getElementById('lastName').value.trim(),
-    email:        document.getElementById('email').value.trim(),
-    businessName: document.getElementById('businessName').value.trim(),
-    website:      document.getElementById('website').value.trim(),
-    bizType:      document.getElementById('bizType').value,
-    teamSize:     document.getElementById('teamSize').value,
-    tools:        getChecked('tools-grid').join(', ') || 'None specified',
-    challenge:    document.getElementById('challenge').value.trim(),
-    services:     getChecked('services-grid'),
-    budget:       getRadio('budget-group'),
-    timeline:     getRadio('timeline-group') || 'Not specified'
-  };
+  // ── Call Claude ────────────────────────────────────────────────────────
+  let proposal;
 
   try {
-    const res  = await fetch('/generate-proposal', {
-      method:  'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body:    JSON.stringify(payload)
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type':      'application/json',
+        'x-api-key':         env.ANTHROPIC_API_KEY,
+        'anthropic-version': '2023-06-01'
+      },
+      body: JSON.stringify({
+        model:      'claude-sonnet-4-20250514',
+        max_tokens: 2000,
+        messages: [{ role: 'user', content: prompt }]
+      })
     });
+
+    if (!res.ok) {
+      const err = await res.json();
+      console.error('Claude API error:', JSON.stringify(err));
+      return json({ error: 'AI generation failed' }, 500);
+    }
 
     const data = await res.json();
+    const text = data.content?.[0]?.text || '';
 
-    if (!res.ok || !data.proposal) throw new Error(data.error || 'Generation failed');
-
-    renderProposal(data.proposal, payload);
-
-    // Generate and upload PDF — only for full proposals, not notReady responses
-    if (data.recordId && !data.notReady) {
-      generateAndUploadPDF(data.recordId, payload);
+    try {
+      proposal = JSON.parse(text);
+    } catch {
+      const match = text.match(/\{[\s\S]*\}/);
+      if (!match) {
+        console.error('Could not parse Claude response:', text);
+        return json({ error: 'Failed to parse proposal' }, 500);
+      }
+      proposal = JSON.parse(match[0]);
     }
 
   } catch (err) {
-    console.error('Proposal error:', err);
-    document.getElementById('prop-loading').style.display   = 'none';
-    document.getElementById('prop-form-page').style.display = 'block';
-    showStep(3);
-    const errEl = document.getElementById('error-3');
-    errEl.textContent = 'Something went wrong generating your proposal. Please try again.';
-    errEl.style.display = 'block';
-    btn.disabled = false;
-  }
-}
-
-// ── Render ────────────────────────────────────────────────────────────────
-
-function renderProposal(p, form) {
-  const today = new Date().toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' });
-
-  // Always ensure form page and loading are hidden, output is shown
-  document.getElementById('prop-form-page').style.display = 'none';
-  document.getElementById('prop-loading').style.display   = 'none';
-  document.getElementById('prop-output').style.display    = 'block';
-
-  // Not ready — render redirect state instead of proposal
-  if (p.notReady) {
-    document.getElementById('output-headline').innerHTML =
-      `Let's get you <em style="color:var(--orange-lt);">ready</em>`;
-    document.getElementById('email-sent-note').textContent = '';
-
-    const stepsHtml = (p.actionableSteps || []).map((s, i) => `
-      <div class="prop-step-item">
-        <div class="prop-step-num">${i + 1}</div>
-        <div>
-          <div class="prop-step-title">${s.step}</div>
-          <div class="prop-step-desc">${s.description}</div>
-        </div>
-      </div>`).join('');
-
-    const resourcesHtml = (p.resources || []).map(r =>
-      `<a href="${r.url}" target="_blank" class="prop-resource-link">${r.label}</a>`
-    ).join('');
-
-    document.getElementById('proposal-document').parentElement.innerHTML = `
-      <div class="prop-notready">
-        <div class="prop-notready-inner">
-          <p class="prop-section-title">Where you are now</p>
-          <div class="prop-notready-summary">${p.notReadySummary}</div>
-
-          <p class="prop-section-title">Steps to take right now</p>
-          <div class="prop-steps-list">${stepsHtml}</div>
-
-          <div class="prop-resources">
-            <div class="prop-resources-label">Free resources from Martech Consulting</div>
-            ${resourcesHtml}
-          </div>
-
-          <div class="prop-cta" style="border-top:1px solid var(--rule);padding-top:1.5rem;">
-            <a href="https://calendly.com/d/cr79-s6m-dws/martech-meeting" target="_blank" class="btn-book">
-              Book a free call anyway →
-            </a>
-            <span class="prop-cta-note">Sometimes a 30-minute conversation is all it takes to find a path forward.</span>
-          </div>
-
-          <p class="prop-closing">${p.closingNote}</p>
-        </div>
-      </div>`;
-
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    return;
+    console.error('Claude call failed:', err);
+    return json({ error: 'AI service unavailable' }, 500);
   }
 
-  // Headline
-  document.getElementById('output-headline').innerHTML =
-    `Here's what we'd recommend<br>for <em style="color:var(--orange-lt);">${form.businessName}</em>`;
-  document.getElementById('email-sent-note').textContent =
-    `Saved to your account · ${form.email}`;
+  // ── Save to Airtable (awaited, errors surfaced) ────────────────────────
+  const { error: saveError, recordId } = await saveToAirtable(body, proposal, env);
+  if (saveError) {
+    console.error('Airtable save failed:', saveError);
+  }
 
-  // Rush fee banner
-  const rushBanner = form.timeline === 'ASAP'
-    ? '<div style="background:rgba(254,105,48,.08);border:1px solid rgba(254,105,48,.25);border-radius:6px;padding:.85rem 1.1rem;margin-bottom:1.5rem;font-size:.82rem;color:var(--body);line-height:1.6;"><strong style="color:var(--orange);">⚡ Rush pricing applied.</strong> A 20% rush fee is included in the investment ranges below to prioritize your project. If your timeline is flexible, <a href="https://calendly.com/d/cr79-s6m-dws/martech-meeting" target="_blank" style="color:var(--orange);">book a call</a> to discuss a planned timeline and save 20%.</div>'
-    : '';
-
-  // Services HTML
-  const servicesHtml = (p.services || []).map(svc => {
-    const scopeItems = Array.isArray(svc.scope)
-      ? svc.scope.map(s => `<li>${s}</li>`).join('')
-      : `<li>${svc.scope}</li>`;
-
-    const isRetainer = svc.isRetainer || svc.timeline?.toLowerCase().includes('month') || svc.investmentRange?.toLowerCase().includes('/month');
-    const badgeLabel = isRetainer ? 'Monthly retainer' : 'Project investment';
-    const timelineLabel = isRetainer ? 'Ongoing partnership' : `⏱ ${svc.timeline}`;
-
-    return `
-      <div class="prop-service-card">
-        <div class="prop-service-head">
-          <div>
-            <div class="prop-service-name">${svc.name}</div>
-            ${isRetainer ? '<div style="font-size:.72rem;color:var(--mid);margin-top:.2rem;font-weight:400;">Ongoing partnership · contracted rate</div>' : ''}
-          </div>
-          <div style="text-align:right;">
-            <span class="prop-service-badge highlight">${svc.investmentRange}</span>
-            <div style="font-size:.65rem;color:var(--mid);margin-top:.3rem;text-transform:uppercase;letter-spacing:.08em;">${badgeLabel}</div>
-          </div>
-        </div>
-        <div class="prop-service-body">
-          <p class="prop-service-rationale">${svc.rationale}</p>
-          <ul class="prop-service-scope">${scopeItems}</ul>
-        </div>
-        <div class="prop-service-footer">
-          <div class="prop-service-investment">Investment: <strong>${svc.investmentRange}</strong></div>
-          <div class="prop-service-timeline">${timelineLabel}</div>
-        </div>
-      </div>`;
-  }).join('');
-
-  // Nonprofit note
-  const nonprofitNote = form.bizType === 'Non-profit'
-    ? '<div style="font-size:.78rem;color:var(--orange);font-weight:500;margin-bottom:1rem;">✓ Non-profit rate applied — 15% discount reflected in all investment ranges</div>'
-    : '';
-
-  document.getElementById('proposal-document').innerHTML = `
-    <div class="prop-doc-header">
-      <div class="prop-doc-brand">Martech <span>Consulting</span></div>
-      <div class="prop-doc-meta">
-        <div class="prop-doc-meta-label">Prepared for</div>
-        <div class="prop-doc-meta-val">${form.firstName} ${form.lastName} · ${form.businessName}</div>
-        <div class="prop-doc-meta-label" style="margin-top:.4rem;">Date</div>
-        <div class="prop-doc-meta-val">${today}</div>
-      </div>
-    </div>
-
-    <div class="prop-doc-title">Custom Proposal for <em>${form.businessName}</em></div>
-    ${nonprofitNote}
-    <div class="prop-doc-summary">${p.executiveSummary}</div>
-
-    <div class="prop-section-title">Recommended engagement</div>
-    ${rushBanner}
-    <div class="prop-services">${servicesHtml}</div>
-
-    <div class="prop-section-title">Investment summary</div>
-    <div class="prop-totals">
-      <div class="prop-total-item">
-        <div class="prop-total-label">Total investment range</div>
-        <div class="prop-total-val"><em>${p.totalRange}</em></div>
-      </div>
-      <div class="prop-total-item">
-        <div class="prop-total-label">Estimated timeline</div>
-        <div class="prop-total-val">${p.projectTimeline}</div>
-      </div>
-      <div class="prop-total-item">
-        <div class="prop-total-label">Budget provided</div>
-        <div class="prop-total-val">${form.budget}</div>
-      </div>
-    </div>
-
-    <div class="prop-section-title">Next steps</div>
-    <div class="prop-next-steps">${p.nextSteps}</div>
-
-    <div class="prop-cta">
-      <a href="https://calendly.com/d/cr79-s6m-dws/martech-meeting" target="_blank" class="btn-book">
-        Book a free discovery call →
-      </a>
-      <span class="prop-cta-note">30 minutes, no pressure. We'll walk through this proposal together.</span>
-    </div>
-  `;
-
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  return json({
+    success: true,
+    proposal,
+    recordId:      recordId || null,
+    notReady:      proposal.notReady || false,
+    airtableError: saveError || null
+  });
 }
 
-// ── PDF generation + upload ───────────────────────────────────────────────
-async function generateAndUploadPDF(recordId, form) {
+// ── Save to Airtable ──────────────────────────────────────────────────────
+async function saveToAirtable(form, proposal, env) {
   try {
-    await new Promise(r => setTimeout(r, 800));
+    const proposalText = buildPlainTextProposal(form, proposal);
 
-    const { jsPDF } = window.jspdf;
-    const doc     = new jsPDF({ unit: 'pt', format: 'a4', orientation: 'portrait' });
-    const element = document.getElementById('proposal-document');
+    const res = await fetch(
+      `https://api.airtable.com/v0/${env.AIRTABLE_PROPOSALS_BASE_ID}/${encodeURIComponent(AIRTABLE_TABLE)}`,
+      {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${env.AIRTABLE_TOKEN}`,
+          'Content-Type':  'application/json'
+        },
+        body: JSON.stringify({
+          fields: {
+            'Name':          `${form.firstName} ${form.lastName}`,
+            'Email':          form.email,
+            'Business Name':  form.businessName,
+            'Website':        form.website || '',
+            'Business Type':  form.bizType,
+            'Team Size':      form.teamSize,
+            'Tools':          form.tools,
+            'Challenge':      form.challenge,
+            'Services':       Array.isArray(form.services) ? form.services.join(', ') : form.services,
+            'Budget':         form.budget,
+            'Timeline':       form.timeline,
+            'Proposal JSON':  JSON.stringify(proposal),
+            'Proposal body':  proposal.notReady ? `NOT READY — Budget: ${form.budget}\n\n${proposal.notReadySummary}` : proposalText
+          }
+        })
+      }
+    );
 
-    const canvas = await html2canvas(element, {
-      scale: 2,
-      useCORS: true,
-      backgroundColor: '#f5f3ee'
-    });
-
-    const imgData = canvas.toDataURL('image/jpeg', 0.9);
-    const pageW   = doc.internal.pageSize.getWidth();
-    const pageH   = doc.internal.pageSize.getHeight();
-    const imgW    = pageW - 80;
-    const imgH    = (canvas.height * imgW) / canvas.width;
-    const margin  = 40;
-
-    let yOffset = 0;
-    while (yOffset < imgH) {
-      if (yOffset > 0) doc.addPage();
-      doc.addImage(imgData, 'JPEG', margin, margin - yOffset, imgW, imgH);
-      yOffset += pageH - margin * 2;
+    if (!res.ok) {
+      const err = await res.json();
+      return { error: JSON.stringify(err), recordId: null };
     }
 
-    const pdfBase64 = doc.output('datauristring').split(',')[1];
-    const filename  = 'proposal-' + form.businessName.replace(/[^a-z0-9]/gi, '-').toLowerCase() + '.pdf';
-
-    const res = await fetch('/upload-pdf', {
-      method:  'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body:    JSON.stringify({ recordId, pdfBase64, filename })
-    });
-
-    const result = await res.json();
-    if (!res.ok) console.error('PDF upload failed:', result);
-    else console.log('PDF uploaded to Airtable for record:', recordId);
+    const data = await res.json();
+    return { error: null, recordId: data.id };
 
   } catch (err) {
-    console.error('PDF generation/upload failed:', err);
+    return { error: err.message, recordId: null };
   }
 }
 
-</script>
-</body>
-</html>
+// ── Build plain text version ──────────────────────────────────────────────
+function buildPlainTextProposal(form, p) {
+  const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  const services = (p.services || []).map((svc, i) =>
+    `${i + 1}. ${svc.name} — ${svc.investmentRange}\n   ${svc.rationale}\n   ${Array.isArray(svc.scope) ? svc.scope.map(s => `• ${s}`).join('\n   ') : svc.scope}\n   Timeline: ${svc.timeline}`
+  ).join('\n\n');
+
+  return `PROPOSAL FOR ${(form.businessName || '').toUpperCase()}
+Prepared by Martech Consulting · ${today}
+
+${p.executiveSummary}
+
+RECOMMENDED SERVICES
+${services}
+
+TOTAL INVESTMENT: ${p.totalRange}
+TIMELINE: ${p.projectTimeline}
+
+NEXT STEPS
+${p.nextSteps}
+
+Ready to move forward? Book a free 30-minute discovery call:
+https://calendly.com/d/cr79-s6m-dws/martech-meeting
+
+Keith & Jon
+Martech Consulting · martechconsulting.io`;
+}
+
+function json(data, status = 200) {
+  return new Response(JSON.stringify(data), {
+    status,
+    headers: { 'Content-Type': 'application/json' }
+  });
+}
