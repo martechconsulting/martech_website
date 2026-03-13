@@ -1,13 +1,3 @@
-// functions/generate-proposal.js
-//
-// Cloudflare Pages Function — generates a personalized proposal via Claude
-// and saves it to Airtable.
-//
-// SETUP: Add to Cloudflare Pages → Settings → Environment Variables:
-//   ANTHROPIC_API_KEY          → your Anthropic API key
-//   AIRTABLE_TOKEN             → already set
-//   AIRTABLE_PROPOSALS_BASE_ID → base ID for your proposals Airtable base (different from Pulse)
-
 const AIRTABLE_TABLE = 'Proposals';
 
 const SERVICES_PRICING = `
@@ -90,6 +80,7 @@ INSTRUCTIONS:
 - Minimum engagement: $1,000 — never propose below this
 - For retainer recommendations: frame them as ongoing partnership, not a recurring bill — emphasize priority access, predictability, and the contracted rate discount vs. ad-hoc work
 - Do not recommend more than 4 services/tiers total — keep proposals focused
+- RUSH FEE: If timeline is 'ASAP', apply a 20% rush fee to ALL investment ranges. Add a note in nextSteps that says: "Because you need this done quickly, a 20% rush fee applies to prioritize your project. If your timeline is flexible, you can save 20% by planning ahead — just let us know." Do not hide or soften this — it reflects real prioritization cost.
 - Write the executive summary in a direct, human voice — no corporate fluff
 - Each service rationale should reference something specific from their submission
 - Scope bullets should be concrete deliverables, not vague promises
