@@ -939,11 +939,21 @@ function renderProposal(p, form) {
       ? svc.scope.map(s => `<li>${s}</li>`).join('')
       : `<li>${svc.scope}</li>`;
 
+    const isRetainer = svc.isRetainer || svc.timeline?.toLowerCase().includes('month') || svc.investmentRange?.toLowerCase().includes('/month');
+    const badgeLabel = isRetainer ? 'Monthly retainer' : 'Project investment';
+    const timelineLabel = isRetainer ? `Ongoing · ${svc.timeline || 'monthly'}` : `⏱ ${svc.timeline}`;
+
     return `
       <div class="prop-service-card">
         <div class="prop-service-head">
-          <div class="prop-service-name">${svc.name}</div>
-          <span class="prop-service-badge highlight">${svc.investmentRange}</span>
+          <div>
+            <div class="prop-service-name">${svc.name}</div>
+            ${isRetainer ? '<div style="font-size:.72rem;color:var(--mid);margin-top:.2rem;font-weight:400;">Ongoing partnership · contracted rate</div>' : ''}
+          </div>
+          <div style="text-align:right;">
+            <span class="prop-service-badge highlight">${svc.investmentRange}</span>
+            <div style="font-size:.65rem;color:var(--mid);margin-top:.3rem;text-transform:uppercase;letter-spacing:.08em;">${badgeLabel}</div>
+          </div>
         </div>
         <div class="prop-service-body">
           <p class="prop-service-rationale">${svc.rationale}</p>
@@ -951,10 +961,15 @@ function renderProposal(p, form) {
         </div>
         <div class="prop-service-footer">
           <div class="prop-service-investment">Investment: <strong>${svc.investmentRange}</strong></div>
-          <div class="prop-service-timeline">⏱ ${svc.timeline}</div>
+          <div class="prop-service-timeline">${timelineLabel}</div>
         </div>
       </div>`;
   }).join('');
+
+  // Nonprofit note
+  const nonprofitNote = form.bizType === 'Non-profit'
+    ? '<div style="font-size:.78rem;color:var(--orange);font-weight:500;margin-bottom:1rem;">✓ Non-profit rate applied — 15% discount reflected in all investment ranges</div>'
+    : '';
 
   document.getElementById('proposal-document').innerHTML = `
     <div class="prop-doc-header">
@@ -968,6 +983,7 @@ function renderProposal(p, form) {
     </div>
 
     <div class="prop-doc-title">Custom Proposal for <em>${form.businessName}</em></div>
+    ${nonprofitNote}
     <div class="prop-doc-summary">${p.executiveSummary}</div>
 
     <div class="prop-section-title">Recommended engagement</div>
