@@ -91,22 +91,19 @@ export async function onRequestPost({ request, env }) {
   }
 
   // ── 6. PATCH the Airtable record ─────────────────────────
-  const patchResult = await patchAirtableRecord(recordId, {
+  const { result: patchResult, error: patchError } = await patchAirtableRecord(recordId, {
     'Tier':              'Paid',
     'Upsell stage':      '$49 report',
     'Stripe session ID': stripeSessionId,
     'Amount Paid':       amountPaid,
     'Report sent':       false
-    // Airtable automation fires when it sees Tier = "Paid":
-    //   Script 1 → builds Claude prompt
-    //   Script 2 → Claude API deep-dive
-    //   Script 3 → sends email report
   }, env);
 
   if (!patchResult) {
-    console.error('Airtable PATCH failed for record:', recordId);
-    // Return 500 so Stripe retries the webhook
-    return new Response('Airtable update failed', { status: 500 });
+    const errMsg = JSON.stringify(patchError || 'unknown error');
+    console.error('Airtable PATCH failed for record:', recordId, '— error:', errMsg);
+    // Return 500 with full error so Stripe shows it in the delivery attempt
+    return new Response(`Airtable update failed: ${errMsg}`, { status: 500 });
   }
 
   console.log('Successfully upgraded record to Paid:', recordId, '| Stripe session:', stripeSessionId);
@@ -129,13 +126,13 @@ async function patchAirtableRecord(recordId, fields, env) {
     );
     if (!res.ok) {
       const err = await res.json();
-      console.error('Airtable PATCH error:', err);
-      return null;
+      console.error('Airtable PATCH error:', JSON.stringify(err));
+      return { result: null, error: err };
     }
-    return await res.json();
+    return { result: await res.json(), error: null };
   } catch (err) {
-    console.error('Airtable PATCH exception:', err);
-    return null;
+    console.error('Airtable PATCH exception:', err.message);
+    return { result: null, error: err.message };
   }
 }
 
