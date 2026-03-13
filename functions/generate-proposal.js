@@ -1,22 +1,3 @@
-// functions/generate-proposal.js
-//
-// Cloudflare Pages Function — generates a personalized proposal via Claude
-// and saves it to Airtable.
-//
-// SETUP:
-// Add to Cloudflare Pages → Settings → Environment Variables:
-//   ANTHROPIC_API_KEY          → your Anthropic API key
-//   AIRTABLE_TOKEN             → already set
-//   AIRTABLE_PROPOSALS_BASE_ID → base ID for your proposals Airtable base (different from Pulse)
-//
-// Airtable: create a "Proposals" table with these fields:
-//   Name (single line), Email (email), Business Name (single line),
-//   Website (URL), Business Type (single line), Team Size (single line),
-//   Tools (long text), Challenge (long text), Services (long text),
-//   Budget (single line), Timeline (single line),
-//   Proposal JSON (long text), Proposal body (long text),
-//   Created (created time)
-
 const AIRTABLE_TABLE = 'Proposals';
 
 const SERVICES_PRICING = `
