@@ -1004,8 +1004,8 @@ async function submitProposal() {
 
     renderProposal(data.proposal, payload);
 
-    // Generate and upload PDF if we got a record ID back
-    if (data.recordId) {
+    // Generate and upload PDF — only for full proposals, not notReady responses
+    if (data.recordId && !data.notReady) {
       generateAndUploadPDF(data.recordId, payload);
     }
 
@@ -1025,6 +1025,11 @@ async function submitProposal() {
 
 function renderProposal(p, form) {
   const today = new Date().toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' });
+
+  // Always ensure form page and loading are hidden, output is shown
+  document.getElementById('prop-form-page').style.display = 'none';
+  document.getElementById('prop-loading').style.display   = 'none';
+  document.getElementById('prop-output').style.display    = 'block';
 
   // Not ready — render redirect state instead of proposal
   if (p.notReady) {
@@ -1070,8 +1075,6 @@ function renderProposal(p, form) {
         </div>
       </div>`;
 
-    document.getElementById('prop-loading').style.display  = 'none';
-    document.getElementById('prop-output').style.display   = 'block';
     window.scrollTo({ top: 0, behavior: 'smooth' });
     return;
   }
