@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Automation Edge — Weekly Newsletter | Martech Consulting</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+
+/* ── Hero ── */
+.nl-hero {
+  background: var(--navy);
+  padding: clamp(5rem,12vw,9rem) 0 clamp(3rem,6vw,5rem);
+  position: relative;
+  overflow: hidden;
+}
+
+.nl-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 55% 50% at 70% 35%, rgba(254,105,48,.12) 0%, transparent 65%),
+    radial-gradient(ellipse 35% 55% at 10% 75%, rgba(255,255,255,.03) 0%, transparent 60%);
+}
+
+.nl-hero__grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+  background-size: 72px 72px;
+}
+
+.nl-hero__inner {
+  position: relative;
+  z-index: 2;
+}
+
+.nl-hero__layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2.5rem, 5vw, 5rem);
+  align-items: center;
+}
+
+.nl-hero h1 {
+  color: #fff;
+  margin-bottom: 1.25rem;
+}
+
+.nl-hero h1 em {
+  font-style: italic;
+  color: var(--orange-lt);
+}
+
+.nl-hero__sub {
+  font-size: 1rem;
+  color: rgba(255,255,255,.52);
+  line-height: 1.75;
+  max-width: 480px;
+  margin-bottom: 2rem;
+  font-weight: 300;
+}
+
+/* Issue preview card */
+.nl-preview {
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 10px;
+  overflow: hidden;
+  animation: fadeUp .5s ease .2s both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.nl-preview__label {
+  background: var(--orange);
+  color: #fff;
+  font-size: .65rem;
+  font-weight: 700;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  padding: .5rem 1rem;
+  display: inline-block;
+}
+
+.nl-preview__body {
+  padding: 1.5rem;
+}
+
+.nl-preview__issue {
+  font-size: .7rem;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.3);
+  margin-bottom: .75rem;
+}
+
+.nl-preview__title {
+  font-family: var(--ff-head);
+  font-size: 1.15rem;
+  color: #fff;
+  font-weight: 400;
+  margin-bottom: 1rem;
+  line-height: 1.3;
+}
+
+.nl-preview__items {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+
+.nl-preview__item {
+  display: flex;
+  align-items: flex-start;
+  gap: .65rem;
+  font-size: .8rem;
+  color: rgba(255,255,255,.5);
+  line-height: 1.5;
+  font-weight: 300;
+}
+
+.nl-preview__item::before {
+  content: '→';
+  color: var(--orange);
+  font-size: .7rem;
+  flex-shrink: 0;
+  margin-top: .1rem;
+}
+
+.nl-preview__footer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid rgba(255,255,255,.06);
+  font-size: .72rem;
+  color: rgba(255,255,255,.25);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ── What you get ── */
+.nl-value {
+  background: var(--cream);
+  padding: clamp(3.5rem,7vw,6rem) 0;
+}
+
+.nl-value__grid {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 1.5rem;
+  margin-top: 2.5rem;
+}
+
+.nl-value__card {
+  background: #fff;
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 1.75rem;
+}
+
+.nl-value__icon {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.nl-value__title {
+  font-weight: 600;
+  color: var(--navy);
+  margin-bottom: .5rem;
+  font-size: .95rem;
+}
+
+.nl-value__desc {
+  font-size: .85rem;
+  color: var(--mid);
+  line-height: 1.65;
+  font-weight: 300;
+}
+
+/* ── Form section ── */
+.nl-form-section {
+  background: var(--navy);
+  padding: clamp(3.5rem,7vw,6rem) 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.nl-form-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse 50% 60% at 50% 100%, rgba(254,105,48,.08) 0%, transparent 60%);
+}
+
+.nl-form-inner {
+  position: relative;
+  z-index: 2;
+  max-width: 640px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.nl-form-inner h2 {
+  color: #fff;
+  margin-bottom: .75rem;
+}
+
+.nl-form-inner h2 em {
+  font-style: italic;
+  color: var(--orange-lt);
+}
+
+.nl-form-inner p {
+  color: rgba(255,255,255,.45);
+  font-size: .95rem;
+  line-height: 1.7;
+  font-weight: 300;
+  margin-bottom: 2rem;
+}
+
+/* Fillout embed container */
+.nl-fillout-wrap {
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 10px;
+  overflow: hidden;
+  min-height: 320px;
+}
+
+/* ── Social proof ── */
+.nl-proof {
+  background: var(--cream);
+  padding: clamp(3rem,6vw,5rem) 0;
+  text-align: center;
+}
+
+.nl-proof__stat {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 2.5rem;
+}
+
+.nl-proof__stat + .nl-proof__stat {
+  border-left: 1px solid var(--rule);
+}
+
+.nl-proof__num {
+  font-family: var(--ff-head);
+  font-size: 2.5rem;
+  font-weight: 300;
+  color: var(--navy);
+  line-height: 1;
+  margin-bottom: .3rem;
+}
+
+.nl-proof__num em {
+  font-style: italic;
+  color: var(--orange);
+}
+
+.nl-proof__label {
+  font-size: .75rem;
+  color: var(--mid);
+  font-weight: 500;
+  letter-spacing: .05em;
+}
+
+.nl-proof__stats {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+.nl-fine {
+  font-size: .75rem;
+  color: var(--mid);
+  margin-top: 1rem;
+}
+
+@media (max-width: 768px) {
+  .nl-hero__layout { grid-template-columns: 1fr; }
+  .nl-value__grid  { grid-template-columns: 1fr; }
+  .nl-preview      { display: none; }
+}
+
+@media (max-width: 500px) {
+  .nl-proof__stat { padding: 0 1.25rem; }
+}
+
+</style>
+</head>
+<body>
+
+<script src="nav.js"></script>
+
+<!-- ── HERO ── -->
+<section class="nl-hero">
+  <div class="nl-hero__grid"></div>
+  <div class="nl-hero__inner">
+    <div class="container--narrow">
+      <div class="nl-hero__layout">
+
+        <div>
+          <p class="eyebrow on-dark">Free weekly newsletter</p>
+          <h1 class="display">The automation tips that <em>actually save time</em></h1>
+          <p class="nl-hero__sub">
+            Every week, Keith and Jon share one automation workflow, one tool tip, and one thing they built for a client — so you can implement it yourself. No fluff, no filler.
+          </p>
+          <div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:center;">
+            <a href="#subscribe" class="btn btn-primary">Get the newsletter →</a>
+            <span style="font-size:.8rem;color:rgba(255,255,255,.3);font-weight:400;">Free. Unsubscribe any time.</span>
+          </div>
+        </div>
+
+        <!-- Sample issue preview -->
+        <div class="nl-preview">
+          <span class="nl-preview__label">Latest issue</span>
+          <div class="nl-preview__body">
+            <div class="nl-preview__issue">Issue #14 · This week</div>
+            <div class="nl-preview__title">How we saved a coaching client 6 hours/week with one Make scenario</div>
+            <div class="nl-preview__items">
+              <div class="nl-preview__item">The exact workflow we built — and why it works</div>
+              <div class="nl-preview__item">The Keap + Calendly connection most people miss</div>
+              <div class="nl-preview__item">A 15-minute Airtable trick for tracking client progress</div>
+              <div class="nl-preview__item">Tool of the week: why we're using Softr for client portals</div>
+            </div>
+          </div>
+          <div class="nl-preview__footer">
+            <span>Martech Consulting · Keith & Jon</span>
+            <span>4 min read</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── WHAT YOU GET ── -->
+<section class="nl-value">
+  <div class="container--narrow">
+    <p class="eyebrow">What's inside every issue</p>
+    <h2>Practical automation, <em>not theory</em></h2>
+    <div class="nl-value__grid">
+      <div class="nl-value__card">
+        <div class="nl-value__icon">⚙️</div>
+        <div class="nl-value__title">One workflow breakdown</div>
+        <div class="nl-value__desc">A real automation we built for a client — explained step by step so you can replicate it in your own business.</div>
+      </div>
+      <div class="nl-value__card">
+        <div class="nl-value__icon">🔧</div>
+        <div class="nl-value__title">Tool tip of the week</div>
+        <div class="nl-value__desc">A feature, shortcut, or integration in Keap, Airtable, Make, or Softr that most people don't know exists.</div>
+      </div>
+      <div class="nl-value__card">
+        <div class="nl-value__icon">📊</div>
+        <div class="nl-value__title">Real numbers</div>
+        <div class="nl-value__desc">Hours saved, revenue recovered, response rates improved — we share actual results from our client work every week.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SUBSCRIBE FORM ── -->
+<section class="nl-form-section" id="subscribe">
+  <div class="nl-form-inner">
+    <p class="eyebrow on-dark">Join the list</p>
+    <h2 class="display">Get <em>smarter</em> about automation every week</h2>
+    <p>Drop your email below. One email per week. Useful every time.</p>
+
+    <!-- Fillout embed — replace YOUR_FILLOUT_FORM_ID with your actual form ID -->
+    <div class="nl-fillout-wrap">
+      <div
+        data-fillout-id="YOUR_FILLOUT_FORM_ID"
+        data-fillout-embed-type="standard"
+        data-fillout-inherit-parameters
+        data-fillout-dynamic-resize
+        style="width:100%;min-height:300px;"
+      ></div>
+      <script src="https://server.fillout.com/embed/v1/"></script>
+    </div>
+
+    <p class="nl-fine">🔒 No spam. Unsubscribe any time. We hate inbox clutter too.</p>
+  </div>
+</section>
+
+<!-- ── PROOF ── -->
+<section class="nl-proof">
+  <div class="container--narrow">
+    <div class="nl-proof__stats">
+      <div class="nl-proof__stat">
+        <div class="nl-proof__num"><em>5–8</em></div>
+        <div class="nl-proof__label">hours saved per tip on average</div>
+      </div>
+      <div class="nl-proof__stat">
+        <div class="nl-proof__num">1</div>
+        <div class="nl-proof__label">email per week, always useful</div>
+      </div>
+      <div class="nl-proof__stat">
+        <div class="nl-proof__num"><em>free</em></div>
+        <div class="nl-proof__label">always, no paywall</div>
+      </div>
+    </div>
+    <p style="font-size:.85rem;color:var(--mid);font-weight:300;">Written by Keith Phillips (Keap Certified Partner) and Jonathan Noury-Elliard — who build these systems for clients every week.</p>
+  </div>
+</section>
+
+</body>
+</html>
