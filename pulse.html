@@ -539,12 +539,12 @@ var QUESTIONS = [
 var answers  = {};
 var currentQ = 0;
 
-// ── THE ONE CHANGED LINE: /pulse → /api/pulse ──
+// ── THE ONE CHANGED LINE: /pulse → /pulse-api ──
 function airtableRequest(fields, recordId) {
   var body = recordId
     ? { _method: 'PATCH', recordId: recordId, fields: fields }
     : { fields: fields };
-  return fetch('/api/pulse', {
+  return fetch('/pulse-api', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body)
