@@ -260,8 +260,6 @@
 </head>
 <body>
 
-<!-- nav injected by nav.js -->
-
 <section class="pulse-hero">
   <div class="pulse-hero__grid"></div>
   <div class="pulse-hero__inner">
@@ -353,7 +351,6 @@
     </div>
   </div>
 
-  <!-- ── SAVE RANKING ── -->
   <div class="save-ranking-section">
     <div class="container--narrow">
       <div class="save-ranking-card">
@@ -483,7 +480,6 @@
 
 </section>
 
-<!-- PAID MODAL -->
 <div class="paid-modal" id="paidModal">
   <div class="paid-modal__box">
     <div class="paid-modal__head">
@@ -514,7 +510,6 @@
 <script>
 // ── CONFIG ────────────────────────────────────
 // Token and Base ID live in Cloudflare Pages env vars — never put them here.
-// All Airtable requests go through /submit (functions/submit.js).
 const AIRTABLE_TABLE = 'Martech Pulse Submissions';
 
 // ── State ─────────────────────────────────────
@@ -562,11 +557,11 @@ const QUESTIONS = [
     cat:'Setup',
     options:[
       {val:'Service business / agency',  tip:'Includes marketing agencies, consultants, freelancers, and B2B service providers.'},
-      {val:'Coaching or consulting',      tip:'High-touch, relationship-driven — coaches, advisors, trainers. Automation frees you to focus on delivery.'},
-      {val:'E-commerce / product',        tip:'Physical or digital products. Email automation and abandoned cart flows are usually the biggest wins.'},
-      {val:'SaaS / tech company',         tip:'Onboarding sequences and churn-prevention automations tend to have the highest ROI here.'},
-      {val:'Local / brick-and-mortar',    tip:'Appointment reminders, review requests, and reactivation campaigns save 5+ hours/week for most local businesses.'},
-      {val:'Creator / solopreneur',       tip:'For solo operators, every manual task is a direct hit on your time. Automation is leverage.'}
+      {val:'Coaching or consulting',     tip:'High-touch, relationship-driven — coaches, advisors, trainers. Automation frees you to focus on delivery.'},
+      {val:'E-commerce / product',       tip:'Physical or digital products. Email automation and abandoned cart flows are usually the biggest wins.'},
+      {val:'SaaS / tech company',        tip:'Onboarding sequences and churn-prevention automations tend to have the highest ROI here.'},
+      {val:'Local / brick-and-mortar',   tip:'Appointment reminders, review requests, and reactivation campaigns save 5+ hours/week for most local businesses.'},
+      {val:'Creator / solopreneur',      tip:'For solo operators, every manual task is a direct hit on your time. Automation is leverage.'}
     ]
   },
   {
@@ -589,11 +584,11 @@ const QUESTIONS = [
     cat:'Leads',
     options:[
       {val:'Referrals / word of mouth',    tip:'Great quality, hard to scale. Automation ensures you never drop the ball on a warm referral.'},
-      {val:'Website contact form',          tip:'Most businesses take 24–72 hours to respond. Automating first touch can 10x your close rate on inbound leads.'},
+      {val:'Website contact form',         tip:'Most businesses take 24–72 hours to respond. Automating first touch can 10x your close rate on inbound leads.'},
       {val:'Social media DMs',             tip:'High intent, easy to lose track of. Wiring DMs into a CRM has huge ROI.'},
-      {val:'Email or phone directly',       tip:'Very warm leads — but without a system, follow-up depends entirely on memory.'},
-      {val:'Paid ads → landing page',       tip:'Speed-to-lead is everything here. Every minute of delay costs you ad spend.'},
-      {val:'Marketplace / platform',        tip:'Platform leads go cold fast. Moving them to your own system quickly is critical.'}
+      {val:'Email or phone directly',      tip:'Very warm leads — but without a system, follow-up depends entirely on memory.'},
+      {val:'Paid ads → landing page',      tip:'Speed-to-lead is everything here. Every minute of delay costs you ad spend.'},
+      {val:'Marketplace / platform',       tip:'Platform leads go cold fast. Moving them to your own system quickly is critical.'}
     ]
   },
   {
@@ -616,10 +611,10 @@ const QUESTIONS = [
     cat:'Scheduling',
     options:[
       {val:'Back-and-forth emails to find a time',   impact:'low',    tip:'Costs an average of 8 emails per booking. A free Calendly link eliminates this entirely.'},
-      {val:'They call or text me',                    impact:'low',    tip:'Works but creates interruptions and context switching. A booking link lets people self-schedule on your terms.'},
-      {val:'I share a Calendly / booking link',       impact:'medium', tip:'Great. Next step: connect it to your CRM so bookings auto-create contacts and trigger a prep sequence.'},
+      {val:'They call or text me',                   impact:'low',    tip:'Works but creates interruptions and context switching. A booking link lets people self-schedule on your terms.'},
+      {val:'I share a Calendly / booking link',      impact:'medium', tip:'Great. Next step: connect it to your CRM so bookings auto-create contacts and trigger a prep sequence.'},
       {val:'Automated with reminders and prep emails',impact:'high',   tip:'Gold standard. Automated reminders alone reduce no-shows by up to 70%.'},
-      {val:"I don't do calls / not applicable",       impact:'high',   tip:"Noted — we'll weight your score toward the other categories that apply to you."}
+      {val:"I don't do calls / not applicable",      impact:'high',   tip:"Noted — we'll weight your score toward the other categories that apply to you."}
     ]
   },
   {
@@ -677,8 +672,6 @@ async function airtableRequest(fields, recordId = null) {
 }
 
 // ── Step 1: POST contact info on Q1 "Start audit" ─
-// Called immediately when the user clicks "Start audit →"
-// Creates the record and stores the ID for all future PATCHes
 async function createContactRecord(ans) {
   const firstName = ans.first_name || '';
   const lastName  = ans.last_name  || '';
@@ -688,18 +681,18 @@ async function createContactRecord(ans) {
     'Full Name':     [firstName, lastName].filter(Boolean).join(' '),
     'Business Name': ans.business_name || '',
     'Email':         ans.email || '',
-    'Website':   ans.url   || '',
+    'Website':       ans.url   || '',
     'Tier':          'Free',
     'Upsell stage':  'None',
     'Report sent':          false,
     'Consulting call booked': false
   };
   const data = await airtableRequest(fields);
-  return data ? data.id : null; // store this as airtableRecordId
+  // Extracted ID with fallback for standard Airtable batch formats
+  return data ? (data.id || (data.records && data.records[0] ? data.records[0].id : null)) : null; 
 }
 
 // ── Step 2: PATCH with full answers + scores on audit complete ─
-// Called after the analyzing animation, before showing results
 async function saveAuditResults(ans, scores, recTitles) {
   if (!airtableRecordId) { console.warn('No record ID — contact step may have failed'); return; }
   const fields = {
@@ -708,8 +701,9 @@ async function saveAuditResults(ans, scores, recTitles) {
     'Lead capture method':  ans.lead_capture   || '',
     'Automated follow-up?': ans.follow_up      || '',
     'Scheduling method':    ans.scheduling     || '',
-    'Tools in use':         (ans.tools      || []).join(', '),
-    'Biggest pain point':   (ans.time_drain || []).join(', '),
+    // Passed as arrays so Airtable Multiple Select fields accept them
+    'Tools in use':         ans.tools          || [],
+    'Biggest pain point':   ans.time_drain     || [],
     // Scores written back to record
     'Overall Score':      scores.overall,
     'Score - leads':      scores.leads,
@@ -717,7 +711,7 @@ async function saveAuditResults(ans, scores, recTitles) {
     'Score - comms':      scores.comms,
     'Score - reporting':  scores.reporting,
     'Score - content':    scores.content,
-    // Top rec titles for Keith/Jon to see at a glance
+    // Top rec titles
     'Rec 1 title': recTitles[0] || '',
     'Rec 2 title': recTitles[1] || '',
     'Rec 3 title': recTitles[2] || ''
@@ -726,17 +720,11 @@ async function saveAuditResults(ans, scores, recTitles) {
 }
 
 // ── Step 3: PATCH Tier=Paid on purchase ──────────
-// This is what triggers the Airtable automation (prompt composer → Claude deep dive)
-// Call this AFTER Stripe payment is confirmed — from your webhook or redirect handler
 async function markAsPaid() {
   if (!airtableRecordId) { console.warn('No record ID — cannot mark as paid'); return; }
   const fields = {
     'Tier':         'Paid',
     'Upsell stage': '$49 report'
-    // The Airtable automation watches for Tier = "Paid" and fires:
-    //   Script 1: reads answers + Config table → builds Claude prompt
-    //   Script 2: calls Claude API → writes deep-dive results back to record
-    //   Script 3 (email): sends full report to the email on record
   };
   await airtableRequest(fields, airtableRecordId);
 }
@@ -995,16 +983,14 @@ function handleContact() {
   );
 }
 
-// Called when "Start audit →" is clicked on Q1
-// Proceeds immediately — POSTs contact info in background
 function startAuditFromContact() {
   const btn = document.getElementById('urlbtn-0');
   if (btn) { btn.disabled = true; btn.textContent = 'Starting…'; }
 
-  // Move to Q2 immediately — never block the user on a network call
+  // Move to Q2 immediately
   nextQ();
 
-  // POST contact info in background — store record ID when it returns
+  // POST contact info in background
   createContactRecord(answers).then(id => {
     if (id) {
       airtableRecordId = id;
@@ -1049,22 +1035,18 @@ function prevQ() {
 }
 
 // ── Submit ────────────────────────────────────
-// Stores the saveAuditResults promise so processPurchase can await it
 let auditSavePromise = null;
 
 function submitAudit() {
   document.getElementById('questionsContainer').style.display = 'none';
   document.getElementById('analyzingState').classList.add('active');
 
-  // Compute scores and recs
   const scores = calcScores();
   lastScores   = scores;
   const recs   = buildRecs(scores);
   lastRecs     = recs;
   const recTitles = recs.map(r => r.title);
 
-  // PATCH the existing record with full answers + scores
-  // Store the promise so processPurchase can wait for it to complete before redirecting
   auditSavePromise = saveAuditResults(answers, scores, recTitles);
 
   const statuses = [
@@ -1110,7 +1092,6 @@ function showResults(data, recs) {
   badge.textContent = grade.label;
   badge.className   = 'score-badge ' + grade.css;
 
-  // Personalise save-ranking headline
   if (firstName) {
     document.getElementById('saveRankingHeadline').textContent =
       `Save your score, ${firstName} — and get your full roadmap`;
@@ -1179,11 +1160,8 @@ function closePaidModal() { document.getElementById('paidModal').classList.remov
 async function processPurchase() {
   closePaidModal();
 
-  // TODO: replace with your actual Stripe payment link
   const STRIPE_LINK = 'https://buy.stripe.com/9B614ncPsgLw8xu881fQI00';
 
-  // Wait for audit data to finish saving to Airtable before leaving the page.
-  // This ensures all answers + scores are in the record before Stripe webhook fires.
   if (auditSavePromise) {
     try { await auditSavePromise; } catch(e) { console.warn('Audit save error:', e); }
   }
@@ -1204,7 +1182,6 @@ async function processPurchase() {
 }
 
 function bookConsulting() {
-  // TODO: replace with your Calendly link
   alert('This will open your Calendly booking link.');
 }
 function subscribeEmail() {
