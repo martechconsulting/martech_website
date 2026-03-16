@@ -49,7 +49,6 @@ export async function onRequestPost({ request, env }) {
     return json({ error: 'Missing required fields' }, 400);
   }
 
-  // ── Build Claude prompt ────────────────────────────────────────────────
   const prompt = `You are a proposal writer for Martech Consulting, a boutique martech consultancy run by Keith Phillips (Keap Certified Partner) and Jonathan Noury-Elliard. They specialize in marketing automation, CRM implementation, Airtable, Softr, Bubble, and digital marketing.
 
 Generate a personalized proposal based on this prospect's submission.
@@ -125,9 +124,7 @@ If the prospect is NOT ready (budget too low for their actual needs):
   "closingNote": "1 sentence — leave the door open warmly. E.g. when you're ready, we're here."
 }`;
 
-  // ── Call Claude ────────────────────────────────────────────────────────
   let proposal;
-
   try {
     const res = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
@@ -168,14 +165,11 @@ If the prospect is NOT ready (budget too low for their actual needs):
     return json({ error: 'AI service unavailable' }, 500);
   }
 
-  // ── Save to Airtable (awaited, errors surfaced) ────────────────────────
   const { error: saveError, recordId } = await saveToAirtable(body, proposal, env);
-  if (saveError) {
-    console.error('Airtable save failed:', saveError);
-  }
+  if (saveError) console.error('Airtable save failed:', saveError);
 
   return json({
-    success: true,
+    success:       true,
     proposal,
     recordId:      recordId || null,
     notReady:      proposal.notReady || false,
@@ -183,11 +177,9 @@ If the prospect is NOT ready (budget too low for their actual needs):
   });
 }
 
-// ── Save to Airtable ──────────────────────────────────────────────────────
 async function saveToAirtable(form, proposal, env) {
   try {
     const proposalText = buildPlainTextProposal(form, proposal);
-
     const res = await fetch(
       `https://api.airtable.com/v0/${env.AIRTABLE_PROPOSALS_BASE_ID}/${encodeURIComponent(AIRTABLE_TABLE)}`,
       {
@@ -210,26 +202,24 @@ async function saveToAirtable(form, proposal, env) {
             'Budget':         form.budget,
             'Timeline':       form.timeline,
             'Proposal JSON':  JSON.stringify(proposal),
-            'Proposal body':  proposal.notReady ? `NOT READY — Budget: ${form.budget}\n\n${proposal.notReadySummary}` : proposalText
+            'Proposal body':  proposal.notReady
+              ? `NOT READY — Budget: ${form.budget}\n\n${proposal.notReadySummary}`
+              : proposalText
           }
         })
       }
     );
-
     if (!res.ok) {
       const err = await res.json();
       return { error: JSON.stringify(err), recordId: null };
     }
-
     const data = await res.json();
     return { error: null, recordId: data.id };
-
   } catch (err) {
     return { error: err.message, recordId: null };
   }
 }
 
-// ── Build plain text version ──────────────────────────────────────────────
 function buildPlainTextProposal(form, p) {
   const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
   const services = (p.services || []).map((svc, i) =>
