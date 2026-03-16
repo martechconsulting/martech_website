@@ -469,7 +469,7 @@ function submitForm() {
     timeline:     answers.timeline     || ''
   };
 
-  fetch('/submit', {
+  fetch('/generate-proposal', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload)
