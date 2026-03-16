@@ -4,184 +4,146 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Get Your Free Proposal | Martech Consulting</title>
-<meta name="description" content="Tell us about your business and we'll generate a personalized proposal with exact pricing and a recommended plan — in seconds.">
+<meta name="description" content="Tell us about your business and we'll generate a personalized proposal with exact pricing in about 30 seconds.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 <style>
-
-/* ── Hero ── */
-.prop-hero { background:var(--navy);padding:clamp(5rem,12vw,9rem) 0 clamp(3rem,6vw,5rem);position:relative;overflow:hidden; }
-.prop-hero::before { content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 60% 50% at 70% 40%,rgba(254,105,48,.13) 0%,transparent 65%),radial-gradient(ellipse 40% 60% at 10% 80%,rgba(255,255,255,.03) 0%,transparent 60%); }
-.prop-hero__grid { position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:72px 72px; }
-.prop-hero__inner { position:relative;z-index:2; }
-.prop-hero h1 { color:#fff;margin-bottom:1.25rem; }
-.prop-hero h1 em { font-style:italic;color:var(--orange-lt); }
-.prop-hero__sub { font-size:1rem;color:rgba(255,255,255,.52);line-height:1.72;max-width:520px;margin-bottom:2rem;font-weight:300; }
-.prop-hero__stats { display:flex;gap:2.5rem;flex-wrap:wrap;margin-top:2.5rem;padding-top:2rem;border-top:1px solid rgba(255,255,255,.08); }
-
-/* ── Form wrap ── */
-.form-wrap { background:var(--navy);padding:0 0 clamp(4rem,8vw,7rem); }
-.form-progress { max-width:680px;margin:0 auto;padding:0 clamp(1.25rem,4vw,2.5rem) 2.5rem; }
-.progress-steps { display:flex;gap:5px;margin-bottom:.6rem; }
-.progress-step { height:3px;flex:1;border-radius:2px;background:rgba(255,255,255,.1);transition:background .4s; }
-.progress-step.done   { background:var(--orange); }
-.progress-step.active { background:rgba(254,105,48,.45); }
-.progress-meta { display:flex;justify-content:space-between;font-size:.72rem;color:rgba(255,255,255,.3);font-weight:600;letter-spacing:.08em;text-transform:uppercase; }
-
-.q-wrap { max-width:680px;margin:0 auto;padding:0 clamp(1.25rem,4vw,2.5rem); }
-.q-card { display:none;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:clamp(1.75rem,4vw,2.5rem);animation:fadeUp .35s ease both; }
-.q-card.active { display:block; }
-@keyframes fadeUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:none} }
-
-.q-eyebrow { font-size:.65rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--orange);margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem; }
-.q-eyebrow::before { content:'';display:block;width:1rem;height:2px;background:currentColor;flex-shrink:0; }
-.q-text { font-family:var(--ff-head);font-size:clamp(1.2rem,3vw,1.6rem);font-weight:400;color:#fff;margin-bottom:.5rem;line-height:1.2; }
-.q-hint { font-size:.82rem;color:rgba(255,255,255,.35);margin-bottom:1.75rem;font-weight:300; }
-
-/* Fields */
-.field-stack { display:flex;flex-direction:column;gap:.65rem; }
-.field-row   { display:grid;grid-template-columns:1fr 1fr;gap:.65rem; }
-.field-label { font-size:.7rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:rgba(255,255,255,.38);margin-bottom:.2rem; }
-.form-field { width:100%;box-sizing:border-box;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:4px;padding:.85rem 1.1rem;font-family:var(--ff-body);font-size:.9rem;color:#fff;outline:none;transition:border-color .2s; }
-.form-field::placeholder { color:rgba(255,255,255,.28); }
-.form-field:focus { border-color:var(--orange); }
-textarea.form-field { resize:vertical;min-height:100px; }
-
-/* Options */
-.options-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:.6rem; }
-.option-btn { background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:6px;padding:.85rem 1rem;color:rgba(255,255,255,.62);font-family:var(--ff-body);font-size:.84rem;cursor:pointer;text-align:left;transition:all .15s;line-height:1.45; }
-.option-btn:hover   { border-color:var(--orange);color:#fff;background:rgba(254,105,48,.08); }
-.option-btn.selected { border-color:var(--orange);background:rgba(254,105,48,.14);color:#fff; }
-.multi-hint { font-size:.72rem;color:rgba(255,255,255,.28);margin-bottom:.75rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase; }
-
-/* Nav */
-.q-nav { display:flex;justify-content:space-between;align-items:center;margin-top:1.75rem; }
-.btn-back { background:none;border:1px solid rgba(255,255,255,.14);color:rgba(255,255,255,.45);padding:.7rem 1.4rem;border-radius:4px;font-family:var(--ff-body);font-size:.84rem;cursor:pointer;transition:all .18s; }
-.btn-back:hover { border-color:rgba(255,255,255,.3);color:#fff; }
-.btn-next { background:var(--orange);border:none;color:#fff;padding:.8rem 1.75rem;border-radius:4px;font-family:var(--ff-body);font-size:.875rem;font-weight:600;cursor:pointer;transition:all .18s; }
-.btn-next:hover:not(:disabled) { background:var(--orange-lt);transform:translateY(-1px); }
-.btn-next:disabled { opacity:.3;cursor:not-allowed;transform:none; }
-
-/* ── Generating ── */
-.generating-state { display:none;text-align:center;padding:5rem 1.25rem; }
-.generating-state.active { display:block; }
-.gen-rings { width:72px;height:72px;margin:0 auto 2rem;position:relative; }
-.gen-ring { position:absolute;inset:0;border:2px solid transparent;border-top-color:var(--orange);border-radius:50%;animation:spin 1s linear infinite; }
-.gen-ring:nth-child(2) { inset:10px;border-top-color:rgba(254,105,48,.35);animation-duration:1.6s;animation-direction:reverse; }
-.gen-dot { position:absolute;inset:28px;background:var(--orange);border-radius:50%;animation:pulse-dot 1.5s ease-in-out infinite; }
-@keyframes spin { to{transform:rotate(360deg)} }
-@keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.75)} }
-.gen-title { font-family:var(--ff-head);font-size:clamp(1.5rem,3vw,2rem);color:#fff;font-weight:300;margin-bottom:.5rem; }
-.gen-sub   { font-size:.9rem;color:rgba(255,255,255,.35);font-weight:300;margin-bottom:1rem; }
-.gen-status { font-size:.82rem;color:rgba(255,255,255,.28);min-height:1.2em; }
-
-/* ── Results ── */
-.results-section { display:none;background:var(--cream); }
-.results-section.active { display:block; }
-
-/* Results hero */
-.results-hero { background:var(--navy);padding:clamp(3rem,6vw,5rem) 0;position:relative;overflow:hidden; }
-.results-hero::before { content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 55% 60% at 80% 50%,rgba(254,105,48,.1) 0%,transparent 60%); }
-.results-hero__inner { position:relative;z-index:2; }
-.results-hero h2 { font-family:var(--ff-head);font-size:clamp(1.6rem,3.5vw,2.4rem);font-weight:300;color:#fff;margin-bottom:.75rem;line-height:1.15; }
-.results-hero__sub { font-size:.95rem;color:rgba(255,255,255,.5);font-weight:300;line-height:1.7;max-width:560px; }
-.results-hero__badge { display:inline-flex;align-items:center;gap:.4rem;background:rgba(254,105,48,.15);border:1px solid rgba(254,105,48,.3);color:var(--orange-lt);font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.35rem .9rem;border-radius:4px;margin-bottom:1rem; }
-
-/* Summary card */
-.summary-section { padding:clamp(2.5rem,5vw,4rem) 0;border-bottom:1px solid var(--rule); }
-.summary-card { background:#fff;border:1px solid var(--rule);border-radius:10px;padding:clamp(1.5rem,3vw,2.25rem);margin-bottom:1.5rem; }
-.summary-card h3 { font-family:var(--ff-head);font-size:1.1rem;font-weight:400;color:var(--ink);margin-bottom:.75rem; }
-.summary-card p  { font-size:.9rem;color:var(--mid);line-height:1.75;font-weight:300; }
-
-/* Service cards */
-.services-section { padding:clamp(2.5rem,5vw,4rem) 0;border-bottom:1px solid var(--rule); }
-.services-section h2 { font-family:var(--ff-head);font-size:clamp(1.4rem,3vw,2rem);font-weight:300;color:var(--ink);margin-bottom:.4rem; }
-.services-section > .container--narrow > p { font-size:.9rem;color:var(--mid);margin-bottom:2rem;font-weight:300; }
-.service-card { background:#fff;border:1px solid var(--rule);border-radius:10px;padding:1.75rem;margin-bottom:1rem;transition:border-color .2s,box-shadow .2s; }
-.service-card:hover { border-color:rgba(254,105,48,.3);box-shadow:0 4px 18px rgba(5,46,77,.07); }
-.service-card.retainer { border-left:3px solid var(--orange); }
-.service-card__header { display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:1rem;flex-wrap:wrap; }
-.service-card__name { font-size:1rem;font-weight:600;color:var(--ink); }
-.service-card__badge { font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.25rem .7rem;border-radius:4px; }
-.badge-retainer { background:rgba(254,105,48,.1);color:var(--orange);border:1px solid rgba(254,105,48,.2); }
-.badge-project  { background:rgba(5,46,77,.06);color:var(--navy);border:1px solid rgba(5,46,77,.12); }
-.service-card__rationale { font-size:.875rem;color:var(--mid);line-height:1.7;margin-bottom:1rem;font-weight:300; }
-.service-card__scope { margin-bottom:1.25rem; }
-.service-card__scope-title { font-size:.68rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem; }
-.service-card__scope ul { list-style:none;display:flex;flex-direction:column;gap:.3rem; }
-.service-card__scope li { font-size:.82rem;color:var(--mid);display:flex;align-items:flex-start;gap:.5rem;line-height:1.5; }
-.service-card__scope li::before { content:'✓';color:var(--orange);font-weight:700;flex-shrink:0;margin-top:.05em; }
-.service-card__footer { display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem;padding-top:1rem;border-top:1px solid var(--rule); }
-.service-card__price { font-family:var(--ff-head);font-size:1.3rem;font-weight:400;color:var(--orange); }
-.service-card__timeline { font-size:.78rem;color:var(--muted);font-weight:500; }
-
-/* Totals bar */
-.totals-bar { background:var(--navy);border-radius:10px;padding:1.5rem 2rem;display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;margin-top:1.5rem; }
-.totals-bar__label { font-size:.78rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.45); }
-.totals-bar__amount { font-family:var(--ff-head);font-size:1.8rem;font-weight:300;color:#fff; }
-.totals-bar__timeline { font-size:.85rem;color:rgba(255,255,255,.4); }
-
-/* Next steps */
-.nextsteps-section { padding:clamp(2.5rem,5vw,4rem) 0;border-bottom:1px solid var(--rule); }
-.nextsteps-card { background:#fff;border:1px solid var(--rule);border-radius:10px;padding:clamp(1.5rem,3vw,2.25rem); }
-.nextsteps-card h3 { font-family:var(--ff-head);font-size:1.15rem;font-weight:400;color:var(--ink);margin-bottom:.75rem; }
-.nextsteps-card p  { font-size:.9rem;color:var(--mid);line-height:1.75;margin-bottom:1.5rem;font-weight:300; }
-.nextsteps-actions { display:flex;gap:1rem;flex-wrap:wrap; }
-
-/* Not ready state */
-.notready-section { padding:clamp(2.5rem,5vw,4rem) 0; }
-.notready-card { background:#fff;border:2px solid var(--orange);border-radius:12px;padding:clamp(1.75rem,4vw,2.5rem); }
-.notready-card__badge { display:inline-flex;align-items:center;gap:.4rem;background:rgba(254,105,48,.1);color:var(--orange);font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:.3rem .85rem;border-radius:4px;margin-bottom:1rem; }
-.notready-card h3 { font-family:var(--ff-head);font-size:clamp(1.3rem,2.5vw,1.8rem);font-weight:400;color:var(--ink);margin-bottom:.5rem; }
-.notready-card__summary { font-size:.9rem;color:var(--mid);line-height:1.75;margin-bottom:2rem;font-weight:300; }
-.action-steps { display:flex;flex-direction:column;gap:.75rem;margin-bottom:2rem; }
-.action-step { background:var(--off);border:1px solid var(--rule);border-radius:8px;padding:1rem 1.25rem; }
-.action-step__num { font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--orange);margin-bottom:.25rem; }
-.action-step__title { font-size:.875rem;font-weight:600;color:var(--ink);margin-bottom:.2rem; }
-.action-step__desc { font-size:.82rem;color:var(--mid);line-height:1.6; }
-.notready-resources { display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:1.5rem; }
-.resource-link { display:inline-flex;align-items:center;gap:.4rem;background:var(--navy);color:rgba(255,255,255,.75);font-size:.8rem;font-weight:500;padding:.6rem 1.1rem;border-radius:4px;text-decoration:none;transition:all .18s; }
-.resource-link:hover { background:var(--orange);color:#fff; }
-.notready-closing { font-size:.875rem;color:var(--mid);font-style:italic; }
-
-/* CTA band */
-.cta-band { background:var(--navy);padding:clamp(3rem,6vw,5rem) 0;text-align:center; }
-.cta-band h3 { font-family:var(--ff-head);font-size:clamp(1.4rem,3vw,2rem);font-weight:300;color:#fff;margin-bottom:.5rem; }
-.cta-band p  { font-size:.9rem;color:rgba(255,255,255,.4);margin-bottom:2rem;font-weight:300; }
-.cta-band__actions { display:flex;justify-content:center;gap:1rem;flex-wrap:wrap; }
-
-/* Restart */
-.restart-bar { padding:1.5rem 0;text-align:center;border-top:1px solid var(--rule); }
-.btn-ghost { background:none;border:none;color:var(--muted);font-family:var(--ff-body);font-size:.82rem;cursor:pointer;text-decoration:underline;text-underline-offset:3px;transition:color .15s; }
-.btn-ghost:hover { color:var(--orange); }
-
-@media (max-width:600px) {
-  .field-row { grid-template-columns:1fr; }
-  .service-card__header { flex-direction:column;gap:.5rem; }
-  .totals-bar { flex-direction:column;text-align:center; }
-}
+.prop-hero{background:var(--navy);padding:clamp(5rem,12vw,9rem) 0 clamp(3rem,6vw,5rem);position:relative;overflow:hidden}
+.prop-hero::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 60% 50% at 70% 40%,rgba(254,105,48,.13) 0%,transparent 65%),radial-gradient(ellipse 40% 60% at 10% 80%,rgba(255,255,255,.03) 0%,transparent 60%)}
+.prop-hero__grid{position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:72px 72px}
+.prop-hero__inner{position:relative;z-index:2}
+.prop-hero h1{color:#fff;margin-bottom:1.25rem}
+.prop-hero h1 em{font-style:italic;color:var(--orange-lt)}
+.prop-hero__sub{font-size:1rem;color:rgba(255,255,255,.52);line-height:1.72;max-width:520px;margin-bottom:2rem;font-weight:300}
+.prop-hero__stats{display:flex;gap:2.5rem;flex-wrap:wrap;margin-top:2.5rem;padding-top:2rem;border-top:1px solid rgba(255,255,255,.08)}
+.form-wrap{background:var(--navy);padding:0 0 clamp(4rem,8vw,7rem)}
+.form-progress{max-width:680px;margin:0 auto;padding:0 clamp(1.25rem,4vw,2.5rem) 2.5rem}
+.progress-steps{display:flex;gap:5px;margin-bottom:.6rem}
+.progress-step{height:3px;flex:1;border-radius:2px;background:rgba(255,255,255,.1);transition:background .4s}
+.progress-step.done{background:var(--orange)}
+.progress-step.active{background:rgba(254,105,48,.45)}
+.progress-meta{display:flex;justify-content:space-between;font-size:.72rem;color:rgba(255,255,255,.3);font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+.q-wrap{max-width:680px;margin:0 auto;padding:0 clamp(1.25rem,4vw,2.5rem)}
+.q-card{display:none;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:clamp(1.75rem,4vw,2.5rem);animation:fadeUp .35s ease both}
+.q-card.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.q-eyebrow{font-size:.65rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--orange);margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem}
+.q-eyebrow::before{content:'';display:block;width:1rem;height:2px;background:currentColor;flex-shrink:0}
+.q-text{font-family:var(--ff-head);font-size:clamp(1.2rem,3vw,1.6rem);font-weight:400;color:#fff;margin-bottom:.5rem;line-height:1.2}
+.q-hint{font-size:.82rem;color:rgba(255,255,255,.35);margin-bottom:1.75rem;font-weight:300}
+.field-stack{display:flex;flex-direction:column;gap:.65rem}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:.65rem}
+.field-label{font-size:.7rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:rgba(255,255,255,.38);margin-bottom:.2rem}
+.form-field{width:100%;box-sizing:border-box;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:4px;padding:.85rem 1.1rem;font-family:var(--ff-body);font-size:.9rem;color:#fff;outline:none;transition:border-color .2s}
+.form-field::placeholder{color:rgba(255,255,255,.28)}
+.form-field:focus{border-color:var(--orange)}
+textarea.form-field{resize:vertical;min-height:110px}
+.options-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:.6rem}
+.option-btn{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:6px;padding:.85rem 1rem;color:rgba(255,255,255,.62);font-family:var(--ff-body);font-size:.84rem;cursor:pointer;text-align:left;transition:all .15s;line-height:1.45}
+.option-btn:hover{border-color:var(--orange);color:#fff;background:rgba(254,105,48,.08)}
+.option-btn.selected{border-color:var(--orange);background:rgba(254,105,48,.14);color:#fff}
+.multi-hint{font-size:.72rem;color:rgba(255,255,255,.28);margin-bottom:.75rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+.q-nav{display:flex;justify-content:space-between;align-items:center;margin-top:1.75rem}
+.btn-back{background:none;border:1px solid rgba(255,255,255,.14);color:rgba(255,255,255,.45);padding:.7rem 1.4rem;border-radius:4px;font-family:var(--ff-body);font-size:.84rem;cursor:pointer;transition:all .18s}
+.btn-back:hover{border-color:rgba(255,255,255,.3);color:#fff}
+.btn-next{background:var(--orange);border:none;color:#fff;padding:.8rem 1.75rem;border-radius:4px;font-family:var(--ff-body);font-size:.875rem;font-weight:600;cursor:pointer;transition:all .18s}
+.btn-next:hover{background:var(--orange-lt)}
+.btn-next:disabled{opacity:.3;cursor:not-allowed}
+.generating-state{display:none;text-align:center;padding:5rem 1.25rem}
+.generating-state.active{display:block}
+.gen-rings{width:72px;height:72px;margin:0 auto 2rem;position:relative}
+.gen-ring{position:absolute;inset:0;border:2px solid transparent;border-top-color:var(--orange);border-radius:50%;animation:spin 1s linear infinite}
+.gen-ring:nth-child(2){inset:10px;border-top-color:rgba(254,105,48,.35);animation-duration:1.6s;animation-direction:reverse}
+.gen-dot{position:absolute;inset:28px;background:var(--orange);border-radius:50%;animation:pulse-dot 1.5s ease-in-out infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.75)}}
+.gen-title{font-family:var(--ff-head);font-size:clamp(1.5rem,3vw,2rem);color:#fff;font-weight:300;margin-bottom:.5rem}
+.gen-sub{font-size:.9rem;color:rgba(255,255,255,.35);font-weight:300;margin-bottom:1rem}
+.gen-status{font-size:.82rem;color:rgba(255,255,255,.28);min-height:1.2em}
+.results-section{display:none;background:var(--cream)}
+.results-section.active{display:block}
+.results-hero{background:var(--navy);padding:clamp(3rem,6vw,5rem) 0;position:relative;overflow:hidden}
+.results-hero::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 55% 60% at 80% 50%,rgba(254,105,48,.1) 0%,transparent 60%)}
+.results-hero__inner{position:relative;z-index:2}
+.results-hero h2{font-family:var(--ff-head);font-size:clamp(1.6rem,3.5vw,2.4rem);font-weight:300;color:#fff;margin-bottom:.75rem;line-height:1.15}
+.results-hero__sub{font-size:.95rem;color:rgba(255,255,255,.5);font-weight:300;line-height:1.7;max-width:560px}
+.results-hero__badge{display:inline-flex;align-items:center;gap:.4rem;background:rgba(254,105,48,.15);border:1px solid rgba(254,105,48,.3);color:var(--orange-lt);font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.35rem .9rem;border-radius:4px;margin-bottom:1rem}
+.summary-section{padding:clamp(2.5rem,5vw,4rem) 0;border-bottom:1px solid var(--rule)}
+.summary-card{background:#fff;border:1px solid var(--rule);border-radius:10px;padding:clamp(1.5rem,3vw,2.25rem);margin-bottom:1.5rem}
+.summary-card h3{font-family:var(--ff-head);font-size:1.1rem;font-weight:400;color:var(--ink);margin-bottom:.75rem}
+.summary-card p{font-size:.9rem;color:var(--mid);line-height:1.75;font-weight:300}
+.services-section{padding:clamp(2.5rem,5vw,4rem) 0;border-bottom:1px solid var(--rule)}
+.services-section h2{font-family:var(--ff-head);font-size:clamp(1.4rem,3vw,2rem);font-weight:300;color:var(--ink);margin-bottom:.4rem}
+.services-section>.container--narrow>p{font-size:.9rem;color:var(--mid);margin-bottom:2rem;font-weight:300}
+.service-card{background:#fff;border:1px solid var(--rule);border-radius:10px;padding:1.75rem;margin-bottom:1rem;transition:border-color .2s,box-shadow .2s}
+.service-card:hover{border-color:rgba(254,105,48,.3);box-shadow:0 4px 18px rgba(5,46,77,.07)}
+.service-card.retainer{border-left:3px solid var(--orange)}
+.service-card__header{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:1rem;flex-wrap:wrap}
+.service-card__name{font-size:1rem;font-weight:600;color:var(--ink)}
+.service-card__badge{font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.25rem .7rem;border-radius:4px}
+.badge-retainer{background:rgba(254,105,48,.1);color:var(--orange);border:1px solid rgba(254,105,48,.2)}
+.badge-project{background:rgba(5,46,77,.06);color:var(--navy);border:1px solid rgba(5,46,77,.12)}
+.service-card__rationale{font-size:.875rem;color:var(--mid);line-height:1.7;margin-bottom:1rem;font-weight:300}
+.service-card__scope{margin-bottom:1.25rem}
+.service-card__scope-title{font-size:.68rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem}
+.service-card__scope ul{list-style:none;display:flex;flex-direction:column;gap:.3rem}
+.service-card__scope li{font-size:.82rem;color:var(--mid);display:flex;align-items:flex-start;gap:.5rem;line-height:1.5}
+.service-card__scope li::before{content:'\2713';color:var(--orange);font-weight:700;flex-shrink:0}
+.service-card__footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem;padding-top:1rem;border-top:1px solid var(--rule)}
+.service-card__price{font-family:var(--ff-head);font-size:1.3rem;font-weight:400;color:var(--orange)}
+.service-card__timeline{font-size:.78rem;color:var(--muted);font-weight:500}
+.totals-bar{background:var(--navy);border-radius:10px;padding:1.5rem 2rem;display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;margin-top:1.5rem}
+.totals-bar__label{font-size:.78rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.45)}
+.totals-bar__amount{font-family:var(--ff-head);font-size:1.8rem;font-weight:300;color:#fff}
+.totals-bar__timeline{font-size:.85rem;color:rgba(255,255,255,.4)}
+.nextsteps-section{padding:clamp(2.5rem,5vw,4rem) 0;border-bottom:1px solid var(--rule)}
+.nextsteps-card{background:#fff;border:1px solid var(--rule);border-radius:10px;padding:clamp(1.5rem,3vw,2.25rem)}
+.nextsteps-card h3{font-family:var(--ff-head);font-size:1.15rem;font-weight:400;color:var(--ink);margin-bottom:.75rem}
+.nextsteps-card p{font-size:.9rem;color:var(--mid);line-height:1.75;margin-bottom:1.5rem;font-weight:300}
+.nextsteps-actions{display:flex;gap:1rem;flex-wrap:wrap}
+.notready-section{padding:clamp(2.5rem,5vw,4rem) 0}
+.notready-card{background:#fff;border:2px solid var(--orange);border-radius:12px;padding:clamp(1.75rem,4vw,2.5rem)}
+.notready-card__badge{display:inline-flex;align-items:center;gap:.4rem;background:rgba(254,105,48,.1);color:var(--orange);font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:.3rem .85rem;border-radius:4px;margin-bottom:1rem}
+.notready-card h3{font-family:var(--ff-head);font-size:clamp(1.3rem,2.5vw,1.8rem);font-weight:400;color:var(--ink);margin-bottom:.5rem}
+.notready-card__summary{font-size:.9rem;color:var(--mid);line-height:1.75;margin-bottom:2rem;font-weight:300}
+.action-steps{display:flex;flex-direction:column;gap:.75rem;margin-bottom:2rem}
+.action-step{background:var(--off);border:1px solid var(--rule);border-radius:8px;padding:1rem 1.25rem}
+.action-step__num{font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--orange);margin-bottom:.25rem}
+.action-step__title{font-size:.875rem;font-weight:600;color:var(--ink);margin-bottom:.2rem}
+.action-step__desc{font-size:.82rem;color:var(--mid);line-height:1.6}
+.notready-resources{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:1.5rem}
+.resource-link{display:inline-flex;align-items:center;gap:.4rem;background:var(--navy);color:rgba(255,255,255,.75);font-size:.8rem;font-weight:500;padding:.6rem 1.1rem;border-radius:4px;text-decoration:none;transition:all .18s}
+.resource-link:hover{background:var(--orange);color:#fff}
+.notready-closing{font-size:.875rem;color:var(--mid);font-style:italic}
+.cta-band{background:var(--navy);padding:clamp(3rem,6vw,5rem) 0;text-align:center}
+.cta-band h3{font-family:var(--ff-head);font-size:clamp(1.4rem,3vw,2rem);font-weight:300;color:#fff;margin-bottom:.5rem}
+.cta-band p{font-size:.9rem;color:rgba(255,255,255,.4);margin-bottom:2rem;font-weight:300}
+.cta-band__actions{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap}
+.restart-bar{padding:1.5rem 0;text-align:center;border-top:1px solid var(--rule)}
+.btn-ghost{background:none;border:none;color:var(--muted);font-family:var(--ff-body);font-size:.82rem;cursor:pointer;text-decoration:underline;text-underline-offset:3px;transition:color .15s}
+.btn-ghost:hover{color:var(--orange)}
+@media(max-width:600px){.field-row{grid-template-columns:1fr}.service-card__header{flex-direction:column;gap:.5rem}.totals-bar{flex-direction:column;text-align:center}}
 </style>
 </head>
 <body>
 
 <!-- nav injected by nav.js -->
 
-<!-- ═══════════ HERO ═══════════ -->
 <section class="prop-hero" id="prop-hero">
   <div class="prop-hero__grid"></div>
   <div class="prop-hero__inner">
     <div class="container--narrow">
       <p class="eyebrow on-dark">Free custom proposal</p>
       <h1 class="display">Tell us about your business.<br><em>We'll build your roadmap.</em></h1>
-      <p class="prop-hero__sub">Answer a few quick questions about where you are and what you need. We'll generate a personalized proposal with exact pricing — in about 30 seconds.</p>
+      <p class="prop-hero__sub">Answer a few quick questions about where you are and what you need. We'll generate a personalized proposal with exact pricing in about 30 seconds.</p>
       <button class="btn btn-primary btn-lg" onclick="startForm()">
         Build my proposal
         <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 7h12M8 3l4 4-4 4"/></svg>
       </button>
       <div class="prop-hero__stats">
         <div><div class="stat__num">30s</div><div class="stat__label">To generate</div></div>
-        <div><div class="stat__num">AI-powered</div><div class="stat__label">By Claude</div></div>
+        <div><div class="stat__num">AI</div><div class="stat__label">Powered by Claude</div></div>
         <div><div class="stat__num">Exact</div><div class="stat__label">Pricing included</div></div>
         <div><div class="stat__num">Free</div><div class="stat__label">No obligation</div></div>
       </div>
@@ -189,7 +151,6 @@ textarea.form-field { resize:vertical;min-height:100px; }
   </div>
 </section>
 
-<!-- ═══════════ FORM ═══════════ -->
 <div class="form-wrap" id="form-wrap" style="display:none;">
   <div style="padding:clamp(2.5rem,5vw,4rem) 0 0;">
     <div class="form-progress">
@@ -200,34 +161,27 @@ textarea.form-field { resize:vertical;min-height:100px; }
       </div>
     </div>
     <div class="q-wrap" id="stepsContainer"></div>
-
-    <!-- Generating animation -->
     <div class="generating-state" id="generatingState">
       <div class="q-wrap">
         <div class="gen-rings"><div class="gen-ring"></div><div class="gen-ring"></div><div class="gen-dot"></div></div>
-        <h3 class="gen-title">Building your proposal…</h3>
+        <h3 class="gen-title">Building your proposal...</h3>
         <p class="gen-sub">Keith &amp; Jon's AI is reviewing your answers</p>
-        <p class="gen-status" id="genStatus">Analyzing your business type…</p>
+        <p class="gen-status" id="genStatus">Analyzing your business type...</p>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ═══════════ RESULTS ═══════════ -->
 <section class="results-section" id="results">
-
-  <!-- Results hero -->
   <div class="results-hero">
     <div class="results-hero__inner">
       <div class="container--narrow">
-        <div class="results-hero__badge" id="resultsBadge">✦ Your proposal is ready</div>
+        <div class="results-hero__badge" id="resultsBadge">Your proposal is ready</div>
         <h2 id="resultsHeadline">Your personalized proposal</h2>
         <p class="results-hero__sub" id="resultsSub">Prepared by Martech Consulting based on your answers.</p>
       </div>
     </div>
   </div>
-
-  <!-- Executive summary -->
   <div class="summary-section" id="summarySection">
     <div class="container--narrow">
       <div class="summary-card">
@@ -236,8 +190,6 @@ textarea.form-field { resize:vertical;min-height:100px; }
       </div>
     </div>
   </div>
-
-  <!-- Services -->
   <div class="services-section" id="servicesSection">
     <div class="container--narrow">
       <h2>Recommended services</h2>
@@ -246,36 +198,28 @@ textarea.form-field { resize:vertical;min-height:100px; }
       <div class="totals-bar">
         <div>
           <div class="totals-bar__label">Total investment range</div>
-          <div class="totals-bar__amount" id="totalRange">—</div>
+          <div class="totals-bar__amount" id="totalRange">-</div>
         </div>
         <div class="totals-bar__timeline" id="projectTimeline"></div>
       </div>
     </div>
   </div>
-
-  <!-- Next steps -->
   <div class="nextsteps-section" id="nextstepsSection">
     <div class="container--narrow">
       <div class="nextsteps-card">
         <h3>How to move forward</h3>
         <p id="nextStepsText"></p>
         <div class="nextsteps-actions">
-          <a href="https://calendly.com/d/cr79-s6m-dws/martech-meeting" target="_blank" class="btn btn-primary">
-            Book a free discovery call →
-          </a>
-          <a href="mailto:info@martechconsulting.io" class="btn btn-outline">
-            Email us instead
-          </a>
+          <a href="https://calendly.com/d/cr79-s6m-dws/martech-meeting" target="_blank" class="btn btn-primary">Book a free discovery call</a>
+          <a href="mailto:info@martechconsulting.io" class="btn btn-outline">Email us instead</a>
         </div>
       </div>
     </div>
   </div>
-
-  <!-- Not ready state (hidden by default) -->
   <div class="notready-section" id="notreadySection" style="display:none;">
     <div class="container--narrow">
       <div class="notready-card">
-        <div class="notready-card__badge">👋 Before we build</div>
+        <div class="notready-card__badge">A note before your proposal</div>
         <h3 id="notreadyHeadline">Let's set you up for success first</h3>
         <p class="notready-card__summary" id="notreadySummary"></p>
         <div class="action-steps" id="actionSteps"></div>
@@ -284,137 +228,50 @@ textarea.form-field { resize:vertical;min-height:100px; }
       </div>
     </div>
   </div>
-
-  <!-- CTA band -->
   <div class="cta-band">
     <div class="container--narrow">
       <h3>Ready to get started?</h3>
-      <p>Book a free 30-minute discovery call. No pitch — just a real conversation about what's possible.</p>
+      <p>Book a free 30-minute discovery call. No pitch, just a real conversation about what is possible.</p>
       <div class="cta-band__actions">
-        <a href="https://calendly.com/d/cr79-s6m-dws/martech-meeting" target="_blank" class="btn btn-primary btn-lg">Book a free call →</a>
-        <a href="mailto:info@martechconsulting.io" class="btn btn-outline btn-lg" style="color:#fff;border-color:rgba(255,255,255,.25);">Email Keith &amp; Jon</a>
+        <a href="https://calendly.com/d/cr79-s6m-dws/martech-meeting" target="_blank" class="btn btn-primary btn-lg">Book a free call</a>
+        <a href="mailto:info@martechconsulting.io" class="btn btn-outline btn-lg" style="color:#fff;border-color:rgba(255,255,255,.25);">Email Keith and Jon</a>
       </div>
     </div>
   </div>
-
   <div class="restart-bar">
     <div class="container--narrow">
-      <button class="btn-ghost" onclick="restartForm()">Start over with different answers →</button>
+      <button class="btn-ghost" onclick="restartForm()">Start over with different answers</button>
     </div>
   </div>
-
 </section>
 
 <script src="nav.js"></script>
 <script>
-// ── Steps config ──────────────────────────────
-const STEPS = [
-  {
-    id: 'contact', num: '01', cat: 'About you',
-    text: "Let's start with the basics",
-    hint: "We'll send your proposal here and use your site to personalize it",
-    type: 'contact'
-  },
-  {
-    id: 'bizType', num: '02', cat: 'Your business',
-    text: 'What type of business do you run?',
-    hint: 'Choose the closest match',
-    type: 'single',
-    options: [
-      'Service business / agency',
-      'Coaching or consulting',
-      'E-commerce / product',
-      'SaaS / tech company',
-      'Local / brick-and-mortar',
-      'Non-profit',
-      'Creator / solopreneur'
-    ]
-  },
-  {
-    id: 'teamSize', num: '03', cat: 'Your business',
-    text: 'How big is your team?',
-    hint: 'Including yourself',
-    type: 'single',
-    options: ['Just me', '2–5 people', '6–15 people', '16–50 people', '50+ people']
-  },
-  {
-    id: 'tools', num: '04', cat: 'Your stack',
-    text: 'What tools are you currently using?',
-    hint: 'Select all that apply',
-    type: 'multi',
-    options: [
-      'A CRM (Keap, HubSpot, Salesforce)',
-      'Email marketing (Mailchimp, ConvertKit)',
-      'Scheduling tool (Calendly, Acuity)',
-      'Project management (Asana, Notion)',
-      'Zapier / Make / automation tool',
-      'Airtable',
-      'Paid ads (Facebook, Google)',
-      'None of the above'
-    ]
-  },
-  {
-    id: 'challenge', num: '05', cat: 'Your challenges',
-    text: "What's your biggest challenge right now?",
-    hint: 'Be specific — this is what shapes your proposal',
-    type: 'textarea',
-    placeholder: "e.g. We spend too much time on manual follow-up and our leads fall through the cracks. We have Mailchimp but nothing is automated…"
-  },
-  {
-    id: 'services', num: '06', cat: 'What you need',
-    text: "What are you looking for help with?",
-    hint: 'Select everything that applies',
-    type: 'multi',
-    options: [
-      'Marketing automation (Make / Zapier)',
-      'CRM setup or cleanup (Keap)',
-      'Airtable build or audit',
-      'Softr client portal',
-      'Bubble app build',
-      'Website build',
-      'Email marketing setup',
-      'Facebook / Google Ads management',
-      'Full martech stack overhaul',
-      'Not sure — just tell me what I need'
-    ]
-  },
-  {
-    id: 'budget', num: '07', cat: 'Investment',
-    text: "What's your budget range?",
-    hint: "Be honest — it helps us recommend the right fit, not the most expensive option",
-    type: 'single',
-    options: [
-      'Under $1K',
-      '$1K – $5K',
-      '$5K – $15K',
-      '$15K – $30K',
-      '$30K+',
-      'Not sure yet'
-    ]
-  },
-  {
-    id: 'timeline', num: '08', cat: 'Timeline',
-    text: 'How quickly do you need this done?',
-    hint: 'Rush projects are possible but carry a surcharge',
-    type: 'single',
-    options: ['ASAP', '1–4 weeks', '1–3 months', '3–6 months', 'No rush — just planning ahead']
-  },
-  {
-    id: 'website', num: '09', cat: 'Final details',
-    text: "Last one — what's your business website?",
-    hint: "We use this to review your current setup before writing your proposal",
-    type: 'url'
-  }
+var STEPS = [
+  { id:'contact',  num:'01', cat:'About you',       text:"Let's start with the basics",               hint:"We'll send your proposal here and use your site to personalize it", type:'contact' },
+  { id:'bizType',  num:'02', cat:'Your business',   text:'What type of business do you run?',          hint:'Choose the closest match', type:'single',
+    options:['Service business / agency','Coaching or consulting','E-commerce / product','SaaS / tech company','Local / brick-and-mortar','Non-profit','Creator / solopreneur'] },
+  { id:'teamSize', num:'03', cat:'Your business',   text:'How big is your team?',                      hint:'Including yourself', type:'single',
+    options:['Just me','2 to 5 people','6 to 15 people','16 to 50 people','50 or more people'] },
+  { id:'tools',    num:'04', cat:'Your stack',      text:'What tools are you currently using?',        hint:'Select all that apply', type:'multi',
+    options:['A CRM (Keap, HubSpot, Salesforce)','Email marketing (Mailchimp, ConvertKit)','Scheduling tool (Calendly, Acuity)','Project management (Asana, Notion)','Zapier or Make or automation tool','Airtable','Paid ads (Facebook, Google)','None of the above'] },
+  { id:'challenge',num:'05', cat:'Your challenges', text:"What is your biggest challenge right now?",  hint:'Be specific - this shapes your proposal', type:'textarea',
+    placeholder:'e.g. We spend too much time on manual follow-up and leads fall through the cracks...' },
+  { id:'services', num:'06', cat:'What you need',   text:'What are you looking for help with?',        hint:'Select everything that applies', type:'multi',
+    options:['Marketing automation (Make or Zapier)','CRM setup or cleanup (Keap)','Airtable build or audit','Softr client portal','Bubble app build','Website build','Email marketing setup','Facebook or Google Ads management','Full martech stack overhaul','Not sure - just tell me what I need'] },
+  { id:'budget',   num:'07', cat:'Investment',      text:"What is your budget range?",                 hint:'Be honest - it helps us recommend the right fit', type:'single',
+    options:['Under $1K','$1K to $5K','$5K to $15K','$15K to $30K','$30K or more','Not sure yet'] },
+  { id:'timeline', num:'08', cat:'Timeline',        text:'How quickly do you need this done?',         hint:'Rush projects are possible but carry a surcharge', type:'single',
+    options:['ASAP','1 to 4 weeks','1 to 3 months','3 to 6 months','No rush - just planning ahead'] },
+  { id:'website',  num:'09', cat:'Final details',   text:"Last one - what is your business website?",  hint:"We use this to review your setup before writing your proposal", type:'url' }
 ];
 
-// ── State ─────────────────────────────────────
-let answers  = {};
-let currentStep = 0;
+var answers = {};
+var currentStep = 0;
 
-// ── Init ──────────────────────────────────────
 function startForm() {
   document.getElementById('prop-hero').style.display = 'none';
-  const wrap = document.getElementById('form-wrap');
+  var wrap = document.getElementById('form-wrap');
   wrap.style.display = 'block';
   currentStep = 0;
   answers = {};
@@ -424,183 +281,180 @@ function startForm() {
 }
 
 function buildProgress() {
-  const el = document.getElementById('progressSteps');
+  var el = document.getElementById('progressSteps');
   el.innerHTML = '';
-  STEPS.forEach((_, i) => {
-    const d = document.createElement('div');
+  for (var i = 0; i < STEPS.length; i++) {
+    var d = document.createElement('div');
     d.className = 'progress-step' + (i < currentStep ? ' done' : i === currentStep ? ' active' : '');
     el.appendChild(d);
-  });
-  document.getElementById('progressLabel').textContent = `Step ${currentStep + 1} of ${STEPS.length}`;
-  document.getElementById('progressCat').textContent = STEPS[currentStep]?.cat || '';
+  }
+  document.getElementById('progressLabel').textContent = 'Step ' + (currentStep + 1) + ' of ' + STEPS.length;
+  document.getElementById('progressCat').textContent = STEPS[currentStep] ? STEPS[currentStep].cat : '';
 }
 
 function buildSteps() {
-  const wrap = document.getElementById('stepsContainer');
+  var wrap = document.getElementById('stepsContainer');
   wrap.innerHTML = '';
-  STEPS.forEach((step, i) => {
-    const card = document.createElement('div');
+  for (var i = 0; i < STEPS.length; i++) {
+    var card = document.createElement('div');
     card.className = 'q-card' + (i === currentStep ? ' active' : '');
-    card.id = `step-${i}`;
-    card.innerHTML = buildStepHTML(step, i);
+    card.id = 'step-' + i;
+    card.innerHTML = buildStepHTML(STEPS[i], i);
     wrap.appendChild(card);
-  });
+  }
+}
+
+function esc(str) {
+  return String(str).replace(/\\/g, '\\\\').replace(/'/g, "\\'");
 }
 
 function buildStepHTML(step, i) {
-  const isLast = i === STEPS.length - 1;
-  let inputHTML = '';
+  var isLast = (i === STEPS.length - 1);
+  var inputHTML = '';
 
   if (step.type === 'contact') {
-    const fn = answers.firstName || '';
-    const ln = answers.lastName  || '';
-    const bn = answers.businessName || '';
-    const em = answers.email || '';
-    const ready = fn && ln && bn && em.includes('@');
-    inputHTML = `
-      <div class="field-stack">
-        <div class="field-row">
-          <div>
-            <div class="field-label">First name</div>
-            <input type="text" class="form-field" id="inp-firstName" placeholder="Keith" value="${fn}" oninput="handleContact()">
-          </div>
-          <div>
-            <div class="field-label">Last name</div>
-            <input type="text" class="form-field" id="inp-lastName" placeholder="Phillips" value="${ln}" oninput="handleContact()">
-          </div>
-        </div>
-        <div>
-          <div class="field-label">Business name</div>
-          <input type="text" class="form-field" id="inp-businessName" placeholder="Martech Consulting" value="${bn}" oninput="handleContact()">
-        </div>
-        <div>
-          <div class="field-label">Your email — we'll send your proposal here</div>
-          <input type="email" class="form-field" id="inp-email" placeholder="you@yourbusiness.com" value="${em}" oninput="handleContact()">
-        </div>
-        <button class="btn-next" id="contact-btn" onclick="nextStep()" ${ready ? '' : 'disabled'}>Next →</button>
-      </div>
-      <p style="font-size:.7rem;color:rgba(255,255,255,.22);margin-top:.75rem;">🔒 We only use this to send your proposal and follow up if you want us to.</p>`;
+    var fn = answers.firstName || '';
+    var ln = answers.lastName || '';
+    var bn = answers.businessName || '';
+    var em = answers.email || '';
+    var ready = fn && ln && bn && em.indexOf('@') > -1;
+    inputHTML = '<div class="field-stack">'
+      + '<div class="field-row">'
+      + '<div><div class="field-label">First name</div><input type="text" class="form-field" id="inp-firstName" placeholder="Keith" value="' + fn + '" oninput="handleContact()"></div>'
+      + '<div><div class="field-label">Last name</div><input type="text" class="form-field" id="inp-lastName" placeholder="Phillips" value="' + ln + '" oninput="handleContact()"></div>'
+      + '</div>'
+      + '<div><div class="field-label">Business name</div><input type="text" class="form-field" id="inp-businessName" placeholder="Martech Consulting" value="' + bn + '" oninput="handleContact()"></div>'
+      + '<div><div class="field-label">Your email</div><input type="email" class="form-field" id="inp-email" placeholder="you@yourbusiness.com" value="' + em + '" oninput="handleContact()"></div>'
+      + '<button class="btn-next" id="contact-btn" onclick="nextStep()"' + (ready ? '' : ' disabled') + '>Next</button>'
+      + '</div>'
+      + '<p style="font-size:.7rem;color:rgba(255,255,255,.22);margin-top:.75rem;">We only use this to send your proposal.</p>';
 
   } else if (step.type === 'single') {
-    const sel = answers[step.id] || '';
-    inputHTML = `<div class="options-grid">${step.options.map(opt => `
-      <button class="option-btn${sel === opt ? ' selected' : ''}" onclick="pickOne('${step.id}', this, '${opt.replace(/'/g, "\\'")}')">
-        ${opt}
-      </button>`).join('')}</div>`;
+    var sel = answers[step.id] || '';
+    inputHTML = '<div class="options-grid">';
+    for (var j = 0; j < step.options.length; j++) {
+      var opt = step.options[j];
+      inputHTML += '<button class="option-btn' + (sel === opt ? ' selected' : '') + '" onclick="pickOne(\'' + step.id + '\',this,\'' + esc(opt) + '\')">' + opt + '</button>';
+    }
+    inputHTML += '</div>';
 
   } else if (step.type === 'multi') {
-    const sel = answers[step.id] || [];
-    inputHTML = `<p class="multi-hint">Select all that apply</p>
-      <div class="options-grid">${step.options.map(opt => `
-        <button class="option-btn${sel.includes(opt) ? ' selected' : ''}" onclick="pickMany('${step.id}', this, '${opt.replace(/'/g, "\\'")}')">
-          ${opt}
-        </button>`).join('')}</div>`;
+    var selArr = answers[step.id] || [];
+    inputHTML = '<p class="multi-hint">Select all that apply</p><div class="options-grid">';
+    for (var k = 0; k < step.options.length; k++) {
+      var mopt = step.options[k];
+      inputHTML += '<button class="option-btn' + (selArr.indexOf(mopt) > -1 ? ' selected' : '') + '" onclick="pickMany(\'' + step.id + '\',this,\'' + esc(mopt) + '\')">' + mopt + '</button>';
+    }
+    inputHTML += '</div>';
 
   } else if (step.type === 'textarea') {
-    const val = answers[step.id] || '';
-    inputHTML = `
-      <textarea class="form-field" id="inp-${step.id}" placeholder="${step.placeholder || ''}" oninput="handleText('${step.id}')">${val}</textarea>`;
+    inputHTML = '<textarea class="form-field" id="inp-' + step.id + '" placeholder="' + (step.placeholder || '') + '" oninput="handleText(\'' + step.id + '\')">' + (answers[step.id] || '') + '</textarea>';
 
   } else if (step.type === 'url') {
-    const val = answers[step.id] || '';
-    inputHTML = `
-      <input type="url" class="form-field" id="inp-${step.id}" placeholder="https://yourbusiness.com" value="${val}" oninput="handleText('${step.id}')">
-      <p style="font-size:.72rem;color:rgba(255,255,255,.22);margin-top:.5rem;">Don't have one? Just type "none" and we'll skip it.</p>`;
+    inputHTML = '<input type="url" class="form-field" id="inp-' + step.id + '" placeholder="https://yourbusiness.com" value="' + (answers[step.id] || '') + '" oninput="handleText(\'' + step.id + '\')">'
+      + '<p style="font-size:.72rem;color:rgba(255,255,255,.22);margin-top:.5rem;">No website? Just type none.</p>';
   }
 
-  const hasAnswer = step.type === 'contact' ? false :
-                    step.type === 'multi'   ? (answers[step.id] || []).length > 0 :
-                    step.type === 'textarea' || step.type === 'url' ? !!(answers[step.id]?.trim()) :
-                    !!(answers[step.id]);
+  var hasAnswer = false;
+  if (step.type !== 'contact') {
+    if (step.type === 'multi') {
+      hasAnswer = (answers[step.id] || []).length > 0;
+    } else if (step.type === 'textarea' || step.type === 'url') {
+      hasAnswer = !!(answers[step.id] && answers[step.id].trim());
+    } else {
+      hasAnswer = !!(answers[step.id]);
+    }
+  }
 
-  const navHTML = step.type !== 'contact' ? `
-    <div class="q-nav">
-      ${i > 0 ? `<button class="btn-back" onclick="prevStep()">← Back</button>` : '<span></span>'}
-      <button class="btn-next" id="qbtn-${i}" onclick="${isLast ? 'submitForm()' : 'nextStep()'}" ${hasAnswer ? '' : 'disabled'}>
-        ${isLast ? 'Generate my proposal →' : 'Next →'}
-      </button>
-    </div>` : '';
+  var navHTML = '';
+  if (step.type !== 'contact') {
+    var backBtn = i > 0 ? '<button class="btn-back" onclick="prevStep()">Back</button>' : '<span></span>';
+    navHTML = '<div class="q-nav">' + backBtn
+      + '<button class="btn-next" id="qbtn-' + i + '" onclick="' + (isLast ? 'submitForm()' : 'nextStep()') + '"' + (hasAnswer ? '' : ' disabled') + '>'
+      + (isLast ? 'Generate my proposal' : 'Next')
+      + '</button></div>';
+  }
 
-  return `
-    <div class="q-eyebrow">Step ${step.num}</div>
-    <h3 class="q-text">${step.text}</h3>
-    <p class="q-hint">${step.hint}</p>
-    ${inputHTML}
-    ${navHTML}`;
+  return '<div class="q-eyebrow">Step ' + step.num + '</div>'
+    + '<h3 class="q-text">' + step.text + '</h3>'
+    + '<p class="q-hint">' + step.hint + '</p>'
+    + inputHTML + navHTML;
 }
 
-// ── Input handlers ────────────────────────────
 function handleContact() {
-  answers.firstName    = document.getElementById('inp-firstName')?.value.trim() || '';
-  answers.lastName     = document.getElementById('inp-lastName')?.value.trim()  || '';
-  answers.businessName = document.getElementById('inp-businessName')?.value.trim() || '';
-  answers.email        = document.getElementById('inp-email')?.value.trim() || '';
-  const btn = document.getElementById('contact-btn');
-  if (btn) btn.disabled = !(answers.firstName && answers.lastName && answers.businessName && answers.email.includes('@'));
+  answers.firstName    = (document.getElementById('inp-firstName')    || {}).value || '';
+  answers.lastName     = (document.getElementById('inp-lastName')     || {}).value || '';
+  answers.businessName = (document.getElementById('inp-businessName') || {}).value || '';
+  answers.email        = (document.getElementById('inp-email')        || {}).value || '';
+  answers.firstName    = answers.firstName.trim();
+  answers.lastName     = answers.lastName.trim();
+  answers.businessName = answers.businessName.trim();
+  answers.email        = answers.email.trim();
+  var btn = document.getElementById('contact-btn');
+  if (btn) btn.disabled = !(answers.firstName && answers.lastName && answers.businessName && answers.email.indexOf('@') > -1);
 }
 
 function handleText(id) {
-  answers[id] = document.getElementById(`inp-${id}`)?.value.trim() || '';
-  const btn = document.getElementById(`qbtn-${currentStep}`);
+  var el = document.getElementById('inp-' + id);
+  answers[id] = el ? el.value.trim() : '';
+  var btn = document.getElementById('qbtn-' + currentStep);
   if (btn) btn.disabled = !answers[id];
 }
 
 function pickOne(id, el, val) {
   answers[id] = val;
-  el.closest('.options-grid').querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+  var btns = el.closest('.options-grid').querySelectorAll('.option-btn');
+  for (var i = 0; i < btns.length; i++) btns[i].classList.remove('selected');
   el.classList.add('selected');
-  const btn = document.getElementById(`qbtn-${currentStep}`);
+  var btn = document.getElementById('qbtn-' + currentStep);
   if (btn) btn.disabled = false;
 }
 
 function pickMany(id, el, val) {
   if (!answers[id]) answers[id] = [];
-  const idx = answers[id].indexOf(val);
-  idx > -1 ? answers[id].splice(idx, 1) : answers[id].push(val);
-  el.classList.toggle('selected', answers[id].includes(val));
-  const btn = document.getElementById(`qbtn-${currentStep}`);
+  var idx = answers[id].indexOf(val);
+  if (idx > -1) { answers[id].splice(idx, 1); } else { answers[id].push(val); }
+  el.classList.toggle('selected', answers[id].indexOf(val) > -1);
+  var btn = document.getElementById('qbtn-' + currentStep);
   if (btn) btn.disabled = answers[id].length === 0;
 }
 
-// ── Navigation ────────────────────────────────
 function nextStep() {
-  document.getElementById(`step-${currentStep}`).classList.remove('active');
+  document.getElementById('step-' + currentStep).classList.remove('active');
   currentStep++;
-  document.getElementById(`step-${currentStep}`).classList.add('active');
+  document.getElementById('step-' + currentStep).classList.add('active');
   buildProgress();
-  document.getElementById(`step-${currentStep}`).scrollIntoView({ behavior: 'smooth', block: 'center' });
+  document.getElementById('step-' + currentStep).scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
 function prevStep() {
-  document.getElementById(`step-${currentStep}`).classList.remove('active');
+  document.getElementById('step-' + currentStep).classList.remove('active');
   currentStep--;
-  document.getElementById(`step-${currentStep}`).classList.add('active');
+  document.getElementById('step-' + currentStep).classList.add('active');
   buildProgress();
 }
 
-// ── Submit ────────────────────────────────────
-async function submitForm() {
+function submitForm() {
   document.getElementById('stepsContainer').style.display = 'none';
   document.getElementById('generatingState').classList.add('active');
 
-  const statuses = [
-    'Analyzing your business type…',
-    'Reviewing your current stack…',
-    'Matching services to your goals…',
-    'Checking budget fit…',
-    'Calculating investment ranges…',
-    'Writing your executive summary…',
-    'Finalizing your proposal…'
+  var statuses = [
+    'Analyzing your business type...',
+    'Reviewing your current stack...',
+    'Matching services to your goals...',
+    'Checking budget fit...',
+    'Calculating investment ranges...',
+    'Writing your executive summary...',
+    'Finalizing your proposal...'
   ];
-
-  let si = 0;
-  const statusEl = document.getElementById('genStatus');
-  const iv = setInterval(() => {
+  var si = 0;
+  var statusEl = document.getElementById('genStatus');
+  var iv = setInterval(function() {
     si++;
     if (si < statuses.length) statusEl.textContent = statuses[si];
   }, 1200);
 
-  const payload = {
+  var payload = {
     firstName:    answers.firstName    || '',
     lastName:     answers.lastName     || '',
     email:        answers.email        || '',
@@ -608,123 +462,106 @@ async function submitForm() {
     website:      answers.website      || '',
     bizType:      answers.bizType      || '',
     teamSize:     answers.teamSize     || '',
-    tools:        Array.isArray(answers.tools) ? answers.tools.join(', ') : (answers.tools || ''),
+    tools:        Array.isArray(answers.tools) ? answers.tools.join(', ') : '',
     challenge:    answers.challenge    || '',
-    services:     answers.services     || [],
+    services:     Array.isArray(answers.services) ? answers.services : [],
     budget:       answers.budget       || '',
     timeline:     answers.timeline     || ''
   };
 
-  try {
-    const res = await fetch('/submit', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    });
-
+  fetch('/submit', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  })
+  .then(function(res) {
     clearInterval(iv);
-
     if (!res.ok) throw new Error('API error ' + res.status);
-    const data = await res.json();
-
+    return res.json();
+  })
+  .then(function(data) {
     if (!data.success) throw new Error(data.error || 'Unknown error');
-
-    showResults(data.proposal, answers);
-
-  } catch (err) {
+    showResults(data.proposal);
+  })
+  .catch(function(err) {
     clearInterval(iv);
-    console.error('Proposal generation failed:', err);
-    statusEl.textContent = 'Something went wrong — please try again.';
-    setTimeout(() => {
+    console.error('Proposal error:', err);
+    statusEl.textContent = 'Something went wrong - please try again.';
+    setTimeout(function() {
       document.getElementById('generatingState').classList.remove('active');
       document.getElementById('stepsContainer').style.display = 'block';
       currentStep = STEPS.length - 1;
-      document.getElementById(`step-${currentStep}`).classList.add('active');
+      document.getElementById('step-' + currentStep).classList.add('active');
     }, 2000);
-  }
+  });
 }
 
-// ── Results ───────────────────────────────────
-function showResults(proposal, ans) {
+function showResults(proposal) {
   document.getElementById('form-wrap').style.display = 'none';
   document.getElementById('prop-hero').style.display = 'none';
-  const results = document.getElementById('results');
+  var results = document.getElementById('results');
   results.classList.add('active');
   results.scrollIntoView({ behavior: 'smooth' });
 
-  const firstName = ans.firstName || '';
+  var firstName = answers.firstName || '';
 
   if (proposal.notReady) {
-    // Hide normal proposal sections
-    document.getElementById('summarySection').style.display  = 'none';
-    document.getElementById('servicesSection').style.display = 'none';
+    document.getElementById('summarySection').style.display   = 'none';
+    document.getElementById('servicesSection').style.display  = 'none';
     document.getElementById('nextstepsSection').style.display = 'none';
-    document.getElementById('notreadySection').style.display = 'block';
-
-    document.getElementById('resultsBadge').textContent = '👋 A note before your proposal';
-    document.getElementById('resultsHeadline').textContent = firstName
-      ? `${firstName}, let's set you up for success first`
-      : "Let's set you up for success first";
-    document.getElementById('resultsSub').textContent = 'We want to make sure we're the right fit — here's what we recommend before engaging.';
-
+    document.getElementById('notreadySection').style.display  = 'block';
+    document.getElementById('resultsBadge').textContent = 'A note before your proposal';
+    document.getElementById('resultsHeadline').textContent = firstName ? firstName + ", let's set you up for success first" : "Let's set you up for success first";
+    document.getElementById('resultsSub').textContent = 'We want to make sure we are the right fit - here is what we recommend before engaging.';
     document.getElementById('notreadySummary').textContent = proposal.notReadySummary || '';
-
-    document.getElementById('actionSteps').innerHTML = (proposal.actionableSteps || []).map((s, i) => `
-      <div class="action-step">
-        <div class="action-step__num">Step ${i + 1}</div>
-        <div class="action-step__title">${s.step}</div>
-        <div class="action-step__desc">${s.description}</div>
-      </div>`).join('');
-
-    document.getElementById('notreadyResources').innerHTML = (proposal.resources || []).map(r => `
-      <a href="${r.url}" target="_blank" class="resource-link">→ ${r.label}</a>`).join('');
-
+    var stepsHTML = '';
+    var actionSteps = proposal.actionableSteps || [];
+    for (var i = 0; i < actionSteps.length; i++) {
+      stepsHTML += '<div class="action-step"><div class="action-step__num">Step ' + (i+1) + '</div><div class="action-step__title">' + actionSteps[i].step + '</div><div class="action-step__desc">' + actionSteps[i].description + '</div></div>';
+    }
+    document.getElementById('actionSteps').innerHTML = stepsHTML;
+    var resHTML = '';
+    var resources = proposal.resources || [];
+    for (var j = 0; j < resources.length; j++) {
+      resHTML += '<a href="' + resources[j].url + '" target="_blank" class="resource-link">' + resources[j].label + '</a>';
+    }
+    document.getElementById('notreadyResources').innerHTML = resHTML;
     document.getElementById('notreadyClosing').textContent = proposal.closingNote || '';
 
   } else {
-    // Normal proposal
-    document.getElementById('resultsBadge').textContent = '✦ Your proposal is ready';
-    document.getElementById('resultsHeadline').textContent = firstName
-      ? `${firstName}, here's your personalized proposal`
-      : 'Your personalized proposal';
-    document.getElementById('resultsSub').textContent = `Prepared by Martech Consulting for ${ans.businessName || 'your business'} — based on your answers.`;
-
+    document.getElementById('resultsBadge').textContent = 'Your proposal is ready';
+    document.getElementById('resultsHeadline').textContent = firstName ? firstName + ', here is your personalized proposal' : 'Your personalized proposal';
+    document.getElementById('resultsSub').textContent = 'Prepared by Martech Consulting for ' + (answers.businessName || 'your business') + '.';
     document.getElementById('execSummary').textContent = proposal.executiveSummary || '';
-
-    document.getElementById('serviceCards').innerHTML = (proposal.services || []).map(svc => `
-      <div class="service-card${svc.isRetainer ? ' retainer' : ''}">
-        <div class="service-card__header">
-          <div class="service-card__name">${svc.name}</div>
-          <div class="service-card__badge ${svc.isRetainer ? 'badge-retainer' : 'badge-project'}">
-            ${svc.isRetainer ? 'Monthly retainer' : 'One-time project'}
-          </div>
-        </div>
-        <div class="service-card__rationale">${svc.rationale}</div>
-        <div class="service-card__scope">
-          <div class="service-card__scope-title">What's included</div>
-          <ul>${(Array.isArray(svc.scope) ? svc.scope : [svc.scope]).map(item => `<li>${item}</li>`).join('')}</ul>
-        </div>
-        <div class="service-card__footer">
-          <div class="service-card__price">${svc.investmentRange}</div>
-          <div class="service-card__timeline">⏱ ${svc.timeline}</div>
-        </div>
-      </div>`).join('');
-
-    document.getElementById('totalRange').textContent       = proposal.totalRange || '—';
-    document.getElementById('projectTimeline').textContent  = proposal.projectTimeline ? `⏱ ${proposal.projectTimeline}` : '';
-    document.getElementById('nextStepsText').textContent    = proposal.nextSteps || '';
+    var cardsHTML = '';
+    var services = proposal.services || [];
+    for (var s = 0; s < services.length; s++) {
+      var svc = services[s];
+      var scopeItems = Array.isArray(svc.scope) ? svc.scope : [svc.scope];
+      var scopeHTML = '';
+      for (var sc = 0; sc < scopeItems.length; sc++) scopeHTML += '<li>' + scopeItems[sc] + '</li>';
+      cardsHTML += '<div class="service-card' + (svc.isRetainer ? ' retainer' : '') + '">'
+        + '<div class="service-card__header"><div class="service-card__name">' + svc.name + '</div>'
+        + '<div class="service-card__badge ' + (svc.isRetainer ? 'badge-retainer' : 'badge-project') + '">' + (svc.isRetainer ? 'Monthly retainer' : 'One-time project') + '</div></div>'
+        + '<div class="service-card__rationale">' + svc.rationale + '</div>'
+        + '<div class="service-card__scope"><div class="service-card__scope-title">What\'s included</div><ul>' + scopeHTML + '</ul></div>'
+        + '<div class="service-card__footer"><div class="service-card__price">' + svc.investmentRange + '</div><div class="service-card__timeline">' + svc.timeline + '</div></div>'
+        + '</div>';
+    }
+    document.getElementById('serviceCards').innerHTML = cardsHTML;
+    document.getElementById('totalRange').textContent = proposal.totalRange || '-';
+    document.getElementById('projectTimeline').textContent = proposal.projectTimeline || '';
+    document.getElementById('nextStepsText').textContent = proposal.nextSteps || '';
   }
 }
 
-// ── Restart ───────────────────────────────────
 function restartForm() {
   document.getElementById('results').classList.remove('active');
-  document.getElementById('prop-hero').style.display = 'block';
-  // Reset not-ready section
-  document.getElementById('summarySection').style.display  = '';
-  document.getElementById('servicesSection').style.display = '';
+  document.getElementById('summarySection').style.display   = '';
+  document.getElementById('servicesSection').style.display  = '';
   document.getElementById('nextstepsSection').style.display = '';
-  document.getElementById('notreadySection').style.display = 'none';
+  document.getElementById('notreadySection').style.display  = 'none';
+  document.getElementById('prop-hero').style.display = 'block';
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 </script>
