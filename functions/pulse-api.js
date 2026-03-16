@@ -1,10 +1,6 @@
-export async function onRequest(context) {
+export async function onRequestPost(context) {
   const request = context.request;
   const env = context.env;
-
-  if (request.method !== 'POST') {
-    return new Response('Method not allowed', { status: 405 });
-  }
 
   try {
     const body = await request.json();
