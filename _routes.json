@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "include": [
+    "/pulse-api",
+    "/generate-proposal",
+    "/api/submit",
+    "/stripe-webhook"
+  ],
+  "exclude": []
+}
