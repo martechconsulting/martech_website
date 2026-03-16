@@ -1,22 +1,34 @@
 export async function onRequestPost({ request, env }) {
-  const body = await request.json();
-  const isPatch = body._method === 'PATCH';
+  try {
+    const body = await request.json();
+    const isPatch = body._method === 'PATCH';
 
-  const url = isPatch
-    ? `https://api.airtable.com/v0/${env.AIRTABLE_BASE_ID}/Martech%20Pulse%20Submissions/${body.recordId}`
-    : `https://api.airtable.com/v0/${env.AIRTABLE_BASE_ID}/Martech%20Pulse%20Submissions`;
+    const tableName = encodeURIComponent('Martech Pulse Submissions');
+    
+    const url = isPatch
+      ? `https://api.airtable.com/v0/${env.AIRTABLE_BASE_ID}/${tableName}/${body.recordId}`
+      : `https://api.airtable.com/v0/${env.AIRTABLE_BASE_ID}/${tableName}`;
 
-  const res = await fetch(url, {
-    method: isPatch ? 'PATCH' : 'POST',
-    headers: {
-      'Authorization': `Bearer ${env.AIRTABLE_TOKEN}`,
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ fields: body.fields })
-  });
+    const res = await fetch(url, {
+      method: isPatch ? 'PATCH' : 'POST',
+      headers: {
+        'Authorization': `Bearer ${env.AIRTABLE_TOKEN}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ fields: body.fields, typecast: true })
+    });
 
-  const data = await res.json();
-  return new Response(JSON.stringify(data), {
-    headers: { 'Content-Type': 'application/json' }
-  });
+    const data = await res.json();
+    
+    return new Response(JSON.stringify(data), {
+      status: res.status,
+      headers: { 'Content-Type': 'application/json' }
+    });
+
+  } catch (error) {
+    return new Response(JSON.stringify({ error: error.message }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' }
+    });
+  }
 }
