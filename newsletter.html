@@ -518,6 +518,10 @@
     }
 
     /* ─── RESPONSIVE ─── */
+    /* tease visibility */
+    .nl-tease--mobile { display: none; }
+    .nl-tease--desktop { display: block; }
+
     @media (max-width: 900px) {
       .nl-hero__layout    { grid-template-columns: 1fr; }
       .nl-hero__copy      { padding-bottom: 0; }
@@ -525,7 +529,8 @@
       .nl-about__layout   { grid-template-columns: 1fr; }
       .nl-proof__inner    { grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; }
       .nl-proof__divider  { display: none; }
-      .nl-tease           { max-width: 100%; }
+      .nl-tease--desktop  { display: none; }
+      .nl-tease--mobile   { display: block; max-width: 100%; }
     }
 
     @media (max-width: 640px) {
@@ -564,8 +569,8 @@
             <div class="nl-trust__item"><span class="dot"></span> Unsubscribe any time</div>
           </div>
 
-          <!-- Latest issue tease in left column, below trust strip -->
-          <div class="nl-tease">
+          <!-- Tease: desktop only -->
+          <div class="nl-tease nl-tease--desktop">
             <div class="nl-tease__label">Latest issue · #14</div>
             <div class="nl-tease__title">"How we saved a coaching client 6 hours/week with one Make scenario"</div>
             <div class="nl-tease__items">
@@ -576,7 +581,7 @@
           </div>
         </div>
 
-        <!-- RIGHT: form only -->
+        <!-- RIGHT: form, then tease below on mobile only -->
         <div class="nl-hero__form-col">
           <div class="nl-form-card">
             <div class="nl-form-card__header">
@@ -591,6 +596,16 @@
                 data-fillout-dynamic-resize>
               </div>
               <script src="https://server.fillout.com/embed/v1/"></script>
+            </div>
+          </div>
+          <!-- Tease: mobile only, sits after the form -->
+          <div class="nl-tease nl-tease--mobile" style="margin-top:1.25rem;">
+            <div class="nl-tease__label">Latest issue · #14</div>
+            <div class="nl-tease__title">"How we saved a coaching client 6 hours/week with one Make scenario"</div>
+            <div class="nl-tease__items">
+              <div class="nl-tease__item">The exact workflow and why it works</div>
+              <div class="nl-tease__item">The Keap + Calendly connection most people miss</div>
+              <div class="nl-tease__item">A 15-min Airtable trick for client progress tracking</div>
             </div>
           </div>
         </div>
