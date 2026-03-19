@@ -32,20 +32,20 @@ src="https://www.facebook.com/tr?id=674728252017714&ev=PageView&noscript=1"
 
   <!-- Primary SEO -->
   <title>Blog | Marketing Automation & Tech for Small Business | Martech Consulting</title>
-  <meta name="description" content="Practical guides on marketing automation, CRM setup, email deliverability, Facebook ads, and no-code technology — written by practitioners, not theorists. Based in Dover, NH."/>
+  <meta name="description" content="Practical guides on marketing automation, CRM setup, email deliverability, Facebook ads, and no-code technology. Written by practitioners, not theorists. Based in Dover, NH."/>
   <meta name="keywords" content="marketing automation blog, small business marketing, CRM tips, email marketing guide, Facebook ads guide, no-code tools, Airtable, Keap, marketing systems"/>
   <link rel="canonical" href="https://martechconsulting.io/blog.html"/>
 
   <!-- Open Graph -->
   <meta property="og:type" content="website"/>
   <meta property="og:title" content="Blog | Marketing Automation & Tech for Small Business | Martech Consulting"/>
-  <meta property="og:description" content="Practical guides on marketing automation, CRM setup, email deliverability, and no-code technology — written by practitioners, not theorists."/>
+  <meta property="og:description" content="Practical guides on marketing automation, CRM setup, email deliverability, and no-code technology. Written by practitioners, not theorists."/>
   <meta property="og:url" content="https://martechconsulting.io/blog.html"/>
   <meta property="og:site_name" content="Martech Consulting"/>
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image"/>
-  <meta name="twitter:title" content="Martech Consulting Blog — Marketing Automation & Technology for Small Business"/>
+  <meta name="twitter:title" content="Martech Consulting Blog: Marketing Automation & Technology for Small Business"/>
   <meta name="twitter:description" content="Practical guides on marketing automation, CRM, email deliverability, and no-code tools."/>
 
   <!-- Blog Schema -->
@@ -90,7 +90,7 @@ src="https://www.facebook.com/tr?id=674728252017714&ev=PageView&noscript=1"
   <style>
     .blog-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 1.75rem;
     }
     .blog-card {
@@ -102,6 +102,8 @@ src="https://www.facebook.com/tr?id=674728252017714&ev=PageView&noscript=1"
       display: flex;
       flex-direction: column;
       transition: border-color .2s, box-shadow .2s;
+      /* prevent content from busting out on narrow screens */
+      min-width: 0;
     }
     .blog-card:hover {
       border-color: var(--orange);
@@ -115,6 +117,7 @@ src="https://www.facebook.com/tr?id=674728252017714&ev=PageView&noscript=1"
       display: flex;
       align-items: center;
       justify-content: center;
+      flex-shrink: 0;
     }
     .blog-card__thumb-pattern {
       position: absolute;
@@ -147,12 +150,14 @@ src="https://www.facebook.com/tr?id=674728252017714&ev=PageView&noscript=1"
       flex: 1;
       display: flex;
       flex-direction: column;
+      min-width: 0;
     }
     .blog-card__meta {
       display: flex;
       gap: 1rem;
       align-items: center;
       margin-bottom: .85rem;
+      flex-wrap: wrap;
     }
     .blog-card__date { font-size: .78rem; color: var(--muted); }
     .blog-card__read { font-size: .78rem; color: var(--muted); }
@@ -163,6 +168,9 @@ src="https://www.facebook.com/tr?id=674728252017714&ev=PageView&noscript=1"
       color: var(--ink);
       line-height: 1.38;
       margin-bottom: .75rem;
+      /* prevent long titles from overflowing */
+      overflow-wrap: break-word;
+      word-break: break-word;
     }
     .blog-card__excerpt {
       font-size: .87rem;
@@ -170,6 +178,7 @@ src="https://www.facebook.com/tr?id=674728252017714&ev=PageView&noscript=1"
       line-height: 1.7;
       flex: 1;
       margin-bottom: 1.25rem;
+      overflow-wrap: break-word;
     }
     .blog-card__footer {
       display: flex;
@@ -177,6 +186,8 @@ src="https://www.facebook.com/tr?id=674728252017714&ev=PageView&noscript=1"
       justify-content: space-between;
       border-top: 1px solid var(--rule);
       padding-top: 1rem;
+      flex-wrap: wrap;
+      gap: .5rem;
     }
     .blog-card__author { display: flex; align-items: center; gap: .55rem; }
     .blog-card__author-avatar {
@@ -185,29 +196,44 @@ src="https://www.facebook.com/tr?id=674728252017714&ev=PageView&noscript=1"
       background: var(--orange);
       display: flex; align-items: center; justify-content: center;
       font-family: var(--ff-head); font-size: .6rem; font-weight: 700; color: #fff;
+      flex-shrink: 0;
     }
     .blog-card__author-name { font-size: .8rem; color: var(--mid); font-weight: 500; }
-    .blog-card__arrow { font-size: .82rem; color: var(--orange); font-weight: 500; }
+    .blog-card__arrow { font-size: .82rem; color: var(--orange); font-weight: 500; white-space: nowrap; }
 
-    .blog-card--featured { grid-column: 1 / -1; flex-direction: row; }
-    .blog-card--featured .blog-card__thumb { width: 380px; height: auto; flex-shrink: 0; border-radius: 0; }
-    .blog-card--featured .blog-card__title { font-size: 1.35rem; }
-    @media (max-width: 760px) {
-      .blog-card--featured { flex-direction: column; }
-      .blog-card--featured .blog-card__thumb { width: 100%; height: 180px; }
+    /* Featured card: side-by-side on desktop, stacked on mobile */
+    .blog-card--featured {
+      grid-column: 1 / -1;
+      flex-direction: row;
     }
+    .blog-card--featured .blog-card__thumb {
+      width: 380px;
+      height: auto;
+      min-height: 220px;
+      flex-shrink: 0;
+      border-radius: 0;
+    }
+    .blog-card--featured .blog-card__title { font-size: 1.35rem; }
 
-    .topic-bar { display: flex; gap: .6rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+    /* Topic filter pills */
+    .topic-bar {
+      display: flex;
+      gap: .6rem;
+      flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+    }
     .topic-pill {
       font-family: var(--ff-head); font-size: .78rem; font-weight: 500;
       padding: .4rem 1rem; border-radius: 99px;
       border: 1px solid var(--rule); background: #fff; color: var(--mid);
       cursor: pointer; transition: background .15s, border-color .15s, color .15s;
+      white-space: nowrap;
     }
     .topic-pill:hover, .topic-pill.active {
       background: var(--orange); border-color: var(--orange); color: #fff;
     }
 
+    /* Pagination */
     .blog-pagination {
       display: flex; align-items: center; justify-content: center;
       gap: .5rem; margin-top: 3rem; flex-wrap: wrap;
@@ -223,14 +249,60 @@ src="https://www.facebook.com/tr?id=674728252017714&ev=PageView&noscript=1"
     .blog-pagination__btn:disabled { opacity: .35; cursor: default; pointer-events: none; }
     .blog-pagination__info { font-size: .8rem; color: var(--muted); padding: 0 .25rem; }
 
+    /* Newsletter CTA strip */
     .blog-nl {
       background: var(--navy); border-radius: 12px; padding: 2.5rem;
-      display: flex; gap: 2rem; align-items: center; justify-content: space-between; margin: 3rem 0;
+      display: flex; gap: 2rem; align-items: center; justify-content: space-between;
+      margin: 3rem 0;
+      /* prevent overflow on narrow containers */
+      overflow: hidden;
     }
-    @media (max-width: 640px) { .blog-nl { flex-direction: column; gap: 1.5rem; } }
-    .blog-nl__text h3 { font-family: var(--ff-head); font-size: 1.2rem; font-weight: 500; color: #fff; margin-bottom: .4rem; }
-    .blog-nl__text p { font-size: .87rem; color: rgba(255,255,255,.55); line-height: 1.6; margin: 0; }
+    .blog-nl__text { min-width: 0; }
+    .blog-nl__text h3 {
+      font-family: var(--ff-head); font-size: 1.2rem; font-weight: 500;
+      color: #fff; margin-bottom: .4rem;
+    }
+    .blog-nl__text p {
+      font-size: .87rem; color: rgba(255,255,255,.55); line-height: 1.6; margin: 0;
+    }
     .blog-nl__cta { flex-shrink: 0; }
+
+    /* ── Mobile overrides ── */
+    @media (max-width: 760px) {
+      /* Featured card: always stack vertically */
+      .blog-card--featured {
+        flex-direction: column;
+      }
+      .blog-card--featured .blog-card__thumb {
+        width: 100%;
+        height: 180px;
+        min-height: unset;
+      }
+      .blog-card--featured .blog-card__title {
+        font-size: 1.15rem;
+      }
+    }
+
+    @media (max-width: 640px) {
+      /* Blog grid: single column */
+      .blog-grid {
+        grid-template-columns: 1fr;
+      }
+
+      /* Newsletter strip: stack vertically */
+      .blog-nl {
+        flex-direction: column;
+        gap: 1.5rem;
+        text-align: center;
+        padding: 1.75rem 1.25rem;
+      }
+      .blog-nl__cta { width: 100%; }
+      .blog-nl__cta .btn { width: 100%; text-align: center; justify-content: center; }
+
+      /* Pagination: tighten up */
+      .blog-pagination__btn { padding: .45rem .75rem; font-size: .78rem; }
+      .blog-pagination__info { display: none; }
+    }
   </style>
 </head>
 <body style="padding-top:62px;">
@@ -241,7 +313,7 @@ src="https://www.facebook.com/tr?id=674728252017714&ev=PageView&noscript=1"
     <nav class="breadcrumb"><a href="/index.html">Home</a><span>/</span>Blog</nav>
     <div class="eyebrow">The Martech Blog</div>
     <h1>Marketing automation and tech,<br>explained by <em>people who build it.</em></h1>
-    <p class="service-hero__sub">No fluff, no vendor-speak. Practical guides on the systems, strategies, and tools that actually move the needle for small business — written by Jonathan and Keith based on real client work.</p>
+    <p class="service-hero__sub">No fluff, no vendor-speak. Practical guides on the systems, strategies, and tools that actually move the needle for small business. Written by Jonathan and Keith based on real client work.</p>
   </div>
 </section>
 
@@ -249,7 +321,7 @@ src="https://www.facebook.com/tr?id=674728252017714&ev=PageView&noscript=1"
 <section class="bg-off">
   <div class="container">
 
-    <!-- Topic filter — pills are built dynamically from actual post categories -->
+    <!-- Topic filter pills, built dynamically from actual post categories -->
     <div class="topic-bar" role="navigation" aria-label="Filter by topic" id="topic-bar">
       <button class="topic-pill active" data-filter="all">All Posts</button>
     </div>
@@ -270,7 +342,7 @@ src="https://www.facebook.com/tr?id=674728252017714&ev=PageView&noscript=1"
             <span class="blog-card__date">March 16, 2026</span>
             <span class="blog-card__read">5 min read</span>
           </div>
-          <div class="blog-card__title">Meta Ads: Traffic vs. Leads – Knowing When to Fuel Your Funnel or Capture High-Value Contacts</div>
+          <div class="blog-card__title">Meta Ads: Traffic vs. Leads. Knowing When to Fuel Your Funnel or Capture High-Value Contacts</div>
           <p class="blog-card__excerpt">Navigating the landscape of Meta advertising can feel like charting unfamiliar territory. With a plethora of ad formats and objectives, it's easy to get...</p>
           <div class="blog-card__footer">
             <div class="blog-card__author">
@@ -507,7 +579,7 @@ src="https://www.facebook.com/tr?id=674728252017714&ev=PageView&noscript=1"
     <div class="blog-nl reveal">
       <div class="blog-nl__text">
         <h3>Get new posts in your inbox</h3>
-        <p>Practical guides on marketing automation and technology — no fluff, no spam. Usually one or two per month.</p>
+        <p>Practical guides on marketing automation and technology. No fluff, no spam. Usually one or two per month.</p>
       </div>
       <div class="blog-nl__cta">
         <a href="#" data-newsletter class="btn btn-primary btn-lg">Subscribe free →</a>
@@ -545,7 +617,7 @@ src="https://www.facebook.com/tr?id=674728252017714&ev=PageView&noscript=1"
 <section class="cta-band">
   <div class="container cta-band__inner">
     <h2 class="section-title cta-band__headline">Want this applied<br>to <em>your business?</em></h2>
-    <p class="cta-band__sub">Book a free call with Jonathan or Keith. We'll look at your current setup and tell you what would actually move the needle — with a price before you leave.</p>
+    <p class="cta-band__sub">Book a free call with Jonathan or Keith. We'll look at your current setup and tell you what would actually move the needle, with a price before you leave.</p>
     <div class="cta-band__btns">
       <a href="/contact.html" class="btn btn-primary btn-lg">Book a free call →</a>
       <a href="/packages.html" class="btn btn-ghost btn-lg">See packages &amp; pricing</a>
@@ -563,13 +635,12 @@ src="https://www.facebook.com/tr?id=674728252017714&ev=PageView&noscript=1"
   var pagination = document.getElementById('blog-pagination');
   var topicBar   = document.getElementById('topic-bar');
 
-  // Grab all generated post cards
   var allCards = Array.from(grid.querySelectorAll('a.blog-card'));
 
   var activeFilter = 'all';
   var currentPage  = 1;
 
-  // ── Build filter pills dynamically from actual post categories ──
+  // Build filter pills dynamically from actual post categories
   var categories = [];
   allCards.forEach(function(card) {
     var badge = card.querySelector('.blog-card__thumb-badge');
@@ -586,7 +657,6 @@ src="https://www.facebook.com/tr?id=674728252017714&ev=PageView&noscript=1"
     topicBar.appendChild(btn);
   });
 
-  // ── Filter ──
   function getFiltered() {
     if (activeFilter === 'all') return allCards;
     return allCards.filter(function(card) {
@@ -595,7 +665,6 @@ src="https://www.facebook.com/tr?id=674728252017714&ev=PageView&noscript=1"
     });
   }
 
-  // ── Render ──
   function render() {
     var filtered   = getFiltered();
     var totalPages = Math.max(1, Math.ceil(filtered.length / POSTS_PER_PAGE));
@@ -619,7 +688,6 @@ src="https://www.facebook.com/tr?id=674728252017714&ev=PageView&noscript=1"
     renderPagination(totalPages);
   }
 
-  // ── Pagination ──
   function renderPagination(totalPages) {
     pagination.innerHTML = '';
     if (totalPages <= 1) return;
@@ -639,7 +707,7 @@ src="https://www.facebook.com/tr?id=674728252017714&ev=PageView&noscript=1"
       return btn;
     }
 
-    pagination.appendChild(makeBtn('← Prev', currentPage - 1, currentPage === 1, false));
+    pagination.appendChild(makeBtn('Prev', currentPage - 1, currentPage === 1, false));
 
     var startP = Math.max(1, currentPage - 2);
     var endP   = Math.min(totalPages, startP + 4);
@@ -653,10 +721,9 @@ src="https://www.facebook.com/tr?id=674728252017714&ev=PageView&noscript=1"
     info.textContent = 'Page ' + currentPage + ' of ' + totalPages;
     pagination.appendChild(info);
 
-    pagination.appendChild(makeBtn('Next →', currentPage + 1, currentPage === totalPages, false));
+    pagination.appendChild(makeBtn('Next', currentPage + 1, currentPage === totalPages, false));
   }
 
-  // ── Filter pill clicks ──
   topicBar.addEventListener('click', function(e) {
     var pill = e.target.closest('.topic-pill');
     if (!pill) return;
