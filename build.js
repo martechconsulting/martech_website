@@ -24,12 +24,18 @@ if (!fs.existsSync(OUTPUT_DIR)) fs.mkdirSync(OUTPUT_DIR, { recursive: true });
 // ── Read all .md posts ────────────────────────────────────────────────────────
 const postFiles = fs.readdirSync(POSTS_DIR).filter(f => f.endsWith('.md'));
 
+// Strip em/en dashes from any string
+function stripDashes(str) {
+  if (!str) return str;
+  return String(str).replace(/\u2014/g, '-').replace(/\u2013/g, '-');
+}
+
 const posts = postFiles.map(file => {
   const raw     = fs.readFileSync(path.join(POSTS_DIR, file), 'utf8');
   const { data, content } = matter(raw);
 
   const cleanContent = content.replace(/<script[\s\S]*?<\/script>/gi, '').trim();
-  const bodyHtml = marked.parse(cleanContent);
+  const bodyHtml = stripDashes(marked.parse(cleanContent));
 
   const wordCount = cleanContent.split(/\s+/).length;
   const readTime  = Math.max(1, Math.round(wordCount / 200));
@@ -44,7 +50,15 @@ const posts = postFiles.map(file => {
   };
   const authorInfo = authorMap[authorName] || { initials, role: authorName };
 
-  return { ...data, bodyHtml, readTime, authorInfo, file };
+  return {
+    ...data,
+    title:            stripDashes(data.title),
+    excerpt:          stripDashes(data.excerpt),
+    meta_description: stripDashes(data.meta_description),
+    og_title:         stripDashes(data.og_title),
+    og_description:   stripDashes(data.og_description),
+    bodyHtml, readTime, authorInfo, file
+  };
 });
 
 posts.sort((a, b) => new Date(b.date) - new Date(a.date));
@@ -124,11 +138,18 @@ function buildPostPage(post, slug) {
   <meta name="author" content="${author}"/>
   <link rel="canonical" href="${canonical_url || `https://martechconsulting.io/blog/${slug}.html`}"/>
 
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/Martech Icon - Full Color.svg"/>
+  <link rel="apple-touch-icon" href="/Martech Icon - Full Color.svg"/>
+
   <meta property="og:type" content="article"/>
   <meta property="og:title" content="${og_title || title}"/>
   <meta property="og:description" content="${og_description || excerpt}"/>
   <meta property="og:url" content="${canonical_url || `https://martechconsulting.io/blog/${slug}.html`}"/>
   <meta property="og:site_name" content="Martech Consulting"/>
+  <meta property="og:image" content="https://martechconsulting.io/images/og-image.jpg"/>
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
   <meta property="article:published_time" content="${date}"/>
   <meta property="article:author" content="${author}"/>
   <meta property="article:section" content="${category}"/>
@@ -155,7 +176,7 @@ function buildPostPage(post, slug) {
     .post-hero__author-name{font-family:var(--ff-head);font-size:.9rem;font-weight:500;color:#fff;}
     .post-hero__author-role{font-size:.78rem;color:rgba(255,255,255,.45);}
     .post-layout{display:grid;grid-template-columns:1fr 300px;gap:4rem;align-items:start;padding:3.5rem 0 1rem;}
-    @media(max-width:860px){.post-layout{grid-template-columns:1fr;gap:2.5rem;}.post-sidebar{order:-1;}}
+    @media(max-width:860px){.post-layout{grid-template-columns:1fr;gap:2.5rem;}.post-content{order:1;}.post-sidebar{order:2;position:static;}}
     .post-content h2{font-family:var(--ff-head);font-size:clamp(1.25rem,2vw,1.55rem);font-weight:500;color:var(--ink);margin:2.5rem 0 .85rem;line-height:1.3;}
     .post-content h3{font-family:var(--ff-head);font-size:1.05rem;font-weight:600;color:var(--ink);margin:1.75rem 0 .6rem;}
     .post-content p{font-size:.96rem;color:var(--mid);line-height:1.8;margin-bottom:1.25rem;}
@@ -221,7 +242,7 @@ function buildPostPage(post, slug) {
           <div>
             <div class="post-author-box__name">${author}</div>
             <div class="post-author-box__role">${authorInfo.role}</div>
-            <p class="post-author-box__bio">Martech Consulting was founded by Jonathan Noury-Elliard and Keith Phillips — a no-code technologist and a Keap Certified Partner who grew a business 300% through COVID by pivoting to marketing automation. <a href="/about.html">Learn more about us →</a></p>
+            <p class="post-author-box__bio">Martech Consulting was founded by Jonathan Noury-Elliard and Keith Phillips - a no-code technologist and a Keap Certified Partner who grew a business 300% through COVID by pivoting to marketing automation. <a href="/about.html">Learn more about us</a></p>
           </div>
         </div>
       </article>
@@ -251,7 +272,7 @@ function buildPostPage(post, slug) {
 
         <div style="background:var(--navy);border-radius:10px;padding:1.5rem;">
           <div style="font-family:var(--ff-head);font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:.85rem;">Want this for your business?</div>
-          <p style="font-size:.85rem;color:rgba(255,255,255,.6);line-height:1.65;margin-bottom:1.25rem;">Book a free call. We'll look at your setup and tell you exactly what would move the needle — with a price before you leave.</p>
+          <p style="font-size:.85rem;color:rgba(255,255,255,.6);line-height:1.65;margin-bottom:1.25rem;">Book a free call. We'll look at your setup and tell you exactly what would move the needle, with a price before you leave.</p>
           <a href="/contact.html" class="btn btn-primary" style="width:100%;justify-content:center;text-align:center;display:flex;">Book a free call →</a>
           <p style="font-size:.72rem;color:rgba(255,255,255,.3);text-align:center;margin-top:.75rem;">No commitment. No hard sell.</p>
         </div>
