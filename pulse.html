@@ -289,7 +289,7 @@ src="https://www.facebook.com/tr?id=674728252017714&ev=PageView&noscript=1"
     <div class="q-card active">
       <div class="q-eyebrow">Almost there</div>
       <h3 class="q-text">Where should we send your results?</h3>
-      <p class="q-hint">We'll email your score and a breakdown of your top automation opportunities. No spam — unsubscribe any time.</p>
+      <p class="q-hint">Enter your details to unlock your full score and recommendations. No card needed, no strings attached.</p>
       <div class="field-stack">
         <div class="field-row">
           <div>
@@ -305,9 +305,8 @@ src="https://www.facebook.com/tr?id=674728252017714&ev=PageView&noscript=1"
           <div class="field-label">Email address</div>
           <input type="email" class="url-field" id="input-email" placeholder="you@yourbusiness.com" oninput="handleInterstitial()">
         </div>
-        <button class="btn-next" id="interstitial-btn" onclick="submitInterstitial()" disabled style="margin-top:.5rem;">
+        <button class="btn-next" id="interstitial-btn" onclick="submitInterstitial()" disabled style="margin-top:.5rem;width:100%;justify-content:center;padding:1rem 1.75rem;font-size:.95rem;">
           Show my score
-          <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" style="margin-left:.5rem;"><path d="M1 7h12M8 3l4 4-4 4"/></svg>
         </button>
       </div>
     </div>
@@ -351,7 +350,7 @@ src="https://www.facebook.com/tr?id=674728252017714&ev=PageView&noscript=1"
   <div class="recs-section" id="recsSection">
     <div class="container--narrow">
       <h2>Your top opportunities</h2>
-      <p>Based on your answers — with the exact tools we use to fix these for clients.</p>
+      <p>Based on your answers, using the exact tools we fix these with for clients.</p>
       <div id="recCards"></div>
       <div class="urgency-banner">
         <div class="urgency-banner__text">
@@ -374,7 +373,7 @@ src="https://www.facebook.com/tr?id=674728252017714&ev=PageView&noscript=1"
         <div class="save-ranking-perks">
           <div class="save-perk">
             <div class="save-perk__icon">📌</div>
-            <div class="save-perk__text"><strong>Saved score &amp; ranking</strong>Your results are stored permanently — revisit, share, or track progress as you implement.</div>
+            <div class="save-perk__text"><strong>Saved score &amp; ranking</strong>Your results are stored permanently. Revisit, share, or track progress as you implement.</div>
           </div>
           <div class="save-perk">
             <div class="save-perk__icon">🗺️</div>
@@ -382,7 +381,7 @@ src="https://www.facebook.com/tr?id=674728252017714&ev=PageView&noscript=1"
           </div>
           <div class="save-perk">
             <div class="save-perk__icon">🛠️</div>
-            <div class="save-perk__text"><strong>Tool-by-tool setup guide</strong>Exact tools to use, why, and how to set them up — including the ones we use every day.</div>
+            <div class="save-perk__text"><strong>Tool-by-tool setup guide</strong>Exact tools to use, why, and how to set them up, including the ones we use every day.</div>
           </div>
           <div class="save-perk">
             <div class="save-perk__icon">📞</div>
@@ -469,7 +468,7 @@ src="https://www.facebook.com/tr?id=674728252017714&ev=PageView&noscript=1"
     <div class="container--narrow">
       <div class="email-cap">
         <h3>Get automation tips every week</h3>
-        <p>Practical workflows, real time saved. No fluff — just what's working for businesses like yours.</p>
+        <p>Practical workflows, real time saved. No fluff. Just what's working for businesses like yours.</p>
         <div class="email-row">
           <input type="email" class="email-field" placeholder="your@email.com" id="emailInput">
           <button class="btn btn-primary" onclick="subscribeEmail()">Subscribe</button>
@@ -487,17 +486,17 @@ src="https://www.facebook.com/tr?id=674728252017714&ev=PageView&noscript=1"
       <button class="paid-modal__close" onclick="closePaidModal()">&times;</button>
     </div>
     <div class="paid-modal__body">
-      <p>Your personalized roadmap with specific tool recommendations, quick wins, and a 30-day action plan — built around your exact answers. Your score is saved permanently.</p>
+      <p>Your personalized roadmap with specific tool recommendations, quick wins, and a 30-day action plan built around your exact answers. Your score is saved permanently.</p>
       <div class="paid-checklist">
-        <div>Saved score &amp; ranking — revisit any time</div>
+        <div>Saved score &amp; ranking, revisit any time</div>
         <div>Full per-category diagnosis with scores explained</div>
         <div>Specific tools to implement (with setup links)</div>
-        <div>Prioritized quick-win actions — week 1, 2, 3</div>
+        <div>Prioritized quick-win actions: week 1, 2, 3</div>
         <div>30-day implementation guide</div>
         <div>Personal review by Keith &amp; Jonathan</div>
       </div>
       <button class="btn btn-primary" onclick="processPurchase()" style="width:100%;justify-content:center;font-size:.95rem;padding:1rem;">
-        Pay $49 — save my score &amp; get full report
+        Pay $49 to save my score &amp; get full report
       </button>
       <button onclick="closePaidModal()" style="display:block;width:100%;margin-top:.75rem;background:none;border:none;color:var(--muted);font-size:.8rem;cursor:pointer;font-family:var(--ff-body);">
         No thanks, keep free score
@@ -548,7 +547,7 @@ var QUESTIONS = [
   },
   { id:'team_size', type:'single', num:'02', text:'How big is your team?', hint:'Including yourself', cat:'Setup',
     options:[
-      {val:'Just me',       tip:'Solo operators benefit most from automation — even one good workflow can save a full day per week.'},
+      {val:'Just me',       tip:'Solo operators benefit most from automation. Even one good workflow can save a full day per week.'},
       {val:'2 to 5',        tip:'Small teams often run on inconsistent processes. Automation creates reliability without adding headcount.'},
       {val:'6 to 15',       tip:'At this size, disconnected tools create real drag across the team. Integration is usually the biggest win.'},
       {val:'16 to 50',      tip:'Automation gaps compound across many people. Standardized workflows have outsized impact here.'},
@@ -560,7 +559,7 @@ var QUESTIONS = [
       {val:'Referrals / word of mouth',  tip:'Great quality, hard to scale. Automation ensures you never drop the ball on a warm referral.'},
       {val:'Website contact form',       tip:'Most businesses take 24-72 hours to respond. Automating first touch can 10x your close rate.'},
       {val:'Social media DMs',           tip:'High intent, easy to lose track of. Wiring DMs into a CRM has huge ROI.'},
-      {val:'Email or phone directly',    tip:'Very warm leads — but without a system, follow-up depends entirely on memory.'},
+      {val:'Email or phone directly',    tip:'Very warm leads, but without a system, follow-up depends entirely on memory.'},
       {val:'Paid ads to landing page',   tip:'Speed-to-lead is everything here. Every minute of delay costs you ad spend.'},
       {val:'Marketplace / platform',     tip:'Platform leads go cold fast. Moving them to your own system quickly is critical.'}
     ]
@@ -580,7 +579,7 @@ var QUESTIONS = [
       {val:'They call or text me',                    impact:'low',    tip:'Works but creates interruptions. A booking link lets people self-schedule on your terms.'},
       {val:'I share a Calendly or booking link',      impact:'medium', tip:'Great. Next step: connect it to your CRM so bookings auto-create contacts.'},
       {val:'Automated with reminders and prep emails',impact:'high',   tip:'Gold standard. Automated reminders alone reduce no-shows by up to 70%.'},
-      {val:'I do not do calls',                       impact:'high',   tip:"Noted — we'll weight your score toward the other categories that apply to you."}
+      {val:'I do not do calls',                       impact:'high',   tip:"Noted. We'll weight your score toward the other categories that apply to you."}
     ]
   },
   { id:'tools', type:'multi', num:'06', text:'Which tools are you currently using?', hint:'Select all that apply', cat:'Tools',
@@ -595,7 +594,7 @@ var QUESTIONS = [
       {val:'None of the above',                       tip:"That's exactly what this audit is for. We'll show you where to start for maximum impact."}
     ]
   },
-  { id:'time_drain', type:'multi', num:'07', text:'Where do you lose the most time?', hint:'Be honest — this shapes your recommendations', cat:'Pain points',
+  { id:'time_drain', type:'multi', num:'07', text:'Where do you lose the most time?', hint:'Be honest. This shapes your recommendations', cat:'Pain points',
     options:[
       {val:'Repetitive client emails',      tip:'Automated sequences and templates in Keap typically eliminate 80% of repetitive email work.'},
       {val:'Manual data entry / reporting', tip:'Airtable + Make can automate most data capture and generate reports automatically.'},
@@ -707,19 +706,19 @@ function calcScores() {
 
 function gradeInfo(score) {
   if (score < 30) return {label:'High opportunity', css:'badge-poor',      headline:"You're leaving serious time on the table"};
-  if (score < 55) return {label:'Room to grow',     css:'badge-fair',      headline:"You've got the basics — now it's time to scale"};
+  if (score < 55) return {label:'Room to grow',     css:'badge-fair',      headline:"You've got the basics. Now it's time to scale"};
   if (score < 75) return {label:'Solid foundation', css:'badge-good',      headline:'Good setup. A few targeted changes will unlock a lot more.'};
-  return              {label:'Well optimized',   css:'badge-excellent', headline:"You're ahead of most businesses — let's find the remaining gaps"};
+  return              {label:'Well optimized',   css:'badge-excellent', headline:"You're ahead of most businesses. Let's find the remaining gaps"};
 }
 
 function scoreDesc(score) {
   var firstName = answers['first_name'] ? ', ' + answers['first_name'] : '';
   var pain = (answers['time_drain'] || [])[0] || 'repetitive tasks';
   var biz  = answers['business_type'] || 'your business type';
-  if (score < 30) return 'For a ' + biz + firstName + ', the biggest quick win is automating lead follow-up and scheduling — two changes that typically save 8-12 hours a week. "' + pain + '" is your most expensive bottleneck right now.';
-  if (score < 55) return 'You have tools in place' + firstName + ' but they are not fully connected. An automation layer like Make wired into a CRM could recover 5-8 hours a week.';
-  if (score < 75) return "You're in good shape" + firstName + '. The remaining opportunity is around ' + pain.toLowerCase() + ' — typically worth $300-600/month in recovered time for a team your size.';
-  return "You've built solid habits" + firstName + '. The final 20% usually comes from custom integrations and AI-assisted workflows — the kind we build in Airtable and Make.';
+  if (score < 30) return 'For a ' + biz + firstName + ', the biggest quick win is automating lead follow-up and scheduling, two changes that typically save 8-12 hours a week. "' + pain + '" is your most expensive bottleneck right now.';
+  if (score < 55) return 'You have tools in place' + firstName + ', but they are not fully connected. An automation layer like Make wired into a CRM could recover 5-8 hours a week.';
+  if (score < 75) return "You're in good shape" + firstName + '. The remaining opportunity is around ' + pain.toLowerCase() + ', typically worth $300-600/month in recovered time for a team your size.';
+  return "You've built solid habits" + firstName + '. The final 20% usually comes from custom integrations and AI-assisted workflows, the kind we build in Airtable and Make.';
 }
 
 function buildRecs(data) {
@@ -736,8 +735,8 @@ function buildRecs(data) {
     pClass:   data.leads<35 ? 'priority-high'  : 'priority-medium',
     title:'Automate your lead follow-up',
     body: hasCRM
-      ? 'You have a CRM — the next step is building a proper automated follow-up sequence inside it. Most clients recover 4-6 hours/week just from automating the first 3 touchpoints after a new lead comes in.'
-      : 'Every lead without a fast, automated follow-up is a missed opportunity. We set this up in Keap — it handles the entire follow-up sequence automatically, triggered the moment a new lead comes in.',
+      ? 'You have a CRM. The next step is building a proper automated follow-up sequence inside it. Most clients recover 4-6 hours/week just from automating the first 3 touchpoints after a new lead comes in.'
+      : 'Every lead without a fast, automated follow-up is a missed opportunity. We set this up in Keap. It handles the entire follow-up sequence automatically, triggered the moment a new lead comes in.',
     toolKeys: hasCRM ? ['make','keap'] : ['keap','make'],
     cta:'Talk to us about building this'
   });
@@ -748,7 +747,7 @@ function buildRecs(data) {
     pClass:   data.scheduling<30 ? 'priority-high'  : 'priority-medium',
     title: hasCal ? 'Connect your booking tool to your CRM' : 'Eliminate scheduling back-and-forth',
     body: hasCal
-      ? 'You already have a booking tool — now wire it into Keap so every booked call auto-creates a contact, logs the meeting, and kicks off a prep email sequence.'
+      ? 'You already have a booking tool. Wire it into Keap so every booked call auto-creates a contact, logs the meeting, and kicks off a prep email sequence.'
       : 'Back-and-forth scheduling costs 8+ emails per booking. A Calendly link takes 10 minutes to set up. Connected to Keap, it automatically creates the contact, tags them, and starts an onboarding sequence.',
     toolKeys:['calendly','keap','make'],
     cta:'Talk to us about building this'
@@ -758,7 +757,7 @@ function buildRecs(data) {
     icon:'💬', color:'#C9952A',
     priority:'High priority', pClass:'priority-high',
     title:'Build an automated client onboarding sequence',
-    body:'A Keap onboarding sequence sends the right information at the right time — welcome email, intake form, contract, kick-off booking — without anyone lifting a finger. Clients get a more professional experience, and your team gets 3-4 hours back per new client.',
+    body:'A Keap onboarding sequence sends the right information at the right time: welcome email, intake form, contract, kick-off booking, without anyone lifting a finger. Clients get a more professional experience, and your team gets 3-4 hours back per new client.',
     toolKeys:['keap','airtable','softr'],
     cta:'Talk to us about building this'
   });
@@ -770,7 +769,7 @@ function buildRecs(data) {
     title:'Replace manual reporting with a live dashboard',
     body: !hasAuto
       ? 'Manual data entry is the most automatable problem in most businesses. We build Airtable bases connected via Make that pull data automatically and update dashboards in real time.'
-      : 'You have automation tools — point them at your reporting. An Airtable base wired to your existing stack via Make can replace most manual data entry and give you a live view of your KPIs.',
+      : 'You have automation tools. Point them at your reporting. An Airtable base wired to your existing stack via Make can replace most manual data entry and give you a live view of your KPIs.',
     toolKeys:['airtable','make','softr'],
     cta:'Talk to us about building this'
   });
@@ -779,7 +778,7 @@ function buildRecs(data) {
     icon:'📢', color:'#534AB7',
     priority:'Medium priority', pClass:'priority-medium',
     title:'Build an AI-assisted content workflow',
-    body:'Creating content from scratch every week is one of the biggest time drains for small teams. We build content workflows in Airtable + Make that use AI to generate first drafts, schedule posts, and track performance — cutting creation time by 50-60%.',
+    body:'Creating content from scratch every week is one of the biggest time drains for small teams. We build content workflows in Airtable + Make that use AI to generate first drafts, schedule posts, and track performance, cutting creation time by 50 to 60%.',
     toolKeys:['airtable','make'],
     cta:'Talk to us about building this'
   });
@@ -987,7 +986,7 @@ function showResults(data, recs) {
   badge.className   = 'score-badge ' + grade.css;
 
   if (firstName) {
-    document.getElementById('saveRankingHeadline').textContent = 'Save your score, ' + firstName + ' — and get your full roadmap';
+    document.getElementById('saveRankingHeadline').textContent = 'Save your score, ' + firstName + ', and get your full roadmap';
   }
 
   var catMeta = [
