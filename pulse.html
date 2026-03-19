@@ -7,7 +7,6 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-VBSLC04Y3T');
 </script>
   <!-- Meta Pixel Code -->
@@ -106,6 +105,13 @@ src="https://www.facebook.com/tr?id=674728252017714&ev=PageView&noscript=1"
 .analyzing-title { font-family:var(--ff-head);font-size:clamp(1.5rem,3vw,2rem);color:#fff;font-weight:300;margin-bottom:.5rem; }
 .analyzing-sub   { font-size:.9rem;color:rgba(255,255,255,.35);font-weight:300;margin-bottom:1rem; }
 .analyzing-status { font-size:.82rem;color:rgba(255,255,255,.28);min-height:1.2em; }
+/* ── Interstitial ── */
+.interstitial-wrap { background:var(--navy);padding:0 0 clamp(4rem,8vw,7rem); }
+.interstitial-card { max-width:680px;margin:0 auto;padding:clamp(2.5rem,5vw,4rem) clamp(1.25rem,4vw,2.5rem) 0; }
+.score-preview-bar { display:flex;align-items:center;gap:1rem;background:rgba(254,105,48,.08);border:1px solid rgba(254,105,48,.2);border-radius:8px;padding:1rem 1.25rem;margin-bottom:1.75rem; }
+.score-preview-dot { width:42px;height:42px;border-radius:50%;border:3px solid var(--orange);display:flex;align-items:center;justify-content:center;font-family:var(--ff-head);font-size:1rem;font-weight:300;color:var(--orange);flex-shrink:0; }
+.score-preview-text { font-size:.85rem;color:rgba(255,255,255,.55);line-height:1.5;font-weight:300; }
+.score-preview-text strong { display:block;color:#fff;font-size:.95rem;margin-bottom:.1rem; }
 /* ── Results ── */
 .results-section { display:none;background:var(--cream); }
 .results-section.active { display:block; }
@@ -229,13 +235,13 @@ src="https://www.facebook.com/tr?id=674728252017714&ev=PageView&noscript=1"
 
 <!-- nav injected by nav.js -->
 
-<section class="pulse-hero">
+<section class="pulse-hero" id="pulseHero">
   <div class="pulse-hero__grid"></div>
   <div class="pulse-hero__inner">
     <div class="container--narrow">
       <p class="eyebrow on-dark">Free 2-minute audit</p>
       <h1 class="display">Find out where your business <em>leaks time</em> every week</h1>
-      <p class="pulse-hero__sub">Answer 8 quick questions. We'll score your marketing stack across 5 categories and show you exactly where automation would save you the most hours.</p>
+      <p class="pulse-hero__sub">Answer 7 quick questions. We'll score your marketing stack across 5 categories and show you exactly where automation would save you the most hours.</p>
       <button class="btn btn-primary btn-lg" onclick="startAudit()">
         Get your free score
         <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 7h12M8 3l4 4-4 4"/></svg>
@@ -250,12 +256,13 @@ src="https://www.facebook.com/tr?id=674728252017714&ev=PageView&noscript=1"
   </div>
 </section>
 
+<!-- ── AUDIT QUESTIONS ── -->
 <div class="audit-wrap" id="audit-wrap" style="display:none;">
   <div style="padding:clamp(2.5rem,5vw,4rem) 0 0;">
     <div class="audit-progress">
       <div class="progress-steps" id="progressSteps"></div>
       <div class="progress-meta">
-        <span id="progressLabel">Question 1 of 8</span>
+        <span id="progressLabel">Question 1 of 7</span>
         <span id="progressCat"></span>
       </div>
     </div>
@@ -269,6 +276,45 @@ src="https://www.facebook.com/tr?id=674728252017714&ev=PageView&noscript=1"
   </div>
 </div>
 
+<!-- ── INTERSTITIAL: name + email gate before results ── -->
+<div class="interstitial-wrap" id="interstitialWrap" style="display:none;">
+  <div class="interstitial-card">
+    <div class="score-preview-bar">
+      <div class="score-preview-dot" id="previewScore">—</div>
+      <div class="score-preview-text">
+        <strong>Your score is ready.</strong>
+        Enter your name and email to see your full breakdown and top recommendations.
+      </div>
+    </div>
+    <div class="q-card active">
+      <div class="q-eyebrow">Almost there</div>
+      <h3 class="q-text">Where should we send your results?</h3>
+      <p class="q-hint">We'll email your score and a breakdown of your top automation opportunities. No spam — unsubscribe any time.</p>
+      <div class="field-stack">
+        <div class="field-row">
+          <div>
+            <div class="field-label">First name</div>
+            <input type="text" class="url-field" id="input-first" placeholder="Keith" oninput="handleInterstitial()">
+          </div>
+          <div>
+            <div class="field-label">Last name</div>
+            <input type="text" class="url-field" id="input-last" placeholder="Phillips" oninput="handleInterstitial()">
+          </div>
+        </div>
+        <div>
+          <div class="field-label">Email address</div>
+          <input type="email" class="url-field" id="input-email" placeholder="you@yourbusiness.com" oninput="handleInterstitial()">
+        </div>
+        <button class="btn-next" id="interstitial-btn" onclick="submitInterstitial()" disabled style="margin-top:.5rem;">
+          Show my score
+          <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" style="margin-left:.5rem;"><path d="M1 7h12M8 3l4 4-4 4"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── RESULTS ── -->
 <section class="results-section" id="results">
   <div class="results-hero">
     <div class="results-hero__inner">
@@ -433,6 +479,7 @@ src="https://www.facebook.com/tr?id=674728252017714&ev=PageView&noscript=1"
   </div>
 </section>
 
+<!-- ── PAID MODAL ── -->
 <div class="paid-modal" id="paidModal">
   <div class="paid-modal__box">
     <div class="paid-modal__head">
@@ -487,9 +534,9 @@ function toolTag(key) {
   return '<span class="tool-tag ' + (t.ours ? 'ours' : 'other') + '" title="' + t.note + '">' + t.name + '</span>';
 }
 
+// ── QUESTIONS: contact form removed, renumbered 01–07 ──
 var QUESTIONS = [
-  { id:'contact', type:'contact', num:'01', text:"Let's get you set up", hint:"We'll send your results here and use your website to personalize your score", cat:'Setup' },
-  { id:'business_type', type:'single', num:'02', text:'What type of business do you run?', hint:'Choose the closest match', cat:'Setup',
+  { id:'business_type', type:'single', num:'01', text:'What type of business do you run?', hint:'Choose the closest match', cat:'Setup',
     options:[
       {val:'Service business / agency',  tip:'Includes marketing agencies, consultants, freelancers, and B2B service providers.'},
       {val:'Coaching or consulting',     tip:'High-touch, relationship-driven. Automation frees you to focus on delivery.'},
@@ -499,7 +546,7 @@ var QUESTIONS = [
       {val:'Creator / solopreneur',      tip:'For solo operators, every manual task is a direct hit on your time. Automation is leverage.'}
     ]
   },
-  { id:'team_size', type:'single', num:'03', text:'How big is your team?', hint:'Including yourself', cat:'Setup',
+  { id:'team_size', type:'single', num:'02', text:'How big is your team?', hint:'Including yourself', cat:'Setup',
     options:[
       {val:'Just me',       tip:'Solo operators benefit most from automation — even one good workflow can save a full day per week.'},
       {val:'2 to 5',        tip:'Small teams often run on inconsistent processes. Automation creates reliability without adding headcount.'},
@@ -508,7 +555,7 @@ var QUESTIONS = [
       {val:'50 or more',    tip:'Larger teams benefit most from auditable, standardized processes and real-time reporting dashboards.'}
     ]
   },
-  { id:'lead_capture', type:'single', num:'04', text:'How do new leads typically reach you?', hint:'Choose your primary channel', cat:'Leads',
+  { id:'lead_capture', type:'single', num:'03', text:'How do new leads typically reach you?', hint:'Choose your primary channel', cat:'Leads',
     options:[
       {val:'Referrals / word of mouth',  tip:'Great quality, hard to scale. Automation ensures you never drop the ball on a warm referral.'},
       {val:'Website contact form',       tip:'Most businesses take 24-72 hours to respond. Automating first touch can 10x your close rate.'},
@@ -518,7 +565,7 @@ var QUESTIONS = [
       {val:'Marketplace / platform',     tip:'Platform leads go cold fast. Moving them to your own system quickly is critical.'}
     ]
   },
-  { id:'follow_up', type:'single', num:'05', text:'What happens after someone expresses interest?', hint:'Your typical follow-up process', cat:'Leads',
+  { id:'follow_up', type:'single', num:'04', text:'What happens after someone expresses interest?', hint:'Your typical follow-up process', cat:'Leads',
     options:[
       {val:'I manually follow up when I remember', impact:'low',    tip:'This is the #1 time drain we see. Automating lead follow-up typically saves 3-5 hours/week.'},
       {val:'I have a rough email template',        impact:'medium', tip:'A template is a start, but manual sending means leads slip through during busy periods.'},
@@ -527,7 +574,7 @@ var QUESTIONS = [
       {val:'CRM handles it automatically',         impact:'high',   tip:'Best-in-class. Keap clients at this level typically see 40% faster close rates.'}
     ]
   },
-  { id:'scheduling', type:'single', num:'06', text:'How do people book time with you?', hint:'Calls, meetings, appointments', cat:'Scheduling',
+  { id:'scheduling', type:'single', num:'05', text:'How do people book time with you?', hint:'Calls, meetings, appointments', cat:'Scheduling',
     options:[
       {val:'Back-and-forth emails to find a time',    impact:'low',    tip:'Costs an average of 8 emails per booking. A free Calendly link eliminates this entirely.'},
       {val:'They call or text me',                    impact:'low',    tip:'Works but creates interruptions. A booking link lets people self-schedule on your terms.'},
@@ -536,9 +583,9 @@ var QUESTIONS = [
       {val:'I do not do calls',                       impact:'high',   tip:"Noted — we'll weight your score toward the other categories that apply to you."}
     ]
   },
-  { id:'tools', type:'multi', num:'07', text:'Which tools are you currently using?', hint:'Select all that apply', cat:'Tools',
+  { id:'tools', type:'multi', num:'06', text:'Which tools are you currently using?', hint:'Select all that apply', cat:'Tools',
     options:[
-      {val:'A CRM (HubSpot, Salesforce, Keap)',  tip:'Having a CRM is a strong positive signal. How well it is configured matters even more than which one.'},
+      {val:'A CRM (HubSpot, Salesforce, Keap)',       tip:'Having a CRM is a strong positive signal. How well it is configured matters even more than which one.'},
       {val:'Email marketing (Mailchimp, ConvertKit)', tip:'Good foundation. The key question is whether it is connected to your CRM and lead capture.'},
       {val:'Scheduling tool (Calendly, Acuity)',      tip:'Eliminates back-and-forth. Even more powerful when connected to your CRM.'},
       {val:'Project management (Asana, Notion)',      tip:'Helps with internal ops. Airtable can combine project management with a database and automations.'},
@@ -548,7 +595,7 @@ var QUESTIONS = [
       {val:'None of the above',                       tip:"That's exactly what this audit is for. We'll show you where to start for maximum impact."}
     ]
   },
-  { id:'time_drain', type:'multi', num:'08', text:'Where do you lose the most time?', hint:'Be honest — this shapes your recommendations', cat:'Pain points',
+  { id:'time_drain', type:'multi', num:'07', text:'Where do you lose the most time?', hint:'Be honest — this shapes your recommendations', cat:'Pain points',
     options:[
       {val:'Repetitive client emails',      tip:'Automated sequences and templates in Keap typically eliminate 80% of repetitive email work.'},
       {val:'Manual data entry / reporting', tip:'Airtable + Make can automate most data capture and generate reports automatically.'},
@@ -565,7 +612,6 @@ var QUESTIONS = [
 var answers  = {};
 var currentQ = 0;
 
-// ── THE ONE CHANGED LINE: /pulse → /pulse-api ──
 function airtableRequest(fields, recordId) {
   var body = recordId
     ? { _method: 'PATCH', recordId: recordId, fields: fields }
@@ -577,17 +623,11 @@ function airtableRequest(fields, recordId) {
   })
   .then(function(res) {
     if (!res.ok) {
-      return res.json().then(function(err) {
-        console.error('Airtable error:', err);
-        return null;
-      });
+      return res.json().then(function(err) { console.error('Airtable error:', err); return null; });
     }
     return res.json();
   })
-  .catch(function(err) {
-    console.error('Airtable request failed:', err);
-    return null;
-  });
+  .catch(function(err) { console.error('Airtable request failed:', err); return null; });
 }
 
 function createContactRecord(ans) {
@@ -788,26 +828,7 @@ function buildQHTML(q, i) {
   var input = '';
   var isLast = (i === QUESTIONS.length - 1);
 
-  if (q.type === 'contact') {
-    var fn  = answers['first_name']    || '';
-    var ln  = answers['last_name']     || '';
-    var bn  = answers['business_name'] || '';
-    var url = answers['url']           || '';
-    var em  = answers['email']         || '';
-    var ready = fn.trim() && ln.trim() && bn.trim() && url.length > 4 && em.indexOf('@') > -1;
-    input = '<div class="field-stack">'
-      + '<div class="field-row">'
-      + '<div><div class="field-label">First name</div><input type="text" class="url-field" id="input-first" placeholder="Keith" value="' + fn + '" oninput="handleContact()"></div>'
-      + '<div><div class="field-label">Last name</div><input type="text" class="url-field" id="input-last" placeholder="Phillips" value="' + ln + '" oninput="handleContact()"></div>'
-      + '</div>'
-      + '<div><div class="field-label">Business name</div><input type="text" class="url-field" id="input-bizname" placeholder="Martech Consulting" value="' + bn + '" oninput="handleContact()"></div>'
-      + '<div><div class="field-label">Business website</div><input type="url" class="url-field" id="input-url" placeholder="https://yourbusiness.com" value="' + url + '" oninput="handleContact()"></div>'
-      + '<div><div class="field-label">Your email</div><input type="email" class="url-field" id="input-email" placeholder="you@yourbusiness.com" value="' + em + '" oninput="handleContact()"></div>'
-      + '<button class="btn-next" id="urlbtn-' + i + '" onclick="startAuditFromContact()"' + (ready ? '' : ' disabled') + '>Start audit</button>'
-      + '</div>'
-      + '<p style="font-size:.7rem;color:rgba(255,255,255,.22);margin-top:.75rem;">No spam. We send your results and occasional automation tips. Unsubscribe any time.</p>';
-
-  } else if (q.type === 'single') {
+  if (q.type === 'single') {
     input = '<div class="options-grid">';
     for (var j = 0; j < q.options.length; j++) {
       var o   = q.options[j];
@@ -820,7 +841,6 @@ function buildQHTML(q, i) {
       input += '<button class="option-btn' + sel + '" onclick="pickOne(\'' + q.id + '\',this,\'' + esc(val) + '\')">' + tipHTML + val + impactHTML + '</button>';
     }
     input += '</div>';
-
   } else {
     var selArr = answers[q.id] || [];
     input = '<p class="multi-hint">Select all that apply</p><div class="options-grid">';
@@ -835,14 +855,11 @@ function buildQHTML(q, i) {
     input += '</div>';
   }
 
-  var navHTML = '';
-  if (q.type !== 'contact') {
-    var hasAns = answers[q.id] && (Array.isArray(answers[q.id]) ? answers[q.id].length > 0 : true);
-    var backBtn = i > 0 ? '<button class="btn-back" onclick="prevQ()">Back</button>' : '<span></span>';
-    navHTML = '<div class="q-nav">' + backBtn
-      + '<button class="btn-next" id="qbtn-' + i + '" onclick="' + (isLast ? 'submitAudit()' : 'nextQ()') + '"' + (hasAns ? '' : ' disabled') + '>'
-      + (isLast ? 'See my score' : 'Next') + '</button></div>';
-  }
+  var hasAns = answers[q.id] && (Array.isArray(answers[q.id]) ? answers[q.id].length > 0 : true);
+  var backBtn = i > 0 ? '<button class="btn-back" onclick="prevQ()">Back</button>' : '<span></span>';
+  var navHTML = '<div class="q-nav">' + backBtn
+    + '<button class="btn-next" id="qbtn-' + i + '" onclick="' + (isLast ? 'submitAudit()' : 'nextQ()') + '"' + (hasAns ? '' : ' disabled') + '>'
+    + (isLast ? 'See my score' : 'Next') + '</button></div>';
 
   return '<div class="q-eyebrow">Question ' + q.num + '</div>'
     + '<h3 class="q-text">' + q.text + '</h3>'
@@ -850,30 +867,36 @@ function buildQHTML(q, i) {
     + input + navHTML;
 }
 
-function handleContact() {
-  answers['first_name']    = (document.getElementById('input-first')   || {}).value || '';
-  answers['last_name']     = (document.getElementById('input-last')    || {}).value || '';
-  answers['business_name'] = (document.getElementById('input-bizname') || {}).value || '';
-  answers['url']           = (document.getElementById('input-url')     || {}).value || '';
-  answers['email']         = (document.getElementById('input-email')   || {}).value || '';
-  answers['first_name']    = answers['first_name'].trim();
-  answers['last_name']     = answers['last_name'].trim();
-  answers['business_name'] = answers['business_name'].trim();
-  answers['url']           = answers['url'].trim();
-  answers['email']         = answers['email'].trim();
-  var btn = document.getElementById('urlbtn-0');
-  if (btn) btn.disabled = !(answers['first_name'] && answers['last_name'] && answers['business_name'] && answers['url'].length > 4 && answers['email'].indexOf('@') > -1);
+// ── Interstitial handlers ──
+function handleInterstitial() {
+  answers['first_name'] = (document.getElementById('input-first')  || {}).value || '';
+  answers['last_name']  = (document.getElementById('input-last')   || {}).value || '';
+  answers['email']      = (document.getElementById('input-email')  || {}).value || '';
+  answers['first_name'] = answers['first_name'].trim();
+  answers['last_name']  = answers['last_name'].trim();
+  answers['email']      = answers['email'].trim();
+  var btn = document.getElementById('interstitial-btn');
+  if (btn) btn.disabled = !(answers['first_name'] && answers['last_name'] && answers['email'].indexOf('@') > -1);
 }
 
-function startAuditFromContact() {
-  var btn = document.getElementById('urlbtn-0');
-  if (btn) { btn.disabled = true; btn.textContent = 'Starting...'; }
-  nextQ();
+function submitInterstitial() {
+  var btn = document.getElementById('interstitial-btn');
+  if (btn) { btn.disabled = true; btn.textContent = 'Loading your score...'; }
+
+  var recTitles = lastRecs.map(function(r){ return r.title; });
+
   createContactRecord(answers).then(function(id) {
-    if (id) { airtableRecordId = id; console.log('Contact record created:', id); }
-    else { console.warn('Contact record creation failed — audit will continue'); }
-  }).catch(function(err) {
-    console.warn('Contact record error (non-blocking):', err);
+    if (id) {
+      airtableRecordId = id;
+      auditSavePromise = saveAuditResults(answers, lastScores, recTitles);
+    }
+    document.getElementById('interstitialWrap').style.display = 'none';
+    document.getElementById('audit-wrap').style.display = 'none';
+    showResults(lastScores, lastRecs);
+  }).catch(function() {
+    document.getElementById('interstitialWrap').style.display = 'none';
+    document.getElementById('audit-wrap').style.display = 'none';
+    showResults(lastScores, lastRecs);
   });
 }
 
@@ -914,13 +937,14 @@ function submitAudit() {
   document.getElementById('questionsContainer').style.display = 'none';
   document.getElementById('analyzingState').classList.add('active');
 
-  var scores    = calcScores();
-  lastScores    = scores;
-  var recs      = buildRecs(scores);
-  lastRecs      = recs;
-  var recTitles = recs.map(function(r){ return r.title; });
+  var scores = calcScores();
+  lastScores = scores;
+  var recs   = buildRecs(scores);
+  lastRecs   = recs;
 
-  auditSavePromise = saveAuditResults(answers, scores, recTitles);
+  // Show score preview in interstitial dot
+  var previewEl = document.getElementById('previewScore');
+  if (previewEl) previewEl.textContent = scores.overall;
 
   var statuses = ['Scoring your answers...','Analyzing lead capture flows...','Evaluating scheduling setup...','Checking tool integrations...','Scoring communication workflows...','Building your recommendations...'];
   var si = 0;
@@ -928,12 +952,17 @@ function submitAudit() {
   var iv = setInterval(function() {
     si++;
     if (si < statuses.length) { statusEl.textContent = statuses[si]; }
-    else { clearInterval(iv); showResults(scores, recs); }
+    else {
+      clearInterval(iv);
+      // Hand off to interstitial instead of going straight to results
+      document.getElementById('analyzingState').classList.remove('active');
+      document.getElementById('interstitialWrap').style.display = 'block';
+      document.getElementById('interstitialWrap').scrollIntoView({behavior:'smooth'});
+    }
   }, 900);
 }
 
 function showResults(data, recs) {
-  document.getElementById('audit-wrap').style.display = 'none';
   document.querySelector('.pulse-hero').style.display = 'none';
   var results = document.getElementById('results');
   results.classList.add('active');
@@ -1013,11 +1042,19 @@ function startAudit() {
   document.querySelector('.pulse-hero').style.display = 'none';
   var wrap = document.getElementById('audit-wrap');
   wrap.style.display = 'block';
-  currentQ = 0; answers = {};
+  currentQ = 0;
+  answers  = {};
   buildProgress();
   buildQuestions();
   wrap.scrollIntoView({behavior:'smooth'});
 }
+
+// ?start=true auto-launches audit (for Reddit ad direct link)
+(function() {
+  if (new URLSearchParams(window.location.search).get('start') === 'true') {
+    window.addEventListener('DOMContentLoaded', function() { startAudit(); });
+  }
+})();
 
 function showPaidModal()  { document.getElementById('paidModal').classList.add('open'); }
 function closePaidModal() { document.getElementById('paidModal').classList.remove('open'); }
