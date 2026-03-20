@@ -1,18 +1,11 @@
 /**
  * PostHog Analytics - martechconsulting.io
- * Tracks: pageviews, CTA clicks, form interactions, Pulse audit, proposal flow, newsletter
- *
- * SETUP: Replace POSTHOG_KEY below with your real key from
- * app.posthog.com → Project Settings → Project API Key
  */
 
 (function () {
-  // ─── CONFIG ────────────────────────────────────────────────────────────────
   var POSTHOG_KEY = 'phc_28wsMMZi8FhUyi0WOJkHCu0AvX4XvzFrPns75btliFS';
   var POSTHOG_HOST = 'https://us.i.posthog.com';
-  // ────────────────────────────────────────────────────────────────────────────
 
-  // ─── POSTHOG SNIPPET (from your project dashboard) ──────────────────────────
   !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group identify setPersonProperties setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags resetGroups onFeatureFlags addFeatureFlagsHandler onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
 
   posthog.init(POSTHOG_KEY, {
@@ -21,117 +14,135 @@
     loaded: function (ph) {
       if (typeof window === 'undefined') return;
       ph.capture('$pageview', { url: window.location.href });
-      trackCustomEvents(ph);
+      trackButtonClicks(ph);
+      trackFormSubmissions(ph);
+      trackScrollDepth(ph);
+      trackOutboundLinks(ph);
+      runHeroExperiment(ph);
     }
   });
-  // ────────────────────────────────────────────────────────────────────────────
 
-  function trackCustomEvents(ph) {
-
-    // ── 1. CTA BUTTON CLICKS ──────────────────────────────────────────────────
-    // Catches all .btn links (Book a call, See packages, etc.)
+  // ── 1. BUTTON CLICKS ───────────────────────────────────────────────────────
+  function trackButtonClicks(ph) {
     document.addEventListener('click', function (e) {
-      var el = e.target.closest('a.btn, button.btn, .pkg__cta, .service-card__link');
+      var el = e.target.closest('a, button, [role="button"]');
       if (!el) return;
 
-      var label = el.textContent.trim().replace(/\s+/g, ' ');
-      var href  = el.getAttribute('href') || '';
+      var tag       = el.tagName.toLowerCase();
+      var text      = el.textContent.trim().replace(/\s+/g, ' ').slice(0, 100);
+      var href      = el.getAttribute('href') || '';
+      var classList = el.className || '';
 
-      ph.capture('cta_click', {
-        label: label,
-        destination: href,
-        page: window.location.pathname
+      if (!text) return;
+      if (href && href.startsWith('http') && !href.includes('martechconsulting.io')) return;
+
+      ph.capture('button_clicked', {
+        button_text:  text,
+        button_type:  tag === 'a' ? 'link' : 'button',
+        button_class: classList.slice(0, 100),
+        destination:  href,
+        page:         window.location.pathname
       });
     });
+  }
 
-    // ── 2. CONTACT FORM ───────────────────────────────────────────────────────
-    // Fires on the contact page form submission
+  // ── 2. FORM SUBMISSIONS ────────────────────────────────────────────────────
+  function trackFormSubmissions(ph) {
     document.addEventListener('submit', function (e) {
       var form = e.target;
       if (!form) return;
 
-      var page = window.location.pathname;
-
-      if (page.includes('contact')) {
-        ph.capture('contact_form_submit', { page: page });
-      }
+      ph.capture('form_submitted', {
+        form_id:   form.id   || 'unknown',
+        form_name: form.name || form.id || 'unknown',
+        page:      window.location.pathname
+      });
     });
+  }
 
-    // ── 3. NEWSLETTER SIGNUP BUTTON ──────────────────────────────────────────
-    document.addEventListener('click', function (e) {
-      var el = e.target.closest('[data-newsletter]');
-      if (!el) return;
-      ph.capture('newsletter_cta_click', { page: window.location.pathname });
-    });
+  // ── 3. SCROLL DEPTH ────────────────────────────────────────────────────────
+  function trackScrollDepth(ph) {
+    var milestones = [25, 50, 75, 100];
+    var reached    = {};
 
-    // ── 4. PULSE AUDIT ────────────────────────────────────────────────────────
-    // Tracks when the audit quiz starts (first question interaction)
-    var pulseStarted = false;
-    if (window.location.pathname.includes('pulse')) {
-      document.addEventListener('click', function (e) {
-        if (!pulseStarted) {
-          var el = e.target.closest('.quiz-option, [data-pulse-step], input[type="radio"], input[type="checkbox"], .option-btn');
-          if (el) {
-            pulseStarted = true;
-            ph.capture('pulse_audit_start');
-          }
+    function getScrollPercent() {
+      var el           = document.documentElement;
+      var body         = document.body;
+      var scrollTop    = el.scrollTop || body.scrollTop;
+      var scrollHeight = (el.scrollHeight || body.scrollHeight) - el.clientHeight;
+      if (scrollHeight <= 0) return 100;
+      return Math.floor((scrollTop / scrollHeight) * 100);
+    }
+
+    window.addEventListener('scroll', function () {
+      var pct = getScrollPercent();
+      milestones.forEach(function (milestone) {
+        if (!reached[milestone] && pct >= milestone) {
+          reached[milestone] = true;
+          ph.capture('scroll_depth_reached', {
+            scroll_depth_percent: milestone,
+            page: window.location.pathname
+          });
         }
       });
-    }
+    }, { passive: true });
+  }
 
-    // ── 5. PROPOSAL FORM ─────────────────────────────────────────────────────
-    // Tracks start and generation events on the proposal page
-    if (window.location.pathname.includes('proposal')) {
-      var proposalStarted = false;
-
-      document.addEventListener('input', function () {
-        if (!proposalStarted) {
-          proposalStarted = true;
-          ph.capture('proposal_form_start');
-        }
-      });
-
-      document.addEventListener('click', function (e) {
-        var el = e.target.closest('[data-generate], #generate-btn, .generate-proposal-btn, button[type="submit"]');
-        if (!el) return;
-        ph.capture('proposal_generate_click');
-      });
-    }
-
-    // ── 6. PACKAGE PAGE - INDIVIDUAL PACKAGE VIEWS ───────────────────────────
-    if (window.location.pathname.includes('packages')) {
-      var observer = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            var pkg = entry.target;
-            var name = pkg.querySelector('.pkg__name');
-            if (name) {
-              ph.capture('package_viewed', { package_name: name.textContent.trim() });
-              observer.unobserve(pkg); // fire once per package
-            }
-          }
-        });
-      }, { threshold: 0.5 });
-
-      document.querySelectorAll('.pkg').forEach(function (el) {
-        observer.observe(el);
-      });
-    }
-
-    // ── 7. OUTBOUND LINKS ─────────────────────────────────────────────────────
+  // ── 4. OUTBOUND LINK CLICKS ────────────────────────────────────────────────
+  function trackOutboundLinks(ph) {
     document.addEventListener('click', function (e) {
       var el = e.target.closest('a[href]');
       if (!el) return;
       var href = el.getAttribute('href');
-      if (href && href.startsWith('http') && !href.includes('martechconsulting.io')) {
-        ph.capture('outbound_link_click', {
-          url: href,
-          label: el.textContent.trim().replace(/\s+/g, ' ').slice(0, 80),
-          page: window.location.pathname
-        });
-      }
-    });
+      if (!href || !href.startsWith('http')) return;
+      if (href.includes('martechconsulting.io')) return;
 
+      ph.capture('outbound_link_clicked', {
+        destination_url: href,
+        link_text:       el.textContent.trim().replace(/\s+/g, ' ').slice(0, 100),
+        page:            window.location.pathname
+      });
+    });
+  }
+
+  // ── 5. HERO A/B EXPERIMENT ─────────────────────────────────────────────────
+  // Only runs on the homepage. Checks the PostHog feature flag
+  // hero-headline-cta-test and swaps copy for the variant bucket.
+  //
+  // Control:  "Stop losing leads to silence" / "Book a free call"
+  // Variant:  "Your marketing should work while you sleep" / "Get a free audit"
+  function runHeroExperiment(ph) {
+    var path = window.location.pathname;
+    if (path !== '/' && path !== '/index.html') return;
+
+    ph.onFeatureFlags(function () {
+      var variant = ph.getFeatureFlag('hero-headline-cta-test');
+      if (variant !== 'variant') return; // control gets no changes
+
+      // Swap headline
+      var h1 = document.querySelector('.hero h1, .hero .display');
+      if (h1) {
+        h1.innerHTML = 'Your marketing should<br>work while you <em>sleep.</em>';
+      }
+
+      // Swap primary CTA button text (first .btn-primary in the hero)
+      var cta = document.querySelector('.hero .btn-primary, .hero__ctas .btn-primary');
+      if (cta) {
+        // Preserve the SVG arrow icon if present
+        var svg = cta.querySelector('svg');
+        cta.childNodes.forEach(function (node) {
+          if (node.nodeType === 3) node.textContent = 'Get a free audit ';
+        });
+        if (!cta.querySelector('svg') && svg) cta.appendChild(svg);
+      }
+
+      // Fire experiment exposure event so PostHog counts this as a valid exposure
+      ph.capture('$feature_flag_called', {
+        '$feature_flag': 'hero-headline-cta-test',
+        '$feature_flag_response': variant,
+        experiment_variant: variant
+      });
+    });
   }
 
 })();
