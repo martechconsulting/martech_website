@@ -19,6 +19,7 @@
       trackScrollDepth(ph);
       trackOutboundLinks(ph);
       runHeroExperiment(ph);
+      runPulseExperiment(ph);
     }
   });
 
@@ -105,10 +106,9 @@
     });
   }
 
-  // ── 5. HERO A/B EXPERIMENT ─────────────────────────────────────────────────
+  // ── 5. HOMEPAGE HERO A/B EXPERIMENT ───────────────────────────────────────
   // Control:  "Stop losing leads to silence" / "Book a free call"
   // Variant:  "Your marketing should work while you sleep" / "Get a free audit"
-  // Conversion event: hero_cta_clicked (tracked separately from generic button_clicked)
   function runHeroExperiment(ph) {
     var path = window.location.pathname;
     if (path !== '/' && path !== '/index.html') return;
@@ -116,13 +116,9 @@
     ph.onFeatureFlags(function () {
       if (posthog.getFeatureFlag('hero-headline-cta-test') === 'variant') {
 
-        // Swap headline
         var h1 = document.querySelector('.hero h1, .hero .display');
-        if (h1) {
-          h1.innerHTML = 'Your marketing should<br>work while you <em>sleep.</em>';
-        }
+        if (h1) h1.innerHTML = 'Your marketing should<br>work while you <em>sleep.</em>';
 
-        // Swap primary CTA text
         var cta = document.querySelector('.hero .btn-primary, .hero__ctas .btn-primary');
         if (cta) {
           var svg = cta.querySelector('svg');
@@ -134,17 +130,56 @@
 
       } else {
         // Control — default behavior, no changes.
-        // If flag evaluation fails, users always see the original copy.
       }
 
-      // Attach conversion click listener to the primary CTA after flag resolves
+      // Conversion: primary CTA click
       var heroCta = document.querySelector('.hero .btn-primary, .hero__ctas .btn-primary');
       if (heroCta) {
         heroCta.addEventListener('click', function () {
           ph.capture('hero_cta_clicked', {
-            variant: posthog.getFeatureFlag('hero-headline-cta-test') || 'control',
+            variant:     posthog.getFeatureFlag('hero-headline-cta-test') || 'control',
             button_text: heroCta.textContent.trim().replace(/\s+/g, ' ').slice(0, 100),
-            page: window.location.pathname
+            page:        window.location.pathname
+          });
+        });
+      }
+    });
+  }
+
+  // ── 6. PULSE PAGE HERO A/B EXPERIMENT ─────────────────────────────────────
+  // Control:  "Find out where your business leaks time every week" / "Get your free score"
+  // Variant:  "See how many hours your business is losing every week" / "Get my free audit"
+  function runPulseExperiment(ph) {
+    var path = window.location.pathname;
+    if (!path.includes('pulse')) return;
+
+    ph.onFeatureFlags(function () {
+      if (posthog.getFeatureFlag('pulse-hero-headline-cta-test') === 'variant') {
+
+        var h1 = document.querySelector('.pulse-hero h1, .pulse-hero .display');
+        if (h1) h1.innerHTML = 'See how many hours your business is <em>losing</em> every week';
+
+        var cta = document.querySelector('.pulse-hero .btn-primary');
+        if (cta) {
+          var svg = cta.querySelector('svg');
+          cta.childNodes.forEach(function (node) {
+            if (node.nodeType === 3) node.textContent = 'Get my free audit ';
+          });
+          if (!cta.querySelector('svg') && svg) cta.appendChild(svg);
+        }
+
+      } else {
+        // Control — default behavior, no changes.
+      }
+
+      // Conversion: Pulse CTA click
+      var pulseCta = document.querySelector('.pulse-hero .btn-primary');
+      if (pulseCta) {
+        pulseCta.addEventListener('click', function () {
+          ph.capture('pulse_cta_clicked', {
+            variant:     posthog.getFeatureFlag('pulse-hero-headline-cta-test') || 'control',
+            button_text: pulseCta.textContent.trim().replace(/\s+/g, ' ').slice(0, 100),
+            page:        window.location.pathname
           });
         });
       }
