@@ -133,14 +133,18 @@
       }
 
       // Conversion: primary CTA click
+      // preventDefault + setTimeout so PostHog fires before navigation
       var heroCta = document.querySelector('.hero .btn-primary, .hero__ctas .btn-primary');
       if (heroCta) {
-        heroCta.addEventListener('click', function () {
+        heroCta.addEventListener('click', function (e) {
+          e.preventDefault();
+          var dest = heroCta.getAttribute('href') || 'contact.html';
           ph.capture('hero_cta_clicked', {
             variant:     posthog.getFeatureFlag('hero-headline-cta-test') || 'control',
             button_text: heroCta.textContent.trim().replace(/\s+/g, ' ').slice(0, 100),
             page:        window.location.pathname
           });
+          setTimeout(function () { window.location.href = dest; }, 300);
         });
       }
     });
@@ -173,6 +177,7 @@
       }
 
       // Conversion: Pulse CTA click
+      // Pulse CTA calls startAudit() inline so no navigation — fires normally
       var pulseCta = document.querySelector('.pulse-hero .btn-primary');
       if (pulseCta) {
         pulseCta.addEventListener('click', function () {
