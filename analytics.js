@@ -106,42 +106,48 @@
   }
 
   // ── 5. HERO A/B EXPERIMENT ─────────────────────────────────────────────────
-  // Only runs on the homepage. Checks the PostHog feature flag
-  // hero-headline-cta-test and swaps copy for the variant bucket.
-  //
   // Control:  "Stop losing leads to silence" / "Book a free call"
   // Variant:  "Your marketing should work while you sleep" / "Get a free audit"
+  // Conversion event: hero_cta_clicked (tracked separately from generic button_clicked)
   function runHeroExperiment(ph) {
     var path = window.location.pathname;
     if (path !== '/' && path !== '/index.html') return;
 
     ph.onFeatureFlags(function () {
-      var variant = ph.getFeatureFlag('hero-headline-cta-test');
-      if (variant !== 'variant') return; // control gets no changes
+      if (posthog.getFeatureFlag('hero-headline-cta-test') === 'variant') {
 
-      // Swap headline
-      var h1 = document.querySelector('.hero h1, .hero .display');
-      if (h1) {
-        h1.innerHTML = 'Your marketing should<br>work while you <em>sleep.</em>';
+        // Swap headline
+        var h1 = document.querySelector('.hero h1, .hero .display');
+        if (h1) {
+          h1.innerHTML = 'Your marketing should<br>work while you <em>sleep.</em>';
+        }
+
+        // Swap primary CTA text
+        var cta = document.querySelector('.hero .btn-primary, .hero__ctas .btn-primary');
+        if (cta) {
+          var svg = cta.querySelector('svg');
+          cta.childNodes.forEach(function (node) {
+            if (node.nodeType === 3) node.textContent = 'Get a free audit ';
+          });
+          if (!cta.querySelector('svg') && svg) cta.appendChild(svg);
+        }
+
+      } else {
+        // Control — default behavior, no changes.
+        // If flag evaluation fails, users always see the original copy.
       }
 
-      // Swap primary CTA button text (first .btn-primary in the hero)
-      var cta = document.querySelector('.hero .btn-primary, .hero__ctas .btn-primary');
-      if (cta) {
-        // Preserve the SVG arrow icon if present
-        var svg = cta.querySelector('svg');
-        cta.childNodes.forEach(function (node) {
-          if (node.nodeType === 3) node.textContent = 'Get a free audit ';
+      // Attach conversion click listener to the primary CTA after flag resolves
+      var heroCta = document.querySelector('.hero .btn-primary, .hero__ctas .btn-primary');
+      if (heroCta) {
+        heroCta.addEventListener('click', function () {
+          ph.capture('hero_cta_clicked', {
+            variant: posthog.getFeatureFlag('hero-headline-cta-test') || 'control',
+            button_text: heroCta.textContent.trim().replace(/\s+/g, ' ').slice(0, 100),
+            page: window.location.pathname
+          });
         });
-        if (!cta.querySelector('svg') && svg) cta.appendChild(svg);
       }
-
-      // Fire experiment exposure event so PostHog counts this as a valid exposure
-      ph.capture('$feature_flag_called', {
-        '$feature_flag': 'hero-headline-cta-test',
-        '$feature_flag_response': variant,
-        experiment_variant: variant
-      });
     });
   }
 
