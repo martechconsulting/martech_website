@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HVAC Website for $100/Month | Martech Consulting</title>
+  <meta name="description" content="Get a professional website for your HVAC company. $100 down, $100/month. Built for HVAC owners who need to show up on Google when homeowners search for help."/>
+  <link rel="canonical" href="https://martechconsulting.io/hvac"/>
+  <link rel="icon" type="image/svg+xml" href="/Martech Icon - Full Color.svg"/>
+
+  <!-- Fonts - matching the existing site -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+
+  <style>
+    /* ── Brand tokens (identical to site) ── */
+    :root {
+      --navy:      #052e4d;
+      --navy2:     #093d63;
+      --orange:    #fe6930;
+      --orange-lt: #ff8f5e;
+      --white:     #ffffff;
+      --cream:     #FDF8F3;
+      --off:       #F3EEE9;
+      --ink:       #052e4d;
+      --mid:       #3a5570;
+      --muted:     #7a94a8;
+      --rule:      #dde5ed;
+      --ff-head:   'Fraunces', Georgia, serif;
+      --ff-body:   'DM Sans', system-ui, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--ff-body); color: var(--ink); background: #fff; -webkit-font-smoothing: antialiased; }
+    img  { display: block; max-width: 100%; }
+    a    { color: inherit; text-decoration: none; }
+
+    /* ── Layout ── */
+    .container        { max-width: 1120px; margin: 0 auto; padding: 0 clamp(1.25rem,4vw,2.5rem); }
+    .container--narrow{ max-width: 780px;  margin: 0 auto; padding: 0 clamp(1.25rem,4vw,2.5rem); }
+    section           { padding: clamp(3rem,7vw,6rem) 0; }
+
+    /* ── Typography ── */
+    h1,h2,h3,h4 { font-family: var(--ff-head); font-weight: 300; line-height: 1.1; letter-spacing: -.02em; }
+    .display     { font-size: clamp(2.4rem,5.5vw,4.7rem); }
+    .section-title { font-size: clamp(1.7rem,3.5vw,2.8rem); }
+    .section-title em, .display em { font-style: italic; color: var(--orange); }
+    .section-title.on-dark    { color: #fff; }
+    .section-title.on-dark em { color: var(--orange-lt); }
+
+    /* ── Eyebrow ── */
+    .eyebrow {
+      font-family: var(--ff-body); font-size: .68rem; font-weight: 700;
+      letter-spacing: .18em; text-transform: uppercase; color: var(--orange);
+      display: flex; align-items: center; gap: .55rem; margin-bottom: .6rem;
+    }
+    .eyebrow::before { content:''; display:block; width:1.4rem; height:2px; background:currentColor; flex-shrink:0; }
+    .eyebrow.on-dark { color: var(--orange-lt); }
+    .eyebrow.blue    { color: var(--mid); }
+
+    /* ── Buttons ── */
+    .btn {
+      display: inline-flex; align-items: center; gap: .45rem;
+      font-family: var(--ff-body); font-weight: 600; font-size: .875rem;
+      line-height: 1; padding: .9rem 1.75rem; border-radius: 4px;
+      border: none; cursor: pointer; text-decoration: none;
+      transition: all .18s; white-space: nowrap;
+    }
+    .btn-primary { background: var(--orange); color: #fff; }
+    .btn-primary:hover { background: var(--orange-lt); transform: translateY(-1px); }
+    .btn-ghost   { background: transparent; color: #fff; border: 1.5px solid rgba(255,255,255,.3); }
+    .btn-ghost:hover { border-color: rgba(255,255,255,.7); background: rgba(255,255,255,.07); }
+    .btn-lg  { font-size: 1rem; padding: 1.05rem 2.1rem; }
+    .btn svg { width: 14px; height: 14px; transition: transform .18s; }
+    .btn:hover svg { transform: translateX(3px); }
+
+    /* ── Minimal top bar ── */
+    .topbar {
+      background: var(--navy);
+      border-bottom: 1px solid rgba(255,255,255,.07);
+      padding: 0 clamp(1.25rem,4vw,2.5rem);
+      height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 100%;
+    }
+    .topbar__logo svg { height: 28px; width: auto; display: block; }
+    .topbar__back {
+      font-size: .78rem; font-weight: 600; color: rgba(255,255,255,.45);
+      display: flex; align-items: center; gap: .35rem;
+      transition: color .15s;
+    }
+    .topbar__back:hover { color: rgba(255,255,255,.8); }
+    .topbar__back svg { width: 12px; height: 12px; }
+
+    /* ── Hero ── */
+    .hero {
+      background: var(--navy);
+      position: relative;
+      overflow: hidden;
+      padding: clamp(3.5rem,8vw,6rem) 0 clamp(2.5rem,6vw,5rem);
+    }
+    .hero__grid {
+      position:absolute; inset:0; pointer-events:none;
+      background-image:
+        linear-gradient(rgba(255,255,255,.027) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.027) 1px,transparent 1px);
+      background-size: 72px 72px;
+    }
+    .hero__glow {
+      position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 65% 55% at 68% 40%,rgba(254,105,48,.13) 0%,transparent 65%),
+        radial-gradient(ellipse 40% 50% at 12% 75%,rgba(255,255,255,.03) 0%,transparent 60%);
+    }
+    .hero__content { position:relative; z-index:2; }
+    .hero__layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+    @media(min-width:860px) {
+      .hero__layout { grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    }
+    .hero h1  { color: #fff; margin-bottom: 1.2rem; }
+    .hero h1 em { font-style: italic; color: var(--orange-lt); }
+    .hero__sub { font-size: 1.05rem; color: rgba(255,255,255,.55); line-height: 1.72; max-width: 460px; margin-bottom: 2rem; }
+    .hero__ctas { display: flex; gap: .75rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+    .hero__proof {
+      display: flex; gap: 2.25rem; flex-wrap: wrap;
+    }
+    .proof__item { }
+    .proof__num   { font-family: var(--ff-head); font-weight: 300; font-size: 1.75rem; color: #fff; line-height: 1; margin-bottom: .2rem; }
+    .proof__label { font-size: .68rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,.3); }
+
+    /* Price card in hero */
+    .price-hero-card {
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 12px;
+      padding: clamp(1.5rem,3vw,2.25rem);
+    }
+    .price-hero-card__badge {
+      display: inline-block;
+      background: var(--orange);
+      color: #fff;
+      font-size: .62rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      padding: .3rem .75rem;
+      border-radius: 100px;
+      margin-bottom: 1.25rem;
+    }
+    .price-hero-card h3 {
+      font-family: var(--ff-head);
+      font-size: 1.4rem;
+      font-weight: 400;
+      color: #fff;
+      margin-bottom: .5rem;
+    }
+    .price-hero-card__sub {
+      font-size: .85rem;
+      color: rgba(255,255,255,.42);
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+    .price-row {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 1.1rem 0;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .price-row:last-of-type { border-bottom: none; padding-bottom: 0; }
+    .price-row__label { font-size: .82rem; color: rgba(255,255,255,.55); flex: 1; }
+    .price-row__amount {
+      font-family: var(--ff-head);
+      font-size: 1.6rem;
+      font-weight: 300;
+      color: #fff;
+      white-space: nowrap;
+    }
+    .price-row__amount small {
+      font-family: var(--ff-body);
+      font-size: .72rem;
+      font-weight: 400;
+      color: rgba(255,255,255,.35);
+      display: block;
+      margin-top: .1rem;
+    }
+    .price-hero-card__note {
+      margin-top: 1.25rem;
+      font-size: .76rem;
+      color: rgba(255,255,255,.28);
+      text-align: center;
+    }
+
+    /* ── Problem section ── */
+    .bg-off   { background: var(--off); }
+    .bg-cream { background: var(--cream); }
+    .bg-white { background: #fff; }
+    .bg-navy  { background: var(--navy); }
+    .bg-navy2 { background: var(--navy2); }
+
+    .problem-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    @media(min-width:640px) { .problem-grid { grid-template-columns: 1fr 1fr; } }
+    @media(min-width:960px) { .problem-grid { grid-template-columns: 1fr 1fr 1fr; } }
+    .problem-item { background: #fff; padding: 2rem 1.75rem; }
+    .problem-item__num   { font-family: var(--ff-head); font-size: 3rem; font-weight: 300; font-style: italic; color: var(--rule); line-height: 1; margin-bottom: 1rem; }
+    .problem-item__title { font-family: var(--ff-head); font-size: 1.1rem; font-weight: 500; color: var(--ink); margin-bottom: .6rem; }
+    .problem-item__body  { font-size: .875rem; color: var(--mid); line-height: 1.72; }
+
+    /* ── What's included ── */
+    .features-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    @media(min-width:600px) { .features-grid { grid-template-columns: 1fr 1fr; } }
+    @media(min-width:960px) { .features-grid { grid-template-columns: 1fr 1fr 1fr; } }
+    .feature-card {
+      background: #fff;
+      border: 1px solid var(--rule);
+      border-radius: 9px;
+      padding: 1.5rem;
+      transition: border-color .2s, transform .2s;
+    }
+    .feature-card:hover { border-color: var(--orange); transform: translateY(-2px); }
+    .feature-card__icon { font-size: 1.5rem; margin-bottom: .9rem; }
+    .feature-card__title { font-family: var(--ff-head); font-size: 1rem; font-weight: 500; color: var(--ink); margin-bottom: .45rem; }
+    .feature-card__body  { font-size: .845rem; color: var(--mid); line-height: 1.65; }
+
+    /* ── How it works ── */
+    .steps { display: grid; grid-template-columns: 1fr; gap: 2rem; }
+    @media(min-width:640px) { .steps { grid-template-columns: 1fr 1fr; } }
+    @media(min-width:960px) { .steps { grid-template-columns: repeat(4,1fr); } }
+    .step__num   { width: 3.5rem; height: 3.5rem; border-radius: 50%; background: var(--navy); color: #fff; display: flex; align-items: center; justify-content: center; font-family: var(--ff-head); font-style: italic; font-size: 1.35rem; margin-bottom: 1.25rem; }
+    .step__title { font-family: var(--ff-head); font-size: 1.1rem; font-weight: 500; color: var(--ink); margin-bottom: .6rem; }
+    .step__body  { font-size: .875rem; color: var(--mid); line-height: 1.75; }
+
+    /* ── FAQ ── */
+    .faq-list { display: flex; flex-direction: column; gap: .6rem; }
+    .faq-item { background: #fff; border: 1px solid var(--rule); border-radius: 8px; overflow: hidden; transition: border-color .2s; }
+    .faq-item.open { border-color: var(--orange); }
+    .faq-item__q    { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 1.25rem 1.5rem; cursor: pointer; font-family: var(--ff-head); font-size: 1rem; font-weight: 500; color: var(--ink); line-height: 1.35; user-select: none; }
+    .faq-item__icon { width: 20px; height: 20px; border-radius: 50%; background: var(--rule); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background .2s; }
+    .faq-item.open .faq-item__icon     { background: var(--orange); }
+    .faq-item.open .faq-item__icon svg { stroke: #fff; }
+    .faq-item__a    { display: none; padding: 0 1.5rem 1.25rem; font-size: .875rem; color: var(--mid); line-height: 1.78; }
+    .faq-item.open .faq-item__a { display: block; }
+
+    /* ── Form section ── */
+    .form-card {
+      background: #fff;
+      border: 1px solid var(--rule);
+      border-radius: 12px;
+      padding: clamp(2rem,4vw,3rem);
+      max-width: 680px;
+      margin: 0 auto;
+    }
+    .form-card h2 { font-family: var(--ff-head); font-size: clamp(1.4rem,3vw,2rem); font-weight: 400; color: var(--ink); margin-bottom: .5rem; }
+    .form-card h2 em { font-style: italic; color: var(--orange); }
+    .form-card__sub { font-size: .9rem; color: var(--mid); line-height: 1.7; margin-bottom: 2rem; }
+    .form-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+    @media(min-width:540px) { .form-grid { grid-template-columns: 1fr 1fr; } }
+    .form-group { display: flex; flex-direction: column; gap: .4rem; }
+    .form-group.full { grid-column: 1/-1; }
+    .form-group label {
+      font-size: .72rem; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--mid);
+    }
+    .form-group label span { color: var(--orange); }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      font-family: var(--ff-body); font-size: .95rem; color: var(--ink);
+      border: 1.5px solid var(--rule); border-radius: 5px;
+      padding: .8rem 1rem; background: #fff;
+      transition: border-color .15s;
+      outline: none;
+      width: 100%;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: var(--navy2); }
+    .form-group textarea { resize: vertical; min-height: 90px; }
+    .form-group select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237a94a8' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; padding-right: 2.5rem; }
+    .form-submit-wrap { margin-top: 1.25rem; }
+    .form-submit-wrap .btn { width: 100%; justify-content: center; font-size: 1rem; padding: 1.1rem 2rem; }
+    .form-disclaimer { font-size: .73rem; color: var(--muted); text-align: center; margin-top: .75rem; line-height: 1.55; }
+
+    /* Form states */
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 2rem 0;
+    }
+    .form-success__icon { font-size: 2.5rem; margin-bottom: .875rem; }
+    .form-success h3 { font-family: var(--ff-head); font-size: 1.5rem; font-weight: 400; color: var(--ink); margin-bottom: .6rem; }
+    .form-success p  { font-size: .9rem; color: var(--mid); line-height: 1.7; max-width: 360px; margin: 0 auto; }
+    .form-error-msg {
+      display: none;
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      border-radius: 6px;
+      padding: .9rem 1.1rem;
+      font-size: .845rem;
+      color: #b91c1c;
+      margin-bottom: 1rem;
+    }
+
+    /* ── CTA band ── */
+    .cta-band {
+      background: var(--navy);
+      padding: clamp(3.5rem,8vw,7rem) 0;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+    .cta-band::before {
+      content:'';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 55% 80% at 25% 50%,rgba(254,105,48,.13) 0%,transparent 60%),
+        radial-gradient(ellipse 40% 60% at 80% 50%,rgba(255,255,255,.03) 0%,transparent 60%);
+      pointer-events: none;
+    }
+    .cta-band__inner { position: relative; z-index: 2; }
+    .cta-band h2     { color: #fff; margin-bottom: 1rem; }
+    .cta-band h2 em  { font-style: italic; color: var(--orange-lt); }
+    .cta-band__sub   { font-size: 1rem; color: rgba(255,255,255,.48); line-height: 1.7; margin-bottom: 2rem; max-width: 520px; margin-left: auto; margin-right: auto; }
+    .cta-band__btns  { display: flex; gap: .75rem; justify-content: center; flex-wrap: wrap; }
+
+    /* ── Callout ── */
+    .callout { background: var(--off); border-left: 3px solid var(--orange); border-radius: 0 8px 8px 0; padding: 1.25rem 1.5rem; margin-bottom: 1.25rem; }
+    .callout__label { font-size: .68rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--orange); margin-bottom: .45rem; }
+    .callout__text  { font-size: .9rem; color: var(--mid); line-height: 1.7; }
+
+    /* ── Footer ── */
+    .footer {
+      background: var(--navy);
+      padding: 2.5rem 0;
+      border-top: 1px solid rgba(255,255,255,.05);
+      text-align: center;
+    }
+    .footer p { font-size: .78rem; color: rgba(255,255,255,.25); }
+    .footer a { color: rgba(255,255,255,.45); transition: color .15s; }
+    .footer a:hover { color: rgba(255,255,255,.8); }
+
+    /* ── Reveal animation ── */
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity .55s ease, transform .55s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── Responsive two-col ── */
+    .two-col { display: grid; grid-template-columns: 1fr; gap: 3rem; align-items: start; }
+    @media(min-width:860px) { .two-col { grid-template-columns: 1fr 1fr; } }
+  </style>
+</head>
+<body>
+
+<!-- Top bar -->
+<div class="topbar">
+  <a href="https://martechconsulting.io" class="topbar__logo" aria-label="Martech Consulting">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1054.4 210.5" aria-label="Martech Consulting">
+      <g><g>
+        <path fill="#fff" d="M435.8,36.6c11.3,0,20.4,3.7,27.3,11.2,6.9,7.4,10.3,17.4,10.3,29.8v56.2c0,2.5-2,4.5-4.5,4.5h-20.7c-2.5,0-4.5-2-4.5-4.5v-53.6c0-5-1.2-9-3.7-11.9-2.4-2.9-6-4.4-10.6-4.4s-8.7,1.6-11.4,4.9c-2.7,3.3-4.1,7.8-4.1,13.6v51.3c0,2.5-2,4.5-4.5,4.5h-20.7c-2.5,0-4.5-2-4.5-4.5v-53.6c0-5-1.2-9-3.7-11.9-2.4-2.9-6-4.4-10.6-4.4s-8.7,1.6-11.4,4.9c-2.7,3.3-4.1,7.8-4.1,13.6v51.3c0,2.5-2,4.5-4.5,4.5h-20.7c-2.5,0-4.5-2-4.5-4.5V43.8c0-2.5,2-4.5,4.5-4.5h20.7c2.5,0,4.5,2,4.5,4.5v4.6c5.4-7.9,14.2-11.9,26.5-11.9s17.1,3,22.8,9.1c1.7,1.9,4.6,1.9,6.4,0,6-6.1,14.5-9.2,25.4-9.2Z"/>
+        <path fill="#fff" d="M561.7,39.3h20.7c2.5,0,4.5,2,4.5,4.5v89.9c0,2.5-2,4.5-4.5,4.5h-20.7c-2.5,0-4.5-2-4.5-4.5v-1.2c0-1.3-1.5-2-2.4-1.1-6.8,6.3-15.8,9.5-27,9.5s-24.2-5-33.4-15.1c-9.2-10.1-13.8-22.4-13.8-37.1s4.6-27,13.8-37.1c9.2-10.1,20.4-15.1,33.4-15.1s20.2,3.2,27,9.5c.9.9,2.4.2,2.4-1.1v-1.2c0-2.5,2-4.5,4.5-4.5ZM516.7,106.4c4.4,4.3,10,6.5,17,6.5s12.7-2.2,17-6.5c4.4-4.4,6.5-10.2,6.5-17.6s-2.2-13.2-6.5-17.6-10-6.5-17-6.5-12.7,2.2-17,6.5c-4.3,4.4-6.5,10.2-6.5,17.6s2.2,13.2,6.5,17.6Z"/>
+        <path fill="#fff" d="M628,49.9c0,1.5,2,2,2.7.7,2-3.4,4.9-6.1,8.4-8.3s8.6-4.1,13.4-4.7,5.1,1.8,5.1,4.5v23.9c0,2.5-2.1,4.5-4.7,4.4-5.5-.1-10.7,1.3-15.6,4.1-6.3,3.6-9.4,9.9-9.4,18.9v40.2c0,2.5-2,4.5-4.5,4.5h-20.7c-2.5,0-4.5-2-4.5-4.5V43.8c0-2.5,2-4.5,4.5-4.5h20.7c2.5,0,4.5,2,4.5,4.5v6.1Z"/>
+        <path fill="#fff" d="M728,67.8h-11.4c-2.5,0-4.5,2-4.5,4.5v30.5c0,4,1.6,6.5,4.7,7.5,2.5.8,6.1,1.2,11.1,1.1,2.5,0,4.6,2,4.6,4.5v18.2c0,2.3-1.8,4.3-4.1,4.5-16.7,1.3-28.4-.6-35.1-5.8-7.3-5.6-10.9-15.6-10.9-30v-30.5c0-2.5-2-4.5-4.5-4.5h-6.9c-2.5,0-4.5-2-4.5-4.5v-19.5c0-2.5,2-4.5,4.5-4.5h6.9c2.5,0,4.5-2,4.5-4.5v-17.4c0-2,1.3-3.7,3.2-4.3l20.7.2c2.9-.9,5.8,1.3,5.8,4.3v17.2c0,2.5,2,4.5,4.5,4.5h11.4c2.5,0,4.5,2,4.5,4.5v19.5c0,2.5-2,4.5-4.5,4.5Z"/>
+        <path fill="#fff" d="M772.8,100.6c-1.1,0-1.8,1.1-1.4,2.1,3.8,7.8,11.4,11.8,22.8,11.8s12.5-1.8,16.9-5.5c1.4-1.2,3.4-1.3,5-.4l16.3,9.4c2.5,1.4,3,4.8,1.1,6.9-9.6,10.7-22.8,16.1-39.7,16.1s-29.9-4.9-39.8-14.8c-10-9.9-14.9-22.3-14.9-37.4s4.9-27.3,14.7-37.3c9.8-10,22.4-14.9,37.9-14.9s26.3,5,35.9,14.9c9.6,10,14.3,22.4,14.3,37.3s-.2,5.4-.5,8-2.2,3.9-4.5,3.9h-64.2ZM772,78.5h38.4c1,0,1.8-1,1.4-2-3.2-9.1-10-13.6-20.3-13.6s-17.7,4.6-20.9,13.6c-.3,1,.4,2,1.4,2Z"/>
+        <path fill="#fff" d="M902.8,141c-15,0-27.5-5-37.5-15-10-10-14.9-22.4-14.9-37.2s5-27.2,14.9-37.2c10-10,22.4-15,37.5-15s18.2,2.3,26.2,6.9c6.5,3.7,11.7,8.5,15.8,14.2,1.5,2.2.9,5.2-1.4,6.5l-18.1,10.5c-2,1.2-4.5.5-5.9-1.3-3.8-5-9.4-7.6-17.1-7.6s-11.8,2.1-16,6.4c-4.2,4.3-6.3,9.8-6.3,16.5s2.1,12.2,6.3,16.5c4.2,4.3,9.6,6.4,16,6.4s13.4-2.5,17.1-7.5c1.4-1.9,3.9-2.5,5.9-1.4l18,10.3c2.3,1.3,3,4.3,1.4,6.5-4.1,5.8-9.3,10.6-15.8,14.4-7.9,4.6-16.7,6.9-26.3,6.9Z"/>
+        <path fill="#fff" d="M1016.6,36.6c10.5,0,19.3,3.6,26.4,10.9,7.1,7.3,10.6,17.3,10.6,30.1v56.2c0,2.5-2,4.5-4.5,4.5h-20.7c-2.5,0-4.5-2-4.5-4.5v-51.9c0-5.8-1.6-10.2-4.8-13.3-3.2-3.1-7.3-4.6-12.4-4.6s-10.2,1.7-13.4,5.1c-3.3,3.4-4.9,8.5-4.9,15.2v49.5c0,2.5-2,4.5-4.5,4.5h-20.7c-2.5,0-4.5-2-4.5-4.5V5.5c0-2,1.3-3.8,3.3-4.3l20.7.2c2.9-.8,5.7,1.3,5.7,4.3v38.9c0,1.3,1.6,2,2.5,1,6-6,14.5-9.1,25.7-9.1Z"/>
+      </g><g>
+        <path fill="#fe6930" d="M338.9,209.7c-5.1,0-9.3-1.7-12.6-5.1-3.3-3.4-5-7.6-5-12.6s1.7-9.2,5-12.6c3.3-3.4,7.6-5.1,12.6-5.1s5.9.7,8.4,2.1c2,1.1,3.7,2.5,5.1,4.2.6.8.3,1.9-.5,2.4l-3.8,2.2c-.7.4-1.6.2-2.1-.5-.6-.8-1.4-1.4-2.3-1.9-1.4-.7-2.9-1.1-4.7-1.1-3,0-5.4.9-7.2,2.8-1.8,1.8-2.7,4.3-2.7,7.3s.9,5.5,2.7,7.3c1.8,1.8,4.2,2.8,7.2,2.8s3.3-.4,4.7-1.1c1-.5,1.8-1.2,2.4-1.9.5-.6,1.4-.7,2.1-.3l3.8,2.2c.8.5,1.1,1.6.5,2.4-1.3,1.7-3,3.1-5,4.2-2.6,1.4-5.4,2.1-8.5,2.1Z"/>
+        <path fill="#fe6930" d="M412,204.7c-3.4,3.4-7.6,5.1-12.5,5.1s-9.1-1.7-12.5-5.1c-3.4-3.4-5.1-7.6-5.1-12.6s1.7-9.2,5.1-12.6c3.4-3.4,7.6-5.1,12.5-5.1s9.1,1.7,12.5,5.1c3.4,3.4,5.1,7.6,5.1,12.6s-1.7,9.2-5.1,12.6ZM392.4,199.4c1.9,1.9,4.2,2.8,7.1,2.8s5.2-.9,7.1-2.8c1.9-1.9,2.8-4.3,2.8-7.3s-.9-5.4-2.8-7.3c-1.9-1.9-4.2-2.8-7.1-2.8s-5.2.9-7.1,2.8c-1.9,1.9-2.8,4.3-2.8,7.3s.9,5.4,2.8,7.3Z"/>
+        <path fill="#fe6930" d="M468.8,175.1h4.4c.9,0,1.7.8,1.7,1.7v30.6c0,.9-.8,1.7-1.7,1.7h-3.3c-.5,0-1.1-.3-1.4-.7l-11.6-16.3c-.3-.4-1-.2-1,.3v15c0,.9-.8,1.7-1.7,1.7h-4.4c-.9,0-1.7-.8-1.7-1.7v-30.6c0-.9.8-1.7,1.7-1.7h3.3c.5,0,1.1.3,1.4.7l11.6,16.3c.3.4,1,.2,1-.3v-15c0-.9.8-1.7,1.7-1.7Z"/>
+        <path fill="#fe6930" d="M518.7,209.7c-3.5,0-6.3-.8-8.7-2.3-1.9-1.2-3.3-2.8-4.3-4.8-.4-.8,0-1.7.7-2.1l3.9-2.3c.7-.4,1.7-.3,2.2.5,1.4,2.2,3.6,3.4,6.4,3.4s4.6-.9,4.6-2.8-.5-1.8-1.5-2.4c-1-.6-2.8-1.2-5.6-2-1.4-.4-2.7-.8-3.7-1.3-1.1-.5-2.1-1.1-3.1-1.9-1-.8-1.8-1.8-2.3-3-.5-1.2-.8-2.6-.8-4.1,0-3.1,1.1-5.6,3.4-7.5,2.2-1.9,4.9-2.8,8-2.8s5.2.7,7.4,2c1.7,1,3.1,2.5,4.2,4.2.5.8.2,1.8-.6,2.3l-5.1,3c-.6-1.3-1.4-2.3-2.3-2.9-.9-.7-2.1-1-3.6-1s-2.1.3-2.7.8-.9,1.1-.9,1.8.4,1.6,1.2,2.2c.8.6,2.4,1.3,4.9,2,1.4.4,2.4.8,3.2,1,.7.3,1.7.7,2.8,1.3,1.1.6,2,1.2,2.6,1.9.6.7,1.1,1.5,1.6,2.6.5,1.1.7,2.3.7,3.7,0,3.2-1.2,5.8-3.5,7.6-2.3,1.9-5.4,2.8-9.1,2.8Z"/>
+        <path fill="#fe6930" d="M584.1,206.6c-2.5,2.1-5.6,3.2-9.4,3.2s-7-1-9.4-3.2c-2.5-2.1-3.7-4.9-3.7-8.5v-21.3c0-.9.8-1.7,1.7-1.7h4.4c.9,0,1.7.8,1.7,1.7v20.6c0,3.2,1.8,4.8,5.3,4.8s5.3-1.6,5.3-4.8v-20.6c0-.9.8-1.7,1.7-1.7h4.4c.9,0,1.7.8,1.7,1.7v21.3c0,3.6-1.2,6.4-3.7,8.5Z"/>
+        <path fill="#fe6930" d="M629.5,201.6h8.8c.9,0,1.7.8,1.7,1.7v4.1c0,.9-.8,1.7-1.7,1.7h-16.5c-.9,0-1.7-.8-1.7-1.7v-30.6c0-.9.8-1.7,1.7-1.7h4.4c.9,0,1.7.8,1.7,1.7v23.1c0,.9.8,1.7,1.7,1.7Z"/>
+        <path fill="#fe6930" d="M689.4,176.8v4.1c0,.9-.8,1.7-1.7,1.7h-5.4c-.9,0-1.7.8-1.7,1.7v23.1c0,.9-.8,1.7-1.7,1.7h-4.4c-.9,0-1.7-.8-1.7-1.7v-23.1c0-.9-.8-1.7-1.7-1.7h-5.4c-.9,0-1.7-.8-1.7-1.7v-4.1c0-.9.8-1.7,1.7-1.7h21.9c.9,0,1.7.8,1.7,1.7Z"/>
+        <path fill="#fe6930" d="M721.2,175.1h4.4c.9,0,1.7.8,1.7,1.7v30.6c0,.9-.8,1.7-1.7,1.7h-4.4c-.9,0-1.7-.8-1.7-1.7v-30.6c0-.9.8-1.7,1.7-1.7Z"/>
+        <path fill="#fe6930" d="M779.2,175.1h6.6c.3,0,.6.3.6.6v32.8c0,.3-.3.6-.6.6h-5c-.2,0-.4,0-.5-.2l-11.9-16.8c-.3-.4-1-.2-1,.3v16.1c0,.3-.3.6-.6.6h-6.6c-.3,0-.6-.3-.6-.6v-32.8c0-.3.3-.6.6-.6h5c.2,0,.4,0,.5.2l11.9,16.8c.3.4,1,.2,1-.3v-16.1c0-.3.3-.6.6-.6Z"/>
+        <path fill="#fe6930" d="M850.8,190.2c.9,0,1.7.8,1.7,1.7v1.2c0,5.1-1.6,9.1-4.7,12.1-3.2,3-7.2,4.5-12,4.5s-9.6-1.7-13.1-5.1c-3.5-3.4-5.2-7.6-5.2-12.5s1.7-9.1,5.2-12.6c3.4-3.4,7.7-5.1,12.6-5.1s6.1.7,8.7,2.1c2,1.1,3.7,2.4,5,4,.7.8.4,2-.5,2.5l-3.8,2.2c-.7.4-1.5.2-2-.3-.7-.7-1.5-1.3-2.5-1.9-1.5-.7-3.1-1.1-5-1.1-2.9,0-5.3,1-7.2,2.9-1.9,1.9-2.8,4.3-2.8,7.3s1,5.3,2.9,7.2c1.9,1.9,4.5,2.8,7.8,2.8s6.9-1.5,8.4-4.5c.2-.4-.1-.8-.5-.8h-6.5c-.9,0-1.7-.8-1.7-1.7v-3.4c0-.9.8-1.7,1.7-1.7h13.7Z"/>
+      </g></g>
+      <g>
+        <path fill="#fe6930" d="M232.3,39.1c15.3,0,27.7,12.4,27.7,27.7v13.8c0,11.8-7.9,21.8-19,25.8-2.5.9-4.8,2.5-6.6,4.6l-14,16.2-12-13.8c-3-3.5-7.5-5.5-12.1-5.5h-2.7c-1.7,0-3.1,1.4-3.1,3.1v6.1c0,1.7,1.4,3.1,3.1,3.1h2.7c1.1,0,2.1.5,2.9,1.3l12.1,14c2.3,2.7,5.6,4.2,9.1,4.2s6.8-1.5,9.1-4.2l14.1-16.4c.4-.5,1-.9,1.5-1.1,16.2-5.5,27.1-20.7,27.1-37.9v-13.3c0-22.1-17.9-40-40-40h-62.9c-5.2,0-10.2,1-14.7,2.8-1.4.5-1.3,2.4.1,2.9,4.6,1.4,9.3,3.3,13.2,5.8s1.9.9,2.9.9h61.4Z"/>
+        <path fill="#fff" d="M238.2,73.9c-.6-4.9-3-9.4-6.9-12.5-3.9-3.1-8.8-4.5-13.7-3.9-4.9.6-9.4,3-12.5,6.9-1.1,1.3-1.9,2.8-2.6,4.4-.3.7-.9,1.1-1.6,1.1h-18.5c-.4,0-.7-.2-.8-.6-5.3-16.8-21-29-39.5-29H42.9c-18.6,0-35,12.4-39.9,30.3-.7,2.6-.5,5.4.9,7.6s4.3,3.9,7.3,3.9h189.9c.7,0,1.3.4,1.6,1.1,1.2,2.8,3.1,5.4,5.6,7.3,3.3,2.6,7.4,4,11.5,4s2.2,0,3.3-.3c3.1-.5,6-1.8,8.4-3.8,5.1-4.2,7.5-10.3,6.8-16.6ZM17.5,69.9c-.6,0-1-.7-.8-1.2,4.9-9.7,14.9-16.1,26.1-16.1h99.3c11.4,0,21.3,6.6,26.1,16.1.3.6-.1,1.2-.8,1.2H17.5ZM224.7,80c-1.1,1.3-2.6,2.2-4.2,2.4-1.7.2-3.3-.3-4.7-1.3-1.3-1.1-2.2-2.6-2.4-4.2-.2-1.7.3-3.3,1.3-4.7,1.1-1.3,2.6-2.2,4.2-2.4.2,0,.5,0,.7,0,1.4,0,2.8.5,3.9,1.4,1.3,1.1,2.2,2.6,2.4,4.2s-.3,3.3-1.3,4.7Z"/>
+        <path fill="#fff" d="M171.3,116.5c0,16.1-13.1,29.2-29.2,29.2h-17c-4.9,0-9.6,2.1-12.8,5.9l-17.6,20.2-17.5-20.2c-3.2-3.7-7.9-5.8-12.8-5.8h-21.6c-14.5,0-26.6-10.7-28.8-24.6,0-.5.3-1,.8-1h67.6c.7,0,1.3.4,1.6,1.1,2.9,6.8,9.6,11.4,17.1,11.4s5.6-.6,8.3-1.9c6.1-2.9,10.1-9.2,10.3-15.9.4-11.6-9.6-20.5-20.7-19.2-6.9.8-12.5,5.3-15,11.3-.3.7-.9,1.1-1.6,1.1H10c-4.8,0-8.6,3.9-8.6,8.6,0,22.9,18.6,41.5,41.4,41.5h21.6c1.3,0,2.6.6,3.5,1.6l17.5,20.2c2.3,2.7,5.8,4.3,9.3,4.3h0c3.6,0,7-1.6,9.3-4.3l17.5-20.2c.9-1,2.2-1.6,3.5-1.6h17c22.9,0,41.4-18.6,41.4-41.4v-19c0-1.7-1.4-3.1-3.1-3.1h-6.1c-1.7,0-3.1,1.4-3.1,3.1v19ZM100.5,107.7c.2,0,.5,0,.7,0,3.2,0,5.9,2.4,6.3,5.6.4,3.5-2.1,6.6-5.6,7-1.7.2-3.3-.3-4.7-1.3s-2.2-2.6-2.4-4.2c-.4-3.5,2.1-6.6,5.6-7Z"/>
+      </g>
+    </svg>
+  </a>
+  <a href="https://martechconsulting.io" class="topbar__back">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    Back to main site
+  </a>
+</div>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero__grid"></div>
+  <div class="hero__glow"></div>
+  <div class="hero__content">
+    <div class="container">
+      <div class="hero__layout">
+
+        <div>
+          <div class="eyebrow on-dark">Website for HVAC Companies</div>
+          <h1 class="display" style="margin-top:.5rem;">
+            Your next customer<br>is already <em>Googling.</em><br>Are they finding you?
+          </h1>
+          <p class="hero__sub">
+            We build professional websites for HVAC companies. Your phone number, services, and service area are built to show up when homeowners need heat, AC, or a fast repair.
+          </p>
+          <div class="hero__ctas">
+            <a href="#get-started" class="btn btn-primary btn-lg">
+              Get started for $100 down
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a href="#what-you-get" class="btn btn-ghost btn-lg">See what's included</a>
+          </div>
+          <div class="hero__proof">
+            <div class="proof__item">
+              <div class="proof__num">$100</div>
+              <div class="proof__label">to start, today</div>
+            </div>
+            <div class="proof__item">
+              <div class="proof__num">$100</div>
+              <div class="proof__label">per month after</div>
+            </div>
+            <div class="proof__item">
+              <div class="proof__num">2-yr</div>
+              <div class="proof__label">minimum term</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Price card -->
+        <div class="price-hero-card">
+          <div class="price-hero-card__badge">Simple pricing</div>
+          <h3>One flat rate.<br>Everything included.</h3>
+          <p class="price-hero-card__sub">No surprise invoices. No paying extra for pages. No hidden SEO fees.</p>
+          <div class="price-row">
+            <div class="price-row__label">Get started today</div>
+            <div class="price-row__amount">$100 <small>one-time deposit</small></div>
+          </div>
+          <div class="price-row">
+            <div class="price-row__label">Ongoing monthly</div>
+            <div class="price-row__amount">$100<small>per month / 2-yr term</small></div>
+          </div>
+          <div class="price-row">
+            <div class="price-row__label">Total over 2 years</div>
+            <div class="price-row__amount">$2,500<small>that's it. no extras.</small></div>
+          </div>
+          <p class="price-hero-card__note">Hosting, updates, and support included.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── PROBLEM ── -->
+<section class="bg-off" id="problem">
+  <div class="container">
+    <div class="reveal" style="max-width:560px;margin-bottom:3.5rem;">
+      <div class="eyebrow blue">The real problem</div>
+      <h2 class="section-title" style="margin-top:.6rem;color:var(--ink);">
+        Being great at HVAC<br>doesn't mean they'll <em>find you.</em>
+      </h2>
+      <p style="font-size:1rem;color:var(--mid);line-height:1.75;margin-top:1rem;">
+        Most HVAC companies lose business every single week because their online presence doesn't match the quality of their work. Here's what that looks like:
+      </p>
+    </div>
+    <div class="problem-grid reveal">
+      <div class="problem-item">
+        <div class="problem-item__num">01</div>
+        <h3 class="problem-item__title">You're invisible on Google</h3>
+        <p class="problem-item__body">When someone searches "HVAC near me" or "furnace repair [your town]," your competitor shows up. Not you. No website means no shot at that call.</p>
+      </div>
+      <div class="problem-item">
+        <div class="problem-item__num">02</div>
+        <h3 class="problem-item__title">They can't reach you</h3>
+        <p class="problem-item__body">Even if someone finds your Facebook page or a directory listing, there's nowhere to learn what you do, what towns you serve, or how to book you. They bounce.</p>
+      </div>
+      <div class="problem-item">
+        <div class="problem-item__num">03</div>
+        <h3 class="problem-item__title">You look smaller than you are</h3>
+        <p class="problem-item__body">A professional website tells customers you're established and trustworthy. Without one, you're competing on price with whoever answers the phone first.</p>
+      </div>
+      <div class="problem-item">
+        <div class="problem-item__num">04</div>
+        <h3 class="problem-item__title">Word of mouth only goes so far</h3>
+        <p class="problem-item__body">Referrals are great. But every customer who looks you up and finds nothing, or nothing useful, that job went to someone else.</p>
+      </div>
+      <div class="problem-item">
+        <div class="problem-item__num">05</div>
+        <h3 class="problem-item__title">Busy season hits, then goes quiet</h3>
+        <p class="problem-item__body">A website works 24/7 even when you're on a job. It collects leads in July so you're not scrambling in October.</p>
+      </div>
+      <div class="problem-item">
+        <div class="problem-item__num">06</div>
+        <h3 class="problem-item__title">You're paying full price for tools you don't have</h3>
+        <p class="problem-item__body">Big website agencies charge $5,000–$10,000 upfront for HVAC sites. You shouldn't need that to get found in your own backyard.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── WHAT'S INCLUDED ── -->
+<section class="bg-white" id="what-you-get">
+  <div class="container">
+    <div class="reveal" style="max-width:560px;margin-bottom:3rem;">
+      <div class="eyebrow blue">What's included</div>
+      <h2 class="section-title" style="color:var(--ink);margin-top:.6rem;">
+        Everything you need.<br><em>Nothing you don't.</em>
+      </h2>
+      <p style="font-size:1rem;color:var(--mid);line-height:1.75;margin-top:1rem;">
+        We build sites that work for HVAC companies. Not a generic template with your logo swapped in.
+      </p>
+    </div>
+    <div class="features-grid reveal">
+      <div class="feature-card">
+        <div class="feature-card__icon">🏠</div>
+        <div class="feature-card__title">A real homepage</div>
+        <div class="feature-card__body">Your services, your service area, your phone number. All above the fold where customers see it immediately.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card__icon">📍</div>
+        <div class="feature-card__title">Local SEO built in</div>
+        <div class="feature-card__body">We target the towns you actually work in. When someone in your area searches for HVAC help, your name comes up.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card__icon">📞</div>
+        <div class="feature-card__title">Click-to-call on mobile</div>
+        <div class="feature-card__body">Most searches happen on a phone. One tap and they're calling you. No copying, no hunting for a number.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card__icon">⭐</div>
+        <div class="feature-card__title">Reviews front and center</div>
+        <div class="feature-card__body">Your Google reviews are your best sales pitch. We display them prominently so new customers trust you before they call.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card__icon">📋</div>
+        <div class="feature-card__title">Services page that converts</div>
+        <div class="feature-card__body">AC installs, furnace repair, heat pumps, tune-ups. Each service listed clearly so customers know you do exactly what they need.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card__icon">📬</div>
+        <div class="feature-card__title">Lead capture form</div>
+        <div class="feature-card__body">A simple form so potential customers can reach you anytime; even when you're on a job and can't pick up.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card__icon">🔒</div>
+        <div class="feature-card__title">Secure & fast hosting</div>
+        <div class="feature-card__body">Your site loads fast on phones and computers. HTTPS included so Google and your customers both trust it.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card__icon">🔧</div>
+        <div class="feature-card__title">Updates & support</div>
+        <div class="feature-card__body">Add a service, update your hours, change your number. We handle it as part of your monthly plan. No extra charge.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card__icon">📊</div>
+        <div class="feature-card__title">Google Analytics setup</div>
+        <div class="feature-card__body">See how many people visit your site, where they're coming from, and what they click. We set it up so it's there when you want it.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── HOW IT WORKS ── -->
+<section class="bg-cream" id="how-it-works">
+  <div class="container">
+    <div class="reveal" style="max-width:560px;margin-bottom:3.5rem;">
+      <div class="eyebrow blue">How it works</div>
+      <h2 class="section-title" style="color:var(--ink);margin-top:.6rem;">
+        From signup to <em>live site</em><br>in about two weeks.
+      </h2>
+    </div>
+    <div class="steps reveal">
+      <div>
+        <div class="step__num">1</div>
+        <div class="step__title">Fill out the form below</div>
+        <div class="step__body">Tell us your business name, the services you offer, and the towns you cover. Takes 5 minutes.</div>
+      </div>
+      <div>
+        <div class="step__num">2</div>
+        <div class="step__title">We build it for you</div>
+        <div class="step__body">We write the content, set up the pages, and handle the technical stuff. You don't need to touch a thing.</div>
+      </div>
+      <div>
+        <div class="step__num">3</div>
+        <div class="step__title">You review and approve</div>
+        <div class="step__body">We send you a preview. You tell us if anything needs to change. We revise until it looks exactly right.</div>
+      </div>
+      <div>
+        <div class="step__num">4</div>
+        <div class="step__title">Your site goes live</div>
+        <div class="step__body">We publish it to your domain and submit it to Google. Then the phone starts ringing.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── CALLOUT ── -->
+<section class="bg-off" style="padding: clamp(2rem,5vw,3.5rem) 0;">
+  <div class="container--narrow">
+    <div class="callout reveal">
+      <div class="callout__label">Who this is for</div>
+      <div class="callout__text">
+        This is built for HVAC contractors who are already doing good work and want more of it. Not a massive operation looking for enterprise software. If you're a 1–10 person shop, running service calls in your area, and you know you need a better web presence but don't want to pay $8,000 for it, this is exactly right for you.
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── FAQ ── -->
+<section class="bg-white" id="faq">
+  <div class="container--narrow">
+    <div class="reveal" style="margin-bottom:2.5rem;">
+      <div class="eyebrow blue">Common questions</div>
+      <h2 class="section-title" style="color:var(--ink);margin-top:.6rem;">
+        Straight answers to<br><em>the obvious questions.</em>
+      </h2>
+    </div>
+    <div class="faq-list reveal">
+      <div class="faq-item">
+        <div class="faq-item__q">
+          What do I get for $100/month exactly?
+          <div class="faq-item__icon">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#7a94a8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+          </div>
+        </div>
+        <div class="faq-item__a">Your monthly fee covers hosting, security, software, and ongoing support. If you need to add a service, update your service area, change your phone number, or tweak the site, that's included. No separate maintenance fees.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-item__q">
+          Do I need to own a domain name already?
+          <div class="faq-item__icon">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#7a94a8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+          </div>
+        </div>
+        <div class="faq-item__a">No. If you already have one, great. We'll connect the site to it. If you don't, we'll help you register one. Domain registration is usually around $15–$20/year and is a separate cost you pay directly to the registrar (not us).</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-item__q">
+          What's the two-year minimum about?
+          <div class="faq-item__icon">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#7a94a8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+          </div>
+        </div>
+        <div class="faq-item__a">SEO takes time. A website that's been live for 12–18 months ranks meaningfully better than one that was just published. The two-year term lets us actually deliver results, not just launch a site and walk away. We're not trying to lock you in. We're trying to make sure the thing works.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-item__q">
+          Will this actually help me show up on Google?
+          <div class="faq-item__icon">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#7a94a8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+          </div>
+        </div>
+        <div class="faq-item__a">Yes, but to be honest with you, it takes a few months to build traction. We build the site with proper local SEO from the start (the right keywords, the right page structure, your service area built in), but Google needs time to index and trust a new domain. Most clients see meaningful improvement in 3–6 months.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-item__q">
+          I already have a website. Can you improve it instead?
+          <div class="faq-item__icon">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#7a94a8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+          </div>
+        </div>
+        <div class="faq-item__a">Reach out and tell us what you've got. We can take a look and let you know whether a rebuild makes more sense than an overhaul. Sometimes it does, sometimes it doesn't.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-item__q">
+          What if I want to cancel before two years?
+          <div class="faq-item__icon">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#7a94a8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+          </div>
+        </div>
+        <div class="faq-item__a">We'll discuss the terms when you sign on. The short version: the two-year commitment is real. We put significant time into building and supporting these sites, and the $100/month pricing only makes sense at that term length. That said, life happens. We're reasonable people and we'll work with you.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-item__q">
+          How involved do I have to be?
+          <div class="faq-item__icon">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#7a94a8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+          </div>
+        </div>
+        <div class="faq-item__a">Minimal. We need your business info upfront (name, services, service area, phone, a few photos if you have them). After that, we handle everything. You'll review a draft before it goes live, and that's mostly it unless you want changes.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── FORM ── -->
+<section class="bg-cream" id="get-started">
+  <div class="container">
+    <div class="reveal" style="text-align:center;max-width:560px;margin:0 auto 3rem;">
+      <div class="eyebrow" style="justify-content:center;">Get started</div>
+      <h2 class="section-title" style="color:var(--ink);margin-top:.6rem;">
+        Tell us about your<br><em>HVAC business.</em>
+      </h2>
+      <p style="font-size:1rem;color:var(--mid);line-height:1.75;margin-top:1rem;">
+        Fill this out and we'll follow up within one business day to talk through next steps. No obligation.
+      </p>
+    </div>
+
+    <div class="form-card reveal">
+      <h2>Let's build your site</h2>
+      <p class="form-card__sub">$100 down today. $100/month for a 2-year term. We handle everything after this.</p>
+
+      <div class="form-error-msg" id="formError">Something went wrong. Please check your info and try again.</div>
+
+      <form id="hvacForm" novalidate>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="f-name">Your name <span>*</span></label>
+            <input type="text" id="f-name" name="Name" placeholder="Mike Thibodeau" required autocomplete="name"/>
+          </div>
+          <div class="form-group">
+            <label for="f-company">Business name <span>*</span></label>
+            <input type="text" id="f-company" name="Company" placeholder="Thibodeau HVAC" required autocomplete="organization"/>
+          </div>
+          <div class="form-group">
+            <label for="f-email">Email address <span>*</span></label>
+            <input type="email" id="f-email" name="Email" placeholder="mike@thibodeauhvac.com" required autocomplete="email"/>
+          </div>
+          <div class="form-group">
+            <label for="f-phone">Phone number <span>*</span></label>
+            <input type="tel" id="f-phone" name="Phone" placeholder="(603) 555-0100" required autocomplete="tel"/>
+          </div>
+          <div class="form-group">
+            <label for="f-city">Your city / town</label>
+            <input type="text" id="f-city" name="City" placeholder="Dover" autocomplete="address-level2"/>
+          </div>
+          <div class="form-group">
+            <label for="f-state">State</label>
+            <select id="f-state" name="State" autocomplete="address-level1">
+              <option value="NH" selected>New Hampshire</option>
+              <option value="ME">Maine</option>
+              <option value="VT">Vermont</option>
+              <option value="MA">Massachusetts</option>
+              <option value="CT">Connecticut</option>
+              <option value="RI">Rhode Island</option>
+              <option value="NY">New York</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="form-group full">
+            <label for="f-notes">Tell us about your business (optional)</label>
+            <textarea id="f-notes" name="Notes" placeholder="What services do you offer? What towns do you cover? Anything specific you want on the site?"></textarea>
+          </div>
+        </div>
+
+        <div class="form-submit-wrap">
+          <button type="submit" class="btn btn-primary" id="submitBtn">
+            <span id="submitLabel">Get started for $100 down</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+        <p class="form-disclaimer">We'll follow up within one business day. No payment collected here. We'll send you a link once we've talked through the details.</p>
+      </form>
+
+      <div class="form-success" id="formSuccess">
+        <div class="form-success__icon">✅</div>
+        <h3>Got it. We'll be in touch.</h3>
+        <p>Expect a message from Keith or Jon within one business day to go over next steps and get your site started.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── CTA BAND ── -->
+<section class="cta-band">
+  <div class="container cta-band__inner">
+    <div class="eyebrow on-dark" style="justify-content:center;">Ready when you are</div>
+    <h2 class="section-title on-dark" style="margin-top:.6rem;">
+      A professional website.<br><em>$100 to start.</em>
+    </h2>
+    <p class="cta-band__sub">Every week without a site is a job that went to someone else. Let's fix that.</p>
+    <div class="cta-band__btns">
+      <a href="#get-started" class="btn btn-primary btn-lg">
+        Fill out the form
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="https://martechconsulting.io/contact.html" class="btn btn-ghost btn-lg">Talk to us first</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── FOOTER ── -->
+<footer class="footer">
+  <div class="container">
+    <p>© 2026 Martech Consulting · Dover, NH · <a href="https://martechconsulting.io">martechconsulting.io</a></p>
+  </div>
+</footer>
+
+
+<script>
+  /* ── Scroll reveal ── */
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  revealEls.forEach(el => io.observe(el));
+
+  /* ── FAQ accordion ── */
+  document.querySelectorAll('.faq-item__q').forEach(q => {
+    q.addEventListener('click', () => {
+      const item = q.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(o => o.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+
+  /* ── Form submission ── */
+  const form      = document.getElementById('hvacForm');
+  const submitBtn = document.getElementById('submitBtn');
+  const submitLbl = document.getElementById('submitLabel');
+  const errorBox  = document.getElementById('formError');
+  const successEl = document.getElementById('formSuccess');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    errorBox.style.display = 'none';
+
+    // Client-side validation
+    const required = [
+      { id: 'f-name',    label: 'Your name' },
+      { id: 'f-company', label: 'Business name' },
+      { id: 'f-email',   label: 'Email address' },
+      { id: 'f-phone',   label: 'Phone number' },
+    ];
+    for (const { id, label } of required) {
+      const val = document.getElementById(id).value.trim();
+      if (!val) {
+        errorBox.textContent = `Please fill in your ${label.toLowerCase()} before submitting.`;
+        errorBox.style.display = 'block';
+        document.getElementById(id).focus();
+        return;
+      }
+    }
+    const email = document.getElementById('f-email').value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      errorBox.textContent = 'Please enter a valid email address.';
+      errorBox.style.display = 'block';
+      return;
+    }
+
+    // Loading state
+    submitBtn.disabled = true;
+    submitLbl.textContent = 'Sending…';
+
+    const payload = {
+      Name:    document.getElementById('f-name').value.trim(),
+      Company: document.getElementById('f-company').value.trim(),
+      Email:   document.getElementById('f-email').value.trim(),
+      Phone:   document.getElementById('f-phone').value.trim(),
+      City:    document.getElementById('f-city').value.trim(),
+      State:   document.getElementById('f-state').value,
+      Notes:   document.getElementById('f-notes').value.trim(),
+    };
+
+    try {
+      const res = await fetch('/api/hvac-lead', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify(payload),
+      });
+
+      const data = await res.json();
+
+      if (res.ok && data.success) {
+        form.style.display = 'none';
+        successEl.style.display = 'block';
+      } else {
+        throw new Error(data.error || 'Unknown error');
+      }
+    } catch (err) {
+      console.error('Submission error:', err);
+      errorBox.textContent = 'Something went wrong on our end. Please email us directly at jonathan@martechconsulting.io.';
+      errorBox.style.display = 'block';
+      submitBtn.disabled = false;
+      submitLbl.textContent = 'Get started for $100 down';
+    }
+  });
+
+  /* ── Smooth scroll for anchor links ── */
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
+</body>
+</html>
