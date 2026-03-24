@@ -1,9 +1,3 @@
-// functions/api/hvac-lead.js
-// Cloudflare Pages Function — keeps the Airtable token server-side only
-// Required env vars (set in Cloudflare dashboard, NOT in code):
-//   AIRTABLE_TOKEN       — your personal access token
-//   AIRTABLE_BASE_ID     — the base ID (starts with "app")
-//   AIRTABLE_TABLE_NAME  — e.g. "Leads" (URL-encoded if it has spaces)
 
 export async function onRequestPost({ request, env }) {
   // ── CORS preflight passthrough ──
@@ -47,7 +41,7 @@ export async function onRequestPost({ request, env }) {
     'City':         String(body.City || '').trim(),
     'State':        String(body.State || 'NH').trim(),
     'Notes':        String(body.Notes || '').trim(),
-    'Lead Source':  'HVAC Website Landing Page',
+    'Lead Source':  'Home Services Landing Page',
     'Status':       'New',
   };
 
@@ -56,8 +50,7 @@ export async function onRequestPost({ request, env }) {
     if (v === '') delete fields[k];
   }
 
-  const tableName = env.AIRTABLE_TABLE_NAME || 'Leads';
-  const url = `https://api.airtable.com/v0/${env.AIRTABLE_BASE_ID}/${encodeURIComponent(tableName)}`;
+  const url = `https://api.airtable.com/v0/${env.AIRTABLE_BASE_ID}/HVAC%20Website%20Build%20Lead%20Table`;
 
   let atRes;
   try {
