@@ -1,12 +1,4 @@
-// functions/api/hvac-lead.js
-// Cloudflare Pages Function — keeps the Airtable token server-side only
-// Required env vars (set in Cloudflare dashboard, NOT in code):
-//   AIRTABLE_TOKEN       — your personal access token
-//   AIRTABLE_BASE_ID     — the base ID (starts with "app")
-//   AIRTABLE_TABLE_NAME  — e.g. "Leads" (URL-encoded if it has spaces)
-
 export async function onRequestPost({ request, env }) {
-  // ── CORS preflight passthrough ──
   const origin = request.headers.get('Origin') || '';
   const corsHeaders = {
     'Access-Control-Allow-Origin': origin,
@@ -25,7 +17,7 @@ export async function onRequestPost({ request, env }) {
     });
   }
 
-  // ── Basic server-side validation ──
+  // Server-side validation
   const required = ['Name', 'Email', 'Phone', 'Company'];
   for (const field of required) {
     if (!body[field] || String(body[field]).trim() === '') {
@@ -36,29 +28,32 @@ export async function onRequestPost({ request, env }) {
     }
   }
 
-  // ── Build Airtable fields ──
-  // Map to whatever column names exist in your Leads base.
-  // Adjust field names here to match exactly what's in Airtable.
+  // Pack everything the table lacks dedicated columns for into Notes
+  const noteParts = [];
+  if (body.Name)      noteParts.push(`Contact: ${String(body.Name).trim()}`);
+  if (body.Email)     noteParts.push(`Email: ${String(body.Email).trim()}`);
+  if (body.State)     noteParts.push(`State: ${String(body.State).trim()}`);
+  if (body.BrandKit)  noteParts.push(`Brand Kit: ${String(body.BrandKit).trim()}`);
+  if (body.BrandLink) noteParts.push(`Brand Link: ${String(body.BrandLink).trim()}`);
+  if (body.Notes)     noteParts.push(`Notes: ${String(body.Notes).trim()}`);
+  noteParts.push('Source: Home Services Landing Page');
+
+  // Exact column names from HVAC Website Build Lead Table
   const fields = {
-    'Name':         String(body.Name).trim(),
-    'Email':        String(body.Email).trim().toLowerCase(),
-    'Phone':        String(body.Phone).trim(),
-    'Company':      String(body.Company).trim(),
-    'City':         String(body.City || '').trim(),
-    'State':        String(body.State || 'NH').trim(),
-    'Brand Kit':    String(body.BrandKit || '').trim(),
-    'Brand Link':   String(body.BrandLink || '').trim(),
-    'Notes':        String(body.Notes || '').trim(),
-    'Lead Source':  'Home Services Landing Page',
-    'Status':       'New',
+    'Business Name': String(body.Company).trim(),
+    'Phone':         String(body.Phone).trim(),
+    'Address':       [body.City, body.State].filter(Boolean).join(', '),
+    'Status':        'New - Inbound',
+    'Notes':         noteParts.join(' | '),
   };
 
-  // Remove empty optional fields
+  // Strip empty fields so Airtable doesn't choke
   for (const [k, v] of Object.entries(fields)) {
-    if (v === '') delete fields[k];
+    if (!v || String(v).trim() === '') delete fields[k];
   }
 
-  const url = `https://api.airtable.com/v0/${env.AIRTABLE_BASE_ID}/HVAC%20Website%20Build%20Lead%20Table`;
+  // Table ID used directly — no name encoding issues
+  const url = `https://api.airtable.com/v0/${env.AIRTABLE_PROPOSALS_BASE_ID}/tbl4XLVSmIqJqd1pl`;
 
   let atRes;
   try {
@@ -94,7 +89,7 @@ export async function onRequestPost({ request, env }) {
   });
 }
 
-// Handle OPTIONS preflight
+// OPTIONS preflight
 export async function onRequestOptions({ request }) {
   const origin = request.headers.get('Origin') || '';
   return new Response(null, {
