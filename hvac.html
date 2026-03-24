@@ -267,13 +267,14 @@
       background: #fff;
       border: 1px solid var(--rule);
       border-radius: 12px;
-      padding: clamp(2rem,4vw,3rem);
+      padding: clamp(1.5rem,4vw,2.5rem);
       max-width: 680px;
       margin: 0 auto;
+      transition: padding .3s ease;
     }
     .form-card h2 { font-family: var(--ff-head); font-size: clamp(1.4rem,3vw,2rem); font-weight: 400; color: var(--ink); margin-bottom: .5rem; }
     .form-card h2 em { font-style: italic; color: var(--orange); }
-    .form-card__sub { font-size: .9rem; color: var(--mid); line-height: 1.7; margin-bottom: 2rem; }
+    .form-card__sub { font-size: .9rem; color: var(--mid); line-height: 1.7; margin-bottom: 1.5rem; }
     .form-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
     @media(min-width:540px) { .form-grid { grid-template-columns: 1fr 1fr; } }
     .form-group { display: flex; flex-direction: column; gap: .4rem; }
@@ -301,6 +302,40 @@
     .form-submit-wrap { margin-top: 1.25rem; }
     .form-submit-wrap .btn { width: 100%; justify-content: center; font-size: 1rem; padding: 1.1rem 2rem; }
     .form-disclaimer { font-size: .73rem; color: var(--muted); text-align: center; margin-top: .75rem; line-height: 1.55; }
+
+    /* Progressive step */
+    .form-step {
+      grid-column: 1/-1;
+      overflow: hidden;
+      max-height: 0;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: max-height .4s ease, opacity .35s ease, transform .35s ease;
+      pointer-events: none;
+    }
+    .form-step.visible {
+      max-height: 600px;
+      opacity: 1;
+      transform: none;
+      pointer-events: auto;
+    }
+    .form-step-inner {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--rule);
+      margin-top: .25rem;
+    }
+    @media(min-width:540px) { .form-step-inner { grid-template-columns: 1fr 1fr; } }
+    .form-step-inner .full { grid-column: 1/-1; }
+    .form-step__label {
+      grid-column: 1/-1;
+      font-size: .68rem; font-weight: 700; letter-spacing: .16em;
+      text-transform: uppercase; color: var(--orange);
+      display: flex; align-items: center; gap: .5rem;
+    }
+    .form-step__label::before { content:''; display:block; width:1rem; height:2px; background:currentColor; flex-shrink:0; }
 
     /* Form states */
     .form-success {
@@ -842,6 +877,8 @@
 
       <form id="hvacForm" novalidate>
         <div class="form-grid">
+
+          <!-- ── Step 1: Always visible ── -->
           <div class="form-group">
             <label for="f-name">Your name <span>*</span></label>
             <input type="text" id="f-name" name="Name" placeholder="Mike Thibodeau" required autocomplete="name"/>
@@ -858,49 +895,94 @@
             <label for="f-phone">Phone number <span>*</span></label>
             <input type="tel" id="f-phone" name="Phone" placeholder="(603) 555-0100" required autocomplete="tel"/>
           </div>
-          <div class="form-group">
-            <label for="f-city">Your city / town</label>
-            <input type="text" id="f-city" name="City" placeholder="Dover" autocomplete="address-level2"/>
+
+          <!-- ── Step 2: Reveals after name + company filled ── -->
+          <div class="form-step" id="step-location">
+            <div class="form-step-inner">
+              <div class="form-step__label">Where are you located?</div>
+              <div class="form-group">
+                <label for="f-city">City / town</label>
+                <input type="text" id="f-city" name="City" placeholder="Dover" autocomplete="address-level2"/>
+              </div>
+              <div class="form-group">
+                <label for="f-state">State</label>
+                <select id="f-state" name="State" autocomplete="address-level1">
+                  <option value="NH" selected>New Hampshire</option>
+                  <option value="ME">Maine</option>
+                  <option value="VT">Vermont</option>
+                  <option value="MA">Massachusetts</option>
+                  <option value="CT">Connecticut</option>
+                  <option value="RI">Rhode Island</option>
+                  <option value="NY">New York</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+            </div>
           </div>
-          <div class="form-group">
-            <label for="f-state">State</label>
-            <select id="f-state" name="State" autocomplete="address-level1">
-              <option value="NH" selected>New Hampshire</option>
-              <option value="ME">Maine</option>
-              <option value="VT">Vermont</option>
-              <option value="MA">Massachusetts</option>
-              <option value="CT">Connecticut</option>
-              <option value="RI">Rhode Island</option>
-              <option value="NY">New York</option>
-              <option value="Other">Other</option>
-            </select>
+
+          <!-- ── Step 3: Reveals after email filled ── -->
+          <div class="form-step" id="step-website">
+            <div class="form-step-inner">
+              <div class="form-step__label">Your online presence</div>
+              <div class="form-group full">
+                <label for="f-webstatus">Do you currently have a website?</label>
+                <select id="f-webstatus" name="WebsiteStatus">
+                  <option value="">Select one</option>
+                  <option value="No Website">No, I don't have one</option>
+                  <option value="Facebook Only">Facebook page only</option>
+                  <option value="Existing Website - Redesign">Yes, but I want a new one</option>
+                </select>
+              </div>
+              <div class="form-group full" id="fbUrlWrap" style="display:none;">
+                <label for="f-fburl">Your Facebook page URL</label>
+                <input type="url" id="f-fburl" name="FacebookURL" placeholder="https://facebook.com/yourbusiness"/>
+              </div>
+              <div class="form-group full" id="websiteUrlWrap" style="display:none;">
+                <label for="f-websiteurl">Your current website URL</label>
+                <input type="url" id="f-websiteurl" name="WebsiteURL" placeholder="https://yourbusiness.com"/>
+              </div>
+            </div>
           </div>
-          <div class="form-group full" style="border-top:1px solid var(--rule);padding-top:1.1rem;margin-top:.25rem;">
-            <label for="f-brandkit">Do you have a brand kit? (logo, colors, fonts)</label>
-            <select id="f-brandkit" name="BrandKit">
-              <option value="">Select one</option>
-              <option value="Yes - I have a brand kit">Yes, I have one</option>
-              <option value="Sort of - I have a logo">Sort of, I have a logo</option>
-              <option value="No - use Very Good Home brand">No, use your brand for me</option>
-            </select>
+
+          <!-- ── Step 4: Reveals after website status chosen ── -->
+          <div class="form-step" id="step-brand">
+            <div class="form-step-inner">
+              <div class="form-step__label">Your brand</div>
+              <div class="form-group full">
+                <label for="f-brandkit">Do you have a logo or brand kit?</label>
+                <select id="f-brandkit" name="BrandKit">
+                  <option value="">Select one</option>
+                  <option value="Yes - I have a brand kit">Yes, full brand kit</option>
+                  <option value="Logo Only">Just a logo</option>
+                  <option value="No - use Very Good Home brand">No, use your brand for me</option>
+                </select>
+              </div>
+              <div class="form-group full" id="brandLinkWrap" style="display:none;">
+                <label for="f-brandlink">Share your brand files (Google Drive, Dropbox, etc.)</label>
+                <input type="url" id="f-brandlink" name="BrandLink" placeholder="https://drive.google.com/..."/>
+              </div>
+            </div>
           </div>
-          <div class="form-group full" id="brandLinkWrap" style="display:none;">
-            <label for="f-brandlink">Share a link to your brand files (Google Drive, Dropbox, etc.)</label>
-            <input type="url" id="f-brandlink" name="BrandLink" placeholder="https://drive.google.com/..."/>
+
+          <!-- ── Step 5: Reveals after brand answered ── -->
+          <div class="form-step" id="step-notes">
+            <div class="form-step-inner">
+              <div class="form-step__label">Anything else?</div>
+              <div class="form-group full">
+                <textarea id="f-notes" name="Notes" placeholder="Services you offer, towns you cover, anything specific you want on the site..."></textarea>
+              </div>
+            </div>
           </div>
-          <div class="form-group full">
-            <label for="f-notes">Tell us about your business (optional)</label>
-            <textarea id="f-notes" name="Notes" placeholder="What services do you offer? What towns do you cover? Anything specific you want on the site?"></textarea>
-          </div>
+
         </div>
 
-        <div class="form-submit-wrap">
+        <div class="form-submit-wrap" id="submitWrap" style="display:none;">
           <button type="submit" class="btn btn-primary" id="submitBtn">
             <span id="submitLabel">Get started for $150 down</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </button>
+          <p class="form-disclaimer">We'll follow up within one business day. No payment collected here. We'll send you a link once we've talked through the details.</p>
         </div>
-        <p class="form-disclaimer">We'll follow up within one business day. No payment collected here. We'll send you a link once we've talked through the details.</p>
       </form>
 
       <div class="form-success" id="formSuccess">
@@ -958,12 +1040,52 @@
     });
   });
 
-  /* ── Brand kit conditional field ── */
-  const brandKitSel  = document.getElementById('f-brandkit');
-  const brandLinkWrap = document.getElementById('brandLinkWrap');
-  brandKitSel.addEventListener('change', () => {
-    const show = brandKitSel.value === 'Yes - I have a brand kit' || brandKitSel.value === 'Sort of - I have a logo';
-    brandLinkWrap.style.display = show ? 'block' : 'none';
+  /* ── Progressive form logic ── */
+  const stepLocation  = document.getElementById('step-location');
+  const stepWebsite   = document.getElementById('step-website');
+  const stepBrand     = document.getElementById('step-brand');
+  const stepNotes     = document.getElementById('step-notes');
+  const submitWrap    = document.getElementById('submitWrap');
+
+  const fbUrlWrap      = document.getElementById('fbUrlWrap');
+  const websiteUrlWrap = document.getElementById('websiteUrlWrap');
+  const brandLinkWrap  = document.getElementById('brandLinkWrap');
+
+  function show(el) { el.classList.add('visible'); }
+
+  function hasValue(id) {
+    const el = document.getElementById(id);
+    return el && el.value.trim() !== '';
+  }
+
+  // Step 2 unlocks when name + company are filled
+  ['f-name', 'f-company'].forEach(id => {
+    document.getElementById(id).addEventListener('input', () => {
+      if (hasValue('f-name') && hasValue('f-company')) show(stepLocation);
+    });
+  });
+
+  // Step 3 unlocks when email is filled
+  document.getElementById('f-email').addEventListener('input', () => {
+    if (hasValue('f-email')) show(stepWebsite);
+  });
+
+  // Website status drives conditional URL fields and unlocks step 4
+  document.getElementById('f-webstatus').addEventListener('change', function() {
+    const v = this.value;
+    fbUrlWrap.style.display      = (v === 'Facebook Only') ? 'block' : 'none';
+    websiteUrlWrap.style.display = (v === 'Existing Website - Redesign') ? 'block' : 'none';
+    if (v) show(stepBrand);
+  });
+
+  // Brand kit drives brand link field and unlocks step 5 + submit
+  document.getElementById('f-brandkit').addEventListener('change', function() {
+    const v = this.value;
+    brandLinkWrap.style.display = (v === 'Yes - I have a brand kit' || v === 'Logo Only') ? 'block' : 'none';
+    if (v) {
+      show(stepNotes);
+      submitWrap.style.display = 'block';
+    }
   });
 
   /* ── Form submission ── */
@@ -977,17 +1099,15 @@
     e.preventDefault();
     errorBox.style.display = 'none';
 
-    // Client-side validation
     const required = [
-      { id: 'f-name',    label: 'Your name' },
-      { id: 'f-company', label: 'Business name' },
-      { id: 'f-email',   label: 'Email address' },
-      { id: 'f-phone',   label: 'Phone number' },
+      { id: 'f-name',    label: 'your name' },
+      { id: 'f-company', label: 'business name' },
+      { id: 'f-email',   label: 'email address' },
+      { id: 'f-phone',   label: 'phone number' },
     ];
     for (const { id, label } of required) {
-      const val = document.getElementById(id).value.trim();
-      if (!val) {
-        errorBox.textContent = `Please fill in your ${label.toLowerCase()} before submitting.`;
+      if (!document.getElementById(id).value.trim()) {
+        errorBox.textContent = `Please fill in ${label} before submitting.`;
         errorBox.style.display = 'block';
         document.getElementById(id).focus();
         return;
@@ -1000,20 +1120,22 @@
       return;
     }
 
-    // Loading state
     submitBtn.disabled = true;
-    submitLbl.textContent = 'Sending…';
+    submitLbl.textContent = 'Sending...';
 
     const payload = {
-      Name:      document.getElementById('f-name').value.trim(),
-      Company:   document.getElementById('f-company').value.trim(),
-      Email:     document.getElementById('f-email').value.trim(),
-      Phone:     document.getElementById('f-phone').value.trim(),
-      City:      document.getElementById('f-city').value.trim(),
-      State:     document.getElementById('f-state').value,
-      BrandKit:  document.getElementById('f-brandkit').value,
-      BrandLink: document.getElementById('f-brandlink').value.trim(),
-      Notes:     document.getElementById('f-notes').value.trim(),
+      Name:          document.getElementById('f-name').value.trim(),
+      Company:       document.getElementById('f-company').value.trim(),
+      Email:         document.getElementById('f-email').value.trim(),
+      Phone:         document.getElementById('f-phone').value.trim(),
+      City:          document.getElementById('f-city').value.trim(),
+      State:         document.getElementById('f-state').value,
+      WebsiteStatus: document.getElementById('f-webstatus').value,
+      FacebookURL:   document.getElementById('f-fburl').value.trim(),
+      WebsiteURL:    document.getElementById('f-websiteurl').value.trim(),
+      BrandKit:      document.getElementById('f-brandkit').value,
+      BrandLink:     document.getElementById('f-brandlink').value.trim(),
+      Notes:         document.getElementById('f-notes').value.trim(),
     };
 
     try {
@@ -1023,7 +1145,6 @@
         body:    JSON.stringify(payload),
       });
 
-      // Only parse JSON if the server actually returned JSON
       let data = {};
       const contentType = res.headers.get('content-type') || '';
       if (contentType.includes('application/json')) {
