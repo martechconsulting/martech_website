@@ -1,0 +1,1514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<title>Martech Consulting — Built for Independent Hospitality</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+
+<style>
+/* ── RESET ── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+/* ── TOKENS ── */
+:root{
+  --orange:#e8622a;
+  --o-hover:#cc5220;
+  --o-soft:rgba(232,98,42,.09);
+  --o-border:rgba(232,98,42,.22);
+  --navy:#03253f;
+  --navy-mid:#0a3553;
+  --cream:#f9f0e3;
+  --cream-dark:#f0e5d2;
+  --stone:#e8dbc8;
+  --light:#edf5f8;
+  --ink:#0c1c2b;
+  --mid:#4d6070;
+  --muted:#7a8f9e;
+  --rule:rgba(3,37,63,.09);
+  --rule-dark:rgba(3,37,63,.14);
+  --white:#ffffff;
+  --card-shadow:0 2px 8px rgba(3,37,63,.07),0 1px 3px rgba(3,37,63,.05);
+  --card-shadow-lg:0 12px 40px rgba(3,37,63,.11),0 2px 8px rgba(3,37,63,.07);
+  --form-shadow:0 20px 60px rgba(3,37,63,.14),0 4px 12px rgba(3,37,63,.08);
+  --serif:'Playfair Display',Georgia,serif;
+  --sans:'DM Sans',system-ui,sans-serif;
+  --radius:8px;
+}
+
+html,body{color-scheme:light;background:#f9f0e3}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans);
+  color:var(--ink);
+  overflow-x:hidden;
+  position:relative;
+}
+
+/* Grain overlay */
+body::after{
+  content:'';
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:9998;
+  opacity:.028;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size:200px 200px;
+}
+
+/* ══════════════════════════════
+   NAV
+══════════════════════════════ */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  height:62px;
+  padding:0 2rem;
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(3,37,63,.97);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+.logo{
+  font-size:.72rem;font-weight:600;
+  letter-spacing:.18em;text-transform:uppercase;
+  color:rgba(255,255,255,.75);
+}
+.logo span{color:var(--orange)}
+.nav-links{display:flex;gap:2rem}
+.nav-links a{
+  font-size:.75rem;color:rgba(255,255,255,.5);text-decoration:none;
+  transition:color .15s;font-weight:400;
+}
+.nav-links a:hover{color:#fff}
+.nav-right{display:flex;align-items:center;gap:1rem}
+.nav-btn{
+  font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  color:#fff;background:var(--orange);
+  padding:.5rem 1.1rem;border-radius:3px;
+  text-decoration:none;transition:background .15s;
+  white-space:nowrap;
+}
+.nav-btn:hover{background:var(--o-hover)}
+
+/* Hamburger */
+.hamburger{
+  display:none;
+  flex-direction:column;justify-content:center;gap:5px;
+  width:40px;height:40px;
+  background:none;border:none;cursor:pointer;padding:6px;
+}
+.hamburger span{
+  display:block;height:1.5px;background:rgba(255,255,255,.7);
+  border-radius:2px;transition:transform .25s,opacity .2s;
+}
+.hamburger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+
+/* Mobile drawer */
+.mobile-drawer{
+  display:none;
+  position:fixed;top:62px;left:0;right:0;z-index:199;
+  background:rgba(3,37,63,.98);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(255,255,255,.1);
+  padding:1.5rem 2rem 2rem;
+  flex-direction:column;gap:1.25rem;
+  transform:translateY(-8px);opacity:0;
+  transition:transform .25s ease,opacity .2s ease;
+}
+.mobile-drawer.open{
+  display:flex;
+  transform:translateY(0);opacity:1;
+}
+.mobile-drawer a{
+  font-size:1rem;font-weight:500;color:rgba(255,255,255,.7);
+  text-decoration:none;padding:.5rem 0;
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+.mobile-drawer .drawer-cta{
+  margin-top:.5rem;
+  display:block;text-align:center;
+  background:var(--orange);color:#fff;
+  padding:.9rem;border-radius:4px;
+  font-size:.82rem;font-weight:600;
+  letter-spacing:.08em;text-transform:uppercase;
+  text-decoration:none;
+}
+
+/* ══════════════════════════════
+   SHARED UTILITIES
+══════════════════════════════ */
+.wrap{max-width:1120px;margin:0 auto;padding:0 2.5rem}
+
+.eyebrow{
+  display:inline-flex;align-items:center;gap:.5rem;
+  font-size:.66rem;font-weight:600;
+  letter-spacing:.22em;text-transform:uppercase;
+  color:var(--orange);margin-bottom:.9rem;
+}
+.eyebrow::before{
+  content:'';width:14px;height:1px;background:var(--orange);flex-shrink:0;
+}
+
+.sh{
+  font-family:var(--serif);
+  font-size:clamp(1.8rem,3vw,2.6rem);
+  font-weight:400;color:var(--navy);
+  line-height:1.12;margin-bottom:.9rem;
+}
+.ss{
+  font-size:.92rem;color:var(--mid);
+  font-weight:300;line-height:1.72;max-width:52ch;
+}
+
+/* Shared section backgrounds */
+.bg-cream{background:#f9f0e3}
+.bg-stone{background:#f0e5d2}
+.bg-light{background:#edf5f8}
+.bg-navy{background:var(--navy)}
+.sec{padding:6rem 2.5rem}
+
+/* Buttons */
+.btn{
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding:.9rem 1.8rem;
+  background:var(--orange);color:#fff;
+  border:none;border-radius:4px;
+  font-family:var(--sans);font-size:.78rem;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;
+  text-decoration:none;cursor:pointer;
+  transition:background .15s,transform .15s,box-shadow .15s;
+}
+.btn:hover{
+  background:var(--o-hover);
+  transform:translateY(-1px);
+  box-shadow:0 6px 20px rgba(232,98,42,.3);
+}
+.btn:active{transform:translateY(0)}
+.btn-ghost{
+  background:transparent;
+  color:var(--orange);
+  border:1.5px solid var(--orange);
+}
+.btn-ghost:hover{
+  background:var(--orange);color:#fff;
+  box-shadow:0 6px 20px rgba(232,98,42,.3);
+}
+.btn-white{background:#fff;color:var(--orange)}
+.btn-white:hover{background:rgba(255,255,255,.9);box-shadow:0 6px 24px rgba(0,0,0,.15)}
+.btn-full{width:100%;justify-content:center}
+
+/* ══════════════════════════════
+   HERO
+══════════════════════════════ */
+.hero-wrap{
+  background:var(--navy);
+  padding-top:62px;
+}
+.hero{
+  max-width:1120px;margin:0 auto;
+  padding:5.5rem 2.5rem 4.5rem;
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:5rem;
+  align-items:center;
+}
+.hero-left{display:flex;flex-direction:column;gap:2rem}
+
+h1{
+  font-family:var(--serif);
+  font-size:clamp(2.7rem,5vw,4.2rem);
+  font-weight:400;line-height:1.06;
+  color:#fff;
+  letter-spacing:-.01em;
+}
+h1 em{font-style:italic;color:var(--orange)}
+
+.hero-sub{
+  font-size:1.02rem;line-height:1.76;
+  color:rgba(255,255,255,.6);font-weight:300;
+  max-width:44ch;
+}
+.hero-sub strong{color:rgba(255,255,255,.9);font-weight:500}
+
+/* Stats strip */
+.stats-strip{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  border-radius:var(--radius);
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow:0 4px 20px rgba(0,0,0,.2);
+}
+.stat-box{
+  background:rgba(255,255,255,.07);
+  padding:1.35rem 1.1rem;text-align:center;
+  border-right:1px solid rgba(255,255,255,.1);
+  position:relative;overflow:hidden;
+  transition:background .2s;
+}
+.stat-box:last-child{border-right:none}
+.stat-box:hover{background:rgba(255,255,255,.11)}
+.stat-box::after{
+  content:'';
+  position:absolute;top:0;left:0;right:0;height:2.5px;
+  background:var(--orange);opacity:0;
+  transition:opacity .2s;
+}
+.stat-box:hover::after{opacity:1}
+.stat-big{
+  font-family:var(--serif);font-size:2.6rem;font-weight:400;
+  color:var(--orange);line-height:1;
+}
+.stat-lbl{
+  font-size:.68rem;color:rgba(255,255,255,.5);
+  margin-top:.4rem;line-height:1.4;font-weight:300;
+}
+
+/* ══════════════════════════════
+   FORM CARD
+══════════════════════════════ */
+.form-card{
+  background:#fff;
+  border-radius:10px;
+  border:1px solid var(--rule);
+  box-shadow:var(--form-shadow);
+  overflow:hidden;
+}
+.fc-head{
+  background:var(--navy);
+  padding:1.75rem 1.9rem;
+  position:relative;overflow:hidden;
+}
+.fc-head::before{
+  content:'';
+  position:absolute;bottom:-40px;right:-40px;
+  width:140px;height:140px;
+  border-radius:50%;
+  background:rgba(232,98,42,.08);
+}
+.fc-head h2{
+  font-family:var(--serif);font-size:1.4rem;font-weight:400;
+  color:#fff;line-height:1.25;margin-bottom:.4rem;
+  position:relative;
+}
+.fc-head p{
+  font-size:.77rem;color:rgba(255,255,255,.5);
+  line-height:1.55;position:relative;
+}
+.fc-body{
+  padding:1.65rem 1.9rem;
+  display:flex;flex-direction:column;gap:.95rem;
+}
+.badge{
+  display:inline-flex;align-items:center;gap:.45rem;
+  background:var(--o-soft);
+  border:1px solid var(--o-border);
+  border-radius:2rem;
+  padding:.28rem .75rem;
+  font-size:.64rem;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;
+  color:var(--orange);width:fit-content;
+}
+.dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--orange);
+  animation:blink 2.2s ease-in-out infinite;
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+
+.field{display:flex;flex-direction:column;gap:.32rem}
+label{
+  font-size:.62rem;font-weight:600;
+  letter-spacing:.12em;text-transform:uppercase;
+  color:var(--navy);
+}
+input,select,textarea{
+  font-family:var(--sans);font-size:.87rem;
+  padding:.72rem .9rem;
+  border:1.5px solid #d6e4ec;
+  border-radius:4px;
+  background:var(--light);color:var(--ink);
+  transition:border-color .15s,background .15s,box-shadow .15s;
+  outline:none;width:100%;
+}
+input::placeholder,textarea::placeholder{color:#96acba}
+input:focus,select:focus,textarea:focus{
+  border-color:var(--orange);background:#fff;
+  box-shadow:0 0 0 3px rgba(232,98,42,.1);
+}
+select{
+  cursor:pointer;appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='%234d6070' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right .9rem center;
+  padding-right:2.2rem;
+}
+textarea{resize:none;min-height:68px;line-height:1.55}
+.r2{display:grid;grid-template-columns:1fr 1fr;gap:.85rem}
+.submit-btn{
+  width:100%;padding:.95rem;
+  background:var(--orange);color:#fff;
+  border:none;border-radius:4px;
+  font-family:var(--sans);font-size:.79rem;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;
+  cursor:pointer;
+  transition:background .15s,transform .12s,box-shadow .15s;
+  margin-top:.15rem;
+}
+.submit-btn:hover{
+  background:var(--o-hover);
+  transform:translateY(-1px);
+  box-shadow:0 6px 20px rgba(232,98,42,.35);
+}
+.submit-btn:disabled{background:#b0bec5;cursor:not-allowed;transform:none;box-shadow:none}
+.fine{font-size:.67rem;color:#96acba;text-align:center;line-height:1.5}
+.success{
+  display:none;padding:2.75rem 1.9rem;
+  flex-direction:column;align-items:center;text-align:center;gap:.9rem;
+}
+.s-ring{
+  width:54px;height:54px;border-radius:50%;
+  border:2px solid var(--orange);
+  background:var(--o-soft);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.25rem;color:var(--orange);
+}
+.success h3{
+  font-family:var(--serif);font-size:1.5rem;font-weight:400;color:var(--navy);
+}
+.success p{font-size:.84rem;color:var(--mid);line-height:1.65;max-width:26ch}
+
+/* ══════════════════════════════
+   MOBILE FORM SECTION
+   (shown only on mobile, hidden on desktop)
+══════════════════════════════ */
+.mobile-form-section{
+  display:none;
+  background:var(--navy);
+  padding:3.5rem 1.25rem 4rem;
+}
+.mobile-form-section .eyebrow{color:var(--orange)}
+.mobile-form-section h2{color:#fff}
+
+/* ══════════════════════════════
+   STICKY MOBILE CTA
+══════════════════════════════ */
+.sticky-cta{
+  display:none;
+  position:fixed;bottom:0;left:0;right:0;z-index:190;
+  background:rgba(249,240,227,.97);
+  backdrop-filter:blur(16px);
+  padding:.85rem 1.25rem;
+  border-top:1px solid var(--rule-dark);
+  box-shadow:0 -4px 20px rgba(3,37,63,.1);
+  transform:translateY(100%);
+  transition:transform .3s ease;
+}
+.sticky-cta.visible{transform:translateY(0)}
+.sticky-cta a{
+  display:block;width:100%;text-align:center;
+  background:var(--orange);color:#fff;
+  padding:.85rem;border-radius:4px;
+  font-size:.82rem;font-weight:600;
+  letter-spacing:.09em;text-transform:uppercase;
+  text-decoration:none;
+}
+
+/* ══════════════════════════════
+   PROBLEM SECTION
+══════════════════════════════ */
+.problem-intro{
+  margin-bottom:3.5rem;
+}
+.problem-intro-left{max-width:44ch}
+
+.pains{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:1.25rem;
+}
+.pain-card{
+  background:#fff;
+  border:1px solid var(--rule);
+  border-radius:var(--radius);
+  padding:1.75rem 1.5rem;
+  display:flex;flex-direction:column;gap:1rem;
+  position:relative;overflow:hidden;
+  box-shadow:var(--card-shadow);
+  transition:box-shadow .2s,transform .2s;
+}
+.pain-card:hover{
+  box-shadow:var(--card-shadow-lg);
+  transform:translateY(-2px);
+}
+.pain-card::before{
+  content:'';
+  position:absolute;top:0;left:0;right:0;height:3px;
+  background:var(--orange);
+  transform:scaleX(0);transform-origin:left;
+  transition:transform .3s ease;
+}
+.pain-card:hover::before{transform:scaleX(1)}
+.pain-icon{
+  width:44px;height:44px;border-radius:var(--radius);
+  background:var(--o-soft);border:1px solid var(--o-border);
+  display:flex;align-items:center;justify-content:center;
+}
+.pain-n{
+  font-family:var(--serif);font-size:2.4rem;font-weight:400;
+  color:var(--orange);line-height:.9;letter-spacing:-.02em;
+}
+.pain-title{font-size:.9rem;font-weight:600;color:var(--navy)}
+.pain-body{font-size:.79rem;line-height:1.68;color:var(--mid);font-weight:300}
+
+/* ══════════════════════════════
+   SERVICES
+══════════════════════════════ */
+.svc-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1.15rem;
+  margin-top:3rem;
+}
+.svc{
+  background:#fff;border:1px solid var(--rule);
+  border-radius:var(--radius);padding:1.8rem;
+  display:flex;flex-direction:column;gap:.9rem;
+  box-shadow:var(--card-shadow);
+  transition:box-shadow .2s,transform .2s;
+  position:relative;overflow:hidden;
+}
+.svc:hover{box-shadow:var(--card-shadow-lg);transform:translateY(-2px)}
+.svc-icon{
+  width:48px;height:48px;border-radius:10px;
+  background:var(--o-soft);border:1px solid var(--o-border);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.svc-title{font-size:.95rem;font-weight:600;color:var(--navy);line-height:1.3}
+.svc-desc{font-size:.79rem;line-height:1.68;color:var(--mid);font-weight:300;flex:1}
+.svc-price{
+  display:inline-flex;align-items:center;
+  font-size:.7rem;font-weight:600;color:var(--orange);
+  background:var(--o-soft);border:1px solid var(--o-border);
+  border-radius:3px;padding:.28rem .65rem;
+  letter-spacing:.04em;margin-top:.15rem;
+  align-self:flex-start;
+}
+
+/* Retainer strip — old, no longer used */
+.ret-strip{display:none}
+
+/* ══════════════════════════════
+   RETAINER PRICING SECTION
+══════════════════════════════ */
+.ret-section{
+  background:var(--navy);
+  padding:5rem 2.5rem;
+  position:relative;overflow:hidden;
+}
+.ret-section::before{
+  content:'';position:absolute;
+  top:-120px;right:-80px;
+  width:360px;height:360px;border-radius:50%;
+  background:rgba(232,98,42,.05);
+  pointer-events:none;
+}
+.ret-header{margin-bottom:2.75rem}
+.ret-cards{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;
+}
+.ret-card{
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:var(--radius);
+  padding:1.85rem 1.65rem;
+  display:flex;flex-direction:column;gap:.7rem;
+  position:relative;
+  transition:background .2s,border-color .2s;
+}
+.ret-card:hover{
+  background:rgba(255,255,255,.08);
+  border-color:rgba(255,255,255,.18);
+}
+.ret-card-featured{
+  background:rgba(232,98,42,.1);
+  border-color:rgba(232,98,42,.4);
+}
+.ret-card-featured:hover{
+  background:rgba(232,98,42,.15);
+  border-color:rgba(232,98,42,.55);
+}
+.ret-badge{
+  display:inline-flex;align-items:center;
+  font-size:.6rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--orange);background:rgba(232,98,42,.15);
+  border:1px solid rgba(232,98,42,.35);
+  border-radius:2rem;padding:.2rem .65rem;
+  width:fit-content;margin-bottom:.2rem;
+}
+.ret-tier{
+  font-size:.65rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
+  color:rgba(255,255,255,.4);
+}
+.ret-amount{
+  font-family:var(--serif);font-size:2.4rem;font-weight:400;
+  color:#fff;line-height:1;
+}
+.ret-amount span{
+  font-size:.95rem;font-family:var(--sans);
+  color:rgba(255,255,255,.35);font-weight:300;
+}
+.ret-what{
+  font-size:.82rem;color:rgba(255,255,255,.65);
+  line-height:1.65;font-weight:300;flex:1;
+  padding-top:.35rem;
+  border-top:1px solid rgba(255,255,255,.08);
+}
+.ret-good-for{
+  font-size:.7rem;color:rgba(255,255,255,.3);
+  line-height:1.5;font-style:italic;
+}
+
+/* ══════════════════════════════
+   CASE STUDY
+══════════════════════════════ */
+.case-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:4.5rem;align-items:start;margin-top:2.5rem;
+}
+.case-photo{
+  border-radius:10px;overflow:hidden;aspect-ratio:16/10;
+  background:linear-gradient(135deg,#b8d0dc 0%,#90b4c8 40%,#6e9ab4 100%);
+  display:flex;align-items:center;justify-content:center;
+  border:1px solid rgba(3,37,63,.1);
+  position:relative;
+  box-shadow:var(--card-shadow-lg);
+  margin-bottom:1.5rem;
+}
+.case-photo-label{
+  display:flex;flex-direction:column;align-items:center;gap:.6rem;
+  text-align:center;
+}
+.case-photo-label span{
+  font-size:.72rem;font-weight:500;
+  color:rgba(3,37,63,.45);letter-spacing:.1em;text-transform:uppercase;
+}
+.case-photo-label small{font-size:.63rem;color:rgba(3,37,63,.3)}
+.case-photo::after{
+  content:'Blue Bear Inn · Francestown NH';
+  position:absolute;bottom:0;left:0;right:0;
+  padding:.65rem 1rem;
+  background:linear-gradient(to top,rgba(3,37,63,.55),transparent);
+  font-size:.68rem;color:rgba(255,255,255,.8);
+  letter-spacing:.1em;text-transform:uppercase;font-weight:500;
+}
+.case-desc{
+  font-size:.85rem;line-height:1.72;color:var(--mid);
+  font-weight:300;margin-bottom:1.5rem;
+}
+.case-results{
+  display:grid;grid-template-columns:1fr 1fr;gap:.85rem;margin-bottom:1.75rem;
+}
+.cr{
+  background:#fff;border:1px solid var(--rule);
+  border-radius:6px;padding:1.15rem;
+  box-shadow:var(--card-shadow);
+}
+.cr-n{
+  font-family:var(--serif);font-size:1.9rem;
+  font-weight:400;color:var(--orange);line-height:1;margin-bottom:.28rem;
+}
+.cr-d{font-size:.72rem;color:var(--mid);line-height:1.45}
+
+.case-right{display:flex;flex-direction:column;gap:1.35rem}
+.pull{
+  font-family:var(--serif);font-size:1.2rem;font-style:italic;
+  color:var(--navy);line-height:1.5;
+  border-left:3px solid var(--orange);
+  padding-left:1.2rem;max-width:38ch;
+}
+.prog-block{
+  background:#fff;border:1px solid var(--rule);
+  border-radius:var(--radius);padding:1.4rem;
+  box-shadow:var(--card-shadow);
+}
+.prog-lbl{
+  font-size:.62rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--orange);margin-bottom:.6rem;
+}
+.prog-title{font-size:.9rem;font-weight:600;color:var(--navy);margin-bottom:.6rem}
+.prog-items{display:flex;flex-direction:column;gap:.45rem}
+.pi{
+  display:flex;align-items:flex-start;gap:.55rem;
+  font-size:.79rem;color:var(--mid);line-height:1.5;
+}
+.pi-dot{
+  width:4px;height:4px;border-radius:50%;
+  background:var(--orange);flex-shrink:0;margin-top:.52rem;
+}
+
+/* ══════════════════════════════
+   PROCESS STEPS
+══════════════════════════════ */
+.steps{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:0;position:relative;margin-top:3.75rem;
+}
+.steps::before{
+  content:'';position:absolute;
+  top:2.3rem;left:11%;right:11%;height:1px;
+  background:rgba(232,98,42,.2);z-index:0;
+}
+.step{text-align:center;padding:0 1.25rem;position:relative;z-index:1}
+.step-n{
+  width:4.6rem;height:4.6rem;border-radius:50%;
+  background:#fff;border:2px solid var(--orange);
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 1.35rem;
+  box-shadow:0 2px 12px rgba(232,98,42,.18),0 0 0 5px #f0e5d2;
+}
+.step-title{font-size:.88rem;font-weight:600;color:var(--navy);margin-bottom:.5rem}
+.step-desc{font-size:.77rem;color:var(--mid);line-height:1.62}
+
+/* ══════════════════════════════
+   WHO WE ARE / BIOS
+══════════════════════════════ */
+.bios{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:3rem}
+.bio{
+  background:#fff;border:1px solid var(--rule);
+  border-radius:var(--radius);overflow:hidden;
+  box-shadow:var(--card-shadow);
+  transition:box-shadow .2s;
+}
+.bio:hover{box-shadow:var(--card-shadow-lg)}
+
+/* Styled photo placeholder with initials */
+.bio-photo{
+  aspect-ratio:16/9;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:.6rem;position:relative;
+  border-bottom:1px solid var(--rule);
+}
+.bio-photo-jon{
+  background:linear-gradient(135deg,#1a4a6b 0%,#0a3553 50%,#052e47 100%);
+}
+.bio-photo-keith{
+  background:linear-gradient(135deg,#2c4a5e 0%,#1a3a50 50%,#0e2f44 100%);
+}
+.bio-initials{
+  width:70px;height:70px;border-radius:50%;
+  background:rgba(255,255,255,.1);
+  border:2px solid rgba(255,255,255,.2);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--serif);font-size:1.6rem;font-weight:400;
+  color:rgba(255,255,255,.7);letter-spacing:.05em;
+}
+.bio-photo-name{
+  font-size:.68rem;font-weight:500;
+  color:rgba(255,255,255,.4);
+  letter-spacing:.12em;text-transform:uppercase;
+}
+.bio-photo-role-tag{
+  font-size:.6rem;font-weight:400;
+  color:rgba(255,255,255,.28);
+  letter-spacing:.08em;
+}
+.bio-photo-bar{
+  position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--orange);
+}
+
+.bio-body{padding:1.6rem}
+.bio-role{
+  font-size:.62rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--orange);margin-bottom:.3rem;
+}
+.bio-name{
+  font-family:var(--serif);font-size:1.25rem;font-weight:400;
+  color:var(--navy);margin-bottom:.75rem;
+}
+.bio-text{
+  font-size:.8rem;line-height:1.72;color:var(--mid);
+  font-weight:300;margin-bottom:1.1rem;
+}
+.bio-tags{display:flex;flex-wrap:wrap;gap:.4rem}
+.bio-tag{
+  font-size:.64rem;font-weight:500;color:var(--navy);
+  background:var(--light);border:1px solid var(--rule-dark);
+  padding:.24rem .65rem;border-radius:3px;
+}
+
+/* Sereno block */
+.sereno-block{
+  margin-top:1.5rem;
+  background:#fff;border:1px solid var(--rule);border-radius:var(--radius);
+  padding:1.5rem 1.75rem;
+  display:grid;grid-template-columns:auto 1fr auto;
+  align-items:center;gap:2rem;
+  box-shadow:var(--card-shadow);
+}
+.sereno-icon{
+  width:52px;height:52px;border-radius:10px;
+  background:var(--o-soft);border:1px solid var(--o-border);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.sereno-lbl{
+  font-size:.62rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--orange);margin-bottom:.3rem;
+}
+.sereno-copy{font-size:.8rem;color:var(--mid);line-height:1.62}
+.sereno-n{
+  font-family:var(--serif);font-size:2.4rem;font-weight:400;
+  color:var(--navy);white-space:nowrap;text-align:right;
+}
+.sereno-n-lbl{font-size:.62rem;color:var(--muted);text-align:right;margin-top:.1rem}
+
+/* ══════════════════════════════
+   PLATFORM COMPARISON
+══════════════════════════════ */
+.pc-grid{display:grid;grid-template-columns:1fr 1fr;gap:4.5rem;align-items:start}
+.compare{display:flex;flex-direction:column;gap:.7rem;margin-top:1.75rem}
+.pc-row{
+  display:grid;grid-template-columns:1fr 1fr;
+  border:1px solid var(--rule);border-radius:6px;overflow:hidden;
+  box-shadow:var(--card-shadow);
+}
+.pc-a{padding:.85rem 1rem;background:#fff;border-right:1px solid var(--rule)}
+.pc-b{padding:.85rem 1rem;background:rgba(232,98,42,.04)}
+.pc-lbl{
+  font-size:.56rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:.28rem;
+}
+.pc-text{font-size:.8rem;color:var(--ink);line-height:1.4}
+.pc-b .pc-text{color:var(--orange);font-weight:500}
+.pc-note{font-size:.8rem;color:var(--muted);margin-top:1.1rem;line-height:1.65}
+
+/* ══════════════════════════════
+   CTA BAND
+══════════════════════════════ */
+.cta-band{
+  background:var(--orange);
+  padding:5.5rem 2.5rem;text-align:center;
+  position:relative;overflow:hidden;
+}
+.cta-band::before{
+  content:'';position:absolute;
+  top:-80px;right:-80px;
+  width:300px;height:300px;border-radius:50%;
+  background:rgba(255,255,255,.06);
+}
+.cta-band::after{
+  content:'';position:absolute;
+  bottom:-100px;left:-60px;
+  width:260px;height:260px;border-radius:50%;
+  background:rgba(0,0,0,.06);
+}
+.cta-band h2{
+  font-family:var(--serif);
+  font-size:clamp(1.9rem,3.5vw,3rem);
+  font-weight:400;color:#fff;line-height:1.12;
+  margin-bottom:.9rem;position:relative;z-index:1;
+}
+.cta-band p{
+  font-size:.94rem;color:rgba(255,255,255,.75);
+  font-weight:300;line-height:1.68;
+  max-width:44ch;margin:0 auto 2.25rem;
+  position:relative;z-index:1;
+}
+.cta-band .sub-note{
+  margin-top:1.1rem;font-size:.76rem;
+  color:rgba(255,255,255,.45);
+  position:relative;z-index:1;
+}
+
+/* FOOTER */
+footer{
+  background:var(--navy);padding:1.85rem 2.5rem;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:1rem;
+}
+.footer-logo{
+  font-size:.7rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
+  color:rgba(255,255,255,.35);
+}
+.footer-logo span{color:var(--orange)}
+.footer-links{display:flex;gap:1.6rem}
+.footer-links a{
+  font-size:.7rem;color:rgba(255,255,255,.3);
+  text-decoration:none;transition:color .15s;
+}
+.footer-links a:hover{color:rgba(255,255,255,.65)}
+.footer-copy{font-size:.7rem;color:rgba(255,255,255,.18)}
+
+/* ══════════════════════════════
+   SCROLL REVEAL
+══════════════════════════════ */
+.rv{opacity:0;transform:translateY(18px);transition:opacity .65s ease,transform .65s ease}
+.rv.in{opacity:1;transform:translateY(0)}
+.rv-d2{transition-delay:.1s}
+.rv-d3{transition-delay:.2s}
+
+/* Hero stagger */
+.fi{opacity:0;transform:translateY(14px);animation:rise .6s ease forwards}
+.fi:nth-child(1){animation-delay:.08s}
+.fi:nth-child(2){animation-delay:.18s}
+.fi:nth-child(3){animation-delay:.28s}
+.fi:nth-child(4){animation-delay:.38s}
+.fi:nth-child(5){animation-delay:.48s}
+@keyframes rise{to{opacity:1;transform:translateY(0)}}
+
+/* ══════════════════════════════
+   MOBILE RESPONSIVE
+══════════════════════════════ */
+@media(max-width:860px){
+  nav{padding:0 1.25rem}
+  .nav-links{display:none}
+  .hamburger{display:flex}
+
+  .hero{
+    grid-template-columns:1fr;gap:2rem;
+    padding:5rem 1.25rem 2.5rem;
+  }
+  /* Hide form on mobile hero — shown in its own section below */
+  .hero .form-card{display:none}
+  .mobile-form-section{display:block}
+
+  .stats-strip{margin-top:.5rem}
+  .stat-big{font-size:2rem}
+  .stat-lbl{font-size:.64rem}
+
+  .problem-intro{grid-template-columns:1fr;gap:1rem}
+  .big-stat{display:none}
+
+  .pains{grid-template-columns:1fr 1fr}
+
+  .svc-grid{grid-template-columns:1fr}
+  .ret-cards{grid-template-columns:1fr}
+  .ret-section{padding:4rem 1.25rem}
+
+  .case-grid,.pc-grid{grid-template-columns:1fr;gap:2.5rem}
+
+  .steps{grid-template-columns:1fr 1fr;gap:2.5rem}
+  .steps::before{display:none}
+  .step-n{box-shadow:0 2px 12px rgba(232,98,42,.18),0 0 0 4px #f0e5d2}
+
+  .bios{grid-template-columns:1fr}
+  .sereno-block{grid-template-columns:auto 1fr;gap:1.25rem}
+  .sereno-n{display:none}
+
+  .r2{grid-template-columns:1fr}
+
+  .sec{padding:4rem 1.25rem}
+
+  .sticky-cta{display:block}
+  .cta-band{padding:4rem 1.25rem}
+}
+
+@media(max-width:480px){
+  .pains{grid-template-columns:1fr}
+  .case-results{grid-template-columns:1fr 1fr}
+  .steps{grid-template-columns:1fr}
+  h1{font-size:2.4rem}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ NAV ══ -->
+<nav>
+  <div class="logo">Martech <span>·</span> Consulting</div>
+  <div class="nav-links">
+    <a href="#services">Services</a>
+    <a href="#case">Our Work</a>
+    <a href="#who">About</a>
+  </div>
+  <div class="nav-right">
+    <a class="nav-btn" href="#form">Free Strategy Call</a>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="mobile-drawer" id="mobile-drawer">
+  <a href="#services" class="drawer-link">Services</a>
+  <a href="#case" class="drawer-link">Our Work</a>
+  <a href="#who" class="drawer-link">About</a>
+  <a href="#form" class="drawer-cta">Get My Free Strategy Call →</a>
+</div>
+
+<!-- ══ STICKY MOBILE CTA ══ -->
+<div class="sticky-cta" id="sticky-cta">
+  <a href="#form">Get My Free Strategy Call →</a>
+</div>
+
+<!-- ══ HERO ══ -->
+<div class="hero-wrap">
+  <section class="hero">
+    <div class="hero-left">
+      <div class="eyebrow fi">Independent hospitality · New England</div>
+      <h1 class="fi">
+        Your property<br>has a story.<br><em>Is your marketing<br>telling it?</em>
+      </h1>
+      <p class="hero-sub fi">
+        We build <strong>marketing systems and revenue operations</strong> for independent inns, boutique hotels, and destination businesses — so you stop depending on OTAs and start owning the guest relationship.
+      </p>
+      <div class="fi">
+        <a class="btn" href="#form">Get My Free Strategy Call →</a>
+      </div>
+      <div class="stats-strip fi">
+        <div class="stat-box">
+          <div class="stat-big">63%</div>
+          <div class="stat-lbl">of indie hotel<br>bookings via OTAs</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-big">2×</div>
+          <div class="stat-lbl">OTA vs. direct<br>cancellation rate</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-big">20%</div>
+          <div class="stat-lbl">average commission<br>per booking</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Desktop form (hidden on mobile) -->
+    <div class="form-card fi" id="form">
+      <div class="fc-head">
+        <h2>Let's find where your revenue is leaking.</h2>
+        <p>We'll review your property before we talk — not a generic pitch.</p>
+      </div>
+      <div class="fc-body" id="fc-body">
+        <div class="badge"><div class="dot"></div>Free 30-min strategy call</div>
+        <form id="lead-form" style="display:flex;flex-direction:column;gap:.95rem">
+          <div class="r2">
+            <div class="field"><label>First Name</label><input type="text" placeholder="Sarah" required></div>
+            <div class="field"><label>Last Name</label><input type="text" placeholder="Langdon" required></div>
+          </div>
+          <div class="field"><label>Email</label><input type="email" placeholder="sarah@yourinn.com" required></div>
+          <div class="field"><label>Property Name</label><input type="text" placeholder="The Ridgeline Inn" required></div>
+          <div class="field">
+            <label>Property Type</label>
+            <select>
+              <option value="" disabled selected>Select one</option>
+              <option>Boutique Inn or B&amp;B</option>
+              <option>Boutique Hotel</option>
+              <option>Outdoor Recreation or Adventure Tourism</option>
+              <option>Event or Wedding Venue</option>
+              <option>Other Destination Business</option>
+            </select>
+          </div>
+          <div class="field"><label>Biggest challenge right now <span style="font-weight:300;text-transform:none;letter-spacing:0;font-size:.65rem;color:var(--muted)">(optional)</span></label>
+            <textarea placeholder="e.g. Full on weekends, empty mid-week. No idea what's driving bookings."></textarea>
+          </div>
+          <button type="submit" class="submit-btn" id="submit-btn">Get My Free Strategy Call →</button>
+          <p class="fine">No pitch deck. No pressure. Just a real conversation.</p>
+        </form>
+      </div>
+      <div class="success" id="success">
+        <div class="s-ring">✓</div>
+        <h3>You're on the calendar.</h3>
+        <p>Expect a note from Jon or Keith within one business day.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ══ MOBILE FORM SECTION ══ -->
+<div class="mobile-form-section" id="form-mobile">
+  <div style="max-width:500px;margin:0 auto">
+    <div class="eyebrow" style="margin-bottom:1rem">Free 30-min strategy call</div>
+    <h2 style="font-family:var(--serif);font-size:1.75rem;color:var(--navy);margin-bottom:1.5rem;line-height:1.2">Let's find where your revenue is leaking.</h2>
+    <div class="form-card">
+      <div class="fc-body">
+        <form id="lead-form-mobile" style="display:flex;flex-direction:column;gap:.95rem">
+          <div class="field"><label>First Name</label><input type="text" placeholder="Sarah" required></div>
+          <div class="field"><label>Email</label><input type="email" placeholder="sarah@yourinn.com" required></div>
+          <div class="field"><label>Property Name</label><input type="text" placeholder="The Ridgeline Inn" required></div>
+          <div class="field">
+            <label>Property Type</label>
+            <select>
+              <option value="" disabled selected>Select one</option>
+              <option>Boutique Inn or B&amp;B</option>
+              <option>Boutique Hotel</option>
+              <option>Outdoor Recreation or Adventure Tourism</option>
+              <option>Event or Wedding Venue</option>
+              <option>Other Destination Business</option>
+            </select>
+          </div>
+          <button type="submit" class="submit-btn">Get My Free Strategy Call →</button>
+          <p class="fine">No pitch deck. No pressure. Just a real conversation.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PROBLEM ══ -->
+<div class="bg-stone rv sec" id="why">
+  <div class="wrap">
+    <div class="problem-intro">
+      <div class="problem-intro-left">
+        <div class="eyebrow">The problem</div>
+        <h2 class="sh" style="max-width:22ch">Your property is stronger than your marketing.</h2>
+        <p class="ss">Every week you don't own the guest relationship, OTAs get paid again. Here's what's costing you.</p>
+      </div>
+
+    </div>
+    <div class="pains">
+
+      <div class="pain-card rv">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between">
+          <div class="pain-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e8622a" stroke-width="1.8" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          </div>
+          <div class="pain-n">20%</div>
+        </div>
+        <div class="pain-title">OTA commission, every booking</div>
+        <div class="pain-body">You're paying 15–25% per booking to platforms that own the guest data. Every repeat visit costs you again.</div>
+      </div>
+
+      <div class="pain-card rv rv-d2">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between">
+          <div class="pain-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e8622a" stroke-width="1.8" stroke-linecap="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+          </div>
+          <div class="pain-n">0</div>
+        </div>
+        <div class="pain-title">Guest data you actually own</div>
+        <div class="pain-body">No CRM means no follow-up, no loyalty, no off-season campaign. You can't reach the guests who loved you most.</div>
+      </div>
+
+      <div class="pain-card rv rv-d3">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between">
+          <div class="pain-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e8622a" stroke-width="1.8" stroke-linecap="round"><rect x="2" y="3" width="6" height="6" rx="1"/><rect x="16" y="3" width="6" height="6" rx="1"/><rect x="9" y="15" width="6" height="6" rx="1"/><path d="M5 9v3h14V9"/><path d="M12 12v3"/></svg>
+          </div>
+          <div class="pain-n">3+</div>
+        </div>
+        <div class="pain-title">Tools that don't talk to each other</div>
+        <div class="pain-body">Your PMS, email, and booking engine operate in silos. You can't see what's actually driving revenue.</div>
+      </div>
+
+      <div class="pain-card rv rv-d3">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between">
+          <div class="pain-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e8622a" stroke-width="1.8" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <div class="pain-n" style="font-size:1.8rem;letter-spacing:0">None</div>
+        </div>
+        <div class="pain-title">A story only you know</div>
+        <div class="pain-body">Your landscape, your community, your seasons — none of it is in your marketing. That story is your edge over every chain hotel in range.</div>
+      </div>
+
+    </div>
+    <div style="margin-top:2.5rem">
+      <a class="btn btn-ghost" href="#form">See What You're Leaving Behind →</a>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SERVICES ══ -->
+<div class="bg-light rv sec" id="services">
+  <div class="wrap">
+    <div class="eyebrow">What we build</div>
+    <h2 class="sh">Systems your PMS doesn't include.</h2>
+    <p class="ss">Your reservation system manages bookings that arrive. We build the demand that fills it — and the infrastructure that keeps guests coming back direct.</p>
+    <div class="svc-grid">
+
+      <div class="svc">
+        <div class="svc-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e8622a" stroke-width="1.8" stroke-linecap="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        </div>
+        <div class="svc-title">Pulse: Marketing Health Check</div>
+        <div class="svc-desc">A scored audit across six categories. Know exactly where you're losing money before you spend a dollar with us.</div>
+        <div class="svc-price">Free to start</div>
+      </div>
+
+      <div class="svc">
+        <div class="svc-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e8622a" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+        </div>
+        <div class="svc-title">RevOps Foundation</div>
+        <div class="svc-desc">CRM setup, guest journey automation — pre-arrival, post-stay, win-back — and direct booking optimization that reduces OTA dependency from day one.</div>
+        <div class="svc-price">$4,500 – $8,500</div>
+      </div>
+
+      <div class="svc">
+        <div class="svc-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e8622a" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        </div>
+        <div class="svc-title">Destination Marketing Strategy</div>
+        <div class="svc-desc">Place-based narrative, channel strategy, and seasonal revenue planning built around your specific community and landscape.</div>
+        <div class="svc-price">$6,500 – $14,000</div>
+      </div>
+
+      <div class="svc">
+        <div class="svc-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e8622a" stroke-width="1.8" stroke-linecap="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+        </div>
+        <div class="svc-title">Paid Campaigns + Event Marketing</div>
+        <div class="svc-desc">Meta ads for events, wine tastings, pool memberships, wedding inquiries, après ski packages, and seasonal programs.</div>
+        <div class="svc-price">Retainer-based</div>
+      </div>
+
+      <div class="svc">
+        <div class="svc-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e8622a" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/></svg>
+        </div>
+        <div class="svc-title">AI Guest Agent</div>
+        <div class="svc-desc">Answers guest questions 24/7. Hands off to a human at the moment of booking intent. Less front-desk overhead, more captured leads.</div>
+        <div class="svc-price">Custom build</div>
+      </div>
+
+      <div class="svc">
+        <div class="svc-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e8622a" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </div>
+        <div class="svc-title">Marketing Stack Audit</div>
+        <div class="svc-desc">A three-day sprint to map your tech environment, find the gaps, and deliver a prioritized roadmap. The right starting point when you need clarity first.</div>
+        <div class="svc-price">$2,500</div>
+      </div>
+
+      <div class="ret-strip">
+        <div class="ret-c">
+          <div class="ret-price">$1,500<span>/mo</span></div>
+          <div class="ret-name">Starter Retainer</div>
+          <div class="ret-desc">Reporting dashboard, monthly strategy call, ongoing stack maintenance.</div>
+        </div>
+        <div class="ret-c">
+          <div class="ret-price">$2,750<span>/mo</span></div>
+          <div class="ret-name">Growth Retainer</div>
+          <div class="ret-desc">Stack management, Meta campaigns, email programs, reporting.</div>
+        </div>
+        <div class="ret-c">
+          <div class="ret-price">$4,500<span>/mo</span></div>
+          <div class="ret-name">Partner Retainer</div>
+          <div class="ret-desc">Embedded RevOps, weekly calls, custom build capacity included.</div>
+        </div>
+      </div>
+
+    </div>
+    <div style="margin-top:2.75rem;text-align:center">
+      <a class="btn" href="#form">Talk Through Your Setup →</a>
+    </div>
+  </div>
+</div>
+
+<!-- ══ RETAINER PRICING ══ -->
+<div class="ret-section rv">
+  <div class="wrap">
+    <div class="ret-header">
+      <div>
+        <div class="eyebrow" style="color:rgba(232,98,42,.85)">Monthly retainers</div>
+        <h2 style="font-family:var(--serif);font-size:clamp(1.6rem,2.5vw,2.1rem);font-weight:400;color:#fff;line-height:1.15;margin-bottom:.7rem">Ongoing partnership.</h2>
+        <p style="font-size:.88rem;color:rgba(255,255,255,.5);font-weight:300;max-width:46ch;line-height:1.7">After the project work is done, these are the plans that keep everything performing. No lock-in until you've seen results.</p>
+      </div>
+    </div>
+    <div class="ret-cards">
+      <div class="ret-card">
+        <div class="ret-tier">Starter</div>
+        <div class="ret-amount">$1,500<span>/mo</span></div>
+        <div class="ret-what">Reporting dashboard, monthly strategy call, ongoing stack maintenance.</div>
+        <div class="ret-good-for">Good for: early-stage properties, post-project maintenance</div>
+      </div>
+      <div class="ret-card ret-card-featured">
+        <div class="ret-badge">Most chosen</div>
+        <div class="ret-tier">Growth</div>
+        <div class="ret-amount">$2,750<span>/mo</span></div>
+        <div class="ret-what">Stack management, Meta campaigns, email programs, full reporting.</div>
+        <div class="ret-good-for">Good for: properties actively growing direct bookings</div>
+      </div>
+      <div class="ret-card">
+        <div class="ret-tier">Partner</div>
+        <div class="ret-amount">$4,500<span>/mo</span></div>
+        <div class="ret-what">Embedded RevOps, weekly calls, custom build capacity included.</div>
+        <div class="ret-good-for">Good for: properties scaling a full revenue operation</div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:2.5rem">
+      <a class="btn btn-white" href="#form">Get My Free Strategy Call →</a>
+      <div style="margin-top:.85rem;font-size:.72rem;color:rgba(255,255,255,.3)">No commitment until we've both decided it makes sense.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ CASE STUDY ══ -->
+<div class="bg-light rv sec" id="case">
+  <div class="wrap">
+    <div class="eyebrow">Live engagement</div>
+    <h2 class="sh">Blue Bear Inn, Francestown NH</h2>
+    <div class="case-grid">
+      <div>
+        <div class="case-photo">
+          <div class="case-photo-label">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="rgba(3,37,63,.35)" stroke-width="1.3" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+        </div>
+        <p class="case-desc">A 13-room historic inn on 54 acres at Crotched Mountain. Full-service tavern, ski access, hiking, weddings, and corporate retreats — 1.5 hours from Boston.</p>
+        <div class="case-results">
+          <div class="cr">
+            <div class="cr-n">Live</div>
+            <div class="cr-d">Tavern dining campaign running now</div>
+          </div>
+          <div class="cr">
+            <div class="cr-n">5+</div>
+            <div class="cr-d">Revenue programs in active development</div>
+          </div>
+          <div class="cr">
+            <div class="cr-n">54ac</div>
+            <div class="cr-d">Untapped venue and outdoor revenue potential</div>
+          </div>
+          <div class="cr">
+            <div class="cr-n">1.5hr</div>
+            <div class="cr-d">From Boston — primary drive market</div>
+          </div>
+        </div>
+        <a class="btn" href="#form" style="margin-top:1.25rem">See If We're a Fit →</a>
+      </div>
+      <div class="case-right">
+        <p class="pull">"Your reservation system manages bookings that arrive. We build the demand that fills it."</p>
+        <div class="prog-block">
+          <div class="prog-lbl">What we built</div>
+          <div class="prog-title">Tavern and dining demand campaign</div>
+          <div class="prog-items">
+            <div class="pi"><div class="pi-dot"></div>Geo-targeted Meta ads driving local dining traffic to The Tavern</div>
+            <div class="pi"><div class="pi-dot"></div>Place-based narrative: the tavern as a community anchor, not a hotel amenity</div>
+            <div class="pi"><div class="pi-dot"></div>CTA structure optimized for reservation intent, not general awareness</div>
+          </div>
+        </div>
+        <div class="prog-block">
+          <div class="prog-lbl">In progress</div>
+          <div class="prog-title">Full RevOps buildout</div>
+          <div class="prog-items">
+            <div class="pi"><div class="pi-dot"></div>Events calendar: wine tastings, holiday dinners, themed weekends</div>
+            <div class="pi"><div class="pi-dot"></div>Seasonal pool membership campaign</div>
+            <div class="pi"><div class="pi-dot"></div>Wedding venue inquiry funnel with automation</div>
+            <div class="pi"><div class="pi-dot"></div>Après ski lodging packages for Crotched Mountain visitors</div>
+            <div class="pi"><div class="pi-dot"></div>AI guest agent for 24/7 inquiry handling</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ HOW IT WORKS ══ -->
+<div class="bg-stone rv sec">
+  <div class="wrap" style="text-align:center">
+    <div class="eyebrow" style="justify-content:center">The process</div>
+    <h2 class="sh">How we work</h2>
+    <p class="ss" style="margin:0 auto;text-align:center">Four steps. No retainer until we've both decided it makes sense.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e8622a" stroke-width="1.8" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.19 12 19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+        <div class="step-title">Strategy call</div>
+        <div class="step-desc">30 min. We review your property first and arrive with specific observations about your marketing gaps.</div>
+      </div>
+      <div class="step">
+        <div class="step-n">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e8622a" stroke-width="1.8" stroke-linecap="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        </div>
+        <div class="step-title">Pulse audit</div>
+        <div class="step-desc">Scored across six categories with a priority report. You know exactly what to fix and in what order.</div>
+      </div>
+      <div class="step">
+        <div class="step-n">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e8622a" stroke-width="1.8" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        </div>
+        <div class="step-title">Proposal</div>
+        <div class="step-desc">Right scope for your property — project, retainer, or both. You decide. No pressure to go further.</div>
+      </div>
+      <div class="step">
+        <div class="step-n">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e8622a" stroke-width="1.8" stroke-linecap="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+        </div>
+        <div class="step-title">Build and measure</div>
+        <div class="step-desc">Systems go live. Reporting dashboard. Every engagement becomes a case study we use to improve the next one.</div>
+      </div>
+    </div>
+    <div style="margin-top:3.25rem">
+      <a class="btn" href="#form">Get My Free Strategy Call →</a>
+    </div>
+  </div>
+</div>
+
+<!-- ══ WHO WE ARE ══ -->
+<div class="bg-cream rv sec" id="who">
+  <div class="wrap">
+    <div class="eyebrow">Who we are</div>
+    <h2 class="sh">We didn't choose hospitality. We came from it.</h2>
+    <p class="ss">Direct category experience, complementary skills, and one shared belief: the story of a place is the most durable competitive advantage an independent operator can build.</p>
+    <div class="bios">
+
+      <div class="bio">
+        <div class="bio-photo bio-photo-jon">
+          <div class="bio-initials">JN</div>
+          <div class="bio-photo-name">Jonathan Noury-Elliard</div>
+          <div class="bio-photo-role-tag">Co-Founder · Strategy</div>
+          <div class="bio-photo-bar"></div>
+        </div>
+        <div class="bio-body">
+          <div class="bio-role">Co-Founder · Technology and Strategy</div>
+          <div class="bio-name">Jonathan Noury-Elliard, MBA</div>
+          <div class="bio-text">Started working in his family's diner at twelve. Former NH State Economic Advisor specifically assigned to hospitality and tourism. Produced NH Rocks Harvest Fest — drew the sitting governor. Roasts and sells Little Bear Coffee to inns and restaurants across NH. An active hospitality operator, not a consultant who decided to serve the industry.</div>
+          <div class="bio-tags">
+            <span class="bio-tag">NH State Economic Advisor</span>
+            <span class="bio-tag">MBA — GPA 3.981</span>
+            <span class="bio-tag">Sereno Inc. Founder</span>
+            <span class="bio-tag">Little Bear Coffee Roasters</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="bio">
+        <div class="bio-photo bio-photo-keith">
+          <div class="bio-initials">KP</div>
+          <div class="bio-photo-name">Keith Phillips</div>
+          <div class="bio-photo-role-tag">Co-Founder · Pipeline</div>
+          <div class="bio-photo-bar"></div>
+        </div>
+        <div class="bio-body">
+          <div class="bio-role">Co-Founder · Pipeline and Digital Marketing</div>
+          <div class="bio-name">Keith Phillips</div>
+          <div class="bio-text">17 years in the events and weddings industry, including as COO of Classic Photographers — a national company. The weddings industry is structurally identical to boutique hospitality: seasonal demand, experience-driven marketing, high-stakes bookings. Professional ski instructor. Keap Certified Partner. Meta advertising specialist.</div>
+          <div class="bio-tags">
+            <span class="bio-tag">COO, Classic Photographers</span>
+            <span class="bio-tag">17+ yrs events industry</span>
+            <span class="bio-tag">Keap Certified Partner</span>
+            <span class="bio-tag">Ski Instructor, Vail</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="sereno-block">
+      <div class="sereno-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#e8622a" stroke-width="1.8" stroke-linecap="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      </div>
+      <div class="sereno-text">
+        <div class="sereno-lbl">Community commitment</div>
+        <div class="sereno-copy">10% of every engagement fee goes to Sereno Inc., a 501c3 for community economic development in NH. When you invest in your business with us, part of that goes back to the communities your guests travel to visit.</div>
+      </div>
+      <div>
+        <div class="sereno-n">10%</div>
+        <div class="sereno-n-lbl">to community</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PLATFORM OBJECTION ══ -->
+<div class="bg-stone rv sec">
+  <div class="wrap">
+    <div class="pc-grid">
+      <div>
+        <div class="eyebrow">A common question</div>
+        <h2 class="sh" style="font-size:clamp(1.5rem,2.5vw,2rem)">Doesn't my reservation system already handle marketing?</h2>
+        <p class="ss" style="font-size:.88rem">Cloudbeds and Little Hotelier manage bookings that arrive. They don't create demand — and they don't tell the specific story of your place. That's the gap we fill.</p>
+        <p class="pc-note">We work alongside your existing PMS. No need to change your reservation system. You need the layer it doesn't include.</p>
+        <div style="margin-top:1.75rem">
+          <a class="btn" href="#form">Talk Through Your Setup →</a>
+        </div>
+      </div>
+      <div>
+        <p style="font-size:.63rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:.9rem">Your PMS vs. what we do</p>
+        <div class="compare">
+          <div class="pc-row"><div class="pc-a"><div class="pc-lbl">Your PMS</div><div class="pc-text">Manages bookings that arrive</div></div><div class="pc-b"><div class="pc-lbl">Martech Consulting</div><div class="pc-text">Builds the demand that fills it</div></div></div>
+          <div class="pc-row"><div class="pc-a"><div class="pc-lbl">Your PMS</div><div class="pc-text">Booking confirmation emails</div></div><div class="pc-b"><div class="pc-lbl">Martech Consulting</div><div class="pc-text">Pre-arrival, post-stay, win-back, re-booking sequences</div></div></div>
+          <div class="pc-row"><div class="pc-a"><div class="pc-lbl">Your PMS</div><div class="pc-text">OTA channel management</div></div><div class="pc-b"><div class="pc-lbl">Martech Consulting</div><div class="pc-text">Paid campaigns, events, seasonal programs</div></div></div>
+          <div class="pc-row"><div class="pc-a"><div class="pc-lbl">Your PMS</div><div class="pc-text">Generic guest profiles</div></div><div class="pc-b"><div class="pc-lbl">Martech Consulting</div><div class="pc-text">Your story — your community, your seasons, your edge</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ CTA BAND ══ -->
+<div class="cta-band rv">
+  <h2>Your property deserves better<br>than a booking confirmation.</h2>
+  <p>One conversation. We'll review your property before we talk and come with observations, not a pitch deck.</p>
+  <a class="btn btn-white" href="#form">Get My Free Strategy Call →</a>
+  <div class="sub-note">No commitment. No pressure. Just a real conversation.</div>
+</div>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-logo">Martech <span>·</span> Consulting</div>
+  <div class="footer-links">
+    <a href="#services">Services</a>
+    <a href="#case">Our Work</a>
+    <a href="#who">About</a>
+    <a href="#form">Contact</a>
+  </div>
+  <div class="footer-copy">© 2026 Martech Consulting · martechconsulting.io</div>
+</footer>
+
+<script>
+/* ── Hamburger + Drawer ── */
+const hamburger = document.getElementById('hamburger');
+const drawer = document.getElementById('mobile-drawer');
+hamburger.addEventListener('click', () => {
+  const open = drawer.classList.toggle('open');
+  hamburger.classList.toggle('open', open);
+});
+drawer.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => {
+    drawer.classList.remove('open');
+    hamburger.classList.remove('open');
+  });
+});
+
+/* ── Sticky CTA ── */
+const stickyCta = document.getElementById('sticky-cta');
+let lastScrollY = 0;
+window.addEventListener('scroll', () => {
+  const scrolled = window.scrollY > 220;
+  stickyCta.classList.toggle('visible', scrolled);
+  lastScrollY = window.scrollY;
+}, { passive: true });
+
+/* ── Scroll Reveal ── */
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(el => { if (el.isIntersecting) el.target.classList.add('in'); });
+}, { threshold: .06 });
+document.querySelectorAll('.rv').forEach(el => obs.observe(el));
+
+/* ── Desktop Form Submit ── */
+document.getElementById('lead-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const btn = document.getElementById('submit-btn');
+  btn.textContent = 'Sending…';
+  btn.disabled = true;
+  setTimeout(() => {
+    document.getElementById('fc-body').style.display = 'none';
+    const s = document.getElementById('success');
+    s.style.display = 'flex';
+  }, 900);
+});
+
+/* ── Mobile Form Submit ── */
+document.getElementById('lead-form-mobile').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const btn = this.querySelector('.submit-btn');
+  btn.textContent = 'Sending…';
+  btn.disabled = true;
+  setTimeout(() => {
+    this.innerHTML = `
+      <div style="text-align:center;padding:1.5rem 0;display:flex;flex-direction:column;align-items:center;gap:.75rem">
+        <div style="width:48px;height:48px;border-radius:50%;border:2px solid var(--orange);background:var(--o-soft);display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:var(--orange)">✓</div>
+        <div style="font-family:var(--serif);font-size:1.4rem;color:var(--navy)">You're on the calendar.</div>
+        <div style="font-size:.84rem;color:var(--mid)">Expect a note from Jon or Keith within one business day.</div>
+      </div>`;
+  }, 900);
+});
+</script>
+</body>
+</html>
