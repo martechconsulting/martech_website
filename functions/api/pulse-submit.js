@@ -1,11 +1,3 @@
-// functions/api/pulse-submit.js
-// Cloudflare Pages Function — route: /api/pulse-submit
-// Used by: hospitality-pulse.html
-//
-// Env vars already set in Cloudflare Pages dashboard:
-//   AIRTABLE_TOKEN             — personal access token
-//   AIRTABLE_PROPOSALS_BASE_ID — apposb2VLlXXnUIMY
-
 export async function onRequestPost({ request, env }) {
   const origin = request.headers.get('Origin') || '';
   const cors = {
@@ -36,7 +28,6 @@ export async function onRequestPost({ request, env }) {
     'Score: Engagement': Number(body['Score: Engagement']) || 0,
     'Score: Pipeline':   Number(body['Score: Pipeline'])   || 0,
     'Score: Revenue':    Number(body['Score: Revenue'])    || 0,
-    'Total Score':       Number(body['Total Score'])       || 0,
     'Win Count':         Number(body['Win Count'])         || 0,
     'Quick Wins':        String(body['Quick Wins']  || '').substring(0, 10000),
     'OTA Dependency':    String(body['OTA Dependency']  || ''),
