@@ -707,25 +707,84 @@ function winCardHTML(w,idx){
  </div>`;
 }
 
-function unlockReport(){
- const first=document.getElementById('gate-first').value.trim();
- const last=document.getElementById('gate-last').value.trim();
- const email=document.getElementById('gate-email').value.trim();
- const property=document.getElementById('gate-property').value.trim();
- if(!first||!email||!property){
- alert('Please fill in first name, email, and property name to unlock your report.');
- return;
- }
+// ── CONFIG ───────────────────────────────────────────────────────────────────
+// Submits to Cloudflare Pages Function in functions/api/pulse-submit.js
+const WORKER_URL='/api/pulse-submit';
 
- // Hide gate, show full wins + CTA
- document.getElementById('gate-wrap').style.display='none';
- const fullList=document.getElementById('wins-full-list');
- fullList.innerHTML=allWins.slice(2).map((w,i)=>winCardHTML(w,i+2)).join('');
- document.getElementById('wins-full').style.display='block';
- document.getElementById('results-cta').style.display='block';
+function revealResults(){
+  document.getElementById('gate-wrap').style.display='none';
+  const fullList=document.getElementById('wins-full-list');
+  fullList.innerHTML=allWins.slice(2).map((w,i)=>winCardHTML(w,i+2)).join('');
+  document.getElementById('wins-full').style.display='block';
+  document.getElementById('results-cta').style.display='block';
+  document.getElementById('wins-full').scrollIntoView({behavior:'smooth',block:'start'});
+}
 
- // Scroll to revealed wins
- document.getElementById('wins-full').scrollIntoView({behavior:'smooth',block:'start'});
+function getAnswerText(secId,qId,type){
+  const sec=SECTIONS.find(s=>s.id===secId);
+  if(!sec)return '';
+  const q=sec.questions.find(q=>q.id===qId);
+  if(!q)return '';
+  const a=answers[qId];
+  if(a===undefined||a===null)return '';
+  if(type==='single') return q.opts[a]||'';
+  if(type==='multi') return (answers[qId]||[]).join(', ');
+  return '';
+}
+
+async function unlockReport(){
+  const first=document.getElementById('gate-first').value.trim();
+  const last=document.getElementById('gate-last').value.trim();
+  const email=document.getElementById('gate-email').value.trim();
+  const property=document.getElementById('gate-property').value.trim();
+  if(!first||!email||!property){
+    alert('Please fill in first name, email, and property name to unlock your report.');
+    return;
+  }
+
+  // Disable button and show loading state
+  const btn=document.querySelector('.gate-card .btn');
+  const origText=btn.textContent;
+  btn.textContent='Saving your results...';
+  btn.disabled=true;
+
+  const cats=getCatScores();
+  const payload={
+    'First Name':first,
+    'Last Name':last,
+    'Email':email,
+    'Property Name':property,
+    'Property Type':(answers['prop_type']||[]).map(i=>SECTIONS[0].questions[0].opts[i]),
+    'Assets':answers['assets']||[],
+    'Score: Reach':cats.reach||0,
+    'Score: Tracking':cats.tracking||0,
+    'Score: Engagement':cats.engagement||0,
+    'Score: Pipeline':cats.pipeline||0,
+    'Score: Revenue':cats.revops||0,
+    'Total Score':getTotalScore(),
+    'Win Count':allWins.length,
+    'Quick Wins':allWins.map(w=>w.t).join(' | '),
+    'OTA Dependency':getAnswerText('reach','ota_pct','single'),
+    'Has CRM':getAnswerText('tracking','crm','single'),
+    'Email Cadence':getAnswerText('engagement','email_sends','single'),
+    'Response SLA':getAnswerText('pipeline','response_time','single'),
+    'Paid Social':getAnswerText('reach','paid_social','single'),
+    'Submitted At':new Date().toISOString(),
+    'Source':'hospitality-pulse'
+  };
+
+  try {
+    await fetch(WORKER_URL,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(payload)
+    });
+  } catch(e){
+    // Submission failed silently - still reveal results
+    console.error('Submission error:',e);
+  }
+
+  revealResults();
 }
 </script>
 </body>
