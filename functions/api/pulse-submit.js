@@ -1,6 +1,14 @@
+// functions/api/pulse-submit.js
+// Cloudflare Pages Function — route: /api/pulse-submit
+// Used by: hospitality-pulse.html
+//
+// Env vars already set in Cloudflare Pages dashboard:
+//   AIRTABLE_TOKEN             — personal access token
+//   AIRTABLE_PROPOSALS_BASE_ID — apposb2VLlXXnUIMY
+
 export async function onRequestPost({ request, env }) {
   const origin = request.headers.get('Origin') || '';
-  const corsHeaders = {
+  const cors = {
     'Access-Control-Allow-Origin': origin,
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type',
@@ -12,51 +20,52 @@ export async function onRequestPost({ request, env }) {
   } catch {
     return new Response(JSON.stringify({ error: 'Invalid JSON' }), {
       status: 400,
-      headers: { 'Content-Type': 'application/json', ...corsHeaders },
+      headers: { 'Content-Type': 'application/json', ...cors },
     });
   }
 
   const fields = {
-    'First Name':       String(body['First Name']  || '').trim(),
-    'Last Name':        String(body['Last Name']   || '').trim(),
-    'Email':            String(body['Email']        || '').trim(),
-    'Property Name':    String(body['Property Name'] || '').trim(),
-    'Property Type':    Array.isArray(body['Property Type'])  ? body['Property Type']  : [],
-    'Assets':           Array.isArray(body['Assets'])          ? body['Assets']          : [],
-    'Score: Reach':       Number(body['Score: Reach'])       || 0,
-    'Score: Tracking':    Number(body['Score: Tracking'])    || 0,
-    'Score: Engagement':  Number(body['Score: Engagement'])  || 0,
-    'Score: Pipeline':    Number(body['Score: Pipeline'])    || 0,
-    'Score: Revenue':     Number(body['Score: Revenue'])     || 0,
-    'Total Score':        Number(body['Total Score'])        || 0,
-    'Win Count':          Number(body['Win Count'])          || 0,
-    'Quick Wins':         String(body['Quick Wins']  || '').substring(0, 10000),
-    'OTA Dependency':     String(body['OTA Dependency']  || ''),
-    'Has CRM':            String(body['Has CRM']          || ''),
-    'Email Cadence':      String(body['Email Cadence']    || ''),
-    'Response SLA':       String(body['Response SLA']     || ''),
-    'Paid Social':        String(body['Paid Social']      || ''),
-    'Submitted At':       String(body['Submitted At'] || new Date().toISOString()),
-    'Source':             'hospitality-pulse',
+    'First Name':      String(body['First Name']  || '').trim(),
+    'Last Name':       String(body['Last Name']   || '').trim(),
+    'Email':           String(body['Email']        || '').trim(),
+    'Property Name':   String(body['Property Name'] || '').trim(),
+    'Property Type':   Array.isArray(body['Property Type']) ? body['Property Type'] : [],
+    'Assets':          Array.isArray(body['Assets'])         ? body['Assets']         : [],
+    'Score: Reach':      Number(body['Score: Reach'])      || 0,
+    'Score: Tracking':   Number(body['Score: Tracking'])   || 0,
+    'Score: Engagement': Number(body['Score: Engagement']) || 0,
+    'Score: Pipeline':   Number(body['Score: Pipeline'])   || 0,
+    'Score: Revenue':    Number(body['Score: Revenue'])    || 0,
+    'Total Score':       Number(body['Total Score'])       || 0,
+    'Win Count':         Number(body['Win Count'])         || 0,
+    'Quick Wins':        String(body['Quick Wins']  || '').substring(0, 10000),
+    'OTA Dependency':    String(body['OTA Dependency']  || ''),
+    'Has CRM':           String(body['Has CRM']          || ''),
+    'Email Cadence':     String(body['Email Cadence']    || ''),
+    'Response SLA':      String(body['Response SLA']     || ''),
+    'Paid Social':       String(body['Paid Social']      || ''),
+    'Submitted At':      String(body['Submitted At'] || new Date().toISOString()),
+    'Source':            'hospitality-pulse',
   };
-
-  const AIRTABLE_URL = 'https://api.airtable.com/v0/apposb2VLlXXnUIMY/tblqnyAUwrWmi43es';
 
   let atRes;
   try {
-    atRes = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${env.AIRTABLE_TOKEN}`,
-        'Content-Type':  'application/json',
-      },
-      body: JSON.stringify({ fields }),
-    });
+    atRes = await fetch(
+      'https://api.airtable.com/v0/apposb2VLlXXnUIMY/tblqnyAUwrWmi43es',
+      {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${env.AIRTABLE_TOKEN}`,
+          'Content-Type':  'application/json',
+        },
+        body: JSON.stringify({ fields }),
+      }
+    );
   } catch (err) {
-    console.error('Airtable fetch failed:', err);
+    console.error('Airtable fetch error:', err);
     return new Response(JSON.stringify({ error: 'Upstream request failed' }), {
       status: 502,
-      headers: { 'Content-Type': 'application/json', ...corsHeaders },
+      headers: { 'Content-Type': 'application/json', ...cors },
     });
   }
 
@@ -64,16 +73,15 @@ export async function onRequestPost({ request, env }) {
 
   if (!atRes.ok) {
     console.error('Airtable error:', JSON.stringify(atData));
-    // Still return 200 so the UI reveals results even if Airtable has an issue
     return new Response(JSON.stringify({ success: false, error: atData }), {
       status: 200,
-      headers: { 'Content-Type': 'application/json', ...corsHeaders },
+      headers: { 'Content-Type': 'application/json', ...cors },
     });
   }
 
   return new Response(JSON.stringify({ success: true, id: atData.id }), {
     status: 200,
-    headers: { 'Content-Type': 'application/json', ...corsHeaders },
+    headers: { 'Content-Type': 'application/json', ...cors },
   });
 }
 
