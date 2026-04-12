@@ -3,67 +3,63 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hospitality Pulse Audit Martech Consulting</title>
+<title>Hospitality Pulse Audit - Martech Consulting</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
- --orange:#fe6930;--o-dk:#e05520;--o-soft:rgba(254,105,48,.08);--o-border:rgba(254,105,48,.2);
- --navy:#052e4d;--cream:#f9f0e3;--stone:#f0e6d4;--white:#fff;
- --ink:#0c1c2b;--mid:#4a5f72;--muted:#7a8f9e;
- --rule:rgba(5,46,77,.09);--rule-dk:rgba(5,46,77,.15);
- --sh-sm:0 2px 8px rgba(5,46,77,.07),0 1px 3px rgba(5,46,77,.05);
- --sh-md:0 8px 28px rgba(5,46,77,.1),0 2px 6px rgba(5,46,77,.06);
- --sh-lg:0 20px 60px rgba(5,46,77,.13),0 4px 12px rgba(5,46,77,.07);
- --serif:'Playfair Display',Georgia,serif;
- --sans:'DM Sans',system-ui,sans-serif;
- --r:8px;
- --green:#16a34a;--amber:#d97706;--red:#dc2626;
+  --orange:#fe6930;--o-dk:#e05520;--o-soft:rgba(254,105,48,.08);--o-border:rgba(254,105,48,.2);
+  --navy:#052e4d;--cream:#f9f0e3;--stone:#f0e6d4;--white:#fff;
+  --ink:#0c1c2b;--mid:#4a5f72;--muted:#7a8f9e;
+  --rule:rgba(5,46,77,.09);--rule-dk:rgba(5,46,77,.15);
+  --sh-sm:0 2px 8px rgba(5,46,77,.07),0 1px 3px rgba(5,46,77,.05);
+  --sh-md:0 8px 28px rgba(5,46,77,.1),0 2px 6px rgba(5,46,77,.06);
+  --sh-lg:0 20px 60px rgba(5,46,77,.13),0 4px 12px rgba(5,46,77,.07);
+  --serif:'Playfair Display',Georgia,serif;
+  --sans:'DM Sans',system-ui,sans-serif;
+  --r:8px;
+  --green:#16a34a;--amber:#d97706;--red:#dc2626;
 }
-html{scroll-behavior:smooth}
+html{color-scheme:light}
 body{font-family:var(--sans);color:var(--ink);background:var(--cream);overflow-x:hidden}
 
-/* ── PROGRESS BAR ── */
-#prog-bar{position:fixed;top:0;left:0;height:3px;background:var(--orange);z-index:300;transition:width .4s ease;width:0}
+/* No smooth scroll — we control scrolling explicitly */
 
-/* ── NAV ── */
-.audit-nav{
- position:sticky;top:0;z-index:200;
- background:rgba(249,240,227,.97);backdrop-filter:blur(16px);
- border-bottom:1px solid var(--rule-dk);
- padding:.85rem 1.5rem;
- display:flex;align-items:center;justify-content:space-between;
+/* ── TOP BAR (always visible) ── */
+.top-bar{
+  position:fixed;top:0;left:0;right:0;z-index:300;
+  background:rgba(249,240,227,.97);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--rule-dk);
 }
-.nav-brand{font-size:.58rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--orange)}
-.nav-steps{display:flex;gap:5px}
-.nav-step{width:26px;height:3px;border-radius:2px;background:var(--stone);transition:background .3s}
-.nav-step.done{background:var(--orange)}
-.nav-count{font-size:.7rem;color:var(--muted)}
-
-/* ── SHARED ── */
-.wrap{max-width:680px;margin:0 auto;padding:0 1.25rem}
-.eyebrow{display:inline-flex;align-items:center;gap:.45rem;font-size:.58rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--orange);margin-bottom:.45rem}
-.eyebrow::before{content:'';width:12px;height:1px;background:var(--orange);flex-shrink:0}
-.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.9rem 1.8rem;background:var(--orange);color:#fff;border:none;border-radius:4px;font-family:var(--sans);font-size:.78rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;cursor:pointer;transition:background .15s,transform .15s,box-shadow .15s}
-.btn:hover{background:var(--o-dk);transform:translateY(-1px);box-shadow:0 6px 20px rgba(254,105,48,.3)}
-.btn:disabled{background:rgba(5,46,77,.12);color:var(--muted);cursor:not-allowed;transform:none;box-shadow:none}
-.btn-ghost{background:transparent;border:1.5px solid var(--orange);color:var(--orange)}
-.btn-ghost:hover{background:var(--orange);color:#fff}
-.btn-white{background:#fff;color:var(--orange)}
-.btn-white:hover{background:rgba(255,255,255,.9);box-shadow:0 6px 24px rgba(0,0,0,.15)}
+.top-bar-inner{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:.7rem 1.5rem;
+}
+.top-brand{font-size:.58rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--orange)}
+#top-steps{display:flex;gap:5px}
+.ts{width:26px;height:3px;border-radius:2px;background:var(--stone);transition:background .3s}
+.ts.done{background:var(--orange)}
+#top-count{font-size:.7rem;color:var(--muted)}
+#prog-bar{height:3px;background:var(--orange);transition:width .4s ease;width:0}
 
 /* ── SCREENS ── */
-.screen{display:none}
+.screen{display:none;min-height:100vh;padding-top:60px}
 .screen.active{display:block}
+.screen.slide-in{animation:slideIn .22s ease forwards}
+@keyframes slideIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 
 /* ── INTRO ── */
-#screen-intro{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem}
+#screen-intro{
+  display:flex;align-items:center;justify-content:center;
+  padding:80px 1.5rem 3rem;
+}
+#screen-intro.active{display:flex}
 .intro-inner{max-width:560px;width:100%;text-align:center}
 .intro-inner h1{font-family:var(--serif);font-size:clamp(2.4rem,5vw,3rem);font-weight:400;color:var(--navy);line-height:1.08;margin-bottom:.9rem}
 .intro-inner h1 em{font-style:italic;color:var(--orange)}
-.intro-inner .lead{font-size:.95rem;color:var(--mid);line-height:1.75;font-weight:300;max-width:42ch;margin:0 auto 2rem}
+.intro-lead{font-size:.95rem;color:var(--mid);line-height:1.75;font-weight:300;max-width:42ch;margin:0 auto 2rem}
 .intro-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin-bottom:2.5rem}
 .istat{background:#fff;border:1px solid var(--rule-dk);border-radius:var(--r);padding:1.1rem .75rem;text-align:center;box-shadow:var(--sh-sm)}
 .istat-n{font-family:var(--serif);font-size:1.75rem;color:var(--orange);line-height:1;margin-bottom:.25rem}
@@ -76,52 +72,63 @@ body{font-family:var(--sans);color:var(--ink);background:var(--cream);overflow-x
 
 /* ── QUESTIONS ── */
 #screen-questions{padding-bottom:7rem}
-.sec-header{padding:2.5rem 1.25rem 0;max-width:680px;margin:0 auto 2rem}
+.sec-header{padding:2rem 1.25rem 0;max-width:680px;margin:0 auto 1.75rem}
+.eyebrow{display:inline-flex;align-items:center;gap:.45rem;font-size:.58rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--orange);margin-bottom:.45rem}
+.eyebrow::before{content:'';width:12px;height:1px;background:var(--orange);flex-shrink:0}
 .sec-header h2{font-family:var(--serif);font-size:clamp(1.7rem,3.5vw,2rem);font-weight:400;color:var(--navy);line-height:1.12;margin-bottom:.5rem}
 .sec-sub{font-size:.84rem;color:var(--mid);line-height:1.65;font-weight:300}
+.wrap{max-width:680px;margin:0 auto;padding:0 1.25rem}
 
 .q-card{background:#fff;border:1px solid var(--rule-dk);border-radius:10px;padding:1.5rem;box-shadow:var(--sh-sm);margin-bottom:1.15rem}
 .q-tag{font-size:.57rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem}
 .q-text{font-size:.9rem;font-weight:500;color:var(--navy);line-height:1.45;margin-bottom:1rem}
 .q-opts{display:flex;flex-direction:column;gap:.45rem}
-.q-opt{display:flex;align-items:center;gap:.65rem;text-align:left;padding:.7rem 1rem;background:var(--cream);border:1.5px solid var(--rule);border-radius:6px;cursor:pointer;font-size:.82rem;color:var(--mid);font-weight:400;font-family:var(--sans);transition:all .15s;width:100%}
-.q-opt:hover{border-color:rgba(254,105,48,.4);color:var(--ink)}
-.q-opt.selected{background:rgba(254,105,48,.07);border-color:var(--orange);color:var(--ink);font-weight:500}
-.q-indicator{width:16px;height:16px;flex-shrink:0;border:2px solid rgba(5,46,77,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all .15s}
-.q-indicator.checkbox{border-radius:3px}
-.q-opt.selected .q-indicator{background:var(--orange);border-color:var(--orange)}
-.q-indicator-dot{width:5px;height:5px;border-radius:50%;background:#fff;display:none}
-.q-opt.selected .q-indicator-dot{display:block}
-.q-indicator-check{font-size:10px;color:#fff;font-weight:700;display:none}
-.q-opt.selected .q-indicator-check{display:block}
 
-/* ── STICKY NAV ── */
-.sticky-nav{
- position:fixed;bottom:0;left:0;right:0;z-index:200;
- background:rgba(249,240,227,.97);backdrop-filter:blur(16px);
- border-top:1px solid var(--rule-dk);
- padding:1rem 1.5rem;
- display:flex;align-items:center;justify-content:space-between;
- box-shadow:0 -4px 20px rgba(5,46,77,.08);
+/* FIX: q-opt is a real button that stores data via data-idx only */
+.q-opt{
+  display:flex;align-items:center;gap:.65rem;text-align:left;
+  padding:.7rem 1rem;background:var(--cream);
+  border:1.5px solid var(--rule);border-radius:6px;
+  cursor:pointer;font-size:.82rem;color:var(--mid);font-weight:400;
+  font-family:var(--sans);transition:all .15s;width:100%;
 }
-.cat-score-label{font-size:.7rem;color:var(--muted);text-align:center}
-.cat-score-label strong{color:var(--orange)}
+.q-opt:hover{border-color:rgba(254,105,48,.4);color:var(--ink)}
+.q-opt.sel{background:rgba(254,105,48,.07);border-color:var(--orange);color:var(--ink);font-weight:500}
+.q-ind{width:16px;height:16px;flex-shrink:0;border:2px solid rgba(5,46,77,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.q-ind.cb{border-radius:3px}
+.q-opt.sel .q-ind{background:var(--orange);border-color:var(--orange)}
+.q-dot{width:5px;height:5px;border-radius:50%;background:#fff}
+.q-chk{font-size:10px;color:#fff;font-weight:700}
+
+/* ── BOTTOM NAV ── */
+.bottom-nav{
+  position:fixed;bottom:0;left:0;right:0;z-index:200;
+  background:rgba(249,240,227,.97);backdrop-filter:blur(16px);
+  border-top:1px solid var(--rule-dk);
+  padding:.9rem 1.5rem;
+  display:flex;align-items:center;justify-content:space-between;
+  box-shadow:0 -4px 20px rgba(5,46,77,.08);
+}
+#cat-score-lbl{font-size:.7rem;color:var(--muted);text-align:center}
+#cat-score-lbl strong{color:var(--orange)}
 .btn-back{background:transparent;border:1.5px solid var(--rule-dk);border-radius:4px;padding:.68rem 1.35rem;font-size:.72rem;font-weight:600;color:var(--mid);cursor:pointer;font-family:var(--sans);letter-spacing:.06em;text-transform:uppercase;transition:border-color .15s}
 .btn-back:hover{border-color:var(--navy);color:var(--navy)}
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.9rem 1.8rem;background:var(--orange);color:#fff;border:none;border-radius:4px;font-family:var(--sans);font-size:.78rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;cursor:pointer;transition:background .15s,transform .15s,box-shadow .15s}
+.btn:hover{background:var(--o-dk);transform:translateY(-1px);box-shadow:0 6px 20px rgba(254,105,48,.3)}
+.btn:disabled{background:rgba(5,46,77,.12);color:var(--muted);cursor:not-allowed;transform:none;box-shadow:none}
+.btn-white{background:#fff;color:var(--orange)}
+.btn-white:hover{background:rgba(255,255,255,.9);box-shadow:0 6px 24px rgba(0,0,0,.15)}
 
 /* ── RESULTS ── */
-#screen-results{min-height:100vh}
+#screen-results{padding-bottom:4rem}
 .results-header{background:var(--navy);padding:1.75rem 1.5rem;text-align:center}
-.results-header .eyebrow{justify-content:center;color:rgba(254,105,48,.8)}
 .results-header .eyebrow::before{background:rgba(254,105,48,.8)}
+.results-header .eyebrow{color:rgba(254,105,48,.8);justify-content:center;margin-bottom:.4rem}
 .results-header h2{font-family:var(--serif);font-size:1.5rem;font-weight:400;color:#fff;margin:0}
-.results-body{max-width:900px;margin:0 auto;padding:2rem 1.25rem 4rem}
+.results-body{max-width:900px;margin:0 auto;padding:2rem 1.25rem}
 
-/* Score layout */
 .score-layout{display:grid;grid-template-columns:auto 1fr;gap:1.25rem;margin-bottom:2rem}
 .score-card{background:#fff;border:1px solid var(--rule-dk);border-radius:10px;padding:2rem 1.75rem;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.85rem;box-shadow:var(--sh-md);min-width:200px}
-.score-ring-wrap svg{display:block}
-.score-note{font-size:.72rem;color:var(--muted);text-align:center;line-height:1.5;font-weight:300;max-width:18ch}
 .cats-card{background:#fff;border:1px solid var(--rule-dk);border-radius:10px;padding:1.75rem;box-shadow:var(--sh-md)}
 .cats-lbl{font-size:.57rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:1.25rem}
 .cat-bar{margin-bottom:.9rem}
@@ -130,16 +137,16 @@ body{font-family:var(--sans);color:var(--ink);background:var(--cream);overflow-x
 .cat-bar-name{font-size:.76rem;font-weight:500;color:var(--ink)}
 .cat-bar-score{font-size:.7rem;font-weight:700}
 .cat-bar-track{height:5px;background:var(--stone);border-radius:3px;overflow:hidden}
-.cat-bar-fill{height:100%;border-radius:3px;transition:width 1s ease}
+.cat-bar-fill{height:100%;border-radius:3px}
 .score-tier{font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;border-radius:1rem;padding:.22rem .75rem;border:1px solid}
+.score-note{font-size:.72rem;color:var(--muted);text-align:center;line-height:1.5;font-weight:300;max-width:18ch}
 
-/* Quick wins */
+/* wins */
 .wins-section{margin-bottom:2.5rem}
 .wins-header{margin-bottom:1.25rem}
 .wins-header h3{font-family:var(--serif);font-size:1.5rem;font-weight:400;color:var(--navy);margin-bottom:.35rem}
 .wins-header p{font-size:.8rem;color:var(--mid);font-weight:300}
 .wins-list{display:flex;flex-direction:column;gap:.75rem}
-
 .win-card{background:#fff;border:1px solid var(--rule-dk);border-radius:var(--r);padding:1.2rem 1.4rem;box-shadow:var(--sh-sm);border-left:3px solid var(--orange)}
 .win-head{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:.45rem}
 .win-label{font-size:.57rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:.22rem}
@@ -149,7 +156,7 @@ body{font-family:var(--sans);color:var(--ink);background:var(--cream);overflow-x
 .win-effort{font-size:.57rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
 .win-desc{font-size:.75rem;color:var(--mid);line-height:1.65;font-weight:300}
 
-/* GATE */
+/* gate */
 .gate-wrap{position:relative;margin-bottom:2.5rem}
 .gate-preview{position:relative}
 .gate-fade{position:absolute;bottom:0;left:0;right:0;height:220px;background:linear-gradient(to bottom,transparent,var(--cream) 85%);pointer-events:none;z-index:2}
@@ -166,11 +173,7 @@ body{font-family:var(--sans);color:var(--ink);background:var(--cream);overflow-x
 .gate-field input::placeholder{color:#93aabb}
 .gate-fine{font-size:.64rem;color:#93aabb;text-align:center;line-height:1.5;margin-top:.2rem}
 
-/* Full wins (hidden until unlocked) */
 #wins-full{display:none}
-#wins-full .wins-list{display:flex;flex-direction:column;gap:.75rem}
-
-/* CTA section */
 .results-cta{background:var(--navy);border-radius:10px;padding:2.5rem;text-align:center;position:relative;overflow:hidden}
 .results-cta::before{content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;border-radius:50%;background:rgba(254,105,48,.05)}
 .results-cta-inner{position:relative;z-index:1}
@@ -178,558 +181,569 @@ body{font-family:var(--sans);color:var(--ink);background:var(--cream);overflow-x
 .results-cta p{font-size:.82rem;color:rgba(255,255,255,.5);line-height:1.65;font-weight:300;max-width:40ch;margin:0 auto 1.75rem}
 .results-cta-sub{margin-top:.85rem;font-size:.67rem;color:rgba(255,255,255,.25)}
 
-/* ── MOBILE ── */
 @media(max-width:680px){
- .score-layout{grid-template-columns:1fr;gap:1rem}
- .gate-row{grid-template-columns:1fr}
- .intro-stats{grid-template-columns:repeat(3,1fr)}
- .covers-grid{grid-template-columns:1fr}
-}
-@media(max-width:420px){
- .intro-stats{grid-template-columns:1fr 1fr}
+  .score-layout{grid-template-columns:1fr}
+  .gate-row{grid-template-columns:1fr}
+  .covers-grid{grid-template-columns:1fr}
 }
 </style>
 </head>
 <body>
 
-<div id="prog-bar"></div>
+<!-- ALWAYS-VISIBLE TOP BAR -->
+<div class="top-bar">
+  <div class="top-bar-inner">
+    <div class="top-brand">Martech &middot; Pulse Audit</div>
+    <div id="top-steps"></div>
+    <div id="top-count"></div>
+  </div>
+  <div id="prog-bar"></div>
+</div>
+
+<!-- BOTTOM NAV (questions only) -->
+<div class="bottom-nav" id="bottom-nav" style="display:none">
+  <button class="btn-back" onclick="prevSection()">&#8592; Back</button>
+  <div id="cat-score-lbl"></div>
+  <button class="btn" id="btn-next" onclick="nextSection()" disabled>Next &rarr;</button>
+</div>
 
 <!-- ════ INTRO ════ -->
 <div id="screen-intro" class="screen active">
- <div class="intro-inner">
- <div class="eyebrow" style="justify-content:center;margin-bottom:1.5rem">
- <span style="width:0;display:none"></span>Martech Consulting
- </div>
- <h1>Hospitality<br><em>Pulse Audit</em></h1>
- <p class="lead">A scored assessment of your marketing, pipeline, tracking, and revenue systems. 8&ndash;10 minutes. You&rsquo;ll leave with a prioritized list of quick wins worth <strong style="color:var(--navy);font-weight:600">$5,000+ per month.</strong></p>
- <div class="intro-stats">
- <div class="istat"><div class="istat-n">6</div><div class="istat-l">Scored categories</div></div>
- <div class="istat"><div class="istat-n">30+</div><div class="istat-l">Questions</div></div>
- <div class="istat"><div class="istat-n">$5k+</div><div class="istat-l">Monthly upside</div></div>
- </div>
- <button class="btn" onclick="startAudit()" style="width:100%;justify-content:center;font-size:.82rem;padding:1rem">Start My Audit &rarr;</button>
- <p style="font-size:.67rem;color:var(--muted);margin-top:.85rem">No email required to start. You&rsquo;ll enter your info to unlock the full report at the end.</p>
- <div class="intro-covers">
- <div class="covers-lbl">What this covers</div>
- <div class="covers-grid">
- <div class="cover-item"><div class="cover-dot"></div>Reach &amp; acquisition</div>
- <div class="cover-item"><div class="cover-dot"></div>Tracking &amp; data</div>
- <div class="cover-item"><div class="cover-dot"></div>Engagement &amp; loyalty</div>
- <div class="cover-item"><div class="cover-dot"></div>Pipeline &amp; lead flow</div>
- <div class="cover-item"><div class="cover-dot"></div>Revenue intelligence</div>
- <div class="cover-item"><div class="cover-dot"></div>Asset utilization</div>
- </div>
- </div>
- </div>
+  <div class="intro-inner">
+    <div class="eyebrow" style="justify-content:center;margin-bottom:1.5rem">Martech Consulting</div>
+    <h1>Hospitality<br><em>Pulse Audit</em></h1>
+    <p class="intro-lead">A scored assessment of your marketing, pipeline, tracking, and revenue systems. 8 to 10 minutes. You will leave with a prioritized list of quick wins worth <strong style="color:var(--navy);font-weight:600">$5,000+ per month.</strong></p>
+    <div class="intro-stats">
+      <div class="istat"><div class="istat-n">6</div><div class="istat-l">Scored categories</div></div>
+      <div class="istat"><div class="istat-n">30+</div><div class="istat-l">Questions</div></div>
+      <div class="istat"><div class="istat-n">$5k+</div><div class="istat-l">Monthly upside</div></div>
+    </div>
+    <button class="btn" onclick="startAudit()" style="width:100%;justify-content:center;font-size:.82rem;padding:1rem">Start My Audit &rarr;</button>
+    <p style="font-size:.67rem;color:var(--muted);margin-top:.85rem">No email required to start. Most operators who score under 60 have five or more surfaced opportunities. The audit tells you which ones to fix first.</p>
+    <div class="intro-covers">
+      <div class="covers-lbl">What this covers</div>
+      <div class="covers-grid">
+        <div class="cover-item"><div class="cover-dot"></div>Reach &amp; acquisition</div>
+        <div class="cover-item"><div class="cover-dot"></div>Tracking &amp; data</div>
+        <div class="cover-item"><div class="cover-dot"></div>Engagement &amp; loyalty</div>
+        <div class="cover-item"><div class="cover-dot"></div>Pipeline &amp; lead flow</div>
+        <div class="cover-item"><div class="cover-dot"></div>Revenue intelligence</div>
+        <div class="cover-item"><div class="cover-dot"></div>Asset utilization</div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- ════ QUESTIONS ════ -->
 <div id="screen-questions" class="screen">
- <nav class="audit-nav">
- <div class="nav-brand">Martech &middot; Pulse Audit</div>
- <div class="nav-steps" id="nav-steps"></div>
- <div class="nav-count" id="nav-count"></div>
- </nav>
- <div id="questions-body"></div>
- <div class="sticky-nav">
- <button class="btn-back" onclick="prevSection()">&#8592; Back</button>
- <div class="cat-score-label" id="cat-score-label"></div>
- <button class="btn" id="btn-next" onclick="nextSection()" disabled>Next &rarr;</button>
- </div>
+  <div id="questions-body"></div>
 </div>
 
 <!-- ════ RESULTS ════ -->
 <div id="screen-results" class="screen">
- <div class="results-header">
- <div class="eyebrow" style="margin-bottom:.4rem">Your Results</div>
- <h2>Hospitality Pulse Audit</h2>
- </div>
- <div class="results-body">
- <!-- Score + cats -->
- <div class="score-layout" id="score-layout"></div>
-
- <!-- Quick wins: preview (always visible) -->
- <div class="wins-section">
- <div class="wins-header">
- <div class="eyebrow">Prioritized quick wins</div>
- <h3 id="wins-headline">Your highest-impact opportunities.</h3>
- <p>Sorted by effort. Low-effort wins take under a day to implement.</p>
- </div>
- <div class="wins-list" id="wins-preview"></div>
- </div>
-
- <!-- Gate -->
- <div class="gate-wrap" id="gate-wrap">
- <div class="gate-preview" id="gate-preview">
- <div class="wins-list" id="wins-locked"></div>
- <div class="gate-fade"></div>
- </div>
- <div class="gate-card">
- <div class="gate-icon">&#128274;</div>
- <h3>Unlock your full report.</h3>
- <p>Enter your info to see every quick win, your full score breakdown, and a copy sent to you.</p>
- <div class="gate-form">
- <div class="gate-row">
- <div class="gate-field"><label>First Name</label><input type="text" id="gate-first" placeholder="Sarah" required></div>
- <div class="gate-field"><label>Last Name</label><input type="text" id="gate-last" placeholder="Langdon" required></div>
- </div>
- <div class="gate-field"><label>Email</label><input type="email" id="gate-email" placeholder="sarah@youroperation.com" required></div>
- <div class="gate-field"><label>Property Name</label><input type="text" id="gate-property" placeholder="The Ridgeline Inn" required></div>
- <button class="btn" style="width:100%;justify-content:center;margin-top:.25rem" onclick="unlockReport()">Unlock My Full Report &rarr;</button>
- <p class="gate-fine">No pitch. No pressure. Jon or Keith will follow up within one business day.</p>
- </div>
- </div>
- </div>
-
- <!-- Full wins (revealed after gate) -->
- <div id="wins-full">
- <div class="wins-section">
- <div class="wins-list" id="wins-full-list"></div>
- </div>
- </div>
-
- <!-- CTA -->
- <div class="results-cta" id="results-cta" style="display:none">
- <div class="results-cta-inner">
- <h3>Want us to walk through this with you?</h3>
- <p>Free 30-minute strategy call. We review your score and your property before we talk. No pitch deck.</p>
- <a class="btn btn-white" href="/hospitality#form">Book My Free Strategy Call &rarr;</a>
- <div class="results-cta-sub">No commitment. Just a real conversation about your operation.</div>
- </div>
- </div>
- </div>
+  <div class="results-header">
+    <div class="eyebrow" style="margin-bottom:.4rem">Your Results</div>
+    <h2>Hospitality Pulse Audit</h2>
+  </div>
+  <div class="results-body">
+    <div class="score-layout" id="score-layout"></div>
+    <div class="wins-section">
+      <div class="wins-header">
+        <div class="eyebrow">Prioritized quick wins</div>
+        <h3 id="wins-headline">Your highest-impact opportunities.</h3>
+        <p>Sorted by effort. Low-effort wins take under a day to implement.</p>
+      </div>
+      <div class="wins-list" id="wins-preview"></div>
+    </div>
+    <div class="gate-wrap" id="gate-wrap">
+      <div class="gate-preview">
+        <div class="wins-list" id="wins-locked"></div>
+        <div class="gate-fade"></div>
+      </div>
+      <div class="gate-card">
+        <div class="gate-icon">&#128274;</div>
+        <h3>Unlock your full report.</h3>
+        <p>Enter your info to see every quick win, your full score breakdown, and a copy sent to you.</p>
+        <div class="gate-form">
+          <div class="gate-row">
+            <div class="gate-field"><label>First Name</label><input type="text" id="gate-first" placeholder="Sarah" required></div>
+            <div class="gate-field"><label>Last Name</label><input type="text" id="gate-last" placeholder="Langdon" required></div>
+          </div>
+          <div class="gate-field"><label>Email</label><input type="email" id="gate-email" placeholder="sarah@youroperation.com" required></div>
+          <div class="gate-field"><label>Property Name</label><input type="text" id="gate-property" placeholder="The Ridgeline Inn" required></div>
+          <button class="btn" style="width:100%;justify-content:center;margin-top:.25rem" onclick="unlockReport()">Unlock My Full Report &rarr;</button>
+          <p class="gate-fine">No pitch. No pressure. Jon or Keith will follow up within one business day.</p>
+        </div>
+      </div>
+    </div>
+    <div id="wins-full" style="display:none;margin-bottom:2.5rem">
+      <div class="wins-list" id="wins-full-list"></div>
+    </div>
+    <div class="results-cta" id="results-cta" style="display:none">
+      <div class="results-cta-inner">
+        <h3>Want us to walk through this with you?</h3>
+        <p>Free 30-minute strategy call. We review your score and your property before we talk. No pitch deck.</p>
+        <a class="btn btn-white" href="/hospitality#form">Book My Free Strategy Call &rarr;</a>
+        <div class="results-cta-sub">No commitment. Just a real conversation about your operation.</div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
+// ─── CONFIG ───────────────────────────────────────────────────────────────────
+const SUBMIT_URL = '/api/pulse-submit';
+
 // ─── DATA ────────────────────────────────────────────────────────────────────
-const SECTIONS=[
- {id:'setup',label:'Your Property',scored:false,eyebrow:'Section 1 of 6',
- heading:'Tell us about your operation.',
- sub:'This calibrates your score and surfaces only the relevant quick wins for your specific business.',
- questions:[
- {id:'prop_type',type:'multi',required:true,
- text:'What type of operation is this? Select all that apply.',
- opts:['Boutique Inn or B&B','Boutique Hotel','Restaurant or Tavern','Brewery or Taproom','Event or Wedding Venue','Outdoor Recreation or Adventure Tourism','Destination Retail or Experience','Other Hospitality or Tourism Business']},
- {id:'assets',type:'multi',
- text:'Which assets does your property have? Select all that apply.',
- opts:['Guest rooms or accommodations','Full-service restaurant or tavern','Bar or cocktail program','Liquor license','Beer garden or outdoor bar','Private event space (indoor)','Outdoor ceremony or event space','Wedding venue capabilities','Pool or fitness amenity','Spa or wellness services','Retail (merch, farm stand, gift shop)','Hiking trails or nature access','Ski access or snow sports','Field or open acreage','Commercial kitchen','Catering capability']},
- ]},
- {id:'reach',label:'Reach & Acquisition',scored:true,eyebrow:'Section 2 of 6',
- heading:'How do people find you?',
- sub:'OTA dependency, paid channels, organic presence, and referral partnerships.',
- questions:[
- {id:'ota_pct',text:"What percentage of your bookings or covers come through third-party platforms Booking.com, OpenTable, Yelp, Expedia?",
- type:'single',opts:['More than 60%','30–60%','10–30%','Less than 10%',"We don't use third-party platforms"],
- scores:[0,1,3,4,4],wins:['ota_high',null,null,null,null]},
- {id:'paid_social',text:'Do you run paid social media advertising Meta, Instagram?',
- type:'single',opts:['Never','Tried it once or twice','Run ads occasionally but inconsistently','Active campaigns with regular reporting and optimization'],
- scores:[0,1,2,4],wins:['no_paid_social','no_paid_social',null,null]},
- {id:'gbp',text:'Is your Google Business Profile claimed and actively maintained current hours, recent photos, regular posts?',
- type:'single',opts:["Not claimed or we're not sure",'Claimed but rarely updated','Actively managed with recent content'],
- scores:[0,1,4],wins:['no_gbp','stale_gbp',null]},
- {id:'dmo',text:'Are you listed in local tourism boards, DMO directories, or regional travel guides?',
- type:'single',opts:['No listings anywhere','One or two, not actively managed','Yes, several with current information'],
- scores:[0,1,4],wins:['no_dmo',null,null]},
- {id:'referral',text:'Do you have active referral partnerships with complementary local businesses photographers, activity operators, wedding vendors?',
- type:'single',opts:['No formal partnerships','One or two informal relationships','Yes, structured partnerships that consistently send referrals'],
- scores:[0,1,4],wins:['no_referral',null,null]},
- {id:'source_track',text:'Do you track where your bookings or visits originate which channel, campaign, or referral source?',
- type:'single',opts:['No, we mostly guess or ask informally','Sometimes, not consistently','Yes, tracked systematically'],
- scores:[0,1,4],wins:['no_source_tracking','no_source_tracking',null]},
- ]},
- {id:'tracking',label:'Tracking & Data',scored:true,eyebrow:'Section 3 of 6',
- heading:'How well do you know your customers?',
- sub:'CRM, email capture, website tracking, attribution, and customer intelligence.',
- questions:[
- {id:'crm',text:'Do you have a CRM or customer database?',
- type:'single',opts:['No system at all','Spreadsheet or manual list','Basic platform Mailchimp, HubSpot free, etc.','Full CRM with automation, segmentation, and pipelines'],
- scores:[0,1,2,4],wins:['no_crm','no_crm',null,null]},
- {id:'email_cap',text:'Do you collect an email address from every guest or customer?',
- type:'single',opts:['Rarely or never','Only if they ask to be on a list',"We try but it's inconsistent",'Yes, systematically at every touchpoint'],
- scores:[0,1,2,4],wins:['no_email_capture','no_email_capture','no_email_capture',null]},
- {id:'pixel',text:'Do you have tracking tools on your website Meta Pixel, Google Analytics GA4?',
- type:'single',opts:['Nothing installed','Google Analytics only','Meta Pixel only','Both GA4 and Meta Pixel, configured'],
- scores:[0,2,2,4],wins:['no_pixel',null,null,null]},
- {id:'attribution',text:'Can you trace a specific booking back to its marketing source which ad, email, or post drove it?',
- type:'single',opts:['No way to tell','We make educated guesses','Sometimes, for paid channels only','Yes, consistently across most channels'],
- scores:[0,1,2,4],wins:['no_attribution','no_attribution',null,null]},
- {id:'repeat_data',text:'Do you know what percentage of your guests or customers are repeat visitors?',
- type:'single',opts:['No idea','Rough sense but no data','Yes, we track and review this regularly'],
- scores:[0,2,4],wins:['no_repeat_data','no_repeat_data',null]},
- {id:'avg_spend',text:'Do you track average spend per guest, table, or visit?',
- type:'single',opts:['No','Roughly, but not formal','Yes, monitored regularly'],
- scores:[0,2,4],wins:['no_spend_tracking',null,null]},
- ]},
- {id:'engagement',label:'Engagement & Loyalty',scored:true,eyebrow:'Section 4 of 6',
- heading:'How do you keep people coming back?',
- sub:'Email marketing, loyalty programs, review systems, and retention cadence.',
- questions:[
- {id:'email_sends',text:'Do you send marketing email to past guests or customers?',
- type:'single',opts:['Never','A holiday message once or twice a year','Occasional newsletters or promotions','Regular email calendar monthly or more, with segmentation'],
- scores:[0,1,2,5],wins:['no_email','minimal_email','minimal_email',null]},
- {id:'pre_arrival',text:'Do you send pre-arrival or pre-visit emails to confirmed guests?',
- type:'single',opts:['No just the booking confirmation','A basic confirmation only','Yes, a manual email or two','Yes, an automated pre-arrival sequence'],
- scores:[0,1,2,5],wins:['no_pre_arrival','no_pre_arrival',null,null]},
- {id:'post_visit',text:'Do you follow up with guests after their visit?',
- type:'single',opts:['Never','Occasionally, manually','Automated follow-up, no offer','Automated follow-up with a return offer or incentive'],
- scores:[0,1,2,5],wins:['no_post_visit','no_post_visit',null,null]},
- {id:'loyalty',text:'Do you have a loyalty or membership program?',
- type:'single',opts:['No','Informal punch cards or manual tracking','Basic digital loyalty program','Robust program with memberships, tiers, or annual perks'],
- scores:[0,1,3,5],wins:['no_loyalty','no_loyalty',null,null]},
- {id:'reviews',text:'How systematically do you ask for reviews after a visit?',
- type:'single',opts:['We rarely or never ask','We ask sometimes in person','We consistently ask and follow up by email','Automated review request timing-optimized'],
- scores:[0,1,2,3],wins:['no_review_ask','no_review_ask',null,null]},
- {id:'win_back',text:"Do you run win-back campaigns for guests who haven't returned in 6+ months?",
- type:'single',opts:['No','Ad hoc, when we remember','Yes, an automated win-back sequence'],
- scores:[0,1,2],wins:['no_win_back','no_win_back',null]},
- ]},
- {id:'pipeline',label:'Pipeline & Lead Flow',scored:true,eyebrow:'Section 5 of 6',
- heading:'How do you handle inquiries and leads?',
- sub:'MQL to SQL conversion, response SLA, follow-up systems, and after-hours coverage.',
- questions:[
- {id:'response_time',text:"When someone submits an inquiry form, email, DM what's your typical response time?",
- type:'single',opts:['More than 48 hours','24–48 hours','Same business day','Within 4 hours','Immediate automated response, then a human follows up'],
- scores:[0,1,2,3,5],wins:['slow_response','slow_response',null,null,null]},
- {id:'followup_seq',text:"Do you have a defined follow-up sequence for leads who inquire but don't convert?",
- type:'single',opts:['No follow-up after the first response','One manual follow-up if we remember','A few follow-up touches, manually','A defined multi-step sequence automated'],
- scores:[0,1,2,5],wins:['no_followup','no_followup',null,null]},
- {id:'lead_stages',text:'Can you see, at any given time, where each open lead sits in your sales process?',
- type:'single',opts:['No system for this',"It's in someone's head",'On a whiteboard or spreadsheet','In a CRM pipeline with defined stages'],
- scores:[0,1,2,4],wins:['no_pipeline','no_pipeline',null,null]},
- {id:'inq_types',text:'Do different inquiry types wedding, room, dining event, corporate have different handling processes and timelines?',
- type:'single',opts:['No, all inquiries handled the same way','Somewhat, informally','Yes, distinct processes per inquiry type'],
- scores:[0,1,3],wins:['no_inquiry_split',null,null]},
- {id:'after_hours',text:'What happens when an inquiry arrives outside business hours?',
- type:'single',opts:["Nothing they wait until we're open",'Voicemail or email, no auto-response','Auto-reply with a next step or booking link','AI agent or chatbot qualifies and collects contact info around the clock'],
- scores:[0,1,2,4],wins:['no_after_hours','no_after_hours',null,null]},
- {id:'conv_rate',text:'Do you track your inquiry-to-booking conversion rate?',
- type:'single',opts:['No','Rough estimate only','Yes, reviewed regularly'],
- scores:[0,1,3],wins:['no_conversion_tracking','no_conversion_tracking',null]},
- ]},
- {id:'revops',label:'Revenue Intelligence',scored:true,eyebrow:'Section 6 of 6',
- heading:'How well do you know your revenue?',
- sub:'Category tracking, margin awareness, pricing strategy, inventory, and demand planning.',
- questions:[
- {id:'rev_breakdown',text:'Do you track revenue broken down by category rooms, dining, events, retail, memberships?',
- type:'single',opts:['No, just total revenue','Rough breakdown, not formal','Tracked in our POS or accounting system','Detailed reporting with trend review'],
- scores:[0,1,2,4],wins:['no_rev_breakdown','no_rev_breakdown',null,null]},
- {id:'margin_data',text:'Do you know which menu items, services, or packages carry your highest margin?',
- type:'single',opts:['No idea','General sense, not data-backed','Yes, we review this regularly'],
- scores:[0,2,4],wins:['no_margin_data','no_margin_data',null]},
- {id:'kpi_review',text:'Do you review defined KPIs on a regular schedule occupancy, RevPAR, average cover spend, repeat visit rate?',
- type:'single',opts:['No formal review','Informal, occasional','Monthly review','Weekly review with a dashboard'],
- scores:[0,1,2,4],wins:['no_kpis','no_kpis',null,null]},
- {id:'dyn_pricing',text:'Do you use seasonal or demand-based pricing for rooms, events, or services?',
- type:'single',opts:['Flat rates year-round','Some seasonal adjustment, not systematic','Yes, dynamic pricing tied to demand and calendar'],
- scores:[0,2,4],wins:['no_dynamic_pricing',null,null]},
- {id:'inventory',text:'Do you track inventory usage, waste, or shrinkage in your food and beverage operation?',
- type:'single',opts:['No tracking','Occasional spot checks','Yes, tracked and reviewed regularly'],
- scores:[0,1,4],wins:['no_inventory_tracking','no_inventory_tracking',null]},
- {id:'event_pnl',text:'When you run events or seasonal programs, do you track their profitability separately?',
- type:'single',opts:['No, rolled into general revenue','Sometimes','Yes, every event or program has a P&L'],
- scores:[0,2,4],wins:['no_event_pnl',null,null]},
- ]},
+const SECTIONS = [
+  {id:'setup',label:'Your Property',scored:false,eyebrow:'Section 1 of 6',
+   heading:'Tell us about your operation.',
+   sub:'This calibrates your score and surfaces only the relevant quick wins for your specific business.',
+   questions:[
+    {id:'prop_type',type:'multi',required:true,
+     text:'What type of operation is this? Select all that apply.',
+     opts:['Boutique Inn or B&B','Boutique Hotel','Restaurant or Tavern','Brewery or Taproom','Event or Wedding Venue','Outdoor Recreation or Adventure Tourism','Destination Retail or Experience','Other Hospitality or Tourism Business']},
+    {id:'assets',type:'multi',
+     text:'Which assets does your property have? Select all that apply.',
+     opts:['Guest rooms or accommodations','Full-service restaurant or tavern','Bar or cocktail program','Liquor license','Beer garden or outdoor bar','Private event space (indoor)','Outdoor ceremony or event space','Wedding venue capabilities','Pool or fitness amenity','Spa or wellness services','Retail (merch, farm stand, gift shop)','Hiking trails or nature access','Ski access or snow sports','Field or open acreage','Commercial kitchen','Catering capability']},
+  ]},
+  {id:'reach',label:'Reach & Acquisition',scored:true,eyebrow:'Section 2 of 6',
+   heading:'How do people find you?',
+   sub:'OTA dependency, paid channels, organic presence, and referral partnerships.',
+   questions:[
+    {id:'ota_pct',text:'What percentage of your bookings or covers come through third-party platforms — Booking.com, OpenTable, Yelp, Expedia?',
+     type:'single',opts:['More than 60%','30 to 60%','10 to 30%','Less than 10%','We do not use third-party platforms'],
+     scores:[0,1,3,4,4],wins:['ota_high',null,null,null,null]},
+    {id:'paid_social',text:'Do you run paid social media advertising — Meta, Instagram?',
+     type:'single',opts:['Never','Tried it once or twice','Run ads occasionally but inconsistently','Active campaigns with regular reporting and optimization'],
+     scores:[0,1,2,4],wins:['no_paid_social','no_paid_social',null,null]},
+    {id:'gbp',text:'Is your Google Business Profile claimed and actively maintained — current hours, recent photos, regular posts?',
+     type:'single',opts:['Not claimed or not sure','Claimed but rarely updated','Actively managed with recent content'],
+     scores:[0,1,4],wins:['no_gbp','stale_gbp',null]},
+    {id:'dmo',text:'Are you listed in local tourism boards, DMO directories, or regional travel guides?',
+     type:'single',opts:['No listings anywhere','One or two, not actively managed','Yes, several with current information'],
+     scores:[0,1,4],wins:['no_dmo',null,null]},
+    {id:'referral',text:'Do you have active referral partnerships with complementary local businesses — photographers, activity operators, wedding vendors?',
+     type:'single',opts:['No formal partnerships','One or two informal relationships','Yes, structured partnerships that consistently send referrals'],
+     scores:[0,1,4],wins:['no_referral',null,null]},
+    {id:'source_track',text:'Do you track where your bookings or visits originate — which channel, campaign, or referral source?',
+     type:'single',opts:['No, we mostly guess or ask informally','Sometimes, not consistently','Yes, tracked systematically'],
+     scores:[0,1,4],wins:['no_source_tracking','no_source_tracking',null]},
+  ]},
+  {id:'tracking',label:'Tracking & Data',scored:true,eyebrow:'Section 3 of 6',
+   heading:'How well do you know your customers?',
+   sub:'CRM, email capture, website tracking, attribution, and customer intelligence.',
+   questions:[
+    {id:'crm',text:'Do you have a CRM or customer database?',
+     type:'single',opts:['No system at all','Spreadsheet or manual list','Basic platform — Mailchimp, HubSpot free, etc.','Full CRM with automation, segmentation, and pipelines'],
+     scores:[0,1,2,4],wins:['no_crm','no_crm',null,null]},
+    {id:'email_cap',text:'Do you collect an email address from every guest or customer?',
+     type:'single',opts:['Rarely or never','Only if they ask to be on a list','We try but it is inconsistent','Yes, systematically at every touchpoint'],
+     scores:[0,1,2,4],wins:['no_email_capture','no_email_capture','no_email_capture',null]},
+    {id:'pixel',text:'Do you have tracking tools on your website — Meta Pixel, Google Analytics GA4?',
+     type:'single',opts:['Nothing installed','Google Analytics only','Meta Pixel only','Both GA4 and Meta Pixel, configured'],
+     scores:[0,2,2,4],wins:['no_pixel',null,null,null]},
+    {id:'attribution',text:'Can you trace a specific booking back to its marketing source — which ad, email, or post drove it?',
+     type:'single',opts:['No way to tell','We make educated guesses','Sometimes, for paid channels only','Yes, consistently across most channels'],
+     scores:[0,1,2,4],wins:['no_attribution','no_attribution',null,null]},
+    {id:'repeat_data',text:'Do you know what percentage of your guests or customers are repeat visitors?',
+     type:'single',opts:['No idea','Rough sense but no data','Yes, we track and review this regularly'],
+     scores:[0,2,4],wins:['no_repeat_data','no_repeat_data',null]},
+    {id:'avg_spend',text:'Do you track average spend per guest, table, or visit?',
+     type:'single',opts:['No','Roughly, but not formal','Yes, monitored regularly'],
+     scores:[0,2,4],wins:['no_spend_tracking',null,null]},
+  ]},
+  {id:'engagement',label:'Engagement & Loyalty',scored:true,eyebrow:'Section 4 of 6',
+   heading:'How do you keep people coming back?',
+   sub:'Email marketing, loyalty programs, review systems, and retention cadence.',
+   questions:[
+    {id:'email_sends',text:'Do you send marketing email to past guests or customers?',
+     type:'single',opts:['Never','A holiday message once or twice a year','Occasional newsletters or promotions','Regular email calendar — monthly or more, with segmentation'],
+     scores:[0,1,2,5],wins:['no_email','minimal_email','minimal_email',null]},
+    {id:'pre_arrival',text:'Do you send pre-arrival or pre-visit emails to confirmed guests?',
+     type:'single',opts:['No, just the booking confirmation','A basic confirmation only','Yes, a manual email or two','Yes, an automated pre-arrival sequence'],
+     scores:[0,1,2,5],wins:['no_pre_arrival','no_pre_arrival',null,null]},
+    {id:'post_visit',text:'Do you follow up with guests after their visit?',
+     type:'single',opts:['Never','Occasionally, manually','Automated follow-up, no offer','Automated follow-up with a return offer or incentive'],
+     scores:[0,1,2,5],wins:['no_post_visit','no_post_visit',null,null]},
+    {id:'loyalty',text:'Do you have a loyalty or membership program?',
+     type:'single',opts:['No','Informal — punch cards or manual tracking','Basic digital loyalty program','Robust program with memberships, tiers, or annual perks'],
+     scores:[0,1,3,5],wins:['no_loyalty','no_loyalty',null,null]},
+    {id:'reviews',text:'How systematically do you ask for reviews after a visit?',
+     type:'single',opts:['We rarely or never ask','We ask sometimes in person','We consistently ask and follow up by email','Automated review request — timing-optimized'],
+     scores:[0,1,2,3],wins:['no_review_ask','no_review_ask',null,null]},
+    {id:'win_back',text:'Do you run win-back campaigns for guests who have not returned in 6 or more months?',
+     type:'single',opts:['No','Ad hoc, when we remember','Yes, an automated win-back sequence'],
+     scores:[0,1,2],wins:['no_win_back','no_win_back',null]},
+  ]},
+  {id:'pipeline',label:'Pipeline & Lead Flow',scored:true,eyebrow:'Section 5 of 6',
+   heading:'How do you handle inquiries and leads?',
+   sub:'MQL to SQL conversion, response SLA, follow-up systems, and after-hours coverage.',
+   questions:[
+    {id:'response_time',text:'When someone submits an inquiry — form, email, DM — what is your typical response time?',
+     type:'single',opts:['More than 48 hours','24 to 48 hours','Same business day','Within 4 hours','Immediate automated response, then a human follows up'],
+     scores:[0,1,2,3,5],wins:['slow_response','slow_response',null,null,null]},
+    {id:'followup_seq',text:'Do you have a defined follow-up sequence for leads who inquire but do not convert?',
+     type:'single',opts:['No follow-up after the first response','One manual follow-up if we remember','A few follow-up touches, manually','A defined multi-step sequence — automated'],
+     scores:[0,1,2,5],wins:['no_followup','no_followup',null,null]},
+    {id:'lead_stages',text:'Can you see, at any given time, where each open lead sits in your sales process?',
+     type:'single',opts:['No system for this','It is in someone\'s head','On a whiteboard or spreadsheet','In a CRM pipeline with defined stages'],
+     scores:[0,1,2,4],wins:['no_pipeline','no_pipeline',null,null]},
+    {id:'inq_types',text:'Do different inquiry types — wedding, room, dining event, corporate — have different handling processes and timelines?',
+     type:'single',opts:['No, all inquiries handled the same way','Somewhat, informally','Yes, distinct processes per inquiry type'],
+     scores:[0,1,3],wins:['no_inquiry_split',null,null]},
+    {id:'after_hours',text:'What happens when an inquiry arrives outside business hours?',
+     type:'single',opts:['Nothing — they wait until we are open','Voicemail or email, no auto-response','Auto-reply with a next step or booking link','AI agent or chatbot qualifies and collects contact info around the clock'],
+     scores:[0,1,2,4],wins:['no_after_hours','no_after_hours',null,null]},
+    {id:'conv_rate',text:'Do you track your inquiry-to-booking conversion rate?',
+     type:'single',opts:['No','Rough estimate only','Yes, reviewed regularly'],
+     scores:[0,1,3],wins:['no_conversion_tracking','no_conversion_tracking',null]},
+  ]},
+  {id:'revops',label:'Revenue Intelligence',scored:true,eyebrow:'Section 6 of 6',
+   heading:'How well do you know your revenue?',
+   sub:'Category tracking, margin awareness, pricing strategy, inventory, and demand planning.',
+   questions:[
+    {id:'rev_breakdown',text:'Do you track revenue broken down by category — rooms, dining, events, retail, memberships?',
+     type:'single',opts:['No, just total revenue','Rough breakdown, not formal','Tracked in our POS or accounting system','Detailed reporting with trend review'],
+     scores:[0,1,2,4],wins:['no_rev_breakdown','no_rev_breakdown',null,null]},
+    {id:'margin_data',text:'Do you know which menu items, services, or packages carry your highest margin?',
+     type:'single',opts:['No idea','General sense, not data-backed','Yes, we review this regularly'],
+     scores:[0,2,4],wins:['no_margin_data','no_margin_data',null]},
+    {id:'kpi_review',text:'Do you review defined KPIs on a regular schedule — occupancy, RevPAR, average cover spend, repeat visit rate?',
+     type:'single',opts:['No formal review','Informal, occasional','Monthly review','Weekly review with a dashboard'],
+     scores:[0,1,2,4],wins:['no_kpis','no_kpis',null,null]},
+    {id:'dyn_pricing',text:'Do you use seasonal or demand-based pricing for rooms, events, or services?',
+     type:'single',opts:['Flat rates year-round','Some seasonal adjustment, not systematic','Yes, dynamic pricing tied to demand and calendar'],
+     scores:[0,2,4],wins:['no_dynamic_pricing',null,null]},
+    {id:'inventory',text:'Do you track inventory usage, waste, or shrinkage in your food and beverage operation?',
+     type:'single',opts:['No tracking','Occasional spot checks','Yes, tracked and reviewed regularly'],
+     scores:[0,1,4],wins:['no_inventory_tracking','no_inventory_tracking',null]},
+    {id:'event_pnl',text:'When you run events or seasonal programs, do you track their profitability separately?',
+     type:'single',opts:['No, rolled into general revenue','Sometimes','Yes, every event or program has a P&L'],
+     scores:[0,2,4],wins:['no_event_pnl',null,null]},
+  ]},
 ];
 
 const QW={
- ota_high:{t:'Add a "Book Direct" offer to your homepage',i:'$800–2,000/mo',e:'Low',d:"At 50 room-nights/month with 40% OTA-sourced at 18% commission, moving 15% to direct saves ~$1,350/mo in fees alone. A 'book direct and save 10%' callout on your website is a two-hour project."},
- no_paid_social:{t:'Launch a geo-targeted Meta campaign',i:'$1,500–4,000/mo',e:'Medium',d:"A $400/mo Meta campaign targeting drive-market guests within 100 miles consistently generates 8–15x ROAS for hospitality properties. The campaign pays for itself on the first booking."},
- no_gbp:{t:'Claim and build out your Google Business Profile',i:'$500–1,500/mo',e:'Low',d:"GBP is the highest-intent free channel for local hospitality. Properties with complete, active profiles get 5x more direction requests and 3x more site clicks than unclaimed listings. Cost: zero."},
- stale_gbp:{t:'Reactivate your Google Business Profile',i:'$300–800/mo',e:'Low',d:"Update photos, hours, and add weekly posts. Active profiles rank higher in local search and receive significantly more calls and direction requests than stale ones. One afternoon of work."},
- no_dmo:{t:'Get listed in regional tourism directories',i:'$300–900/mo',e:'Low',d:"NH Division of Travel and Tourism, local CVBs, TripAdvisor, regional travel blogs. Warm inbound traffic from travelers already in research mode and most listings are free or low-cost."},
- no_referral:{t:'Build 3 local referral partnerships',i:'$500–2,000/mo',e:'Low',d:"Wedding photographers, outdoor activity operators, corporate travel coordinators. Each sends warm referrals at zero cost. One partnership agreement per week for three weeks changes your lead flow permanently."},
- no_source_tracking:{t:'Set up UTM tracking on every link you share',i:'Unlock optimization',e:'Low',d:"UTM parameters take five minutes per link to add. Once in place, GA4 shows which posts, emails, and ads drove bookings. You stop guessing and start doubling what's actually working."},
- no_crm:{t:'Set up a CRM and import your contacts',i:'$600–1,800/mo',e:'Medium',d:"HubSpot free tier handles 2,000 contacts. Import every email you have. One re-engagement campaign to lapsed guests typically recovers 5–8% at 500 contacts, that's 25–40 return visits at your average spend."},
- no_email_capture:{t:'Capture an email from every guest interaction',i:'$400–1,200/mo',e:'Low',d:"Every uncaptured email is a lost lifetime value. A simple ask at checkout or check-in gets 40–60% opt-in. At 80 interactions/month, that's 30–50 new contacts compounding monthly."},
- no_pixel:{t:'Install Meta Pixel and GA4',i:'Unlock all paid reach',e:'Low',d:"Without tracking pixels, every ad dollar runs blind. Installation is free and takes one hour. It builds a retargeting audience from day one every visitor becomes a future ad target at a fraction of cold-audience cost."},
- no_attribution:{t:'Add UTM parameters to all marketing links',i:'Unlock optimization',e:'Low',d:"UTM parameters take minutes to set up. Once in place, GA4 tells you exactly which channel drove which booking. You stop funding what doesn't work and start scaling what does."},
- no_repeat_data:{t:'Start tracking repeat vs. first-time visits',i:'Strategic clarity',e:'Low',d:"Properties that track repeat visit rates consistently find 20–30% of revenue comes from under 10% of customers. Knowing who your best customers are changes every marketing decision you make."},
- no_spend_tracking:{t:'Track average spend per visit by segment',i:'$300–800/mo',e:'Low',d:"When you know Thursday dinner guests spend 40% less than Saturday guests, you build midweek programs that close the gap. This data exists in your POS it just needs to be pulled and reviewed."},
- no_email:{t:'Launch a monthly email to your list',i:'$500–1,500/mo',e:'Low',d:"A monthly email to 500 past guests generates 20–25% open rates. At a 2% click-to-book rate and $150 average spend, that's $1,500/send. Set up once, runs every month with minimal effort."},
- minimal_email:{t:'Build a proper monthly email calendar',i:'$800–2,000/mo',e:'Low',d:"Holiday-only emails miss 48 weeks of revenue touchpoints. A simple calendar seasonal offer, event preview, local story, win-back compounds every month and costs nothing beyond the time to write it."},
- no_pre_arrival:{t:'Build a pre-arrival email sequence',i:'$400–1,000/mo',e:'Low',d:"Pre-arrival emails run 50–60% open rates. A 3-email sequence what to expect, what's on this week, upgrade offer reduces friction and drives incremental spend before the guest arrives."},
- no_post_visit:{t:'Set up an automated post-visit follow-up',i:'$600–1,500/mo',e:'Low',d:"A 3-day post-visit email with a return offer sees 20–30% open rates. Properties with post-visit sequences see 12–18% of recipients book again within 90 days. Build it once, it runs forever."},
- no_loyalty:{t:'Launch a membership or loyalty program',i:'$750–3,000/mo',e:'Medium',d:"A mug club at $75/year with 50 members is $3,750 in predictable annual revenue plus regular visits. A dining membership at $20/mo with 30 members adds $600/mo baseline before anyone orders food."},
- no_review_ask:{t:'Systematize your review request process',i:'$400–1,000/mo',e:'Low',d:"Properties that systematically ask for reviews get 3–4x review volume and a 0.3–0.5 star improvement within 90 days. A 4.6 vs. a 4.2 drives measurably more bookings. One automated email, done."},
- no_win_back:{t:'Set up an automated win-back campaign',i:'$400–1,200/mo',e:'Low',d:"A single email to guests who haven't returned in 6 months with a specific offer recovers 8–12% of them. At 100 lapsed guests/month, that's 8–12 return visits with zero new ad spend."},
- slow_response:{t:'Set a 4-hour inquiry response SLA',i:'$500–2,000/mo',e:'Low',d:"Leads contacted within 5 minutes convert at 10x the rate of those reached after 24 hours. A 4-hour SLA, an auto-reply that buys time, and an immediate internal alert is a one-hour implementation."},
- no_followup:{t:'Build a 3-touch follow-up for non-converting leads',i:'$500–1,500/mo',e:'Medium',d:"A 3-email follow-up sequence for inquiries that don't book recovers 12–18% of them. At 20 non-converting leads/month, that's 2–4 additional bookings most properties follow up with zero of these."},
- no_pipeline:{t:'Build a visual lead pipeline',i:'Prevent revenue leakage',e:'Low',d:"Without a pipeline, leads fall through cracks. A free Trello board or CRM stage setup lets you see every open inquiry and its status. Catching two dropped leads per month at $300 average = $600/mo recovered."},
- no_inquiry_split:{t:'Create separate handling for high-value inquiry types',i:'$800–3,000/mo',e:'Medium',d:"Wedding, corporate, and event inquiries are worth 5–20x a single-night booking. A dedicated intake process, response template, and 2-hour SLA for these alone captures significantly more high-value business."},
- no_after_hours:{t:'Add after-hours inquiry handling',i:'$400–1,200/mo',e:'Low',d:"38% of hospitality inquiries arrive outside business hours. An auto-reply with a booking link captures intent before it cools. An AI agent qualifies and collects contact info around the clock."},
- no_conversion_tracking:{t:'Start tracking inquiry-to-booking conversion rate',i:'Strategic clarity',e:'Low',d:"If you don't know your conversion rate, you don't know if the problem is not enough leads or not enough closings. These require completely different fixes. This one number changes where you invest."},
- no_rev_breakdown:{t:'Segment your revenue by category',i:'$800–2,000/mo in optimization',e:'Low',d:"Rooms, dining, events, retail each line has different margins and growth levers. Separating them in QuickBooks or your POS takes one hour and immediately shows you where to push and where to cut."},
- no_margin_data:{t:'Identify and promote your highest-margin items',i:'$400–1,500/mo',e:'Low',d:"Craft cocktails, specialty items, and package add-ons often carry 60–75% margins vs. 30% on standard food. Training staff to suggest your top-margin items adds $2–4/cover with zero new traffic."},
- no_kpis:{t:'Define 5 KPIs and review them monthly',i:'Strategic clarity',e:'Low',d:"Occupancy rate, RevPAR, average cover spend, inquiry-to-booking rate, repeat visit percentage. Five numbers reviewed monthly reveal the one thing worth optimizing. Most operators have none defined."},
- no_dynamic_pricing:{t:'Introduce seasonal or demand-based pricing',i:'$800–2,500/mo',e:'Medium',d:"Properties with demand-based pricing earn 12–18% more annual revenue than flat-rate competitors. Start simple: peak weekend rate, off-peak midweek rate, holiday premium. Three tiers, one afternoon."},
- no_inventory_tracking:{t:'Implement basic F&B inventory tracking',i:'$300–900/mo',e:'Medium',d:"Industry-standard food cost is 28–32% of revenue. Without tracking, most operations run 35–42% a gap worth $3,000+/year on $30k/month in F&B. A weekly count takes 45 minutes."},
- no_event_pnl:{t:'Track per-event profitability',i:'$500–2,000/mo',e:'Low',d:"Events that look profitable often aren't once you account for labor, food cost, and overhead. A simple spreadsheet P&L per event shows which formats to run more of and which to reprice or cut entirely."},
+  ota_high:{t:'Add a "Book Direct" offer to your homepage',i:'$800-2,000/mo',e:'Low',d:'At 50 room-nights/month with 40% OTA-sourced at 18% commission, moving 15% to direct saves around $1,350/mo in fees alone. A "book direct and save 10%" callout on your website is a two-hour project.'},
+  no_paid_social:{t:'Launch a geo-targeted Meta campaign',i:'$1,500-4,000/mo',e:'Medium',d:'A $400/mo Meta campaign targeting drive-market guests within 100 miles consistently generates 8 to 15x ROAS for hospitality properties. The campaign pays for itself on the first booking.'},
+  no_gbp:{t:'Claim and build out your Google Business Profile',i:'$500-1,500/mo',e:'Low',d:'GBP is the highest-intent free channel for local hospitality. Properties with complete, active profiles get 5x more direction requests and 3x more site clicks than unclaimed listings. Cost: zero.'},
+  stale_gbp:{t:'Reactivate your Google Business Profile',i:'$300-800/mo',e:'Low',d:'Update photos, hours, and add weekly posts. Active profiles rank higher in local search and receive significantly more calls and direction requests than stale ones. One afternoon of work.'},
+  no_dmo:{t:'Get listed in regional tourism directories',i:'$300-900/mo',e:'Low',d:'NH Division of Travel and Tourism, local CVBs, TripAdvisor, regional travel blogs. Warm inbound traffic from travelers already in research mode — and most listings are free or low-cost.'},
+  no_referral:{t:'Build 3 local referral partnerships',i:'$500-2,000/mo',e:'Low',d:'Wedding photographers, outdoor activity operators, corporate travel coordinators. Each sends warm referrals at zero cost. One partnership agreement per week for three weeks changes your lead flow permanently.'},
+  no_source_tracking:{t:'Set up UTM tracking on every link you share',i:'Unlock optimization',e:'Low',d:'UTM parameters take five minutes per link to add. Once in place, GA4 shows which posts, emails, and ads drove bookings. You stop guessing and start doubling what is actually working.'},
+  no_crm:{t:'Set up a CRM and import your contacts',i:'$600-1,800/mo',e:'Medium',d:'HubSpot free tier handles 2,000 contacts. Import every email you have. One re-engagement campaign to lapsed guests typically recovers 5 to 8% — at 500 contacts, that is 25 to 40 return visits at your average spend.'},
+  no_email_capture:{t:'Capture an email from every guest interaction',i:'$400-1,200/mo',e:'Low',d:'Every uncaptured email is a lost lifetime value. A simple ask at checkout or check-in gets 40 to 60% opt-in. At 80 interactions/month, that is 30 to 50 new contacts compounding monthly.'},
+  no_pixel:{t:'Install Meta Pixel and GA4',i:'Unlock all paid reach',e:'Low',d:'Without tracking pixels, every ad dollar runs blind. Installation is free and takes one hour. It builds a retargeting audience from day one — every visitor becomes a future ad target at a fraction of cold-audience cost.'},
+  no_attribution:{t:'Add UTM parameters to all marketing links',i:'Unlock optimization',e:'Low',d:'UTM parameters take minutes to set up. Once in place, GA4 tells you exactly which channel drove which booking. You stop funding what does not work and start scaling what does.'},
+  no_repeat_data:{t:'Start tracking repeat vs. first-time visits',i:'Strategic clarity',e:'Low',d:'Properties that track repeat visit rates consistently find 20 to 30% of revenue comes from under 10% of customers. Knowing who your best customers are changes every marketing decision you make.'},
+  no_spend_tracking:{t:'Track average spend per visit by segment',i:'$300-800/mo',e:'Low',d:'When you know Thursday dinner guests spend 40% less than Saturday guests, you build midweek programs that close the gap. This data exists in your POS — it just needs to be pulled and reviewed.'},
+  no_email:{t:'Launch a monthly email to your list',i:'$500-1,500/mo',e:'Low',d:'A monthly email to 500 past guests generates 20 to 25% open rates. At a 2% click-to-book rate and $150 average spend, that is $1,500/send. Set up once, runs every month with minimal effort.'},
+  minimal_email:{t:'Build a proper monthly email calendar',i:'$800-2,000/mo',e:'Low',d:'Holiday-only emails miss 48 weeks of revenue touchpoints. A simple calendar — seasonal offer, event preview, local story, win-back — compounds every month and costs nothing beyond the time to write it.'},
+  no_pre_arrival:{t:'Build a pre-arrival email sequence',i:'$400-1,000/mo',e:'Low',d:'Pre-arrival emails run 50 to 60% open rates. A 3-email sequence — what to expect, what is on this week, upgrade offer — reduces friction and drives incremental spend before the guest arrives.'},
+  no_post_visit:{t:'Set up an automated post-visit follow-up',i:'$600-1,500/mo',e:'Low',d:'A 3-day post-visit email with a return offer sees 20 to 30% open rates. Properties with post-visit sequences see 12 to 18% of recipients book again within 90 days. Build it once, it runs forever.'},
+  no_loyalty:{t:'Launch a membership or loyalty program',i:'$750-3,000/mo',e:'Medium',d:'A mug club at $75/year with 50 members is $3,750 in predictable annual revenue plus regular visits. A dining membership at $20/mo with 30 members adds $600/mo baseline before anyone orders food.'},
+  no_review_ask:{t:'Systematize your review request process',i:'$400-1,000/mo',e:'Low',d:'Properties that systematically ask for reviews get 3 to 4x review volume and a 0.3 to 0.5 star improvement within 90 days. A 4.6 vs. a 4.2 drives measurably more bookings. One automated email, done.'},
+  no_win_back:{t:'Set up an automated win-back campaign',i:'$400-1,200/mo',e:'Low',d:'A single email to guests who have not returned in 6 months with a specific offer recovers 8 to 12% of them. At 100 lapsed guests/month, that is 8 to 12 return visits with zero new ad spend.'},
+  slow_response:{t:'Set a 4-hour inquiry response SLA',i:'$500-2,000/mo',e:'Low',d:'Leads contacted within 5 minutes convert at 10x the rate of those reached after 24 hours. A 4-hour SLA, an auto-reply that buys time, and an immediate internal alert is a one-hour implementation.'},
+  no_followup:{t:'Build a 3-touch follow-up for non-converting leads',i:'$500-1,500/mo',e:'Medium',d:'A 3-email follow-up sequence for inquiries that do not book recovers 12 to 18% of them. At 20 non-converting leads/month, that is 2 to 4 additional bookings — most properties follow up with zero of these.'},
+  no_pipeline:{t:'Build a visual lead pipeline',i:'Prevent revenue leakage',e:'Low',d:'Without a pipeline, leads fall through cracks. A free Trello board or CRM stage setup lets you see every open inquiry and its status. Catching two dropped leads per month at $300 average = $600/mo recovered.'},
+  no_inquiry_split:{t:'Create separate handling for high-value inquiry types',i:'$800-3,000/mo',e:'Medium',d:'Wedding, corporate, and event inquiries are worth 5 to 20x a single-night booking. A dedicated intake process, response template, and 2-hour SLA for these alone captures significantly more high-value business.'},
+  no_after_hours:{t:'Add after-hours inquiry handling',i:'$400-1,200/mo',e:'Low',d:'38% of hospitality inquiries arrive outside business hours. An auto-reply with a booking link captures intent before it cools. An AI agent qualifies and collects contact info around the clock.'},
+  no_conversion_tracking:{t:'Start tracking inquiry-to-booking conversion rate',i:'Strategic clarity',e:'Low',d:'If you do not know your conversion rate, you do not know if the problem is not enough leads or not enough closings. These require completely different fixes. This one number changes where you invest.'},
+  no_rev_breakdown:{t:'Segment your revenue by category',i:'$800-2,000/mo in optimization',e:'Low',d:'Rooms, dining, events, retail — each line has different margins and growth levers. Separating them in QuickBooks or your POS takes one hour and immediately shows you where to push and where to cut.'},
+  no_margin_data:{t:'Identify and promote your highest-margin items',i:'$400-1,500/mo',e:'Low',d:'Craft cocktails, specialty items, and package add-ons often carry 60 to 75% margins vs. 30% on standard food. Training staff to suggest your top-margin items adds $2 to $4/cover with zero new traffic.'},
+  no_kpis:{t:'Define 5 KPIs and review them monthly',i:'Strategic clarity',e:'Low',d:'Occupancy rate, RevPAR, average cover spend, inquiry-to-booking rate, repeat visit percentage. Five numbers reviewed monthly reveal the one thing worth optimizing. Most operators have none defined.'},
+  no_dynamic_pricing:{t:'Introduce seasonal or demand-based pricing',i:'$800-2,500/mo',e:'Medium',d:'Properties with demand-based pricing earn 12 to 18% more annual revenue than flat-rate competitors. Start simple: peak weekend rate, off-peak midweek rate, holiday premium. Three tiers, one afternoon.'},
+  no_inventory_tracking:{t:'Implement basic F&B inventory tracking',i:'$300-900/mo',e:'Medium',d:'Industry-standard food cost is 28 to 32% of revenue. Without tracking, most operations run 35 to 42% — a gap worth $3,000+/year on $30k/month in F&B. A weekly count takes 45 minutes.'},
+  no_event_pnl:{t:'Track per-event profitability',i:'$500-2,000/mo',e:'Low',d:'Events that look profitable often are not once you account for labor, food cost, and overhead. A simple spreadsheet P&L per event shows which formats to run more of — and which to reprice or cut entirely.'},
 };
 
 const AW={
- 'Guest rooms or accommodations':{tr:s=>s.revops<12,w:{t:'Implement ADR optimization for your rooms',i:'$600–2,000/mo',e:'Low',d:"A 10% ADR increase on 50 room-nights/month is $750/mo without adding a single booking. Seasonal pricing tiers, direct-booking incentives, and package bundling are the three levers. Start with pricing."}},
- 'Beer garden or outdoor bar':{tr:s=>s.engagement<12||s.reach<12,w:{t:'Program your beer garden with recurring events',i:'$800–2,500/mo',e:'Medium',d:"A monthly outdoor event trivia, live music, themed night at 60 guests x $25 average spend = $1,500/event. Two per month adds $3,000+ incrementally, plus the halo effect on regular visits."}},
- 'Hiking trails or nature access':{tr:s=>s.reach<14,w:{t:'Package your trails as a bookable experience',i:'$400–1,200/mo',e:'Low',d:"A guided trail morning, sunrise hike, or seasonal foraging walk at $35–65/person is high-margin. Three events/month at 12 people generates $1,500–2,300 in new revenue from an asset you already own."}},
- 'Private event space (indoor)':{tr:s=>s.pipeline<12,w:{t:'Build a dedicated event inquiry page and funnel',i:'$1,500–5,000/mo',e:'Medium',d:"An event space with no dedicated landing page is invisible to anyone searching Google. One page with photos, capacity, packages, and a form is a system that runs indefinitely."}},
- 'Wedding venue capabilities':{tr:s=>s.pipeline<15,w:{t:'Build a wedding lead funnel with a defined SLA',i:'$2,000–8,000/mo',e:'Medium',d:"Wedding leads not reached within hours have a 70% chance of choosing someone else. A dedicated inquiry page, auto-response with a brochure, and a 2-hour human follow-up SLA is a system you build once."}},
- 'Pool or fitness amenity':{tr:()=>true,w:{t:'Launch a community pool or fitness membership',i:'$750–3,000/mo',e:'Medium',d:"A summer pool membership at $150 (family) with 30 members = $4,500 upfront plus regular F&B visits. A year-round fitness membership at $50/mo with 20 members = $1,000/mo predictable baseline."}},
- 'Outdoor ceremony or event space':{tr:s=>s.reach<12,w:{t:'List your outdoor space on event venue directories',i:'$500–2,000/mo',e:'Low',d:"The Knot, WeddingWire, Peerspace, and regional wedding directories drive consistent venue traffic. A complete listing with photos and pricing takes two hours. These leads arrive warm and ready to tour."}},
- 'Liquor license':{tr:s=>s.engagement<12,w:{t:'Build a cocktail program with a loyalty element',i:'$400–1,500/mo',e:'Low',d:"A house cocktail menu with 4–6 seasonal craft cocktails at $13–16 each adds $2–4/cover. A spirits or wine club creates $50–100/mo subscriptions from your most loyal customers with minimal operational lift."}},
- 'Field or open acreage':{tr:()=>true,w:{t:'Program your acreage with seasonal events',i:'$1,000–4,000/mo',e:'Medium',d:"A seasonal outdoor market, harvest dinner, or farm-to-table event at 80 guests x $55 = $4,400. Once you have the process, recurring events compound annually. Open acreage is unticketed revenue."}},
- 'Spa or wellness services':{tr:s=>s.engagement<12,w:{t:'Bundle spa services into bookable packages',i:'$600–1,800/mo',e:'Low',d:"A 'stay + spa' package priced at a slight premium to room-only drives ADR and spa revenue simultaneously. Couples packages, seasonal wellness retreats, and weekday specials fill slow inventory with high-margin bookings."}},
- 'Catering capability':{tr:s=>s.reach<14,w:{t:'Market your catering capability to corporate clients',i:'$1,000–4,000/mo',e:'Medium',d:"Corporate catering contracts generate recurring, predictable revenue at consistent margins. A one-page capabilities sheet and LinkedIn outreach to local company offices is the entire go-to-market."}},
+  'Guest rooms or accommodations':{tr:s=>s.revops<12,w:{t:'Implement ADR optimization for your rooms',i:'$600-2,000/mo',e:'Low',d:'A 10% ADR increase on 50 room-nights/month is $750/mo without adding a single booking. Seasonal pricing tiers, direct-booking incentives, and package bundling are the three levers. Start with pricing.'}},
+  'Beer garden or outdoor bar':{tr:s=>s.engagement<12||s.reach<12,w:{t:'Program your beer garden with recurring events',i:'$800-2,500/mo',e:'Medium',d:'A monthly outdoor event — trivia, live music, themed night — at 60 guests x $25 average spend = $1,500/event. Two per month adds $3,000+ incrementally, plus the halo effect on regular visits.'}},
+  'Hiking trails or nature access':{tr:s=>s.reach<14,w:{t:'Package your trails as a bookable experience',i:'$400-1,200/mo',e:'Low',d:'A guided trail morning, sunrise hike, or seasonal foraging walk at $35 to $65/person is high-margin. Three events/month at 12 people generates $1,500 to $2,300 in new revenue from an asset you already own.'}},
+  'Private event space (indoor)':{tr:s=>s.pipeline<12,w:{t:'Build a dedicated event inquiry page and funnel',i:'$1,500-5,000/mo',e:'Medium',d:'An event space with no dedicated landing page is invisible to anyone searching Google. One page with photos, capacity, packages, and a form is a system that runs indefinitely.'}},
+  'Wedding venue capabilities':{tr:s=>s.pipeline<15,w:{t:'Build a wedding lead funnel with a defined SLA',i:'$2,000-8,000/mo',e:'Medium',d:'Wedding leads not reached within hours have a 70% chance of choosing someone else. A dedicated inquiry page, auto-response with a brochure, and a 2-hour human follow-up SLA is a system you build once.'}},
+  'Pool or fitness amenity':{tr:()=>true,w:{t:'Launch a community pool or fitness membership',i:'$750-3,000/mo',e:'Medium',d:'A summer pool membership at $150 (family) with 30 members = $4,500 upfront plus regular F&B visits. A year-round fitness membership at $50/mo with 20 members = $1,000/mo predictable baseline.'}},
+  'Outdoor ceremony or event space':{tr:s=>s.reach<12,w:{t:'List your outdoor space on event venue directories',i:'$500-2,000/mo',e:'Low',d:'The Knot, WeddingWire, Peerspace, and regional wedding directories drive consistent venue traffic. A complete listing with photos and pricing takes two hours. These leads arrive warm and ready to tour.'}},
+  'Liquor license':{tr:s=>s.engagement<12,w:{t:'Build a cocktail program with a loyalty element',i:'$400-1,500/mo',e:'Low',d:'A house cocktail menu with 4 to 6 seasonal craft cocktails at $13 to $16 each adds $2 to $4/cover. A spirits or wine club creates $50 to $100/mo subscriptions from your most loyal customers with minimal operational lift.'}},
+  'Field or open acreage':{tr:()=>true,w:{t:'Program your acreage with seasonal events',i:'$1,000-4,000/mo',e:'Medium',d:'A seasonal outdoor market, harvest dinner, or farm-to-table event at 80 guests x $55 = $4,400. Once you have the process, recurring events compound annually. Open acreage is unticketed revenue.'}},
+  'Spa or wellness services':{tr:s=>s.engagement<12,w:{t:'Bundle spa services into bookable packages',i:'$600-1,800/mo',e:'Low',d:'A stay-plus-spa package priced at a slight premium to room-only drives ADR and spa revenue simultaneously. Couples packages, seasonal wellness retreats, and weekday specials fill slow inventory with high-margin bookings.'}},
+  'Catering capability':{tr:s=>s.reach<14,w:{t:'Market your catering capability to corporate clients',i:'$1,000-4,000/mo',e:'Medium',d:'Corporate catering contracts generate recurring, predictable revenue at consistent margins. A one-page capabilities sheet and LinkedIn outreach to local company offices is the entire go-to-market.'}},
 };
+
+const CAT_LABELS={reach:'Reach & Acquisition',tracking:'Tracking & Data',engagement:'Engagement & Loyalty',pipeline:'Pipeline & Lead Flow',revops:'Revenue Intelligence'};
 
 // ─── STATE ────────────────────────────────────────────────────────────────────
 let curSec=0, answers={}, allWins=[];
 
 // ─── ENGINE ──────────────────────────────────────────────────────────────────
+function getOpt(qId,oi){
+  for(const sec of SECTIONS){
+    const q=sec.questions.find(q=>q.id===qId);
+    if(q)return q.opts[oi];
+  }
+  return null;
+}
+
 function getCatScore(secId){
- const sec=SECTIONS.find(s=>s.id===secId);
- if(!sec||!sec.scored)return 0;
- let pts=0,max=0;
- sec.questions.forEach(q=>{
- if(!q.scores)return;
- max+=Math.max(...q.scores);
- const a=answers[q.id];
- if(a!==undefined)pts+=q.scores[a]||0;
- });
- return max>0?Math.round((pts/max)*20):0;
+  const sec=SECTIONS.find(s=>s.id===secId);
+  if(!sec||!sec.scored)return 0;
+  let pts=0,max=0;
+  sec.questions.forEach(q=>{
+    if(!q.scores)return;
+    max+=Math.max(...q.scores);
+    const a=answers[q.id];
+    if(a!==undefined)pts+=q.scores[a]||0;
+  });
+  return max>0?Math.round((pts/max)*20):0;
 }
 
 function getCatScores(){
- const s={};
- SECTIONS.filter(sc=>sc.scored).forEach(sc=>{ s[sc.id]=getCatScore(sc.id); });
- return s;
+  const s={};
+  SECTIONS.filter(sc=>sc.scored).forEach(sc=>{s[sc.id]=getCatScore(sc.id);});
+  return s;
 }
 
 function getTotalScore(){
- return Object.values(getCatScores()).reduce((a,b)=>a+b,0);
+  return Object.values(getCatScores()).reduce((a,b)=>a+b,0);
 }
 
-function buildWins(){
- const seen=new Set(),result=[];
- SECTIONS.filter(s=>s.scored).forEach(sc=>{
- sc.questions.forEach(q=>{
- if(!q.wins)return;
- const a=answers[q.id];
- if(a===undefined)return;
- const key=q.wins[a];
- if(key&&!seen.has(key)&&QW[key]){
- seen.add(key);
- result.push({...QW[key],_k:key});
- }
- });
- });
- const cats=getCatScores();
- (answers['assets']||[]).forEach(asset=>{
- const aw=AW[asset];
- if(aw&&aw.tr(cats)){
- const k='a_'+asset;
- if(!seen.has(k)){seen.add(k);result.push({...aw.w,_k:k});}
- }
- });
- return result.filter(Boolean)
- .sort((a,b)=>(a.e==='Low'?0:1)-(b.e==='Low'?0:1));
-}
-
-// ─── SCREENS ─────────────────────────────────────────────────────────────────
-function showScreen(id){
- document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
- document.getElementById('screen-'+id).classList.add('active');
- window.scrollTo(0,0);
-}
-
-function startAudit(){
- curSec=0;
- showScreen('questions');
- renderSection();
-}
-
-// ─── RENDERING ───────────────────────────────────────────────────────────────
-function renderSection(){
- const sec=SECTIONS[curSec];
- const total=SECTIONS.length;
-
- // Progress bar
- document.getElementById('prog-bar').style.width=((curSec/total)*100)+'%';
-
- // Nav steps
- const stepsEl=document.getElementById('nav-steps');
- stepsEl.innerHTML=SECTIONS.map((_,i)=>`<div class="nav-step${i<=curSec?' done':''}"></div>`).join('');
- document.getElementById('nav-count').textContent=(curSec+1)+' / '+total;
-
- // Body
- const body=document.getElementById('questions-body');
- let html=`<div class="sec-header"><div class="eyebrow">${sec.eyebrow}</div><h2>${sec.heading}</h2><p class="sec-sub">${sec.sub}</p></div><div class="wrap">`;
- sec.questions.forEach(q=>{
- const isSingle=q.type==='single';
- html+=`<div class="q-card"><div class="q-tag">${isSingle?'Choose one':'Select all that apply'}</div><p class="q-text">${q.text}</p><div class="q-opts">`;
- q.opts.forEach((opt,oi)=>{
- const sel=isSingle?(answers[q.id]===oi):(answers[q.id]||[]).includes(opt);
- html+=`<button class="q-opt${sel?' selected':''}" onclick="handleAnswer('${q.id}','${q.type}',${JSON.stringify(oi)},${JSON.stringify(opt)})">
- <span class="q-indicator${isSingle?'':' checkbox'}">
- ${isSingle?'<span class="q-indicator-dot"></span>':'<span class="q-indicator-check">&#10003;</span>'}
- </span>${opt}</button>`;
- });
- html+='</div></div>';
- });
- html+='</div>';
- body.innerHTML=html;
-
- // Cat score label
- const lbl=document.getElementById('cat-score-label');
- if(sec.scored){
- lbl.innerHTML=`Category: <strong>${getCatScore(sec.id)}/20</strong>`;
- lbl.style.display='block';
- } else {
- lbl.style.display='none';
- }
-
- updateNextBtn();
-}
-
-function handleAnswer(qId,type,oi,opt){
- if(type==='single'){
- answers[qId]=oi;
- } else {
- const cur=answers[qId]||[];
- answers[qId]=cur.includes(opt)?cur.filter(x=>x!==opt):[...cur,opt];
- }
- renderSection();
-}
-
-function canProceed(){
- const sec=SECTIONS[curSec];
- if(sec.id==='setup'){
- return (answers['prop_type']||[]).length>0;
- }
- return true;
-}
-
-function updateNextBtn(){
- document.getElementById('btn-next').disabled=!canProceed();
- const isLast=curSec===SECTIONS.length-1;
- document.getElementById('btn-next').textContent=isLast?'See My Results →':'Next →';
-}
-
-function nextSection(){
- if(!canProceed())return;
- if(curSec<SECTIONS.length-1){
- curSec++;
- renderSection();
- window.scrollTo(0,0);
- } else {
- showResults();
- }
-}
-
-function prevSection(){
- if(curSec>0){curSec--;renderSection();window.scrollTo(0,0);}
- else showScreen('intro');
-}
-
-// ─── RESULTS ─────────────────────────────────────────────────────────────────
-function showResults(){
- document.getElementById('prog-bar').style.width='100%';
- allWins=buildWins();
- const score=getTotalScore();
- const cats=getCatScores();
- const catLabels={reach:'Reach & Acquisition',tracking:'Tracking & Data',engagement:'Engagement & Loyalty',pipeline:'Pipeline & Lead Flow',revops:'Revenue Intelligence'};
-
- // Tier
- let tier,tierColor;
- if(score>=85){tier='Optimized';tierColor='#16a34a';}
- else if(score>=70){tier='Strong';tierColor='#0ea5e9';}
- else if(score>=50){tier='Functional';tierColor='#d97706';}
- else if(score>=30){tier='Developing';tierColor='#d97706';}
- else{tier='High Opportunity';tierColor='#dc2626';}
- const ringColor=score>=70?'#16a34a':score>=50?'#fe6930':'#dc2626';
-
- // SVG ring
- const r=52,cx=70,cy=70,circ=2*Math.PI*r,pct=Math.min(score/100,1);
- const ringHTML=`<svg width="148" height="148" viewBox="0 0 140 140">
- <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#f0e6d4" stroke-width="10"/>
- <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${ringColor}" stroke-width="10"
- stroke-dasharray="${pct*circ} ${circ}" stroke-linecap="round"
- style="transform:rotate(-90deg);transform-origin:70px 70px;transition:stroke-dasharray 1s ease"/>
- <text x="${cx}" y="${cy-4}" text-anchor="middle" fill="#052e4d" font-size="30" font-family="'Playfair Display',serif" font-weight="400">${score}</text>
- <text x="${cx}" y="${cy+15}" text-anchor="middle" fill="#7a8f9e" font-size="11" font-family="'DM Sans',sans-serif">out of 100</text>
- </svg>`;
-
- // Score layout
- let catBarsHTML='<div class="cats-lbl">Score by category</div>';
- Object.entries(catLabels).forEach(([id,label])=>{
- const s=cats[id]||0,pct=(s/20)*100;
- const color=s>=15?'#16a34a':s>=9?'#fe6930':'#dc2626';
- catBarsHTML+=`<div class="cat-bar">
- <div class="cat-bar-head">
- <span class="cat-bar-name">${label}</span>
- <span class="cat-bar-score" style="color:${color}">${s}/20</span>
- </div>
- <div class="cat-bar-track"><div class="cat-bar-fill" style="width:${pct}%;background:${color}"></div></div>
- </div>`;
- });
-
- document.getElementById('score-layout').innerHTML=`
- <div class="score-card">
- <div class="score-ring-wrap">${ringHTML}</div>
- <span class="score-tier" style="color:${tierColor};background:${tierColor}18;border-color:${tierColor}40">${tier}</span>
- <p class="score-note">Across 5 scored categories</p>
- </div>
- <div class="cats-card">${catBarsHTML}</div>`;
-
- // Wins: first 2 always visible, rest locked
- document.getElementById('wins-headline').textContent=`Your ${allWins.length} highest-impact opportunities.`;
- const preview=allWins.slice(0,2);
- const locked=allWins.slice(2);
-
- document.getElementById('wins-preview').innerHTML=preview.map((w,i)=>winCardHTML(w,i)).join('');
- document.getElementById('wins-locked').innerHTML=locked.slice(0,3).map((w,i)=>winCardHTML(w,i+2)).join('');
-
- showScreen('results');
-}
-
-function winCardHTML(w,idx){
- const ec=w.e==='Low'?'#16a34a':'#d97706';
- return `<div class="win-card">
- <div class="win-head">
- <div>
- <div class="win-label">Quick Win #${idx+1}</div>
- <div class="win-title">${w.t}</div>
- </div>
- <div class="win-meta">
- <div class="win-impact">${w.i}</div>
- <div class="win-effort" style="color:${ec}">${w.e} effort</div>
- </div>
- </div>
- <div class="win-desc">${w.d}</div>
- </div>`;
-}
-
-// ── CONFIG ───────────────────────────────────────────────────────────────────
-// Submits to Cloudflare Pages Function in functions/api/pulse-submit.js
-const WORKER_URL='/api/pulse-submit';
-
-function revealResults(){
-  document.getElementById('gate-wrap').style.display='none';
-  const fullList=document.getElementById('wins-full-list');
-  fullList.innerHTML=allWins.slice(2).map((w,i)=>winCardHTML(w,i+2)).join('');
-  document.getElementById('wins-full').style.display='block';
-  document.getElementById('results-cta').style.display='block';
-  document.getElementById('wins-full').scrollIntoView({behavior:'smooth',block:'start'});
-}
-
-function getAnswerText(secId,qId,type){
+function getAnswerText(secId,qId){
   const sec=SECTIONS.find(s=>s.id===secId);
   if(!sec)return '';
   const q=sec.questions.find(q=>q.id===qId);
   if(!q)return '';
   const a=answers[qId];
-  if(a===undefined||a===null)return '';
-  if(type==='single') return q.opts[a]||'';
-  if(type==='multi') return (answers[qId]||[]).join(', ');
-  return '';
+  if(a===undefined)return '';
+  return q.opts[a]||'';
+}
+
+function buildWins(){
+  const seen=new Set(),result=[];
+  SECTIONS.filter(s=>s.scored).forEach(sc=>{
+    sc.questions.forEach(q=>{
+      if(!q.wins)return;
+      const a=answers[q.id];
+      if(a===undefined)return;
+      const key=q.wins[a];
+      if(key&&!seen.has(key)&&QW[key]){seen.add(key);result.push({...QW[key],_k:key});}
+    });
+  });
+  const cats=getCatScores();
+  (answers['assets']||[]).forEach(asset=>{
+    const aw=AW[asset];
+    if(aw&&aw.tr(cats)){
+      const k='a_'+asset;
+      if(!seen.has(k)){seen.add(k);result.push({...aw.w,_k:k});}
+    }
+  });
+  return result.filter(Boolean).sort((a,b)=>(a.e==='Low'?0:1)-(b.e==='Low'?0:1));
+}
+
+// ─── SCREEN MANAGEMENT ───────────────────────────────────────────────────────
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>{
+    s.classList.remove('active','slide-in');
+  });
+  const el=document.getElementById('screen-'+id);
+  el.classList.add('active');
+  // Force repaint then add animation
+  requestAnimationFrame(()=>{
+    el.classList.add('slide-in');
+    window.scrollTo({top:0,behavior:'instant'});
+  });
+
+  // Show/hide bottom nav
+  document.getElementById('bottom-nav').style.display=(id==='questions')?'flex':'none';
+
+  // Update top bar
+  updateTopBar(id);
+}
+
+function updateTopBar(screenId){
+  const stepsEl=document.getElementById('top-steps');
+  const countEl=document.getElementById('top-count');
+  const progEl=document.getElementById('prog-bar');
+
+  if(screenId==='questions'){
+    stepsEl.innerHTML=SECTIONS.map((_,i)=>`<div class="ts${i<=curSec?' done':''}"></div>`).join('');
+    countEl.textContent=(curSec+1)+' / '+SECTIONS.length;
+    progEl.style.width=((curSec/SECTIONS.length)*100)+'%';
+  } else if(screenId==='results'){
+    stepsEl.innerHTML=SECTIONS.map(()=>`<div class="ts done"></div>`).join('');
+    countEl.textContent='Results';
+    progEl.style.width='100%';
+  } else {
+    stepsEl.innerHTML='';
+    countEl.textContent='';
+    progEl.style.width='0%';
+  }
+}
+
+function startAudit(){
+  curSec=0;
+  showScreen('questions');
+  renderSection();
+}
+
+// ─── RENDER ──────────────────────────────────────────────────────────────────
+function renderSection(){
+  const sec=SECTIONS[curSec];
+  updateTopBar('questions');
+
+  let html=`<div class="sec-header"><div class="eyebrow">${sec.eyebrow}</div><h2>${sec.heading}</h2><p class="sec-sub">${sec.sub}</p></div><div class="wrap">`;
+
+  sec.questions.forEach(q=>{
+    const isSingle=q.type==='single';
+    html+=`<div class="q-card"><div class="q-tag">${isSingle?'Choose one':'Select all that apply'}</div><p class="q-text">${q.text}</p><div class="q-opts">`;
+    q.opts.forEach((opt,oi)=>{
+      // KEY FIX: only pass qId, type, and index — no option text in the attribute
+      const sel=isSingle?(answers[q.id]===oi):(answers[q.id]||[]).includes(opt);
+      const indInner=isSingle
+        ?`<span class="q-dot" ${sel?'':'style="display:none"'}></span>`
+        :`<span class="q-chk" ${sel?'':'style="display:none"'}>&#10003;</span>`;
+      html+=`<button class="q-opt${sel?' sel':''}" data-qid="${q.id}" data-type="${q.type}" data-oi="${oi}" onclick="handleAnswer(this)">
+        <span class="q-ind${isSingle?'':' cb'}">${indInner}</span>${opt}</button>`;
+    });
+    html+='</div></div>';
+  });
+  html+='</div>';
+  document.getElementById('questions-body').innerHTML=html;
+
+  // Cat score label
+  const lbl=document.getElementById('cat-score-lbl');
+  if(sec.scored){
+    lbl.innerHTML=`Category: <strong>${getCatScore(sec.id)}/20</strong>`;
+    lbl.style.display='block';
+  } else {
+    lbl.style.display='none';
+  }
+
+  updateNextBtn();
+}
+
+// KEY FIX: receive the button element, read data attributes
+function handleAnswer(btn){
+  const qId=btn.dataset.qid;
+  const type=btn.dataset.type;
+  const oi=parseInt(btn.dataset.oi,10);
+  const opt=getOpt(qId,oi);  // look up text from SECTIONS — no attr escaping needed
+
+  if(type==='single'){
+    answers[qId]=oi;
+  } else {
+    const cur=answers[qId]||[];
+    answers[qId]=cur.includes(opt)?cur.filter(x=>x!==opt):[...cur,opt];
+  }
+  renderSection();
+}
+
+function canProceed(){
+  const sec=SECTIONS[curSec];
+  if(sec.id==='setup')return(answers['prop_type']||[]).length>0;
+  return true;
+}
+
+function updateNextBtn(){
+  const btn=document.getElementById('btn-next');
+  btn.disabled=!canProceed();
+  const isLast=curSec===SECTIONS.length-1;
+  btn.textContent=isLast?'See My Results →':'Next →';
+}
+
+function nextSection(){
+  if(!canProceed())return;
+  if(curSec<SECTIONS.length-1){
+    curSec++;
+    showScreen('questions');
+    renderSection();
+  } else {
+    showResults();
+  }
+}
+
+function prevSection(){
+  if(curSec>0){
+    curSec--;
+    showScreen('questions');
+    renderSection();
+  } else {
+    showScreen('intro');
+  }
+}
+
+// ─── RESULTS ─────────────────────────────────────────────────────────────────
+function showResults(){
+  allWins=buildWins();
+  const score=getTotalScore();
+  const cats=getCatScores();
+
+  let tier,tc;
+  if(score>=85){tier='Optimized';tc='#16a34a';}
+  else if(score>=70){tier='Strong';tc='#0ea5e9';}
+  else if(score>=50){tier='Functional';tc='#d97706';}
+  else if(score>=30){tier='Developing';tc='#d97706';}
+  else{tier='High Opportunity';tc='#dc2626';}
+  const ringColor=score>=70?'#16a34a':score>=50?'#fe6930':'#dc2626';
+
+  const r=52,cx=70,cy=70,circ=2*Math.PI*r,pct=Math.min(score/100,1);
+  const ring=`<svg width="148" height="148" viewBox="0 0 140 140">
+    <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#f0e6d4" stroke-width="10"/>
+    <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${ringColor}" stroke-width="10"
+      stroke-dasharray="${pct*circ} ${circ}" stroke-linecap="round"
+      style="transform:rotate(-90deg);transform-origin:70px 70px"/>
+    <text x="${cx}" y="${cy-4}" text-anchor="middle" fill="#052e4d" font-size="30" font-family="Playfair Display,serif" font-weight="400">${score}</text>
+    <text x="${cx}" y="${cy+15}" text-anchor="middle" fill="#7a8f9e" font-size="11" font-family="DM Sans,sans-serif">out of 100</text>
+  </svg>`;
+
+  let catBars='<div class="cats-lbl">Score by category</div>';
+  Object.entries(CAT_LABELS).forEach(([id,label])=>{
+    const s=cats[id]||0,pct=(s/20)*100;
+    const color=s>=15?'#16a34a':s>=9?'#fe6930':'#dc2626';
+    catBars+=`<div class="cat-bar">
+      <div class="cat-bar-head">
+        <span class="cat-bar-name">${label}</span>
+        <span class="cat-bar-score" style="color:${color}">${s}/20</span>
+      </div>
+      <div class="cat-bar-track"><div class="cat-bar-fill" style="width:${pct}%;background:${color}"></div></div>
+    </div>`;
+  });
+
+  document.getElementById('score-layout').innerHTML=`
+    <div class="score-card">
+      ${ring}
+      <span class="score-tier" style="color:${tc};background:${tc}18;border-color:${tc}40">${tier}</span>
+      <p class="score-note">Across 5 scored categories</p>
+    </div>
+    <div class="cats-card">${catBars}</div>`;
+
+  document.getElementById('wins-headline').textContent=`Your ${allWins.length} highest-impact opportunities.`;
+  document.getElementById('wins-preview').innerHTML=allWins.slice(0,2).map((w,i)=>winHTML(w,i)).join('');
+  document.getElementById('wins-locked').innerHTML=allWins.slice(2,5).map((w,i)=>winHTML(w,i+2)).join('');
+
+  showScreen('results');
+}
+
+function winHTML(w,idx){
+  const ec=w.e==='Low'?'#16a34a':'#d97706';
+  return `<div class="win-card">
+    <div class="win-head">
+      <div><div class="win-label">Quick Win #${idx+1}</div><div class="win-title">${w.t}</div></div>
+      <div class="win-meta"><div class="win-impact">${w.i}</div><div class="win-effort" style="color:${ec}">${w.e} effort</div></div>
+    </div>
+    <div class="win-desc">${w.d}</div>
+  </div>`;
+}
+
+// ─── UNLOCK ───────────────────────────────────────────────────────────────────
+function revealResults(){
+  document.getElementById('gate-wrap').style.display='none';
+  document.getElementById('wins-full-list').innerHTML=allWins.slice(2).map((w,i)=>winHTML(w,i+2)).join('');
+  document.getElementById('wins-full').style.display='block';
+  document.getElementById('results-cta').style.display='block';
+  document.getElementById('wins-full').scrollIntoView({behavior:'smooth',block:'start'});
 }
 
 async function unlockReport(){
@@ -742,47 +756,30 @@ async function unlockReport(){
     return;
   }
 
-  // Disable button and show loading state
   const btn=document.querySelector('.gate-card .btn');
-  const origText=btn.textContent;
   btn.textContent='Saving your results...';
   btn.disabled=true;
 
   const cats=getCatScores();
   const payload={
-    'First Name':first,
-    'Last Name':last,
-    'Email':email,
-    'Property Name':property,
-    'Property Type':(answers['prop_type']||[]).map(i=>SECTIONS[0].questions[0].opts[i]),
+    'First Name':first,'Last Name':last,'Email':email,'Property Name':property,
+    'Property Type':(answers['prop_type']||[]).map(i=>getOpt('prop_type',i)).filter(Boolean),
     'Assets':answers['assets']||[],
-    'Score: Reach':cats.reach||0,
-    'Score: Tracking':cats.tracking||0,
-    'Score: Engagement':cats.engagement||0,
-    'Score: Pipeline':cats.pipeline||0,
-    'Score: Revenue':cats.revops||0,
-    'Total Score':getTotalScore(),
-    'Win Count':allWins.length,
-    'Quick Wins':allWins.map(w=>w.t).join(' | '),
-    'OTA Dependency':getAnswerText('reach','ota_pct','single'),
-    'Has CRM':getAnswerText('tracking','crm','single'),
-    'Email Cadence':getAnswerText('engagement','email_sends','single'),
-    'Response SLA':getAnswerText('pipeline','response_time','single'),
-    'Paid Social':getAnswerText('reach','paid_social','single'),
-    'Submitted At':new Date().toISOString(),
-    'Source':'hospitality-pulse'
+    'Score: Reach':cats.reach||0,'Score: Tracking':cats.tracking||0,
+    'Score: Engagement':cats.engagement||0,'Score: Pipeline':cats.pipeline||0,
+    'Score: Revenue':cats.revops||0,'Total Score':getTotalScore(),
+    'Win Count':allWins.length,'Quick Wins':allWins.map(w=>w.t).join(' | '),
+    'OTA Dependency':getAnswerText('reach','ota_pct'),
+    'Has CRM':getAnswerText('tracking','crm'),
+    'Email Cadence':getAnswerText('engagement','email_sends'),
+    'Response SLA':getAnswerText('pipeline','response_time'),
+    'Paid Social':getAnswerText('reach','paid_social'),
+    'Submitted At':new Date().toISOString(),'Source':'hospitality-pulse',
   };
 
-  try {
-    await fetch(WORKER_URL,{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify(payload)
-    });
-  } catch(e){
-    // Submission failed silently - still reveal results
-    console.error('Submission error:',e);
-  }
+  try{
+    await fetch(SUBMIT_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+  }catch(e){console.error('Submission error:',e);}
 
   revealResults();
 }
