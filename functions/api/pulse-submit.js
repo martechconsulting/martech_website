@@ -1,13 +1,3 @@
-// functions/api/pulse-submit.js
-// Cloudflare Pages Function — route: /api/pulse-submit
-// Used by: hospitality-pulse.html
-//
-// Env vars (already set in Cloudflare Pages dashboard):
-//   AIRTABLE_TOKEN              — personal access token
-//   AIRTABLE_PROPOSALS_BASE_ID  — apposb2VLlXXnUIMY
-//
-// Table: Pulse Leads (create this in the apposb2VLlXXnUIMY base)
-
 export async function onRequestPost({ request, env }) {
   const origin = request.headers.get('Origin') || '';
   const corsHeaders = {
@@ -50,7 +40,7 @@ export async function onRequestPost({ request, env }) {
     'Source':             'hospitality-pulse',
   };
 
-  const url = `https://api.airtable.com/v0/${env.AIRTABLE_PROPOSALS_BASE_ID}/Pulse%20Leads`;
+  const AIRTABLE_URL = 'https://api.airtable.com/v0/apposb2VLlXXnUIMY/tblqnyAUwrWmi43es';
 
   let atRes;
   try {
