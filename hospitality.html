@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Martech Consulting | Hospitliaty Marketing and RevOps</title>
+<title>Martech Consulting | Hospitality Marketing and RevOps</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
@@ -35,9 +35,19 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:62px;padding:0 1.25re
   border-bottom:1px solid var(--rule-dk)}
 .logo-link{display:flex;align-items:center;text-decoration:none;flex-shrink:0}
 .logo-link svg{height:26px;width:auto;display:block}
+.nav-links{display:none;gap:2rem}
+.nav-links a{font-size:.74rem;font-weight:400;color:var(--mid);
+  text-decoration:none;letter-spacing:.02em}
+.nav-links a:hover{color:var(--navy)}
+@media(min-width:900px){.nav-links{display:flex}}
+.nav-right{display:flex;align-items:center;gap:.85rem}
 .nav-cta{font-size:.7rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
   color:var(--white);background:var(--orange);padding:.48rem 1rem;border-radius:3px;
   text-decoration:none;white-space:nowrap}
+.nav-ghost{font-size:.7rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--navy);border:1.5px solid var(--rule-dk);padding:.44rem .9rem;border-radius:3px;
+  text-decoration:none;display:none}
+@media(min-width:900px){.nav-ghost{display:inline-block}}
 
 /* SHARED */
 .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 1.6rem;
@@ -79,14 +89,21 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:62px;padding:0 1.25re
 /* HERO */
 .hero-wrap{padding-top:62px;position:relative;overflow:hidden;
   min-height:100svh;display:flex;align-items:center}
+@media(min-width:900px){.hero-wrap{min-height:calc(100vh - 0px)}}
 .hero-bg{position:absolute;inset:0;
   background-image:url("images/blue-bear-inn.jpg");
   background-size:cover;background-position:center 60%;z-index:0}
 .hero-overlay{position:absolute;inset:0;z-index:1;
-  background:linear-gradient(160deg,rgba(5,46,77,.95) 0%,rgba(5,46,77,.88) 45%,rgba(5,46,77,.55) 75%,rgba(5,46,77,.2) 100%),
-  linear-gradient(to top,rgba(5,46,77,.7) 0%,transparent 50%)}
-.hero-inner{position:relative;z-index:2;width:100%;padding:3rem 1.25rem 5rem;max-width:680px}
+  background:linear-gradient(108deg,rgba(5,46,77,.96) 0%,rgba(5,46,77,.88) 40%,rgba(5,46,77,.55) 68%,rgba(5,46,77,.18) 100%),
+  linear-gradient(to top,rgba(5,46,77,.65) 0%,transparent 55%)}
+.hero-inner{position:relative;z-index:2;width:100%;padding:3rem 1.25rem 5rem;
+  display:grid;grid-template-columns:1fr;gap:2.5rem}
+@media(min-width:900px){
+  .hero-inner{grid-template-columns:1.1fr .9fr;gap:4rem;align-items:center;
+    padding:5rem 2.5rem 4.5rem;max-width:1120px;margin:0 auto}
+}
 
+.hero-left{display:flex;flex-direction:column}
 .hero-kicker{font-size:.6rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
   color:rgba(254,105,48,.9);display:flex;align-items:center;gap:.5rem;margin-bottom:1.25rem}
 .hero-kicker::before{content:'';width:14px;height:1px;background:rgba(254,105,48,.8)}
@@ -103,6 +120,8 @@ h1 em{font-style:italic;color:var(--orange)}
   border-radius:var(--r);overflow:hidden;
   border:1px solid rgba(255,255,255,.1);
   box-shadow:0 4px 24px rgba(0,0,0,.25);max-width:460px}
+.hero-form-wrap{display:none}
+@media(min-width:900px){.hero-form-wrap{display:block}}
 .stat{background:rgba(255,255,255,.06);padding:1rem .85rem;text-align:center;
   border-right:1px solid rgba(255,255,255,.09)}
 .stat:last-child{border-right:none}
@@ -321,8 +340,11 @@ footer{background:var(--navy);padding:1.75rem 1.25rem;
 .mobile-form-sec{display:none;background:var(--navy);padding:3rem 1.25rem 3.5rem}
 .mobile-form-sec .fc-label{font-family:var(--serif);font-size:1.5rem;font-weight:400;
   color:#fff;margin-bottom:1.25rem;line-height:1.2}
-@media(max-width:767px){
-  .hero-inner .form-card{display:none}
+@media(min-width:900px){
+  .mobile-form-sec{display:none}
+}
+@media(max-width:899px){
+  .hero-form-wrap{display:none}
   .mobile-form-sec{display:block}
 }
 
@@ -362,7 +384,16 @@ footer{background:var(--navy);padding:1.75rem 1.25rem;
  </g>
  </svg>
   </a>
-  <a class="nav-cta" href="#form">Free Strategy Call</a>
+  <div class="nav-links">
+    <a href="#problem">The Problem</a>
+    <a href="#services">Services</a>
+    <a href="#work">Our Work</a>
+    <a href="#about">About</a>
+  </div>
+  <div class="nav-right">
+    <a class="nav-ghost" href="/hospitality-pulse">Free Audit</a>
+    <a class="nav-cta" href="#form">Free Strategy Call</a>
+  </div>
 </nav>
 
 <div class="sticky-cta" id="sticky-cta">
@@ -374,6 +405,7 @@ footer{background:var(--navy);padding:1.75rem 1.25rem;
   <div class="hero-bg"></div>
   <div class="hero-overlay"></div>
   <div class="hero-inner">
+  <div class="hero-left">
     <div class="hero-kicker">Place-based marketing &middot; New England</div>
     <h1>You're leaving money<br>on the table.<br><em>We find it.</em></h1>
     <p class="hero-sub">30 years inside <strong>hospitality, tourism, and events</strong>. We built this practice from the inside. We know this world because we came from it.</p>
@@ -393,6 +425,51 @@ footer{background:var(--navy);padding:1.75rem 1.25rem;
       <div class="stat">
         <div class="stat-n">2&times;</div>
         <div class="stat-l">OTA cancellation<br>rate vs. direct</div>
+      </div>
+    </div>
+  </div>
+  </div>
+  <div class="hero-form-wrap">
+    <div class="form-card">
+      <div class="fc-head">
+        <h2>Let's find where your revenue is hiding.</h2>
+        <p>We review your property before we talk. Not a generic pitch.</p>
+      </div>
+      <div class="fc-body" id="fc-body-hero">
+        <div class="live-badge"><div class="pulse"></div>Free 30-min strategy call</div>
+        <form id="lead-form-hero" style="display:flex;flex-direction:column;gap:.85rem">
+          <div class="r2">
+            <div class="field"><label>First Name</label><input type="text" placeholder="Sarah" required></div>
+            <div class="field"><label>Last Name</label><input type="text" placeholder="Langdon" required></div>
+          </div>
+          <div class="field"><label>Email</label><input type="email" placeholder="sarah@yourproperty.com" required></div>
+          <div class="field"><label>Property Name</label><input type="text" placeholder="The Ridgeline Inn" required></div>
+          <div class="field">
+            <label>Property Type</label>
+            <select>
+              <option value="" disabled selected>Select one</option>
+              <option>Boutique Inn or B&amp;B</option>
+              <option>Boutique Hotel</option>
+              <option>Restaurant or Tavern</option>
+              <option>Brewery or Taproom</option>
+              <option>Event or Wedding Venue</option>
+              <option>Outdoor Recreation or Adventure Tourism</option>
+              <option>Destination Retail or Experience</option>
+              <option>Other Hospitality or Tourism Business</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Biggest gap right now <span style="font-weight:300;text-transform:none;letter-spacing:0;font-size:.64rem;color:var(--muted)">(optional)</span></label>
+            <textarea placeholder="e.g. Packed weekends, empty midweek."></textarea>
+          </div>
+          <button type="submit" class="submit-btn" id="submit-btn-hero">Book My Free Strategy Call &rarr;</button>
+          <p class="fine">No pitch deck. No pressure. Just a real conversation.</p>
+        </form>
+      </div>
+      <div class="success" id="success-hero" style="display:none;flex-direction:column;align-items:center;text-align:center;gap:.75rem;padding:2.25rem 1.75rem">
+        <div class="s-ring">&#10003;</div>
+        <h3 style="font-family:var(--serif);font-size:1.3rem;font-weight:400;color:var(--navy)">You're on the calendar.</h3>
+        <p style="font-size:.8rem;color:var(--mid);line-height:1.6;max-width:26ch">Expect a note from Jon or Keith within one business day.</p>
       </div>
     </div>
   </div>
@@ -710,49 +787,9 @@ footer{background:var(--navy);padding:1.75rem 1.25rem;
 <div class="cta-band rv" id="form">
   <h2>Place-based marketing<br>by people who came from it.</h2>
   <p>We look at your operation before we talk. Nearly 30 years of hospitality in the room. No pitch deck.</p>
-  <div style="position:relative;z-index:1;max-width:480px;margin:0 auto">
-    <div class="form-card">
-      <div class="fc-head">
-        <h2>Let's find where your revenue is hiding.</h2>
-        <p>We review your property before we talk. Not a generic pitch.</p>
-      </div>
-      <div class="fc-body" id="fc-body">
-        <div class="live-badge"><div class="pulse"></div>Free 30-min strategy call</div>
-        <form id="lead-form" style="display:flex;flex-direction:column;gap:.85rem">
-          <div class="r2">
-            <div class="field"><label>First Name</label><input type="text" placeholder="Sarah" required></div>
-            <div class="field"><label>Last Name</label><input type="text" placeholder="Langdon" required></div>
-          </div>
-          <div class="field"><label>Email</label><input type="email" placeholder="sarah@yourproperty.com" required></div>
-          <div class="field"><label>Property Name</label><input type="text" placeholder="The Ridgeline Inn" required></div>
-          <div class="field">
-            <label>Property Type</label>
-            <select>
-              <option value="" disabled selected>Select one</option>
-              <option>Boutique Inn or B&amp;B</option>
-              <option>Boutique Hotel</option>
-              <option>Restaurant or Tavern</option>
-              <option>Brewery or Taproom</option>
-              <option>Event or Wedding Venue</option>
-              <option>Outdoor Recreation or Adventure Tourism</option>
-              <option>Destination Retail or Experience</option>
-              <option>Other Hospitality or Tourism Business</option>
-            </select>
-          </div>
-          <div class="field">
-            <label>Biggest gap right now <span style="font-weight:300;text-transform:none;letter-spacing:0;font-size:.64rem;color:var(--muted)">(optional)</span></label>
-            <textarea placeholder="e.g. Packed weekends, empty midweek."></textarea>
-          </div>
-          <button type="submit" class="submit-btn" id="submit-btn">Book My Free Strategy Call &rarr;</button>
-          <p class="fine">No pitch deck. No pressure. Just a real conversation.</p>
-        </form>
-      </div>
-      <div class="success" id="success">
-        <div class="s-ring">&#10003;</div>
-        <h3>You're on the calendar.</h3>
-        <p>Expect a note from Jon or Keith within one business day.</p>
-      </div>
-    </div>
+  <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:.85rem">
+    <a class="btn btn-white" href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false" style="display:inline-flex;width:auto">Book My Free Strategy Call &rarr;</a>
+    <a class="btn" href="/hospitality-pulse" style="background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.4);display:inline-flex;width:auto">Take the Free Audit &rarr;</a>
   </div>
   <div class="cta-sub">No commitment. Just a real conversation about your property.</div>
 </div>
@@ -788,16 +825,19 @@ window.addEventListener('scroll',()=>sc.classList.toggle('show',window.scrollY>3
 const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');}),{threshold:.06});
 document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
 
-// Desktop form
-document.getElementById('lead-form').addEventListener('submit',function(e){
-  e.preventDefault();
-  const btn=document.getElementById('submit-btn');
-  btn.textContent='Sending…';btn.disabled=true;
-  setTimeout(()=>{
-    document.getElementById('fc-body').style.display='none';
-    document.getElementById('success').style.display='flex';
-  },900);
-});
+// Hero desktop form
+const heroForm=document.getElementById('lead-form-hero');
+if(heroForm){
+  heroForm.addEventListener('submit',function(e){
+    e.preventDefault();
+    const btn=document.getElementById('submit-btn-hero');
+    btn.textContent='Sending…';btn.disabled=true;
+    setTimeout(()=>{
+      document.getElementById('fc-body-hero').style.display='none';
+      document.getElementById('success-hero').style.display='flex';
+    },900);
+  });
+}
 
 // Mobile form
 document.getElementById('lead-form-mobile').addEventListener('submit',function(e){
