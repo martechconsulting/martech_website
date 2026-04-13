@@ -29,12 +29,12 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;o
   background-size:200px}
 
 /* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:200;height:62px;padding:0 1.25rem;
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:62px;padding:0 1.5rem;
   display:flex;align-items:center;justify-content:space-between;
   background:rgba(249,240,227,.97);backdrop-filter:blur(16px);
   border-bottom:1px solid var(--rule-dk)}
 .logo-link{display:flex;align-items:center;text-decoration:none;flex-shrink:0}
-.logo-link svg{height:26px;width:auto;display:block}
+.logo-link svg{height:32px;width:auto;display:block;max-width:180px}
 .nav-links{display:none;gap:2rem}
 .nav-links a{font-size:.74rem;font-weight:400;color:var(--mid);
   text-decoration:none;letter-spacing:.02em}
@@ -88,7 +88,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:62px;padding:0 1.25re
 
 /* HERO */
 .hero-wrap{padding-top:62px;position:relative;overflow:hidden;
-  min-height:100svh;display:flex;align-items:center}
+  min-height:100svh;display:flex;align-items:center;justify-content:center}
 @media(min-width:900px){.hero-wrap{min-height:calc(100vh - 0px)}}
 .hero-bg{position:absolute;inset:0;
   background-image:url("images/blue-bear-inn.jpg");
@@ -96,11 +96,13 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:62px;padding:0 1.25re
 .hero-overlay{position:absolute;inset:0;z-index:1;
   background:linear-gradient(108deg,rgba(5,46,77,.96) 0%,rgba(5,46,77,.88) 40%,rgba(5,46,77,.55) 68%,rgba(5,46,77,.18) 100%),
   linear-gradient(to top,rgba(5,46,77,.65) 0%,transparent 55%)}
-.hero-inner{position:relative;z-index:2;width:100%;padding:3rem 1.25rem 5rem;
+.hero-inner{position:relative;z-index:2;width:100%;
+  padding:3rem 1.25rem 5rem;
+  max-width:1120px;
   display:grid;grid-template-columns:1fr;gap:2.5rem}
 @media(min-width:900px){
   .hero-inner{grid-template-columns:1.1fr .9fr;gap:4rem;align-items:center;
-    padding:5rem 2.5rem 4.5rem;max-width:1120px;margin:0 auto}
+    padding:5rem 2.5rem 4.5rem}
 }
 
 .hero-left{display:flex;flex-direction:column}
